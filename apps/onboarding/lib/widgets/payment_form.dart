@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:onboarding/core/money.dart';
 
 class PaymentForm extends StatefulWidget {
   const PaymentForm({super.key});
@@ -8,14 +10,20 @@ class PaymentForm extends StatefulWidget {
 }
 
 class _PaymentFormState extends State<PaymentForm> {
+  final _formKey = GlobalKey<FormState>();
+
   bool _coverFees = true;
+  bool _coverMembership = false;
+  bool _payCash = false;
+
+  bool get _skipPayment => _coverMembership || _payCash;
 
   double? get dues => double.tryParse(_annualContributionController.text);
-  double get netTotal => 20 + (dues ?? 0);
-  double get processingFee => _coverFees ? (netTotal * 0.029) + 0.3 : 0;
-  double get total => netTotal + processingFee;
+  double get netTotal => (_coverMembership ? 0 : 20) + (dues ?? 0);
+  double get processingFee => (netTotal * 0.029) + 0.3;
+  double get total => netTotal + (_coverFees ? processingFee : 0);
 
-  late final _annualContributionController = TextEditingController(text: '50')
+  late final _annualContributionController = TextEditingController()
     ..addListener(() {
       _totalController.text = total.toString();
     });
@@ -25,64 +33,155 @@ class _PaymentFormState extends State<PaymentForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-              'Your PVD Things co-op membership is good for life and is refundable if you choose to give up your membership. PLEASE NOTE: In addition to your co-op membership, you will also need to pay annual dues before you can start borrowing items. Annual dues are set at a sliding scale based on your income: Annually, we suggest at least \$1/thousand of income; someone making \$50,000 a year would pay \$50/year in dues. You can pay dues the first time you visit PVD Things.'),
-          const SizedBox(height: 32),
-          TextFormField(
-            initialValue: '20',
-            readOnly: true,
-            decoration: const InputDecoration(
-                labelText: 'Lifetime Membership',
-                prefixText: '\$ ',
-                icon: Icon(Icons.card_membership)),
-          ),
-          const SizedBox(height: 8),
-          TextFormField(
-            controller: _annualContributionController,
-            decoration: const InputDecoration(
-              labelText: 'Annual Contribution',
-              hintText: '1 / Thousand of Annual Income (Suggested)',
-              prefixText: '\$ ',
-              icon: Icon(Icons.add),
-            ),
-          ),
-          const SizedBox(height: 8),
-          TextFormField(
-            controller: _totalController,
-            readOnly: true,
-            decoration: const InputDecoration(
-              labelText: 'Total Due Today',
-              prefixText: '\$ ',
-              icon: Icon(Icons.arrow_forward),
-            ),
-          ),
-          const SizedBox(height: 32),
-          DropdownButtonFormField(
-            value: _coverFees ? 0 : 1,
-            items: const [
-              DropdownMenuItem(
-                value: 0,
-                child: Text('Cover Processing Fee (2.9% +\$0.30)'),
+          if (!_skipPayment)
+            Card.outlined(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  const ListTile(
+                    title: Text('Sliding Scale Membership'),
+                    subtitle: Text(
+                        'Your PVD Things co-op membership is good for life and is refundable if you choose to give up your membership. In addition, we ask our members to pay a suggested annual contribution of \$1/thousand of income. For Example: Someone making \$50,000/year would pay \$50/year.'),
+                  ),
+                  const Divider(height: 1),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          controller: _annualContributionController,
+                          decoration: const InputDecoration(
+                            labelText: 'Annual Contribution',
+                            hintText:
+                                '1 / Thousand of Annual Income (Suggested)',
+                            prefixText: '\$ ',
+                            border: InputBorder.none,
+                          ),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value == null ||
+                                double.tryParse(value) == null) {
+                              return 'Valid dollar amount required';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        DropdownButtonFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Processing Fee',
+                            border: InputBorder.none,
+                          ),
+                          value: _coverFees ? 0 : 1,
+                          items: const [
+                            DropdownMenuItem(
+                              value: 0,
+                              child:
+                                  Text('Cover Processing Fee (2.9% +\$0.30)'),
+                            ),
+                            DropdownMenuItem(
+                              value: 1,
+                              child: Text('Do not cover the processing fee'),
+                            ),
+                          ],
+                          onChanged: (value) => setState(() {
+                            _coverFees = value == 0;
+                            _totalController.text = total.toString();
+                          }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          child: ListenableBuilder(
+                            listenable: _annualContributionController,
+                            builder: (context, _) {
+                              return Text(
+                                  'Processing Fee: ${Money.format(processingFee)}');
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(height: 1),
+                  const ListTile(
+                    title: Text('Lifetime Membership'),
+                    subtitle: Text('\$20'),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    title: const Text('Total Due Today'),
+                    subtitle: ListenableBuilder(
+                      listenable: _annualContributionController,
+                      builder: (context, _) {
+                        return Text(Money.format(total));
+                      },
+                    ),
+                  ),
+                ],
               ),
-              DropdownMenuItem(
-                value: 1,
-                child: Text('Do Not Cover Processing Fee'),
+            ),
+          if (!_skipPayment) const SizedBox(height: 32),
+          if (!_payCash)
+            Card.outlined(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  const ListTile(
+                    title: Text('Financial Assistance'),
+                    subtitle: Text(
+                        'Our charitable purpose is to expand tool access to everyone, regardless of ability to pay. If you cannot afford the Lifetime Membership fee, it will be waived. Check this box to assert that you are in need of financial assistance.'),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: Checkbox(
+                      value: _coverMembership,
+                      onChanged: (value) => setState(() {
+                        _coverMembership = value ?? false;
+                        _totalController.text = total.toString();
+                      }),
+                    ),
+                    title: const Text('I cannot afford to pay'),
+                  ),
+                ],
               ),
-            ],
-            onChanged: (value) {
-              setState(() {
-                _coverFees = value == 0;
-              });
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text('Processing Fee: \$ $processingFee'),
-          ),
+            ),
+          if (!_skipPayment) const SizedBox(height: 32),
+          if (!_coverMembership)
+            Card.outlined(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  const ListTile(
+                    title: Text('Pay Cash'),
+                    subtitle: Text(
+                        'Check the box below to skip payment and pay in cash later.'),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: Checkbox(
+                      value: _payCash,
+                      onChanged: (value) => setState(() {
+                        _payCash = value ?? false;
+                      }),
+                    ),
+                    title: const Text('Pay in cash'),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
