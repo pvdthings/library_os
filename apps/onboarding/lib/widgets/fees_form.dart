@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:onboarding/core/money.dart';
 
-class PaymentForm extends StatefulWidget {
-  const PaymentForm({super.key});
+class FeesForm extends StatefulWidget {
+  const FeesForm({super.key});
 
   @override
-  State<PaymentForm> createState() => _PaymentFormState();
+  State<FeesForm> createState() => _FeesFormState();
 }
 
-class _PaymentFormState extends State<PaymentForm> {
+class _FeesFormState extends State<FeesForm> {
   final _formKey = GlobalKey<FormState>();
 
   bool _coverFees = true;

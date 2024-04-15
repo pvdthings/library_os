@@ -3,7 +3,7 @@ import 'package:onboarding/models/contact_model.dart';
 import 'package:onboarding/widgets/agreement_form.dart';
 import 'package:onboarding/widgets/contact_info_controller.dart';
 import 'package:onboarding/widgets/contact_info_form.dart';
-import 'package:onboarding/widgets/payment_form.dart';
+import 'package:onboarding/widgets/fees_form.dart';
 import 'package:onboarding/widgets/responsive_body.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +43,6 @@ class _StepperPageState extends State<StepperPage> {
               return;
             }
             _currentStep -= 1;
-            // TODO: Navigate to landing page instead
           }),
           onStepTapped: (value) => setState(() {
             _currentStep = value;
@@ -58,8 +57,8 @@ class _StepperPageState extends State<StepperPage> {
               content: AgreementForm(),
             ),
             const Step(
-              title: Text('Payment'),
-              content: PaymentForm(),
+              title: Text('Membership Fees'),
+              content: FeesForm(),
             ),
           ],
         ),
