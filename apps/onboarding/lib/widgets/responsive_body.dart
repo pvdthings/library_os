@@ -10,21 +10,16 @@ class ResponsiveBody extends StatelessWidget {
     return SingleChildScrollView(
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final form = Padding(
-            padding: const EdgeInsets.all(16),
-            child: child,
-          );
-
           if (constraints.maxWidth >= 1024) {
             return Center(
               child: FractionallySizedBox(
                 widthFactor: 1 / 2,
-                child: form,
+                child: child,
               ),
             );
           }
 
-          return form;
+          return child ?? const SizedBox.shrink();
         },
       ),
     );

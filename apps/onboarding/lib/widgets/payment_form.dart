@@ -47,7 +47,7 @@ class _PaymentFormState extends State<PaymentForm> {
                   const ListTile(
                     title: Text('Sliding Scale Membership'),
                     subtitle: Text(
-                        'Your PVD Things co-op membership is good for life and is refundable if you choose to give up your membership. In addition, we ask our members to pay a suggested annual contribution of \$1/thousand of income. For Example: Someone making \$50,000/year would pay \$50/year.'),
+                        'Your PVD Things co-op membership is good for life and is refundable if you choose to give up your membership. In addition, we ask our members to pay a suggested annual contribution of \$1/thousand of income. For example: Someone earning \$50,000/year would pay \$50/year.'),
                   ),
                   const Divider(height: 1),
                   Padding(
@@ -78,6 +78,7 @@ class _PaymentFormState extends State<PaymentForm> {
                         ),
                         const SizedBox(height: 16),
                         DropdownButtonFormField(
+                          isExpanded: true,
                           decoration: const InputDecoration(
                             labelText: 'Processing Fee',
                             border: InputBorder.none,
@@ -86,8 +87,7 @@ class _PaymentFormState extends State<PaymentForm> {
                           items: const [
                             DropdownMenuItem(
                               value: 0,
-                              child:
-                                  Text('Cover Processing Fee (2.9% +\$0.30)'),
+                              child: Text('Cover Processing Fee'),
                             ),
                             DropdownMenuItem(
                               value: 1,
@@ -99,18 +99,9 @@ class _PaymentFormState extends State<PaymentForm> {
                             _totalController.text = total.toString();
                           }),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                          child: ListenableBuilder(
-                            listenable: _annualContributionController,
-                            builder: (context, _) {
-                              return Text(
-                                  'Processing Fee: ${Money.format(processingFee)}');
-                            },
-                          ),
+                        const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text('Processing Fee: 2.9% +\$0.30'),
                         ),
                       ],
                     ),
