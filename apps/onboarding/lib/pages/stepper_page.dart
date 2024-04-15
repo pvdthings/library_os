@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onboarding/core/launch.dart';
 import 'package:onboarding/models/contact_model.dart';
 import 'package:onboarding/widgets/agreement_form.dart';
 import 'package:onboarding/widgets/contact_info_controller.dart';
@@ -28,7 +29,10 @@ class _StepperPageState extends State<StepperPage> {
     () {
       setState(() => _currentStep = 2);
     },
-    () {},
+    () {
+      // TODO: Get URL from API
+      // launch('');
+    },
   ];
 
   @override
