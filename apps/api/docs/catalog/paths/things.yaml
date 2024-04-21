@@ -1,0 +1,20 @@
+paths:
+  /things:
+    get:
+      summary: Fetches the data for the catalog app, including things and categories
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  things:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Catalog Thing'
+                  categories:
+                    type: array
+                    items:
+                      type: string

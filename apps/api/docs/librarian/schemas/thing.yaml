@@ -1,0 +1,45 @@
+components:
+  schemas:
+    Thing:
+      type: object
+      required:
+        - id
+        - name
+        - hidden
+        - stock
+        - available
+        - images
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the thing
+        name:
+          type: string
+          description: The name of the thing
+        name_es:
+          type: string
+          description: The Spanish translation of the name
+        hidden:
+          type: boolean
+          description: Whether the thing is not allowed for lending
+        eyeProtection:
+          type: boolean
+          description: Whether eye protection is required for lending
+        stock:
+          type: number
+          description: The total number of this thing in stock
+        available:
+          type: number
+          description: The number of this thing available to borrow
+        images:
+          type: array
+          items:
+            type: string
+          description: URLs pointing to images of this thing
+      example:
+        id: rec12345
+        name: Hammer
+        name_es: Martillo
+        hidden: false
+        stock: 5
+        available: 3

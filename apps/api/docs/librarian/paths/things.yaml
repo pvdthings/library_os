@@ -1,0 +1,88 @@
+paths:
+  /lending/things/categories:
+    get:
+      summary: Gets an array of possible thing categories
+      parameters:
+        - $ref: '#/components/parameters/SupabaseAccessToken'
+        - $ref: '#/components/parameters/SupabaseRefreshToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /lending/things:
+    get:
+      summary: Gets an array of all things
+      parameters:
+        - $ref: '#/components/parameters/SupabaseAccessToken'
+        - $ref: '#/components/parameters/SupabaseRefreshToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Thing'
+    put:
+      summary: Creates a new thing
+      parameters:
+        - $ref: '#/components/parameters/SupabaseAccessToken'
+        - $ref: '#/components/parameters/SupabaseRefreshToken'
+      responses:
+        '200':
+          description: Thing created
+  /lending/things/{id}:
+    get:
+      summary: Gets a thing by its unique id
+      parameters:
+        - $ref: '#/components/parameters/SupabaseAccessToken'
+        - $ref: '#/components/parameters/SupabaseRefreshToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Detailed Thing'
+        '404':
+          description: Thing not found
+    patch:
+      summary: Updates a thing by its unique id
+      parameters:
+        - $ref: '#/components/parameters/SupabaseAccessToken'
+        - $ref: '#/components/parameters/SupabaseRefreshToken'
+      responses:
+        '204':
+          description: Thing updated
+    delete:
+      summary: Deletes a thing by its unique id
+      parameters:
+        - $ref: '#/components/parameters/SupabaseAccessToken'
+        - $ref: '#/components/parameters/SupabaseRefreshToken'
+      responses:
+        '204':
+          description: Thing deleted
+  /lending/things/{id}/categories:
+    patch:
+      summary: Updates the categories of a thing
+      parameters:
+        - $ref: '#/components/parameters/SupabaseAccessToken'
+        - $ref: '#/components/parameters/SupabaseRefreshToken'
+      responses:
+        '204':
+          description: Thing categories updated
+  /lending/things/{id}/image:
+    delete:
+      summary: Deletes the image of a thing
+      parameters:
+        - $ref: '#/components/parameters/SupabaseAccessToken'
+        - $ref: '#/components/parameters/SupabaseRefreshToken'
+      responses:
+        '200':
+          description: Thing image deleted

@@ -1,0 +1,35 @@
+{
+  "name": "pvdthings-api",
+  "version": "1.17.5",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pvdthings/api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pvdthings/api/issues"
+  },
+  "homepage": "https://github.com/pvdthings/api#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.10.0",
+    "airtable": "^0.12.2",
+    "body-parser": "^1.19.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}

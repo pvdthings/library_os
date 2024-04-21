@@ -1,0 +1,56 @@
+components:
+  schemas:
+    Item:
+      type: object
+      required:
+        - id
+        - number
+        - name
+        - hidden
+        - available
+        - totalLoans
+        - images
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the item
+        name:
+          type: string
+          description: The name of the thing associated with this item
+        number:
+          type: integer
+          description: The auto-generated number of this item, used for lending
+        brand:
+          type: string
+          description: The manufacturer or brand name of this item
+        description:
+          type: string
+          description: The description of this item
+        condition:
+          type: string
+          description: The condition of the item
+        estimatedValue:
+          type: number
+          description: The estimated value of the item (in dollars)
+        hidden:
+          type: boolean
+          description: Whether this item is not allowed for lending
+        eyeProtection:
+          type: boolean
+          description: Whether eye protection is required for lending
+        available:
+          type: boolean
+          description: False if this item is currently checked out
+        totalLoans:
+          type: number
+          description: The total number of times this item has been borrowed
+        images:
+          type: array
+          items:
+            type: string
+          description: URLs pointing to images of this item
+        manuals:
+          type: array
+          items:
+            type: object
+          description: Manual objects with URLs and filenames

@@ -1,0 +1,39 @@
+components:
+  schemas:
+    Catalog Thing:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the thing
+        name:
+          type: string
+          description: The name of the thing
+        spanishName:
+          type: string
+          description: The Spanish translation of the name
+        categories:
+          type: array
+          items:
+            type: string
+          description: The categories of this thing belongs to
+        image:
+          type: string
+          format: url
+          description: A URL pointing to the image of the thing
+        stock:
+          type: number
+          description: The total number of this thing in stock
+        available:
+          type: number
+          description: The number of this thing available to borrow
+      example:
+        id: rec12345
+        name: Hammer
+        spanishName: Martillo
+        categories: [DIY]
+        stock: 5
+        available: 3
