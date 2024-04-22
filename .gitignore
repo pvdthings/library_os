@@ -1,3 +1,7 @@
+# Deployment
+fly.toml
+fly.*.toml
+
 # Miscellaneous
 *.class
 *.log
