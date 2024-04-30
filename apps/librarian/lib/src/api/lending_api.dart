@@ -171,6 +171,15 @@ class LendingApi {
     });
   }
 
+  static Future<Response> convertInventoryItem(
+    String id,
+    String thingId,
+  ) async {
+    return await DioClient.instance.post('/inventory/$id/convert', data: {
+      'thingId': thingId,
+    });
+  }
+
   static Future<Response> deleteInventoryItem(String id) async {
     return await DioClient.instance.delete('/inventory/$id');
   }

@@ -91,6 +91,10 @@ const updateItem = async (id, { brand, description, estimatedValue, hidden, cond
   await items.update(id, updatedFields);
 }
 
+const convertItem = async (id, thingId) => {
+  await items.update(id, { Thing: [thingId] });
+}
+
 const deleteItem = async (id) => {
   await items.destroy(id);
 }
@@ -100,5 +104,6 @@ module.exports = {
   fetchItem,
   createItems,
   updateItem,
+  convertItem,
   deleteItem
 };

@@ -1,4 +1,4 @@
-const { fetchItems, fetchItem, createItems, updateItem, deleteItem } = require('../../../services/inventory');
+const { fetchItems, fetchItem, createItems, updateItem, deleteItem, convertItem } = require('../../../services/inventory');
 
 const express = require('express');
 const router = express.Router();
@@ -37,6 +37,19 @@ router.patch('/:id', async (req, res) => {
 
     try {
         await updateItem(req.params.id, { brand, description, estimatedValue, hidden, condition, image, manuals });
+        res.status(204).send();
+    } catch (error) {
+        console.error(error);
+        res.status(error.status || 500).send({ errors: [error] });
+    }
+});
+
+router.post('/:id/convert', async (req, res) => {
+    const { id } = req.params;
+    const { thingId } = req.body;
+
+    try {
+        await convertItem(id, thingId);
         res.status(204).send();
     } catch (error) {
         console.error(error);

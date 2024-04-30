@@ -33,10 +33,12 @@ class ItemDetailsDrawer extends StatelessWidget {
                   message: 'Convert',
                   child: IconButton.filled(
                     onPressed: () {
-                      if (controller.convertThing(context)) {
-                        Scaffold.of(context).closeEndDrawer();
-                        // TODO: show snackbar
-                      }
+                      controller.convertThing(context).then((didConvert) {
+                        if (didConvert) {
+                          // Scaffold.of(context).closeEndDrawer();
+                          // TODO: navigate to new thing?
+                        }
+                      });
                     },
                     icon: const Icon(convertIcon),
                   ),

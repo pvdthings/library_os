@@ -138,11 +138,8 @@ class ItemDetailsController extends ChangeNotifier {
     return _removeImage;
   }
 
-  bool convertThing(BuildContext context) {
-    // show thing conversion dialog
-    // if converted, return true
-    showConvertDialog(context);
-    return false;
+  Future<bool> convertThing(BuildContext context) {
+    return showConvertDialog(context, item!.id);
   }
 
   void _saveChanges() async {

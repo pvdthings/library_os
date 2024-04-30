@@ -46,3 +46,12 @@ paths:
       responses:
         '204':
           description: Item updated
+  /lending/inventory/{id}/convert:
+    post:
+      summary: Converts an item into a different type of thing
+      parameters:
+        - $ref: '#/components/parameters/SupabaseAccessToken'
+        - $ref: '#/components/parameters/SupabaseRefreshToken'
+      responses:
+        '204':
+          description: Item converted
