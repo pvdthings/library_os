@@ -5,6 +5,7 @@ import 'package:librarian_app/src/core/file_data.dart';
 import 'package:librarian_app/src/core/pick_file.dart';
 import 'package:librarian_app/src/features/inventory/data/inventory_repository.dart';
 import 'package:librarian_app/src/features/inventory/models/updated_image_model.dart';
+import 'package:librarian_app/src/features/inventory/widgets/conversion/convert_dialog.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/items/item_manuals_card.dart';
 import 'package:librarian_app/src/utils/format.dart';
 
@@ -135,6 +136,13 @@ class ItemDetailsController extends ChangeNotifier {
     }
 
     return _removeImage;
+  }
+
+  bool convertThing(BuildContext context) {
+    // show thing conversion dialog
+    // if converted, return true
+    showConvertDialog(context);
+    return false;
   }
 
   void _saveChanges() async {
