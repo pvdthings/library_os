@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:librarian_app/src/core/file_data.dart';
 import 'package:librarian_app/src/core/pick_file.dart';
 import 'package:librarian_app/src/features/inventory/data/inventory_repository.dart';
@@ -26,18 +25,12 @@ class ItemDetailsController extends ChangeNotifier {
   final Function()? onSave;
   final Function()? onSaveComplete;
 
-  late ValueNotifier<bool> hiddenNotifier = ValueNotifier(false)
-    ..addListener(notifyListeners);
-  late TextEditingController brandController = TextEditingController()
-    ..addListener(notifyListeners);
-  late TextEditingController descriptionController = TextEditingController()
-    ..addListener(notifyListeners);
-  late TextEditingController estimatedValueController = TextEditingController()
-    ..addListener(notifyListeners);
-  late ValueNotifier<String?> conditionNotifier = ValueNotifier(null)
-    ..addListener(notifyListeners);
-  late ValueNotifier<List<ManualData>> manualsNotifier = ValueNotifier([])
-    ..addListener(notifyListeners);
+  late ValueNotifier<bool> hiddenNotifier;
+  late TextEditingController brandController;
+  late TextEditingController descriptionController;
+  late TextEditingController estimatedValueController;
+  late ValueNotifier<String?> conditionNotifier;
+  late ValueNotifier<List<ManualData>> manualsNotifier;
 
   late List<ManualData> _originalManuals = [];
 
@@ -46,6 +39,15 @@ class ItemDetailsController extends ChangeNotifier {
   Future<void> _loadItemDetails() async {
     isLoading = true;
     notifyListeners();
+
+    hiddenNotifier = ValueNotifier(false)..addListener(notifyListeners);
+    brandController = TextEditingController()..addListener(notifyListeners);
+    descriptionController = TextEditingController()
+      ..addListener(notifyListeners);
+    estimatedValueController = TextEditingController()
+      ..addListener(notifyListeners);
+    conditionNotifier = ValueNotifier(null)..addListener(notifyListeners);
+    manualsNotifier = ValueNotifier([])..addListener(notifyListeners);
 
     item = await repository?.getItem(number: item!.number);
 
