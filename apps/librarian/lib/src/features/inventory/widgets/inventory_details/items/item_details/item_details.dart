@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/items/item_details/item_details_controller.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/items/item_manuals_card.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/thing_image_card/thing_image_card.dart';
-import 'package:librarian_app/src/widgets/fields/checkbox_field.dart';
-import 'package:librarian_app/src/widgets/input_decoration.dart';
 import 'package:librarian_app/src/features/inventory/models/item_model.dart';
+
+import '../../../conversion/icon.dart';
 
 class ItemDetails extends ConsumerWidget {
   const ItemDetails({
@@ -38,85 +38,138 @@ class ItemDetails extends ConsumerWidget {
               useNewDesign: true,
             ),
             const SizedBox(height: 32),
-            Builder(
-              builder: (context) {
-                final checkbox = CheckboxField(
-                  title: 'Hide in Catalog',
-                  value: controller.hiddenNotifier.value,
-                  onChanged: hiddenLocked
-                      ? null
-                      : (value) {
-                          controller.hiddenNotifier.value = value ?? false;
-                        },
-                );
+            Card(
+              clipBehavior: Clip.antiAlias,
+              elevation: 0,
+              margin: EdgeInsets.zero,
+              child: Builder(
+                builder: (context) {
+                  final newCheckbox = CheckboxListTile(
+                    title: const Text('Hidden'),
+                    secondary: const Icon(Icons.visibility_off_outlined),
+                    value: controller.hiddenNotifier.value,
+                    onChanged: hiddenLocked
+                        ? null
+                        : (value) {
+                            controller.hiddenNotifier.value = value ?? false;
+                          },
+                  );
 
-                if (!hiddenLocked) {
-                  return checkbox;
-                }
+                  if (!hiddenLocked) {
+                    return newCheckbox;
+                  }
 
-                return Tooltip(
-                  message: 'Unable to unhide because the thing is hidden.',
-                  child: checkbox,
-                );
-              },
+                  return Tooltip(
+                    message: 'Unable to unhide because the thing is hidden.',
+                    child: newCheckbox,
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 32),
-            TextFormField(
-              controller: controller.brandController,
-              decoration: inputDecoration.copyWith(
-                labelText: 'Brand',
-                hintText: 'Generic',
+            Card(
+              clipBehavior: Clip.antiAlias,
+              elevation: 0,
+              margin: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.data_array),
+                    title: Text('Details'),
+                    visualDensity: VisualDensity.comfortable,
+                  ),
+                  const Divider(height: 1),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          readOnly: true,
+                          initialValue: controller.item!.name,
+                          decoration: InputDecoration(
+                            labelText: 'Thing',
+                            suffix: Tooltip(
+                              message: 'Convert',
+                              child: IconButton(
+                                onPressed: () {
+                                  controller.convertThing(context);
+                                },
+                                icon: const Icon(convertIcon),
+                              ),
+                            ),
+                          ),
+                          enabled: !controller.isLoading,
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: controller.brandController,
+                          decoration: const InputDecoration(
+                            labelText: 'Brand',
+                            hintText: 'Generic',
+                          ),
+                          enabled: !controller.isLoading,
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: controller.descriptionController,
+                          decoration: const InputDecoration(
+                            labelText: 'Description',
+                          ),
+                          enabled: !controller.isLoading,
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: controller.estimatedValueController,
+                          decoration: const InputDecoration(
+                            labelText: 'Estimated Value (\$)',
+                            prefixText: '\$ ',
+                          ),
+                          enabled: !controller.isLoading,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          keyboardType: TextInputType.number,
+                        ),
+                        const SizedBox(height: 16),
+                        DropdownButtonFormField<String?>(
+                          decoration: const InputDecoration(
+                            labelText: 'Condition',
+                          ),
+                          items: controller.isLoading
+                              ? null
+                              : const [
+                                  DropdownMenuItem(
+                                    value: null,
+                                    child: Text('None'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'Like New',
+                                    child: Text('Like New'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'Lightly Used',
+                                    child: Text('Lightly Used'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'Heavily Used',
+                                    child: Text('Heavily Used'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'Damaged',
+                                    child: Text('Damaged'),
+                                  ),
+                                ],
+                          onChanged: (value) {
+                            controller.conditionNotifier.value = value;
+                          },
+                          value: controller.conditionNotifier.value,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              enabled: !controller.isLoading,
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: controller.descriptionController,
-              decoration: inputDecoration.copyWith(labelText: 'Description'),
-              enabled: !controller.isLoading,
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: controller.estimatedValueController,
-              decoration: inputDecoration.copyWith(
-                labelText: 'Estimated Value (\$)',
-                prefixText: '\$ ',
-              ),
-              enabled: !controller.isLoading,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<String?>(
-              decoration: inputDecoration.copyWith(labelText: 'Condition'),
-              items: controller.isLoading
-                  ? null
-                  : const [
-                      DropdownMenuItem(
-                        value: null,
-                        child: Text('None'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Like New',
-                        child: Text('Like New'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Lightly Used',
-                        child: Text('Lightly Used'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Heavily Used',
-                        child: Text('Heavily Used'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Damaged',
-                        child: Text('Damaged'),
-                      ),
-                    ],
-              onChanged: (value) {
-                controller.conditionNotifier.value = value;
-              },
-              value: controller.conditionNotifier.value,
             ),
             const SizedBox(height: 32),
             ItemManualsCard(

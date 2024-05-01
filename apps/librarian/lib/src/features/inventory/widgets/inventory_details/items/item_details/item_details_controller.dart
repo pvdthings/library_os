@@ -139,7 +139,15 @@ class ItemDetailsController extends ChangeNotifier {
   }
 
   Future<bool> convertThing(BuildContext context) {
-    return showConvertDialog(context, item!.id);
+    return showConvertDialog(context, item!.id).then((didConvert) {
+      if (didConvert) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Converted successfully!'),
+        ));
+      }
+
+      return didConvert;
+    });
   }
 
   void _saveChanges() async {
@@ -189,6 +197,11 @@ class ItemDetailsController extends ChangeNotifier {
   void _discardChanges() {
     _uploadedImage = null;
     _removeExistingImage = false;
+  }
+
+  void discardChanges() {
+    _discardChanges();
+    _loadItemDetails();
   }
 
   void Function()? get saveChanges {
