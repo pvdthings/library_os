@@ -25,6 +25,7 @@ class ItemDetailsController extends ChangeNotifier {
   final Function()? onSave;
   final Function()? onSaveComplete;
 
+  late TextEditingController nameController;
   late ValueNotifier<bool> hiddenNotifier;
   late TextEditingController brandController;
   late TextEditingController descriptionController;
@@ -40,6 +41,9 @@ class ItemDetailsController extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
+    item = await repository?.getItem(number: item!.number);
+
+    nameController = TextEditingController(text: item!.name);
     hiddenNotifier = ValueNotifier(false)..addListener(notifyListeners);
     brandController = TextEditingController()..addListener(notifyListeners);
     descriptionController = TextEditingController()
@@ -48,8 +52,6 @@ class ItemDetailsController extends ChangeNotifier {
       ..addListener(notifyListeners);
     conditionNotifier = ValueNotifier(null)..addListener(notifyListeners);
     manualsNotifier = ValueNotifier([])..addListener(notifyListeners);
-
-    item = await repository?.getItem(number: item!.number);
 
     hiddenNotifier.value = (item?.hidden ?? false);
 
@@ -143,6 +145,8 @@ class ItemDetailsController extends ChangeNotifier {
   Future<bool> convertThing(BuildContext context) {
     return showConvertDialog(context, item!.id).then((didConvert) {
       if (didConvert) {
+        _loadItemDetails();
+
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Converted successfully!'),
         ));

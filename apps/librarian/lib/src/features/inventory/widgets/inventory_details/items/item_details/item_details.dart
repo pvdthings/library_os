@@ -5,6 +5,7 @@ import 'package:librarian_app/src/features/inventory/widgets/inventory_details/i
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/items/item_manuals_card.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/thing_image_card/thing_image_card.dart';
 import 'package:librarian_app/src/features/inventory/models/item_model.dart';
+import 'package:librarian_app/src/utils/media_query.dart';
 
 import '../../../conversion/icon.dart';
 
@@ -40,7 +41,7 @@ class ItemDetails extends ConsumerWidget {
             const SizedBox(height: 32),
             Card(
               clipBehavior: Clip.antiAlias,
-              elevation: 0,
+              elevation: isMobile(context) ? 1 : 0,
               margin: EdgeInsets.zero,
               child: Builder(
                 builder: (context) {
@@ -69,7 +70,7 @@ class ItemDetails extends ConsumerWidget {
             const SizedBox(height: 32),
             Card(
               clipBehavior: Clip.antiAlias,
-              elevation: 0,
+              elevation: isMobile(context) ? 1 : 0,
               margin: EdgeInsets.zero,
               child: Column(
                 children: [
@@ -86,7 +87,7 @@ class ItemDetails extends ConsumerWidget {
                       children: [
                         TextFormField(
                           readOnly: true,
-                          initialValue: controller.item!.name,
+                          controller: controller.nameController,
                           decoration: InputDecoration(
                             labelText: 'Thing',
                             suffix: Tooltip(
