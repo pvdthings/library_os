@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:librarian_app/src/core/file_data.dart';
 import 'package:librarian_app/src/core/pick_file.dart';
 import 'package:librarian_app/src/features/inventory/data/inventory_repository.dart';
 import 'package:librarian_app/src/features/inventory/models/updated_image_model.dart';
+import 'package:librarian_app/src/features/inventory/widgets/conversion/convert_dialog.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/items/item_manuals_card.dart';
 import 'package:librarian_app/src/utils/format.dart';
 
@@ -25,18 +25,13 @@ class ItemDetailsController extends ChangeNotifier {
   final Function()? onSave;
   final Function()? onSaveComplete;
 
-  late ValueNotifier<bool> hiddenNotifier = ValueNotifier(false)
-    ..addListener(notifyListeners);
-  late TextEditingController brandController = TextEditingController()
-    ..addListener(notifyListeners);
-  late TextEditingController descriptionController = TextEditingController()
-    ..addListener(notifyListeners);
-  late TextEditingController estimatedValueController = TextEditingController()
-    ..addListener(notifyListeners);
-  late ValueNotifier<String?> conditionNotifier = ValueNotifier(null)
-    ..addListener(notifyListeners);
-  late ValueNotifier<List<ManualData>> manualsNotifier = ValueNotifier([])
-    ..addListener(notifyListeners);
+  late TextEditingController nameController;
+  late ValueNotifier<bool> hiddenNotifier;
+  late TextEditingController brandController;
+  late TextEditingController descriptionController;
+  late TextEditingController estimatedValueController;
+  late ValueNotifier<String?> conditionNotifier;
+  late ValueNotifier<List<ManualData>> manualsNotifier;
 
   late List<ManualData> _originalManuals = [];
 
@@ -47,6 +42,16 @@ class ItemDetailsController extends ChangeNotifier {
     notifyListeners();
 
     item = await repository?.getItem(number: item!.number);
+
+    nameController = TextEditingController(text: item!.name);
+    hiddenNotifier = ValueNotifier(false)..addListener(notifyListeners);
+    brandController = TextEditingController()..addListener(notifyListeners);
+    descriptionController = TextEditingController()
+      ..addListener(notifyListeners);
+    estimatedValueController = TextEditingController()
+      ..addListener(notifyListeners);
+    conditionNotifier = ValueNotifier(null)..addListener(notifyListeners);
+    manualsNotifier = ValueNotifier([])..addListener(notifyListeners);
 
     hiddenNotifier.value = (item?.hidden ?? false);
 
@@ -137,6 +142,20 @@ class ItemDetailsController extends ChangeNotifier {
     return _removeImage;
   }
 
+  Future<bool> convertThing(BuildContext context) {
+    return showConvertDialog(context, item!.id).then((didConvert) {
+      if (didConvert) {
+        _loadItemDetails();
+
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Converted successfully!'),
+        ));
+      }
+
+      return didConvert;
+    });
+  }
+
   void _saveChanges() async {
     onSave?.call();
 
@@ -184,6 +203,11 @@ class ItemDetailsController extends ChangeNotifier {
   void _discardChanges() {
     _uploadedImage = null;
     _removeExistingImage = false;
+  }
+
+  void discardChanges() {
+    _discardChanges();
+    _loadItemDetails();
   }
 
   void Function()? get saveChanges {

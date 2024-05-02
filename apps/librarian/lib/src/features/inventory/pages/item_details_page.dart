@@ -22,21 +22,24 @@ class ItemDetailsPage extends ConsumerStatefulWidget {
 
 class _ItemDetailsPageState extends ConsumerState<ItemDetailsPage> {
   late final _controller = ItemDetailsController(
-      item: widget.item,
-      repository: ref.read(thingsRepositoryProvider.notifier));
+    item: widget.item,
+    repository: ref.read(thingsRepositoryProvider.notifier),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('#${widget.item.number} ${widget.item.name}'),
+        title: Text('#${widget.item.number}'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ItemDetails(
-          controller: _controller,
-          item: widget.item,
-          hiddenLocked: widget.hiddenLocked,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ItemDetails(
+            controller: _controller,
+            item: widget.item,
+            hiddenLocked: widget.hiddenLocked,
+          ),
         ),
       ),
       floatingActionButton: ListenableBuilder(

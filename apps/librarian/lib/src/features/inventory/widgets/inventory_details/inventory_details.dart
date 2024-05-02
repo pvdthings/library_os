@@ -2,7 +2,9 @@ import 'package:file_picker/_internal/file_picker_web.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/src/features/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/items/create_items/create_items_dialog.dart';
+import 'package:librarian_app/src/features/inventory/widgets/item_details_drawer/drawer.dart';
 import 'package:librarian_app/src/widgets/fields/checkbox_field.dart';
 import 'package:librarian_app/src/widgets/input_decoration.dart';
 import 'package:librarian_app/src/features/inventory/models/updated_image_model.dart';
@@ -12,10 +14,11 @@ import 'package:librarian_app/src/features/inventory/providers/selected_thing_pr
 import 'package:librarian_app/src/features/inventory/providers/thing_details_provider.dart';
 import 'package:librarian_app/src/features/inventory/providers/things_repository_provider.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/categories_card.dart';
-import 'package:librarian_app/src/features/inventory/widgets/inventory_details/items/item_details/item_details_dialog.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/items/items_card.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_details/thing_image_card/thing_image_card.dart';
 import 'package:librarian_app/src/utils/media_query.dart';
+
+import 'items/item_details/item_details_controller.dart';
 
 class InventoryDetails extends ConsumerWidget {
   const InventoryDetails({super.key});
@@ -122,15 +125,22 @@ class InventoryDetails extends ConsumerWidget {
                   return;
                 }
 
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ItemDetailsDialog(
-                      item: item,
-                      hiddenLocked: details.hidden,
-                    );
+                final detailsController = ItemDetailsController(
+                  item: item,
+                  repository: ref.read(thingsRepositoryProvider.notifier),
+                  onSave: () {
+                    // setState(() => _isLoading = true);
+                  },
+                  onSaveComplete: () {
+                    // setState(() => _isLoading = false);
                   },
                 );
+
+                ref.read(endDrawerProvider).openEndDrawer(
+                    context,
+                    ItemDetailsDrawer(
+                      controller: detailsController,
+                    ));
               },
               onAddItemsPressed: () {
                 showDialog(

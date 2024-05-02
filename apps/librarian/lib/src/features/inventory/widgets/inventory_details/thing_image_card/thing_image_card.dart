@@ -50,7 +50,7 @@ class ThingImageCard extends StatelessWidget {
     if (useNewDesign) {
       return Card(
         clipBehavior: Clip.antiAlias,
-        elevation: 0,
+        elevation: isMobile(context) ? 1 : 0,
         margin: EdgeInsets.zero,
         child: Stack(
           alignment: AlignmentDirectional.center,
