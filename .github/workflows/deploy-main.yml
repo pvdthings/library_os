@@ -1,9 +1,9 @@
-name: Deploy (Development)
+name: Deploy (Production)
 
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   deploy-api:
@@ -15,5 +15,5 @@ jobs:
         with:
           appdir: "apps/api"
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "pvdthings-api-dev"
+          heroku_app_name: "pvdthings-api"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
