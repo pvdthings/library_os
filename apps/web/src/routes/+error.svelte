@@ -1,6 +1,8 @@
 <script>
   import { page } from '$app/stores';
 	import { t } from '$lib/language/translate';
+
+  console.error($page.error);
 </script>
 
 <div class="w-screen h-1/2-screen relative">

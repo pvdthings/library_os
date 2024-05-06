@@ -21,7 +21,11 @@
 		<LanguageToggleView slot="end" />
 	</AppBar>
 	<div class="flex-grow pt-24 lg:pt-32 pb-20">
-		<slot />
+		<div class="mx-3 lg:mx-auto lg:w-3/4">
+			<div id="AppView" class="relative">
+				<slot />
+			</div>
+		</div>
 	</div>
 	<BottomNavigationView />
 </main>
