@@ -1,0 +1,31 @@
+# Contributing
+
+Like an agile team, the Library OS project is developed through cross-functional collaboration. We appreciate contributions from software developers, UI/UX designers, QA testers, creatives, and more.
+
+## Report a bug 🐞
+Did you find something wrong in our software?
+
+[Click here](https://airtable.com/appbOLIvAukdL1eQ5/pagXBHXA9laLXgNDO/form) to report a bug.
+
+## Leave an idea 💡
+Is there a feature you want to see or do you have an idea to improve an existing feature?
+
+[Click here](https://airtable.com/appbOLIvAukdL1eQ5/pagXBHXA9laLXgNDO/form) to leave an idea.
+
+## Contribute code 🛠
+If you're a developer with experience in frontend or backend, we would love your help!
+
+### How to start
+1. **Find an issue** on our backlog and leave a comment stating that you're going to work on it. A member of the core team will mark it as _In Progress_.
+2. **Create a branch** off your own fork of the repository.
+3. **Submit your proposed changes** in a merge request targeting `dev` branch.
+4. **The core team will review** and decide whether to merge.
+
+## Join the core team 🤝
+The Library OS team is organized by @dillonfagan, member of the Steering Committee at [PVD Things](https://www.pvdthings.coop/) in Providence, Rhode Island.
+
+We meet **Tuesdays at 7:30 PM (New York Time)** on Discord, though this may change depending on the preferences of the team.
+
+We work using agile-inspired methodologies and believe in things like SOLID, red-green refactoring, and intuitive design.
+
+If you would like to join the core team, please contact @dillonfagan on GitHub to set up a meeting.
