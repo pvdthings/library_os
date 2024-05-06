@@ -5,6 +5,7 @@ import 'package:librarian_app/src/features/authentication/providers/user_tray.da
 import 'package:librarian_app/src/features/borrowers/widgets/layouts/borrowers_desktop_layout.dart';
 import 'package:librarian_app/src/features/borrowers/widgets/borrowers_list/searchable_borrowers_list.dart';
 import 'package:librarian_app/src/features/borrowers/widgets/needs_attention_view.dart';
+import 'package:librarian_app/src/features/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/src/features/dashboard/widgets/create_menu_item.dart';
 import 'package:librarian_app/src/features/inventory/providers/things_repository_provider.dart';
 import 'package:librarian_app/src/features/inventory/widgets/layouts/inventory_desktop_layout.dart';
@@ -233,6 +234,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                   ),
                 )
               : null,
+          endDrawer: ref.watch(endDrawerProvider).drawer,
           floatingActionButton: mobile ? menuAnchor : null,
         );
       },

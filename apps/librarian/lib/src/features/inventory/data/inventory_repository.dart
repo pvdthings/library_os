@@ -175,6 +175,11 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     ref.invalidateSelf();
   }
 
+  Future<void> convertItem(String id, String thingId) async {
+    await LendingApi.convertInventoryItem(id, thingId);
+    ref.invalidateSelf();
+  }
+
   Future<void> deleteItem(String id) async {
     await LendingApi.deleteInventoryItem(id);
     ref.invalidateSelf();
