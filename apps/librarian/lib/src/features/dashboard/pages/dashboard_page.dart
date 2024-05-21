@@ -7,7 +7,6 @@ import 'package:librarian_app/src/features/borrowers/widgets/borrowers_list/sear
 import 'package:librarian_app/src/features/borrowers/widgets/needs_attention_view.dart';
 import 'package:librarian_app/src/features/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/src/features/dashboard/widgets/create_menu_item.dart';
-import 'package:librarian_app/src/features/inventory/providers/things_repository_provider.dart';
 import 'package:librarian_app/src/features/inventory/widgets/layouts/inventory_desktop_layout.dart';
 import 'package:librarian_app/src/features/inventory/pages/inventory_details_page.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_list/searchable_inventory_list.dart';
@@ -136,23 +135,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             await Future.delayed(const Duration(milliseconds: 150), () {
               showDialog(
                 context: context,
-                builder: (context) {
-                  return CreateThingDialog(
-                    onCreate: (name, spanishName) {
-                      ref
-                          .read(thingsRepositoryProvider.notifier)
-                          .createThing(name: name, spanishName: spanishName)
-                          .then((value) {
-                        Navigator.of(context).pop();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('${value.name} created'),
-                          ),
-                        );
-                      });
-                    },
-                  );
-                },
+                builder: (context) => const CreateThingDialog(),
               );
             });
           },
