@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/src/features/inventory/providers/find_things_by_name.dart';
 import 'package:librarian_app/src/widgets/input_decoration.dart';
 
-class CreateThingDialog extends StatelessWidget {
-  CreateThingDialog({super.key, this.onCreate});
+import '../../models/thing_model.dart';
 
-  final _formKey = GlobalKey<FormState>();
+class CreateThingDialog extends ConsumerStatefulWidget {
+  const CreateThingDialog({super.key, this.onCreate});
+
   final void Function(String name, String? spanishName)? onCreate;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return _CreateThingDialogState();
+  }
+}
+
+class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
+  final _formKey = GlobalKey<FormState>();
 
   final _name = TextEditingController();
   final _spanishName = TextEditingController();
 
+  Future<List<ThingModel>>? existingMatches;
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      icon: const Icon(Icons.build_rounded),
+      icon: const Icon(Icons.build),
       title: const Text('Create New Thing'),
       actions: [
         OutlinedButton(
@@ -28,7 +42,7 @@ class CreateThingDialog extends StatelessWidget {
             onPressed: _name.text.isNotEmpty
                 ? () {
                     if (_formKey.currentState!.validate()) {
-                      onCreate?.call(_name.text, _spanishName.text);
+                      widget.onCreate?.call(_name.text, _spanishName.text);
                     }
                   }
                 : null,
@@ -37,7 +51,8 @@ class CreateThingDialog extends StatelessWidget {
         ),
       ],
       contentPadding: const EdgeInsets.all(16),
-      content: IntrinsicWidth(
+      content: SizedBox(
+        width: 500,
         child: Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -58,6 +73,15 @@ class CreateThingDialog extends StatelessWidget {
                   labelText: 'Name',
                   constraints: const BoxConstraints(minWidth: 500),
                 ),
+                onChanged: (value) {
+                  if (value.isEmpty || value.length < 4) {
+                    return;
+                  }
+
+                  setState(() {
+                    existingMatches = ref.read(findThingsByName(value));
+                  });
+                },
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -67,6 +91,21 @@ class CreateThingDialog extends StatelessWidget {
                   constraints: const BoxConstraints(minWidth: 500),
                 ),
               ),
+              const SizedBox(height: 16),
+              FutureBuilder(
+                future: existingMatches,
+                builder: (context, snapshot) {
+                  final existingThingName = snapshot.data?.firstOrNull?.name;
+                  if (existingThingName != null) {
+                    return _ExistingThingWarning(
+                      thingName: _name.text,
+                      existingThingName: existingThingName,
+                    );
+                  }
+
+                  return const SizedBox.shrink();
+                },
+              ),
             ],
           ),
         ),
@@ -74,3 +113,42 @@ class CreateThingDialog extends StatelessWidget {
     );
   }
 }
+
+class _ExistingThingWarning extends StatelessWidget {
+  const _ExistingThingWarning({
+    required this.thingName,
+    required this.existingThingName,
+  });
+
+  final String thingName;
+  final String existingThingName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.zero,
+      child: ListTile(
+        leading: const Icon(
+          Icons.warning_rounded,
+          color: Colors.amber,
+        ),
+        title: const Text('Thing Already Exists'),
+        subtitle: Text.rich(
+          TextSpan(
+            children: [
+              const TextSpan(text: 'A thing named '),
+              TextSpan(text: thingName, style: boldTextStyle),
+              const TextSpan(text: ' might already exist.\n'),
+              const TextSpan(text: 'Is '),
+              TextSpan(text: existingThingName, style: boldTextStyle),
+              const TextSpan(text: ' the same thing?'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+const boldTextStyle = TextStyle(fontWeight: FontWeight.bold);
