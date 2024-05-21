@@ -18,6 +18,7 @@ class BorrowerDetailsPane extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
+      color: Theme.of(context).colorScheme.surfaceContainerHigh,
       clipBehavior: Clip.antiAlias,
       child: FutureBuilder(
         future: borrowerFuture,

@@ -104,8 +104,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     final menuAnchor = MenuAnchor(
       controller: _menuController,
       style: MenuStyle(
-        backgroundColor:
-            MaterialStatePropertyAll(Theme.of(context).primaryColor),
+        backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
       ),
       menuChildren: [
         createMenuItem(
@@ -181,7 +180,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             scrolledUnderElevation: isMobile(context) ? 1 : 0,
           ),
           body: mobile
-              ? module.mobileLayout
+              ? SafeArea(child: module.mobileLayout!)
               : DesktopDashboard(
                   selectedIndex: _moduleIndex,
                   onDestinationSelected: (index) {
@@ -191,30 +190,28 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                   child: module.desktopLayout,
                 ),
           bottomNavigationBar: mobile
-              ? SafeArea(
-                  child: NavigationBar(
-                    selectedIndex: _moduleIndex,
-                    onDestinationSelected: (index) {
-                      setState(() => _moduleIndex = index);
-                    },
-                    destinations: const [
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.handshake),
-                        icon: Icon(Icons.handshake_outlined),
-                        label: "Loans",
-                      ),
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.people),
-                        icon: Icon(Icons.people_outlined),
-                        label: "Borrowers",
-                      ),
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.build),
-                        icon: Icon(Icons.build_outlined),
-                        label: "Things",
-                      ),
-                    ],
-                  ),
+              ? NavigationBar(
+                  selectedIndex: _moduleIndex,
+                  onDestinationSelected: (index) {
+                    setState(() => _moduleIndex = index);
+                  },
+                  destinations: const [
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.handshake),
+                      icon: Icon(Icons.handshake_outlined),
+                      label: "Loans",
+                    ),
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.people),
+                      icon: Icon(Icons.people_outlined),
+                      label: "Borrowers",
+                    ),
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.build),
+                      icon: Icon(Icons.build_outlined),
+                      label: "Things",
+                    ),
+                  ],
                 )
               : null,
           endDrawer: ref.watch(endDrawerProvider).drawer,

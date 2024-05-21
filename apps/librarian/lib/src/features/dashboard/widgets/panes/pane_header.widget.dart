@@ -7,12 +7,12 @@ class PaneHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var primaryColor = Theme.of(context).primaryColor;
+    final primaryColor = Theme.of(context).colorScheme.primaryContainer;
     return Container(
       decoration: BoxDecoration(
-        color: primaryColor.withAlpha(100),
+        color: primaryColor,
         border: Border(
-          bottom: BorderSide(color: Colors.black.withOpacity(0.5)),
+          bottom: BorderSide(color: Colors.black.withOpacity(0.25)),
         ),
       ),
       child: Padding(

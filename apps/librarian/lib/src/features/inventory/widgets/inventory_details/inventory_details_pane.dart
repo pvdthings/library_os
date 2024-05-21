@@ -32,6 +32,7 @@ class InventoryDetailsPane extends ConsumerWidget {
     }
 
     return Card(
+      color: Theme.of(context).colorScheme.surfaceContainerHigh,
       clipBehavior: Clip.antiAlias,
       child: selectedThing == null
           ? const Center(child: Text('Inventory Details'))

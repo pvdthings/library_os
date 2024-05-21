@@ -59,6 +59,7 @@ class _Action extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.surfaceContainerHigh,
       child: Column(
         children: [
           ListTile(
@@ -66,11 +67,11 @@ class _Action extends StatelessWidget {
               Icons.electric_bolt_rounded,
               color: Colors.amber,
             ),
-            title: Text(title,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(fontSize: 20)),
+            title: Text(
+              title,
+              style:
+                  Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 20),
+            ),
           ),
           if (description != null)
             Detail(

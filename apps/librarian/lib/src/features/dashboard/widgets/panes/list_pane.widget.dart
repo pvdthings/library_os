@@ -15,6 +15,7 @@ class ListPane extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.surfaceContainerHigh,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
         width: 500,
