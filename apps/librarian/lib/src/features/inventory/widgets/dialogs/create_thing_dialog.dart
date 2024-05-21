@@ -4,11 +4,10 @@ import 'package:librarian_app/src/features/inventory/providers/find_things_by_na
 import 'package:librarian_app/src/widgets/input_decoration.dart';
 
 import '../../models/thing_model.dart';
+import '../../providers/things_repository_provider.dart';
 
 class CreateThingDialog extends ConsumerStatefulWidget {
-  const CreateThingDialog({super.key, this.onCreate});
-
-  final void Function(String name, String? spanishName)? onCreate;
+  const CreateThingDialog({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -23,6 +22,20 @@ class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
   final _spanishName = TextEditingController();
 
   Future<List<ThingModel>>? existingMatches;
+
+  createThing() {
+    ref
+        .read(thingsRepositoryProvider.notifier)
+        .createThing(name: _name.text, spanishName: _spanishName.text)
+        .then((value) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${value.name} created'),
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +55,7 @@ class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
             onPressed: _name.text.isNotEmpty
                 ? () {
                     if (_formKey.currentState!.validate()) {
-                      widget.onCreate?.call(_name.text, _spanishName.text);
+                      createThing();
                     }
                   }
                 : null,
