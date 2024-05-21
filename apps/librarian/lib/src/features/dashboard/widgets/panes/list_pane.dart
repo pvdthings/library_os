@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pane_header.widget.dart';
+import 'pane_header.dart';
 
 class ListPane extends StatelessWidget {
   const ListPane({
@@ -20,6 +20,7 @@ class ListPane extends StatelessWidget {
       child: SizedBox(
         width: 500,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             header,
             Expanded(child: child),

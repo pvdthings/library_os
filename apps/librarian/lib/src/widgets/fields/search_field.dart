@@ -21,30 +21,35 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: _searchController,
-      onChanged: widget.onChanged,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        constraints: const BoxConstraints(maxWidth: 400),
-        hintText: 'Search...',
-        icon: Icon(
-          Icons.search_rounded,
-          color: _searchController.text.isEmpty
-              ? null
-              : Theme.of(context).primaryIconTheme.color,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        TextField(
+          controller: _searchController,
+          onChanged: widget.onChanged,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            constraints: const BoxConstraints(maxWidth: 400),
+            hintText: 'Search...',
+            icon: Icon(
+              Icons.search_rounded,
+              color: _searchController.text.isEmpty
+                  ? null
+                  : Theme.of(context).primaryIconTheme.color,
+            ),
+          ),
         ),
-        suffixIcon: _searchController.text.isEmpty
-            ? null
-            : IconButton(
-                onPressed: () {
+        IconButton(
+          onPressed: _searchController.text.isEmpty
+              ? null
+              : () {
                   setState(() => _searchController.clear());
                   widget.onClearPressed?.call();
                 },
-                icon: const Icon(Icons.clear_rounded),
-                tooltip: 'Clear Search',
-              ),
-      ),
+          icon: const Icon(Icons.clear_rounded),
+          tooltip: 'Clear',
+        ),
+      ],
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/src/features/inventory/providers/thing_details_controller_provider.dart';
 import 'package:librarian_app/src/widgets/dialogs/save_dialog.dart';
-import 'package:librarian_app/src/features/dashboard/widgets/panes/pane_header.widget.dart';
+import 'package:librarian_app/src/features/dashboard/widgets/panes/pane_header.dart';
 import 'package:librarian_app/src/features/inventory/models/detailed_thing_model.dart';
 import 'package:librarian_app/src/features/inventory/providers/edited_thing_details_providers.dart';
 import 'package:librarian_app/src/features/inventory/providers/selected_thing_provider.dart';
