@@ -12,6 +12,14 @@
 	$things = data.things;
 	$categories = data.categories;
 
+	const screens = {
+		[Screen.catalog]: CatalogView,
+		[Screen.myList]: MyListView,
+		[Screen.info]: InfoView
+	};
+
+	$: currentScreen = screens[$activeScreen];
+
 	onMount(() => {
 		const urlParams = new URLSearchParams(window.location.search);
 		$wishListFilter = urlParams.get('showWishList') === 'true';
@@ -23,17 +31,7 @@
 		<LoadingIndicator />
 	{:else}
 		<div id="AppView" class="relative">
-			{#if $activeScreen === Screen.catalog}
-				<CatalogView />
-			{/if}
-
-			{#if $activeScreen === Screen.myList}
-				<MyListView />
-			{/if}
-
-			{#if $activeScreen === Screen.info}
-				<InfoView />
-			{/if}
+			<svelte:component this={currentScreen} />
 		</div>
 	{/if}
 </div>
