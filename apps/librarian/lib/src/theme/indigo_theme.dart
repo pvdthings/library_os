@@ -9,6 +9,13 @@ ThemeData _createIndigoTheme() {
   );
 
   return baseTheme.copyWith(
+    cardTheme: baseTheme.cardTheme.copyWith(
+      color: baseTheme.colorScheme.surfaceContainerLow,
+    ),
+    dialogBackgroundColor: baseTheme.colorScheme.surfaceContainerHigh,
+    drawerTheme: baseTheme.drawerTheme.copyWith(
+      backgroundColor: baseTheme.colorScheme.surfaceContainerHigh,
+    ),
     listTileTheme: ListTileThemeData(
       selectedTileColor:
           baseTheme.colorScheme.secondaryContainer.withAlpha(100),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/src/utils/media_query.dart';
 
 class DetailsCard extends StatelessWidget {
   const DetailsCard({
@@ -16,7 +15,6 @@ class DetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: isMobile(context) ? 1 : 0,
       margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
       child: Column(
