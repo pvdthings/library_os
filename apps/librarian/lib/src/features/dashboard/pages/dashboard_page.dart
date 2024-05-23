@@ -157,6 +157,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         return Scaffold(
           appBar: AppBar(
             title: Text(module.title),
+            backgroundColor: isMobile(context) ? null : Colors.transparent,
             centerTitle: mobile,
             actions: [
               if (!mobile) ...[
