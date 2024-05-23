@@ -88,6 +88,7 @@ class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
                 ),
                 onChanged: (value) {
                   if (value.isEmpty || value.length < 4) {
+                    setState(() => existingMatches = null);
                     return;
                   }
 
@@ -109,7 +110,7 @@ class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
                 future: existingMatches,
                 builder: (context, snapshot) {
                   final existingThingName = snapshot.data?.firstOrNull?.name;
-                  if (existingThingName != null) {
+                  if (existingMatches != null && existingThingName != null) {
                     return _ExistingThingWarning(
                       thingName: _name.text,
                       existingThingName: existingThingName,
