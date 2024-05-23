@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/src/widgets/fields/search_field.dart';
-import 'package:librarian_app/src/features/dashboard/widgets/panes/list_pane.widget.dart';
-import 'package:librarian_app/src/features/dashboard/widgets/panes/pane_header.widget.dart';
+import 'package:librarian_app/src/features/dashboard/widgets/panes/list_pane.dart';
+import 'package:librarian_app/src/features/dashboard/widgets/panes/pane_header.dart';
 import 'package:librarian_app/src/features/loans/providers/loans_filter_provider.dart';
 import 'package:librarian_app/src/features/loans/providers/selected_loan_provider.dart';
 import 'package:librarian_app/src/features/loans/widgets/loan_details/loan_details_pane.dart';

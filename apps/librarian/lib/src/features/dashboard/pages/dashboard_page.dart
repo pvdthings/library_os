@@ -7,7 +7,6 @@ import 'package:librarian_app/src/features/borrowers/widgets/borrowers_list/sear
 import 'package:librarian_app/src/features/borrowers/widgets/needs_attention_view.dart';
 import 'package:librarian_app/src/features/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/src/features/dashboard/widgets/create_menu_item.dart';
-import 'package:librarian_app/src/features/inventory/providers/things_repository_provider.dart';
 import 'package:librarian_app/src/features/inventory/widgets/layouts/inventory_desktop_layout.dart';
 import 'package:librarian_app/src/features/inventory/pages/inventory_details_page.dart';
 import 'package:librarian_app/src/features/inventory/widgets/inventory_list/searchable_inventory_list.dart';
@@ -105,8 +104,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     final menuAnchor = MenuAnchor(
       controller: _menuController,
       style: MenuStyle(
-        backgroundColor:
-            MaterialStatePropertyAll(Theme.of(context).primaryColor),
+        backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
       ),
       menuChildren: [
         createMenuItem(
@@ -136,23 +134,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             await Future.delayed(const Duration(milliseconds: 150), () {
               showDialog(
                 context: context,
-                builder: (context) {
-                  return CreateThingDialog(
-                    onCreate: (name, spanishName) {
-                      ref
-                          .read(thingsRepositoryProvider.notifier)
-                          .createThing(name: name, spanishName: spanishName)
-                          .then((value) {
-                        Navigator.of(context).pop();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('${value.name} created'),
-                          ),
-                        );
-                      });
-                    },
-                  );
-                },
+                builder: (context) => const CreateThingDialog(),
               );
             });
           },
@@ -175,6 +157,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         return Scaffold(
           appBar: AppBar(
             title: Text(module.title),
+            backgroundColor: isMobile(context) ? null : Colors.transparent,
             centerTitle: mobile,
             actions: [
               if (!mobile) ...[
@@ -198,7 +181,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             scrolledUnderElevation: isMobile(context) ? 1 : 0,
           ),
           body: mobile
-              ? module.mobileLayout
+              ? SafeArea(child: module.mobileLayout!)
               : DesktopDashboard(
                   selectedIndex: _moduleIndex,
                   onDestinationSelected: (index) {
@@ -208,30 +191,28 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                   child: module.desktopLayout,
                 ),
           bottomNavigationBar: mobile
-              ? SafeArea(
-                  child: NavigationBar(
-                    selectedIndex: _moduleIndex,
-                    onDestinationSelected: (index) {
-                      setState(() => _moduleIndex = index);
-                    },
-                    destinations: const [
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.handshake),
-                        icon: Icon(Icons.handshake_outlined),
-                        label: "Loans",
-                      ),
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.people),
-                        icon: Icon(Icons.people_outlined),
-                        label: "Borrowers",
-                      ),
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.build),
-                        icon: Icon(Icons.build_outlined),
-                        label: "Things",
-                      ),
-                    ],
-                  ),
+              ? NavigationBar(
+                  selectedIndex: _moduleIndex,
+                  onDestinationSelected: (index) {
+                    setState(() => _moduleIndex = index);
+                  },
+                  destinations: const [
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.handshake),
+                      icon: Icon(Icons.handshake_outlined),
+                      label: "Loans",
+                    ),
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.people),
+                      icon: Icon(Icons.people_outlined),
+                      label: "Borrowers",
+                    ),
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.build),
+                      icon: Icon(Icons.build_outlined),
+                      label: "Things",
+                    ),
+                  ],
                 )
               : null,
           endDrawer: ref.watch(endDrawerProvider).drawer,

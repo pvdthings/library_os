@@ -16,6 +16,7 @@ class LoanDetailsPane extends ConsumerWidget {
     final loanDetailsFuture = ref.watch(loanDetailsProvider);
 
     return Card(
+      color: Theme.of(context).colorScheme.surfaceContainerHigh,
       clipBehavior: Clip.antiAlias,
       child: selectedLoan == null
           ? const Center(child: Text('Loan Details'))

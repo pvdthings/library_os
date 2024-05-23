@@ -5,8 +5,8 @@ import 'package:librarian_app/src/features/borrowers/providers/borrowers_filter_
 import 'package:librarian_app/src/features/borrowers/providers/selected_borrower_provider.dart';
 import 'package:librarian_app/src/features/borrowers/widgets/borrower_details/borrower_details_pane.dart';
 import 'package:librarian_app/src/widgets/fields/search_field.dart';
-import 'package:librarian_app/src/features/dashboard/widgets/panes/list_pane.widget.dart';
-import 'package:librarian_app/src/features/dashboard/widgets/panes/pane_header.widget.dart';
+import 'package:librarian_app/src/features/dashboard/widgets/panes/list_pane.dart';
+import 'package:librarian_app/src/features/dashboard/widgets/panes/pane_header.dart';
 
 import '../borrowers_list/borrowers_list_view.dart';
 
