@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/src/core/library.dart';
+import 'package:librarian_app/src/core/core.dart';
 import 'package:librarian_app/src/features/authentication/providers/signin_error_provider.dart';
 import 'package:librarian_app/src/features/authentication/widgets/discord_button.dart';
 import 'package:librarian_app/src/features/authentication/providers/auth_service_provider.dart';

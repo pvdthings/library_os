@@ -1,7 +1,4 @@
-import 'package:file_picker/_internal/file_picker_web.dart';
-import 'package:file_picker/file_picker.dart';
-
-import 'file_data.dart';
+part of 'core.dart';
 
 Future<FileData?> pickDocumentFile() async {
   FilePickerResult? result = await FilePickerWeb.platform.pickFiles(

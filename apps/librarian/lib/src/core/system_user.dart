@@ -1,4 +1,4 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+part of 'core.dart';
 
 class SystemUser {
   final String name;

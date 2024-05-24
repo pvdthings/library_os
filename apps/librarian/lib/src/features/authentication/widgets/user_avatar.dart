@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/src/core/system_user.dart';
+import 'package:librarian_app/src/core/core.dart';
 import 'package:librarian_app/src/features/authentication/providers/user_provider.dart';
 
 class UserAvatar extends ConsumerWidget {

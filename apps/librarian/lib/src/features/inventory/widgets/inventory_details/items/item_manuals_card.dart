@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:librarian_app/src/core/file_data.dart';
+import 'package:librarian_app/src/core/core.dart';
 import 'package:librarian_app/src/utils/media_query.dart';
 import 'package:url_launcher/url_launcher.dart';
 

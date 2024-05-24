@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:librarian_app/constants.dart';
-import 'package:librarian_app/src/core/library.dart';
+import 'package:librarian_app/src/core/core.dart';
 import 'package:librarian_app/src/features/splash/pages/splash_page.dart';
 import 'package:librarian_app/src/services/image_service.dart';
 import 'package:librarian_app/src/theme/indigo_theme.dart';

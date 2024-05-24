@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/src/core/core.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
-
-import '../../../core/system_user.dart';
 
 final userProvider = Provider<SystemUser?>((ref) {
   final currentUser = supabase.Supabase.instance.client.auth.currentUser;

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+part of 'core.dart';
 
 class FileData {
   final String name;
