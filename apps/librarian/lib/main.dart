@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:librarian_app/constants.dart';
-import 'package:librarian_app/src/core/core.dart';
-import 'package:librarian_app/src/modules/splash/pages/splash_page.dart';
-import 'package:librarian_app/src/services/image_service.dart';
-import 'package:librarian_app/src/theme/indigo_theme.dart';
+import 'package:librarian_app/core/core.dart';
+import 'package:librarian_app/modules/splash/pages/splash_page.dart';
+import 'package:librarian_app/services/image_service.dart';
+import 'package:librarian_app/theme/indigo_theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 Future<void> main() async {
