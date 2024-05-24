@@ -16,7 +16,7 @@ class SignInPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void onSignedIn() {
+    void navigateToDashboard() {
       Navigator.of(context).pushAndRemoveUntil(
         createFadePageRoute(child: const DashboardPage()),
         (route) => false,
@@ -25,13 +25,14 @@ class SignInPage extends ConsumerWidget {
 
     Future<void> signIn() async {
       if (kDebugMode) {
-        onSignedIn();
+        navigateToDashboard();
         return;
       }
 
       try {
-        await ref.read(authServiceProvider).signIn();
-        onSignedIn();
+        await ref
+            .read(authServiceProvider)
+            .signIn(onSuccess: navigateToDashboard);
       } on AuthException catch (error) {
         ref.read(signinErrorProvider.notifier).state = error.toString();
       } catch (error) {
