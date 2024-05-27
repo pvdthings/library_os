@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../core/semantic_version.dart';
@@ -10,10 +9,6 @@ class UpdateDialogController {
   final BuildContext context;
 
   void showUpdateDialog(SemanticVersion version) {
-    if (kDebugMode) {
-      return;
-    }
-
     showDialog(
       context: context,
       barrierDismissible: false,

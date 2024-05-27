@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
@@ -41,10 +42,16 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
   @override
   void initState() {
     super.initState();
-    _updateNotifier.addListener(() {
-      UpdateDialogController(context)
-          .showUpdateDialog(_updateNotifier.newerVersion!);
-    });
+    _updateNotifier.addListener(showUpdateDialog);
+  }
+
+  void showUpdateDialog() {
+    if (kDebugMode) {
+      return;
+    }
+
+    UpdateDialogController(context)
+        .showUpdateDialog(_updateNotifier.newerVersion!);
   }
 
   int _moduleIndex = 0;
