@@ -8,3 +8,16 @@ Provider<Future<List<ThingModel>>> findThingsByName(String name) {
       .read(thingsRepositoryProvider.notifier)
       .getThings(filter: name));
 }
+
+Provider<Future<List<ThingModel>>> findThingsByItem({required int number}) {
+  return Provider((ref) async {
+    final repository = ref.read(thingsRepositoryProvider.notifier);
+    final item = await repository.getItem(number: number);
+
+    if (item == null) {
+      return [];
+    }
+
+    return await repository.getThings(filter: item.name);
+  });
+}
