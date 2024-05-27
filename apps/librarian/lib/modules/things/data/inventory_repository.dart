@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/api/api.dart' as api;
 import 'package:librarian_app/services/image_service.dart';
-import 'package:librarian_app/modules/things/models/updated_image_model.dart';
+import 'package:librarian_app/api/models/updated_image_model.dart';
 
-import '../models/detailed_thing_model.dart';
-import '../models/item_model.dart';
-import '../models/thing_model.dart';
+import '../../../api/models/detailed_thing_model.dart';
+import '../../../api/models/item_model.dart';
+import '../../../api/models/thing_model.dart';
 
 class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   final imageService = _ImageServiceWrapper();

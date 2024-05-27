@@ -4,7 +4,7 @@ import 'package:librarian_app/modules/things/providers/things_repository_provide
 import 'package:librarian_app/modules/things/details/inventory/item_details/item_details.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_details/item_details_controller.dart';
 
-import '../../models/item_model.dart';
+import '../../../../api/models/item_model.dart';
 
 class ItemDetailsPage extends ConsumerStatefulWidget {
   const ItemDetailsPage({

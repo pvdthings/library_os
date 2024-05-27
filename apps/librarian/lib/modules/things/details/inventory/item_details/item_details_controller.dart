@@ -2,12 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:librarian_app/core/core.dart';
 import 'package:librarian_app/modules/things/data/inventory_repository.dart';
-import 'package:librarian_app/modules/things/models/updated_image_model.dart';
+import 'package:librarian_app/api/models/updated_image_model.dart';
 import 'package:librarian_app/modules/things/convert/convert_dialog.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_manuals_card.dart';
 import 'package:librarian_app/utils/format.dart';
 
-import '../../../models/item_model.dart';
+import '../../../../../api/models/item_model.dart';
 
 class ItemDetailsController extends ChangeNotifier {
   ItemDetailsController({

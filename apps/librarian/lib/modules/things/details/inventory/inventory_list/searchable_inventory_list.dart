@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/widgets/fields/submit_text_field.dart';
-import 'package:librarian_app/modules/things/models/thing_model.dart';
+import 'package:librarian_app/api/models/thing_model.dart';
 import 'package:librarian_app/modules/things/providers/things_filter_provider.dart';
 import 'package:librarian_app/modules/things/details/inventory/inventory_list/inventory_list_view.dart';
 

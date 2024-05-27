@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/api/models/thing_model.dart';
 import 'package:librarian_app/modules/things/providers/find_things_by_name.dart';
 import 'package:librarian_app/widgets/input_decoration.dart';
 
-import '../models/thing_model.dart';
 import '../providers/things_repository_provider.dart';
 
 class CreateThingDialog extends ConsumerStatefulWidget {
