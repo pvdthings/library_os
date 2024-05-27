@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
-import 'package:librarian_app/modules/things/widgets/conversion/icon.dart';
+import 'package:librarian_app/modules/things/convert/icon.dart';
 
-import '../../models/thing_model.dart';
+import '../models/thing_model.dart';
 
 class ConvertDialog extends ConsumerStatefulWidget {
   const ConvertDialog({super.key, required this.itemId});

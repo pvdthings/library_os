@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/things/pages/inventory_details_page.dart';
+import 'package:librarian_app/modules/things/details/inventory_details_page.dart';
 import 'package:librarian_app/modules/loans/providers/loan_details_provider.dart';
 import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
 import 'package:librarian_app/modules/loans/widgets/checkin/checkin_dialog.dart';

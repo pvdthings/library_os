@@ -3,22 +3,22 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
-import 'package:librarian_app/modules/things/widgets/inventory_details/items/create_items/create_items_dialog.dart';
-import 'package:librarian_app/modules/things/widgets/item_details_drawer/drawer.dart';
+import 'package:librarian_app/modules/things/details/inventory/create_items/create_items_dialog.dart';
+import 'package:librarian_app/modules/things/details/inventory/item_details_drawer/drawer.dart';
 import 'package:librarian_app/widgets/fields/checkbox_field.dart';
 import 'package:librarian_app/widgets/input_decoration.dart';
 import 'package:librarian_app/modules/things/models/updated_image_model.dart';
-import 'package:librarian_app/modules/things/pages/item_details_page.dart';
+import 'package:librarian_app/modules/things/details/inventory/item_details_page.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_provider.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
-import 'package:librarian_app/modules/things/widgets/inventory_details/categories_card.dart';
-import 'package:librarian_app/modules/things/widgets/inventory_details/items/items_card.dart';
-import 'package:librarian_app/modules/things/widgets/inventory_details/thing_image_card/thing_image_card.dart';
+import 'package:librarian_app/modules/things/details/categories/categories_card.dart';
+import 'package:librarian_app/modules/things/details/inventory/items_card.dart';
+import 'package:librarian_app/modules/things/details/image/thing_image_card.dart';
 import 'package:librarian_app/utils/media_query.dart';
 
-import 'items/item_details/item_details_controller.dart';
+import 'inventory/item_details/item_details_controller.dart';
 
 class InventoryDetails extends ConsumerWidget {
   const InventoryDetails({super.key});

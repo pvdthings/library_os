@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/things/widgets/inventory_details/items/item_details/item_details_controller.dart';
-import 'package:librarian_app/modules/things/widgets/inventory_details/items/item_manuals_card.dart';
-import 'package:librarian_app/modules/things/widgets/inventory_details/thing_image_card/thing_image_card.dart';
+import 'package:librarian_app/modules/things/details/inventory/item_details/item_details_controller.dart';
+import 'package:librarian_app/modules/things/details/inventory/item_manuals_card.dart';
+import 'package:librarian_app/modules/things/details/image/thing_image_card.dart';
 import 'package:librarian_app/modules/things/models/item_model.dart';
 import 'package:librarian_app/utils/media_query.dart';
 
-import '../../../conversion/icon.dart';
+import '../../../convert/icon.dart';
 
 class ItemDetails extends ConsumerWidget {
   const ItemDetails({

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
-import 'package:librarian_app/modules/things/widgets/dialogs/delete_inventory_item_dialog.dart';
+import 'package:librarian_app/modules/things/details/inventory/delete_inventory_item_dialog.dart';
 import 'package:librarian_app/utils/media_query.dart';
 
-import '../widgets/dialogs/delete_thing_dialog.dart';
+import '../delete/delete_thing_dialog.dart';
 import 'things_repository_provider.dart';
 
 class ThingDetailsController {

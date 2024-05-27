@@ -4,7 +4,7 @@ import 'package:librarian_app/modules/things/providers/thing_details_controller_
 import 'package:librarian_app/modules/things/providers/thing_details_provider.dart';
 
 import '../providers/edited_thing_details_providers.dart';
-import '../widgets/inventory_details/inventory_details.dart';
+import 'inventory_details.dart';
 
 class InventoryDetailsPage extends ConsumerWidget {
   const InventoryDetailsPage({super.key});

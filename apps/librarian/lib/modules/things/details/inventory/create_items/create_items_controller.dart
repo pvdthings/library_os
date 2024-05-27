@@ -5,7 +5,7 @@ import 'package:librarian_app/core/core.dart';
 import 'package:librarian_app/modules/things/data/inventory_repository.dart';
 import 'package:librarian_app/modules/things/models/updated_image_model.dart';
 
-import '../../../../models/thing_model.dart';
+import '../../../models/thing_model.dart';
 import '../item_manuals_card.dart';
 
 class CreateItemsController extends ChangeNotifier {

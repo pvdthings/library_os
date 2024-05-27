@@ -8,10 +8,10 @@ import 'package:librarian_app/modules/borrowers/widgets/borrowers_list/searchabl
 import 'package:librarian_app/modules/borrowers/widgets/needs_attention_view.dart';
 import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/dashboard/widgets/create_menu_item.dart';
-import 'package:librarian_app/modules/things/widgets/layouts/inventory_desktop_layout.dart';
-import 'package:librarian_app/modules/things/pages/inventory_details_page.dart';
-import 'package:librarian_app/modules/things/widgets/inventory_list/searchable_inventory_list.dart';
-import 'package:librarian_app/modules/things/widgets/dialogs/create_thing_dialog.dart';
+import 'package:librarian_app/dashboard/layouts/inventory_desktop_layout.dart';
+import 'package:librarian_app/modules/things/details/inventory_details_page.dart';
+import 'package:librarian_app/modules/things/details/inventory/inventory_list/searchable_inventory_list.dart';
+import 'package:librarian_app/modules/things/create/create_thing_dialog.dart';
 import 'package:librarian_app/modules/loans/pages/checkout_page.dart';
 import 'package:librarian_app/modules/loans/pages/loan_details_page.dart';
 import 'package:librarian_app/modules/loans/widgets/loans_list/searchable_loans_list.dart';

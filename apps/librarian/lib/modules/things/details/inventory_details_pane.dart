@@ -7,7 +7,7 @@ import 'package:librarian_app/modules/things/models/detailed_thing_model.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_provider.dart';
-import 'package:librarian_app/modules/things/widgets/inventory_details/inventory_details.dart';
+import 'package:librarian_app/modules/things/details/inventory_details.dart';
 
 class InventoryDetailsPane extends ConsumerWidget {
   const InventoryDetailsPane({super.key});

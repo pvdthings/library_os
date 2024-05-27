@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/modules/things/widgets/inventory_details/items/item_details/item_details_controller.dart';
+import 'package:librarian_app/modules/things/details/inventory/item_details/item_details_controller.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
 
-import '../inventory_details/items/item_details/item_details.dart';
+import '../item_details/item_details.dart';
 
 class ItemDetailsDrawer extends StatefulWidget {
   const ItemDetailsDrawer({
