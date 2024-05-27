@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/modules/things/providers/find_things.dart';
 import 'package:librarian_app/modules/things/providers/things_filter_provider.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 
@@ -10,6 +11,14 @@ final thingsProvider = Provider<Future<List<ThingModel>>>((ref) async {
 
   if (searchFilter == null || searchFilter.isEmpty) {
     return things;
+  }
+
+  if (searchFilter.startsWith('#')) {
+    final itemNumber = int.tryParse(searchFilter.replaceFirst('#', ''));
+
+    if (itemNumber != null) {
+      return await ref.read(findThingsByItem(number: itemNumber));
+    }
   }
 
   return things
