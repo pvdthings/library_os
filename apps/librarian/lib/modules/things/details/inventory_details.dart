@@ -7,7 +7,7 @@ import 'package:librarian_app/modules/things/details/inventory/create_items/crea
 import 'package:librarian_app/modules/things/details/inventory/item_details_drawer/drawer.dart';
 import 'package:librarian_app/widgets/fields/checkbox_field.dart';
 import 'package:librarian_app/widgets/input_decoration.dart';
-import 'package:librarian_app/api/models/updated_image_model.dart';
+import 'package:librarian_app/core/api/models/updated_image_model.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_details_page.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';

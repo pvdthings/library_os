@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_details/item_details_controller.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_manuals_card.dart';
 import 'package:librarian_app/modules/things/details/image/thing_image_card.dart';
-import 'package:librarian_app/api/models/item_model.dart';
+import 'package:librarian_app/core/api/models/item_model.dart';
 import 'package:librarian_app/utils/media_query.dart';
 
 import '../../../convert/icon.dart';

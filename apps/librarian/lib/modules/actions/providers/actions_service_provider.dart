@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/api/api.dart';
+import 'package:librarian_app/core/api/api.dart';
 import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
 import 'package:librarian_app/utils/format.dart';
 

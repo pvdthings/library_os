@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:librarian_app/api/api.dart' as API;
+import 'package:librarian_app/core/api/api.dart' as API;
 
 import '../models/loan_details_model.dart';
 import '../models/loan_model.dart';

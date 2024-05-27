@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/providers/things_filter_provider.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 
-import '../../../api/models/thing_model.dart';
+import '../../../core/api/models/thing_model.dart';
 
 final thingsProvider = Provider<Future<List<ThingModel>>>((ref) async {
   final searchFilter = ref.watch(thingsFilterProvider);

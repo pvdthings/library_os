@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:librarian_app/core/core.dart';
-import 'package:librarian_app/modules/things/data/inventory_repository.dart';
-import 'package:librarian_app/api/models/updated_image_model.dart';
+import 'package:librarian_app/core/data/inventory_repository.dart';
+import 'package:librarian_app/core/api/models/updated_image_model.dart';
 
-import '../../../../../api/models/thing_model.dart';
+import '../../../../../core/api/models/thing_model.dart';
 import '../item_manuals_card.dart';
 
 class CreateItemsController extends ChangeNotifier {

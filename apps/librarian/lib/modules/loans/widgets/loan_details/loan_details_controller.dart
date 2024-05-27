@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/api/api.dart' as api;
+import 'package:librarian_app/core/api/api.dart' as api;
 import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
 
 class LoanDetailsController {

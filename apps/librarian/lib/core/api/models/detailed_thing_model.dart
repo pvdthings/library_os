@@ -1,4 +1,4 @@
-import 'package:librarian_app/api/models/image_model.dart';
+import 'package:librarian_app/core/api/models/image_model.dart';
 
 import 'item_model.dart';
 

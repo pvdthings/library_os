@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/api/api.dart';
+import 'package:librarian_app/core/api/api.dart';
 import 'package:librarian_app/modules/borrowers/models/payment_model.dart';
 
 import '../models/borrower_model.dart';

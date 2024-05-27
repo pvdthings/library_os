@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_controller_provider.dart';
 import 'package:librarian_app/widgets/dialogs/save_dialog.dart';
 import 'package:librarian_app/widgets/panes/pane_header.dart';
-import 'package:librarian_app/api/models/detailed_thing_model.dart';
+import 'package:librarian_app/core/api/models/detailed_thing_model.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_provider.dart';
