@@ -21,7 +21,9 @@ import 'package:librarian_app/utils/media_query.dart';
 import 'package:librarian_app/modules/actions/widgets/actions.dart'
     as librarian_actions;
 
+import '../module.dart';
 import '../widgets/desktop_dashboard.dart';
+import '../widgets/update_button.dart';
 
 class DashboardPage extends ConsumerStatefulWidget {
   const DashboardPage({super.key});
@@ -161,7 +163,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             centerTitle: mobile,
             actions: [
               if (!mobile) ...[
-                _UpdateButton(),
+                const UpdateButton(),
                 const SizedBox(width: 32),
                 const UserTray(),
                 const SizedBox(width: 32),
@@ -217,42 +219,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
               : null,
           endDrawer: ref.watch(endDrawerProvider).drawer,
           floatingActionButton: mobile ? menuAnchor : null,
-        );
-      },
-    );
-  }
-}
-
-class DashboardModule {
-  const DashboardModule({
-    required this.title,
-    required this.desktopLayout,
-    required this.mobileLayout,
-  });
-
-  final String title;
-  final Widget desktopLayout;
-  final Widget? mobileLayout;
-}
-
-class _UpdateButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: UpdateNotifier.instance,
-      builder: (context, _) {
-        final newVersion = UpdateNotifier.instance.newerVersion;
-
-        if (newVersion == null) {
-          return const SizedBox.shrink();
-        }
-
-        return IconButton(
-          onPressed: () {
-            UpdateDialogController(context).showUpdateDialog(newVersion);
-          },
-          tooltip: 'Update Available',
-          icon: const Icon(Icons.update, color: Colors.amber),
         );
       },
     );
