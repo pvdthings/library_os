@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:librarian_app/modules/inventory/data/inventory_repository.dart';
-import 'package:librarian_app/modules/inventory/models/item_model.dart';
+import 'package:librarian_app/modules/things/data/inventory_repository.dart';
+import 'package:librarian_app/modules/things/models/item_model.dart';
 
 class ConnectedThingSearchField extends StatelessWidget {
   final ThingSearchController controller;

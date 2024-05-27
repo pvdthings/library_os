@@ -9,8 +9,8 @@ import 'package:librarian_app/modules/loans/providers/loans_controller_provider.
 import 'package:librarian_app/modules/loans/widgets/checkout/eye_protection_dialog.dart';
 import 'package:librarian_app/utils/media_query.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
-import 'package:librarian_app/modules/inventory/models/item_model.dart';
-import 'package:librarian_app/modules/inventory/providers/things_repository_provider.dart';
+import 'package:librarian_app/modules/things/models/item_model.dart';
+import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/modules/loans/models/thing_summary_model.dart';
 import 'package:librarian_app/modules/loans/widgets/checkout/connected_thing_search_field.dart';
 
