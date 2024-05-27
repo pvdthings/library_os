@@ -2,7 +2,7 @@ import 'package:file_picker/_internal/file_picker_web.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/dashboard/providers/end_drawer_provider.dart';
+import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/modules/things/widgets/inventory_details/items/create_items/create_items_dialog.dart';
 import 'package:librarian_app/modules/things/widgets/item_details_drawer/drawer.dart';
 import 'package:librarian_app/widgets/fields/checkbox_field.dart';

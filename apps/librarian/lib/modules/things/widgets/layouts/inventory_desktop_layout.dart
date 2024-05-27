@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/dashboard/widgets/panes/list_pane.dart';
-import 'package:librarian_app/modules/dashboard/widgets/panes/pane_header.dart';
+import 'package:librarian_app/widgets/panes/list_pane.dart';
+import 'package:librarian_app/widgets/panes/pane_header.dart';
 import 'package:librarian_app/widgets/fields/search_field.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/providers/things_filter_provider.dart';
