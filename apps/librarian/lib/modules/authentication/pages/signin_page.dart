@@ -7,7 +7,7 @@ import 'package:librarian_app/core/core.dart';
 import 'package:librarian_app/modules/authentication/providers/signin_error_provider.dart';
 import 'package:librarian_app/modules/authentication/widgets/discord_button.dart';
 import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
-import 'package:librarian_app/modules/dashboard/pages/dashboard_page.dart';
+import 'package:librarian_app/dashboard/pages/dashboard_page.dart';
 import 'package:librarian_app/widgets/fade_page_route.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

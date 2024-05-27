@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:librarian_app/constants.dart';
 import 'package:librarian_app/core/core.dart';
 import 'package:librarian_app/modules/splash/pages/splash_page.dart';
-import 'package:librarian_app/services/image_service.dart';
+import 'package:librarian_app/core/services/image_service.dart';
 import 'package:librarian_app/theme/indigo_theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
