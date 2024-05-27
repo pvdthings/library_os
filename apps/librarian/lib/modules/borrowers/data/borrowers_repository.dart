@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/api/api.dart';
 import 'package:librarian_app/modules/borrowers/models/payment_model.dart';
-import 'package:librarian_app/api/lending_api.dart';
 
 import '../models/borrower_model.dart';
 
@@ -10,7 +10,7 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
   Future<List<BorrowerModel>> build() async => await getBorrowers();
 
   Future<List<BorrowerModel>> getBorrowers() async {
-    final response = await LendingApi.fetchBorrowers();
+    final response = await fetchBorrowers();
     return (response.data as List)
         .map((json) => BorrowerModel.fromJson(json))
         .toList();
@@ -22,13 +22,13 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
   }
 
   Future<BorrowerModel?> getBorrowerDetails(String id) async {
-    final response = await LendingApi.fetchBorrower(id);
+    final response = await fetchBorrower(id);
     return BorrowerModel.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<bool> updateBorrower(String id, {String? email, String? phone}) async {
     try {
-      await LendingApi.updateBorrower(id, email: email, phone: phone);
+      await updateBorrower(id, email: email, phone: phone);
 
       ref.invalidateSelf();
       return true;
@@ -38,7 +38,7 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
   }
 
   Future<List<PaymentModel>> getPayments(String borrowerId) async {
-    final response = await LendingApi.fetchPayments(borrowerId: borrowerId);
+    final response = await fetchPayments(borrowerId: borrowerId);
     return (response.data as List)
         .map((e) => PaymentModel.fromJson(e))
         .toList();
@@ -49,7 +49,7 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
     required double cash,
   }) async {
     try {
-      await LendingApi.recordCashPayment(
+      await recordCashPayment(
         cash: cash,
         borrowerId: borrowerId,
       );

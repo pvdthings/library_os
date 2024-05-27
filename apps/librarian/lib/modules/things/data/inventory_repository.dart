@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/api/lending_api.dart';
+import 'package:librarian_app/api/api.dart' as api;
 import 'package:librarian_app/services/image_service.dart';
 import 'package:librarian_app/modules/things/models/updated_image_model.dart';
 
@@ -16,12 +16,12 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   Future<List<ThingModel>> build() async => await getThings();
 
   Future<List<String>> getCategories() async {
-    final response = await LendingApi.getCategories();
+    final response = await api.getCategories();
     return (response.data as List).map((e) => e.toString()).sorted().toList();
   }
 
   Future<List<ThingModel>> getThings({String? filter}) async {
-    final response = await LendingApi.fetchThings();
+    final response = await api.fetchThings();
     final objects = response.data as List;
     final things = objects.map((e) => ThingModel.fromJson(e)).toList();
 
@@ -35,13 +35,13 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   }
 
   Future<DetailedThingModel> getThingDetails({required String id}) async {
-    final response = await LendingApi.fetchThing(id: id);
+    final response = await api.fetchThing(id: id);
     return DetailedThingModel.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<ItemModel?> getItem({required int number}) async {
     try {
-      final response = await LendingApi.fetchInventoryItem(number: number);
+      final response = await api.fetchInventoryItem(number: number);
       return ItemModel.fromJson(response.data as Map<String, dynamic>);
     } catch (_) {
       return null;
@@ -52,7 +52,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     required String name,
     String? spanishName,
   }) async {
-    final response = await LendingApi.createThing(
+    final response = await api.createThing(
       name: name,
       spanishName: spanishName,
     );
@@ -76,10 +76,10 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     }
 
     if (categories != null) {
-      await LendingApi.updateThingCategories(thingId, categories: categories);
+      await api.updateThingCategories(thingId, categories: categories);
     }
 
-    await LendingApi.updateThing(
+    await api.updateThing(
       thingId,
       name: name,
       spanishName: spanishName,
@@ -91,7 +91,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     ref.invalidateSelf();
   }
 
-  Future<ImageDTO?> _convert(UpdatedImageModel? updatedImage) async {
+  Future<api.ImageDTO?> _convert(UpdatedImageModel? updatedImage) async {
     if (updatedImage == null || updatedImage.bytes == null || kDebugMode) {
       return null;
     }
@@ -101,16 +101,16 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
       type: updatedImage.type!,
     );
 
-    return ImageDTO(url: result.url);
+    return api.ImageDTO(url: result.url);
   }
 
   Future<void> deleteThing(String id) async {
-    await LendingApi.deleteThing(id);
+    await api.deleteThing(id);
     ref.invalidateSelf();
   }
 
   Future<void> deleteThingImage({required String thingId}) async {
-    await LendingApi.deleteThingImage(thingId);
+    await api.deleteThingImage(thingId);
     ref.invalidateSelf();
   }
 
@@ -131,7 +131,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         ? null
         : await Future.wait(manuals.map((m) => imageService.uploadImageDTO(m)));
 
-    await LendingApi.createInventoryItems(
+    await api.createInventoryItems(
       thingId,
       quantity: quantity,
       brand: brand,
@@ -139,7 +139,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
       description: description,
       estimatedValue: estimatedValue,
       hidden: hidden,
-      image: image == null ? null : ImageDTO(url: imageUrl),
+      image: image == null ? null : api.ImageDTO(url: imageUrl),
       manuals: manualDTOs,
     );
     ref.invalidateSelf();
@@ -161,14 +161,14 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         ? null
         : await Future.wait(manuals.map((m) => imageService.uploadImageDTO(m)));
 
-    await LendingApi.updateInventoryItem(
+    await api.updateInventoryItem(
       id,
       brand: brand,
       condition: condition,
       description: description,
       estimatedValue: estimatedValue,
       hidden: hidden,
-      image: image == null ? null : ImageDTO(url: imageUrl),
+      image: image == null ? null : api.ImageDTO(url: imageUrl),
       manuals: manualDTOs,
     );
 
@@ -176,12 +176,12 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   }
 
   Future<void> convertItem(String id, String thingId) async {
-    await LendingApi.convertInventoryItem(id, thingId);
+    await api.convertInventoryItem(id, thingId);
     ref.invalidateSelf();
   }
 
   Future<void> deleteItem(String id) async {
-    await LendingApi.deleteInventoryItem(id);
+    await api.deleteInventoryItem(id);
     ref.invalidateSelf();
   }
 }
@@ -202,9 +202,9 @@ class _ImageServiceWrapper {
     return result.url;
   }
 
-  Future<ImageDTO> uploadImageDTO(UpdatedImageModel image) async {
+  Future<api.ImageDTO> uploadImageDTO(UpdatedImageModel image) async {
     if (image.existingUrl != null) {
-      return ImageDTO(url: image.existingUrl, name: image.name);
+      return api.ImageDTO(url: image.existingUrl, name: image.name);
     }
 
     final result = await _service.uploadImage(
@@ -213,6 +213,6 @@ class _ImageServiceWrapper {
       path: image.name,
     );
 
-    return ImageDTO(url: result.url, name: image.name);
+    return api.ImageDTO(url: result.url, name: image.name);
   }
 }

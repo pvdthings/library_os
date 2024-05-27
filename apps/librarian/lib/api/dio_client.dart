@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:librarian_app/constants.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+part of 'api.dart';
 
 class DioClient {
   static String get _accessToken =>

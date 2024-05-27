@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/api/lending_api.dart';
+import 'package:librarian_app/api/api.dart' as api;
 import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
 
 class LoanDetailsController {
@@ -13,7 +13,7 @@ class LoanDetailsController {
   final WidgetRef ref;
 
   Future<void> sendReminderEmail({required int loanNumber}) async {
-    LendingApi.sendReminderEmail(loanNumber: loanNumber).then((value) {
+    api.sendReminderEmail(loanNumber: loanNumber).then((value) {
       ref.invalidate(loansRepositoryProvider);
 
       ScaffoldMessenger.of(context)
