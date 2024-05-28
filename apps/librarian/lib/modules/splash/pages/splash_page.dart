@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/authentication/pages/signin_page.dart';
 import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
-import 'package:librarian_app/modules/dashboard/pages/dashboard_page.dart';
+import 'package:librarian_app/dashboard/pages/dashboard_page.dart';
 import 'package:librarian_app/widgets/fade_page_route.dart';
 
 class SplashPage extends ConsumerStatefulWidget {

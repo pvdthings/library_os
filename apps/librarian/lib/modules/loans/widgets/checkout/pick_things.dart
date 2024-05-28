@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/inventory/models/item_model.dart';
-import 'package:librarian_app/modules/inventory/providers/things_repository_provider.dart';
+import 'package:librarian_app/core/api/models/item_model.dart';
+import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 
 import '../../../../widgets/fields/submit_text_field.dart';
 import 'thing_list_tile.dart';

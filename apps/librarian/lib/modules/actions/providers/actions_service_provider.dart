@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/api/loans_api.dart';
+import 'package:librarian_app/core/api/api.dart';
 import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
 import 'package:librarian_app/utils/format.dart';
 
@@ -11,7 +11,7 @@ class ActionsService {
 
   Future<bool> isAuthorizedToExtendAllDueDates() async {
     try {
-      final res = await LoansApi.extendAuthorization();
+      final res = await extendAuthorization();
       return res.statusCode == 204;
     } catch (error) {
       return false;
@@ -20,7 +20,7 @@ class ActionsService {
 
   Future<bool> extendAllDueDates(DateTime dueDate) async {
     try {
-      final res = await LoansApi.extend(dueDate: formatDate(dueDate));
+      final res = await extend(dueDate: formatDate(dueDate));
       final data = res.data as Map<String, dynamic>;
       final result = data['success'] as bool;
 
