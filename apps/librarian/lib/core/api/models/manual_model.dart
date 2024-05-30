@@ -1,3 +1,5 @@
+part of 'models.dart';
+
 class ManualModel {
   const ManualModel({
     required this.filename,

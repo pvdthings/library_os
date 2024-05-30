@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+part of 'models.dart';
 
 class UpdatedImageModel {
   final String? name;

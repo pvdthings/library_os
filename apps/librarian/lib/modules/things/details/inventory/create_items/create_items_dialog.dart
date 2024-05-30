@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/api/models/models.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items.dart';
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items_controller.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
-
-import '../../../../../core/api/models/thing_model.dart';
 
 class CreateItemsDialog extends ConsumerStatefulWidget {
   const CreateItemsDialog({super.key, required this.thing});

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/api/models/models.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/providers/things_provider.dart';
 
-import '../../../../../core/api/models/thing_model.dart';
 import 'inventory_list.dart';
 
 class InventoryListView extends ConsumerWidget {

@@ -1,4 +1,4 @@
-import 'manual_model.dart';
+part of 'models.dart';
 
 class ItemModel {
   ItemModel({

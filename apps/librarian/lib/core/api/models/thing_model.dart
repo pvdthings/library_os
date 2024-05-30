@@ -1,11 +1,13 @@
+part of 'models.dart';
+
 class ThingModel {
   ThingModel({
     required this.id,
     required this.name,
-    required this.hidden,
-    required this.stock,
-    required this.available,
+    this.available = 0,
+    this.hidden = false,
     this.spanishName,
+    this.stock = 0,
   });
 
   final String id;

@@ -1,6 +1,4 @@
-import 'package:librarian_app/core/api/models/image_model.dart';
-
-import 'item_model.dart';
+part of 'models.dart';
 
 class DetailedThingModel {
   DetailedThingModel({

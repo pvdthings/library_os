@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/api/models/models.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_controller_provider.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
 
-import '../../../../core/api/models/item_model.dart';
 import '../../../../widgets/details_card/card_header.dart';
 
 class ItemsCard extends ConsumerWidget {

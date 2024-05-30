@@ -1,3 +1,5 @@
+part of 'models.dart';
+
 class ImageModel {
   const ImageModel({
     required this.id,
