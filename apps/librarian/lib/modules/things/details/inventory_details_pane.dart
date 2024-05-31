@@ -104,11 +104,13 @@ class InventoryDetailsPane extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: SingleChildScrollView(
                         child: Padding(
-                          padding: EdgeInsets.all(16),
-                          child: InventoryDetails(),
+                          padding: const EdgeInsets.all(16),
+                          child: InventoryDetails(
+                            id: selectedThing.id,
+                          ),
                         ),
                       ),
                     ),

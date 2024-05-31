@@ -58,7 +58,9 @@ class InventoryDetailsPage extends ConsumerWidget {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  const InventoryDetails(),
+                  InventoryDetails(
+                    id: thingDetails.id,
+                  ),
                   const SizedBox(height: 24),
                   FilledButton.icon(
                     onPressed: delete,

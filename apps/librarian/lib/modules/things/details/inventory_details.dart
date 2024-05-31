@@ -5,13 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items_dialog.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_details_drawer/drawer.dart';
+import 'package:librarian_app/modules/things/providers/thing_details.dart';
 import 'package:librarian_app/widgets/fields/checkbox_field.dart';
 import 'package:librarian_app/widgets/input_decoration.dart';
 import 'package:librarian_app/core/api/models/models.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_details_page.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
-import 'package:librarian_app/modules/things/providers/thing_details_provider.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/modules/things/details/categories/categories_card.dart';
 import 'package:librarian_app/modules/things/details/inventory/items_card.dart';
@@ -21,11 +21,13 @@ import 'package:librarian_app/utils/media_query.dart';
 import 'inventory/item_details/item_details_controller.dart';
 
 class InventoryDetails extends ConsumerWidget {
-  const InventoryDetails({super.key});
+  const InventoryDetails({super.key, required this.id});
+
+  final String id;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final detailsFuture = ref.watch(thingDetailsProvider);
+    final detailsFuture = ref.watch(thingDetails(id));
 
     return FutureBuilder(
       future: detailsFuture,
