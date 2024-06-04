@@ -11,7 +11,7 @@ import 'package:librarian_app/utils/media_query.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
 import 'package:librarian_app/core/api/models/item_model.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
-import 'package:librarian_app/modules/loans/models/thing_summary_model.dart';
+import 'package:librarian_app/core/api/models/thing_summary_model.dart';
 import 'package:librarian_app/modules/loans/checkout/connected_thing_search_field.dart';
 
 import 'checkout_details.dart';
