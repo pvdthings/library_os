@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/widgets/panes/pane_header.dart';
-import 'package:librarian_app/modules/loans/widgets/email/send_email_dialog.dart';
-import 'package:librarian_app/modules/loans/widgets/loan_details/loan_details_controller.dart';
+import 'package:librarian_app/modules/loans/email/send_email_dialog.dart';
+import 'package:librarian_app/modules/loans/details/loan_details_controller.dart';
 
-import '../../models/loan_details_model.dart';
+import '../models/loan_details_model.dart';
 import '../checkin/checkin_dialog.dart';
 import '../edit/edit_loan_dialog.dart';
 import 'thing_number.dart';

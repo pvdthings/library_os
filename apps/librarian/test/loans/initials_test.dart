@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:librarian_app/modules/loans/widgets/loans_list/loans_list.dart';
+import 'package:librarian_app/modules/loans/list/loans_list.dart';
 
 void main() {
   group('Initials', () {
