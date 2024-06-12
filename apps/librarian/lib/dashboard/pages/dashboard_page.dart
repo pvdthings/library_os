@@ -109,6 +109,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ws = ref.watch(workspace);
     final mobile = isMobile(context);
     final module = _modules[_moduleIndex];
 
@@ -122,18 +123,21 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
           context: context,
           leadingIcon: const Icon(Icons.handshake_rounded),
           text: 'Create Loan',
-          onTap: () async {
-            _menuController.close();
-            setState(() => _moduleIndex = 0);
-            await Future.delayed(const Duration(milliseconds: 150), () {
-              final window = WorkspaceWindow(
-                title: 'Create Loan',
-                content: const CheckoutStepper(),
-              );
-
-              ref.read(workspace).open(window);
-            });
-          },
+          tooltip: ws.hasItem
+              ? 'Another "Create Loan" window is already in use.'
+              : null,
+          onTap: ws.hasItem
+              ? null
+              : () async {
+                  _menuController.close();
+                  setState(() => _moduleIndex = 0);
+                  await Future.delayed(const Duration(milliseconds: 150), () {
+                    ws.open(WorkspaceWindow(
+                      title: 'Create Loan',
+                      content: const CheckoutStepper(),
+                    ));
+                  });
+                },
         ),
         createMenuItem(
           context: context,

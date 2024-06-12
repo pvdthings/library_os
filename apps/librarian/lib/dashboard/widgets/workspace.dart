@@ -24,12 +24,13 @@ class Workspace extends ConsumerWidget {
           Align(
             alignment: Alignment.center,
             child: Container(
-                margin: const EdgeInsets.only(
-                  right: 8,
-                  bottom: 8,
-                  left: 8,
-                ),
-                child: ws.activeItem!.widget),
+              margin: const EdgeInsets.only(
+                right: 8,
+                bottom: 8,
+                left: 8,
+              ),
+              child: ws.activeItem!.widget,
+            ),
           ),
         const Align(
           alignment: Alignment.bottomRight,
@@ -106,7 +107,10 @@ class MinimizedItem extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(color: Colors.black),
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             const SizedBox(width: 16),
             const Icon(
