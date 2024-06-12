@@ -38,6 +38,11 @@ class WorkspaceController {
     ref.notifyListeners();
   }
 
+  void closeWindow() {
+    _items.removeLast();
+    ref.notifyListeners();
+  }
+
   void close(String id) {
     _items.removeWhere((i) => i.id == id);
     _minimized.remove(id);

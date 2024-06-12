@@ -17,7 +17,9 @@ import 'package:librarian_app/modules/loans/checkout/connected_thing_search_fiel
 import 'checkout_details.dart';
 
 class CheckoutStepper extends ConsumerStatefulWidget {
-  const CheckoutStepper({super.key});
+  const CheckoutStepper({super.key, this.onFinish});
+
+  final void Function()? onFinish;
 
   @override
   ConsumerState<CheckoutStepper> createState() => _CheckoutStepperState();
@@ -62,7 +64,7 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
         dueDate: _dueDate);
 
     Future.delayed(Duration.zero, () {
-      Navigator.of(context).pop();
+      widget.onFinish?.call();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(success ? 'Success!' : 'Failed to create loan records'),

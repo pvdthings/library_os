@@ -13,7 +13,11 @@ class CheckoutPage extends StatelessWidget {
       ),
       body: Container(
         constraints: const BoxConstraints(maxWidth: 600),
-        child: const CheckoutStepper(),
+        child: CheckoutStepper(
+          onFinish: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
     );
   }

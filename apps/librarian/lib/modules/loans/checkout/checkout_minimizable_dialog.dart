@@ -24,15 +24,18 @@ class WorkspaceWindow extends ConsumerWidget {
       child: Card.filled(
         clipBehavior: Clip.antiAlias,
         elevation: 1,
-        child: ListView(
-          controller: ScrollController(),
+        child: Column(
           children: [
             WorkspaceWindowHeader(
               title: title,
               onMinimize: () => ws.minimize(id, title: title),
               onClose: () => ws.close(id),
             ),
-            content,
+            Expanded(
+              child: SingleChildScrollView(
+                child: content,
+              ),
+            ),
           ],
         ),
       ),

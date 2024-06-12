@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/dashboard/providers/create_loan_controller.dart';
 import 'package:librarian_app/dashboard/providers/workspace.dart';
 import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
 import 'package:librarian_app/modules/authentication/providers/user_tray.dart';
@@ -10,8 +11,6 @@ import 'package:librarian_app/modules/borrowers/widgets/needs_attention_view.dar
 import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/dashboard/widgets/create_menu_item.dart';
 import 'package:librarian_app/dashboard/layouts/inventory_desktop_layout.dart';
-import 'package:librarian_app/modules/loans/checkout/checkout_minimizable_dialog.dart';
-import 'package:librarian_app/modules/loans/checkout/checkout_stepper.dart';
 import 'package:librarian_app/modules/things/details/inventory_details_page.dart';
 import 'package:librarian_app/modules/things/details/inventory/inventory_list/searchable_inventory_list.dart';
 import 'package:librarian_app/modules/things/create/create_thing_dialog.dart';
@@ -132,10 +131,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                   _menuController.close();
                   setState(() => _moduleIndex = 0);
                   await Future.delayed(const Duration(milliseconds: 150), () {
-                    ws.open(WorkspaceWindow(
-                      title: 'Create Loan',
-                      content: const CheckoutStepper(),
-                    ));
+                    ref.read(createLoan).createLoan(context);
                   });
                 },
         ),

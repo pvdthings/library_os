@@ -20,18 +20,21 @@ class Workspace extends ConsumerWidget {
           margin: const EdgeInsets.only(right: 8, bottom: 8),
           child: child,
         ),
-        if (ws.activeItem != null)
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              margin: const EdgeInsets.only(
-                right: 8,
-                bottom: 8,
-                left: 8,
-              ),
-              child: ws.activeItem!.widget,
+        Align(
+          alignment: Alignment.center,
+          child: Container(
+            margin: const EdgeInsets.only(
+              right: 8,
+              bottom: 8,
+              left: 8,
+            ),
+            child: AnimatedOpacity(
+              opacity: ws.activeItem != null ? 1 : 0,
+              duration: const Duration(milliseconds: 200),
+              child: ws.activeItem?.widget,
             ),
           ),
+        ),
         const Align(
           alignment: Alignment.bottomRight,
           child: MinimizedItems(),
