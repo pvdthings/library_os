@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/modules/loans/widgets/checkout/checkout_stepper.dart';
+import 'package:librarian_app/modules/loans/checkout/checkout_stepper.dart';
 
 class CheckoutPage extends StatelessWidget {
   const CheckoutPage({super.key});
@@ -13,7 +13,11 @@ class CheckoutPage extends StatelessWidget {
       ),
       body: Container(
         constraints: const BoxConstraints(maxWidth: 600),
-        child: const CheckoutStepper(),
+        child: CheckoutStepper(
+          onFinish: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
     );
   }
