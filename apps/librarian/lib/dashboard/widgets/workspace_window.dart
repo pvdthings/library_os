@@ -21,8 +21,9 @@ class WorkspaceWindow extends ConsumerWidget {
 
     return Offstage(
       offstage: ws.isMinimized(id),
-      child: Card.filled(
+      child: Card(
         clipBehavior: Clip.antiAlias,
+        color: Theme.of(context).colorScheme.surfaceContainerHigh,
         elevation: 1,
         child: Column(
           children: [

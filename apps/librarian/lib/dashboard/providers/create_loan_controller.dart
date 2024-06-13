@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/dashboard/providers/workspace.dart';
-import 'package:librarian_app/modules/loans/checkout/checkout_minimizable_dialog.dart';
+import 'package:librarian_app/dashboard/widgets/workspace_window.dart';
 import 'package:librarian_app/modules/loans/checkout/checkout_page.dart';
 import 'package:librarian_app/modules/loans/checkout/checkout_stepper.dart';
 import 'package:librarian_app/utils/media_query.dart';

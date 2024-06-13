@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/loans/checkout/checkout_minimizable_dialog.dart';
+import 'package:librarian_app/dashboard/widgets/workspace_window.dart';
 
 class WorkspaceController {
   WorkspaceController(this.ref);
