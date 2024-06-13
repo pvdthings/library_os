@@ -36,6 +36,10 @@ const fetchItem = async (id) => {
       pageSize: 100
   }).all();
 
+  if (records.length === 0) {
+    return null;
+  }
+
   return mapItem(records[0]);
 }
 

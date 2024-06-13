@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/dashboard/providers/create_loan_controller.dart';
+import 'package:librarian_app/dashboard/providers/workspace.dart';
 import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
 import 'package:librarian_app/modules/authentication/providers/user_tray.dart';
 import 'package:librarian_app/modules/borrowers/widgets/layouts/borrowers_desktop_layout.dart';
@@ -12,10 +14,9 @@ import 'package:librarian_app/dashboard/layouts/inventory_desktop_layout.dart';
 import 'package:librarian_app/modules/things/details/inventory_details_page.dart';
 import 'package:librarian_app/modules/things/details/inventory/inventory_list/searchable_inventory_list.dart';
 import 'package:librarian_app/modules/things/create/create_thing_dialog.dart';
-import 'package:librarian_app/modules/loans/pages/checkout_page.dart';
-import 'package:librarian_app/modules/loans/pages/loan_details_page.dart';
-import 'package:librarian_app/modules/loans/widgets/loans_list/searchable_loans_list.dart';
-import 'package:librarian_app/modules/loans/widgets/layouts/loans_desktop_layout.dart';
+import 'package:librarian_app/modules/loans/details/loan_details_page.dart';
+import 'package:librarian_app/modules/loans/list/searchable_loans_list.dart';
+import 'package:librarian_app/dashboard/layouts/loans_desktop_layout.dart';
 import 'package:librarian_app/modules/updates/widgets/update_dialog_controller.dart';
 import 'package:librarian_app/modules/updates/notifiers/update_notifier.dart';
 import 'package:librarian_app/utils/media_query.dart';
@@ -107,6 +108,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ws = ref.watch(workspace);
     final mobile = isMobile(context);
     final module = _modules[_moduleIndex];
 
@@ -120,18 +122,18 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
           context: context,
           leadingIcon: const Icon(Icons.handshake_rounded),
           text: 'Create Loan',
-          onTap: () async {
-            _menuController.close();
-            setState(() => _moduleIndex = 0);
-            await Future.delayed(const Duration(milliseconds: 150), () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CheckoutPage(),
-                ),
-              );
-            });
-          },
+          tooltip: ws.hasItem
+              ? 'Another "Create Loan" window is already in use.'
+              : null,
+          onTap: ws.hasItem
+              ? null
+              : () async {
+                  _menuController.close();
+                  setState(() => _moduleIndex = 0);
+                  await Future.delayed(const Duration(milliseconds: 150), () {
+                    ref.read(createLoan).createLoan(context);
+                  });
+                },
         ),
         createMenuItem(
           context: context,

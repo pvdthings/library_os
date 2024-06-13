@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/loans/providers/loan_details_provider.dart';
 import 'package:librarian_app/modules/loans/providers/selected_loan_provider.dart';
-import 'package:librarian_app/modules/loans/widgets/loan_details/loan_details_header.dart';
+import 'package:librarian_app/modules/loans/details/loan_details_header.dart';
 
-import '../../providers/loans_repository_provider.dart';
+import '../providers/loans_repository_provider.dart';
 import 'loan_details.dart';
 
 class LoanDetailsPane extends ConsumerWidget {

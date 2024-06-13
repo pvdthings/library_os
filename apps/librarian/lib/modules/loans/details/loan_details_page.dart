@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/details/inventory_details_page.dart';
 import 'package:librarian_app/modules/loans/providers/loan_details_provider.dart';
 import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
-import 'package:librarian_app/modules/loans/widgets/checkin/checkin_dialog.dart';
-import 'package:librarian_app/modules/loans/widgets/email/send_email_dialog.dart';
-import 'package:librarian_app/modules/loans/widgets/loan_details/loan_details.dart';
-import 'package:librarian_app/modules/loans/widgets/loan_details/loan_details_controller.dart';
+import 'package:librarian_app/modules/loans/checkin/checkin_dialog.dart';
+import 'package:librarian_app/modules/loans/email/send_email_dialog.dart';
+import 'package:librarian_app/modules/loans/details/loan_details.dart';
+import 'package:librarian_app/modules/loans/details/loan_details_controller.dart';
 
-import '../widgets/edit/edit_loan_dialog.dart';
+import '../edit/edit_loan_dialog.dart';
 
 class LoanDetailsPage extends ConsumerWidget {
   const LoanDetailsPage({super.key});

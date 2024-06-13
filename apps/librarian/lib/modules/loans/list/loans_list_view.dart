@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/loans/providers/loans_provider.dart';
 import 'package:librarian_app/modules/loans/providers/selected_loan_provider.dart';
 
-import '../../models/loan_model.dart';
+import '../../../core/api/models/loan_model.dart';
 import 'loans_list.dart';
 
 class LoansListView extends ConsumerWidget {
