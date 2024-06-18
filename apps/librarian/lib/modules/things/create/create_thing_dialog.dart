@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/thing_model.dart';
 import 'package:librarian_app/modules/things/providers/create_thing_service.dart';
 import 'package:librarian_app/modules/things/providers/find_things.dart';
+import 'package:librarian_app/utils/future_signal.dart';
 import 'package:librarian_app/widgets/circular_progress_icon.dart';
 import 'package:librarian_app/widgets/input_decoration.dart';
 
@@ -131,28 +132,6 @@ class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
         ),
       ),
     );
-  }
-}
-
-class FutureSignal<T> extends ChangeNotifier {
-  FutureSignal(this.future) {
-    future.then(onValue);
-    future.whenComplete(onComplete);
-  }
-
-  final Future<T> future;
-
-  T? data;
-  bool isLoading = true;
-
-  void onValue(T? value) {
-    data = value;
-    notifyListeners();
-  }
-
-  void onComplete() {
-    isLoading = false;
-    notifyListeners();
   }
 }
 
