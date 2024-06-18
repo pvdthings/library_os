@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/thing_model.dart';
+import 'package:librarian_app/modules/things/providers/create_thing_service.dart';
 import 'package:librarian_app/modules/things/providers/find_things.dart';
+import 'package:librarian_app/widgets/circular_progress_icon.dart';
 import 'package:librarian_app/widgets/input_decoration.dart';
-
-import '../providers/things_repository_provider.dart';
 
 class CreateThingDialog extends ConsumerStatefulWidget {
   const CreateThingDialog({super.key});
@@ -21,20 +21,26 @@ class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
   final _name = TextEditingController();
   final _spanishName = TextEditingController();
 
-  Future<List<ThingModel>>? existingMatches;
+  FutureSignal<List<ThingModel>>? existingThings;
 
-  createThing() {
-    ref
-        .read(thingsRepositoryProvider.notifier)
-        .createThing(name: _name.text, spanishName: _spanishName.text)
-        .then((value) {
-      Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${value.name} created'),
-        ),
-      );
-    });
+  bool get doesNameHaveSufficientLength {
+    return _name.text.length > 2;
+  }
+
+  void onCreate() {
+    if (_formKey.currentState!.validate()) {
+      ref.read(createThing).create(
+          name: _name.text,
+          spanishName: _spanishName.text,
+          onFinish: () {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('${_name.text} created'),
+              ),
+            );
+          });
+    }
   }
 
   @override
@@ -50,18 +56,17 @@ class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
           child: const Text('Cancel'),
         ),
         ListenableBuilder(
-          listenable: _name,
-          builder: (context, child) => FilledButton(
-            onPressed: _name.text.isNotEmpty
-                ? () {
-                    if (_formKey.currentState!.validate()) {
-                      createThing();
-                    }
-                  }
-                : null,
-            child: const Text('Create'),
-          ),
-        ),
+            listenable: Listenable.merge([existingThings, _name]),
+            builder: (context, child) {
+              final isLoading = existingThings?.isLoading ?? false;
+              return ValueListenableBuilder(
+                valueListenable: _name,
+                builder: (context, name, child) => FilledButton(
+                  onPressed: isLoading || _name.text.isEmpty ? null : onCreate,
+                  child: const Text('Create'),
+                ),
+              );
+            }),
       ],
       contentPadding: const EdgeInsets.all(16),
       content: SizedBox(
@@ -82,20 +87,21 @@ class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
 
                   return null;
                 },
-                decoration: inputDecoration.copyWith(
-                  labelText: 'Name',
-                  constraints: const BoxConstraints(minWidth: 500),
-                ),
                 onChanged: (value) {
-                  if (value.isEmpty || value.length < 4) {
-                    setState(() => existingMatches = null);
+                  if (value.length < 3) {
+                    setState(() => existingThings = null);
                     return;
                   }
 
                   setState(() {
-                    existingMatches = ref.read(findThingsByName(value));
+                    existingThings =
+                        FutureSignal(ref.read(findThingsByName(value)));
                   });
                 },
+                decoration: inputDecoration.copyWith(
+                  labelText: 'Name',
+                  constraints: const BoxConstraints(minWidth: 500),
+                ),
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -106,20 +112,20 @@ class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
                 ),
               ),
               const SizedBox(height: 16),
-              FutureBuilder(
-                future: existingMatches,
-                builder: (context, snapshot) {
-                  final existingThingName = snapshot.data?.firstOrNull?.name;
-                  if (existingMatches != null && existingThingName != null) {
-                    return _ExistingThingWarning(
-                      thingName: _name.text,
-                      existingThingName: existingThingName,
+              ListenableBuilder(
+                  listenable: Listenable.merge([existingThings, _name]),
+                  builder: (context, child) {
+                    return FutureBuilder(
+                      future: existingThings?.future,
+                      builder: (context, snapshot) => _ExistingThingWarning(
+                        thingName: _name.text,
+                        existingThingName: !doesNameHaveSufficientLength
+                            ? null
+                            : snapshot.data?.firstOrNull?.name,
+                        isLoading: existingThings?.isLoading ?? false,
+                      ),
                     );
-                  }
-
-                  return const SizedBox.shrink();
-                },
-              ),
+                  }),
             ],
           ),
         ),
@@ -128,26 +134,71 @@ class _CreateThingDialogState extends ConsumerState<CreateThingDialog> {
   }
 }
 
+class FutureSignal<T> extends ChangeNotifier {
+  FutureSignal(this.future) {
+    future.then(onValue);
+    future.whenComplete(onComplete);
+  }
+
+  final Future<T> future;
+
+  T? data;
+  bool isLoading = true;
+
+  void onValue(T? value) {
+    data = value;
+    notifyListeners();
+  }
+
+  void onComplete() {
+    isLoading = false;
+    notifyListeners();
+  }
+}
+
 class _ExistingThingWarning extends StatelessWidget {
   const _ExistingThingWarning({
     required this.thingName,
-    required this.existingThingName,
+    this.existingThingName,
+    this.isLoading = false,
   });
 
   final String thingName;
-  final String existingThingName;
+  final String? existingThingName;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    if (isLoading) {
+      return const Card.outlined(
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.zero,
+        child: ListTile(
+          title: Text('Searching...'),
+          trailing: CircularProgressIcon(),
+        ),
+      );
+    }
+
+    if (existingThingName == null) {
+      return const Card.outlined(
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.zero,
+        child: ListTile(
+          title: Text('No Duplicates Found'),
+        ),
+      );
+    }
+
+    return Card.outlined(
       clipBehavior: Clip.antiAlias,
       margin: EdgeInsets.zero,
       child: ListTile(
-        leading: const Icon(
+        trailing: const Icon(
           Icons.warning_rounded,
           color: Colors.amber,
         ),
-        title: const Text('Thing Already Exists'),
+        title: const Text('Duplicate Thing'),
         subtitle: Text.rich(
           TextSpan(
             children: [
