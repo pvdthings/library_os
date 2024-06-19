@@ -15,7 +15,7 @@
 
 <div
   class:body-hidden={hidden}
-  class="fixed top-0 left-0 w-full h-full overflow-hidden md:h-fit md:absolute bg-indigo-50 md:border md:border-gray-500 md:shadow-highest md:rounded-md flex flex-col z-50 md:z-40"
+  class="fixed top-0 left-0 w-full h-full overflow-hidden md:h-fit md:absolute bg-gray-50 md:border md:border-neutral-400 md:shadow-highest md:rounded-md flex flex-col z-50 md:z-40"
 >
   <div class="md:hidden">
     <div class="p-4 bg-primary text-2xl font-bold text-left sticky top-0">

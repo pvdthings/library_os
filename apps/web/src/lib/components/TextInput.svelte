@@ -20,7 +20,7 @@
     on:change
     on:keyup={keyReleased}
     class:invalid
-    class="w-full px-4 py-2 pl-10 rounded-md border border-gray-500 shadow-high outline-none {customClass}"
+    class="w-full px-4 py-2 pl-10 rounded-md border border-neutral-400 shadow-high outline-none {customClass}"
 />
 
 <style lang="postcss">

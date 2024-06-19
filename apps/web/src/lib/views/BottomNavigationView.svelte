@@ -15,7 +15,7 @@
 	$: learnText = $t('Learn');
 </script>
 
-<div class="btm-nav bg-indigo-50 upward-shadow box-content lg:hidden">
+<div class="btm-nav bg-neutral-100 border-t border-neutral-400 upward-shadow box-content lg:hidden">
 	<button
 		class="bg-transparent"
 		class:active={$activeScreen === Screen.catalog}

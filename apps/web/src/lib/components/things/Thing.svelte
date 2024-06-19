@@ -67,8 +67,9 @@
 <svelte:window bind:innerWidth />
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-	class="relative flex flex-col justify-between bg-white border border-gray-500 rounded-md {isInList ? 'shadow-lowest' : 'shadow-low'} overflow-hidden cursor-pointer"
+	class="relative flex flex-col justify-between bg-white border border-neutral-400 rounded-md {isInList ? 'shadow-lowest' : 'shadow-low'} overflow-hidden cursor-pointer"
 	on:click={onClick}
 >
 	{#if isInList}
@@ -89,21 +90,21 @@
 		</div>
 	</div>
 	{#key isInList}
-		<div class="{getBackgroundColor()} py-1 text-center font-medium border-t border-gray-500">
+		<div class="{getBackgroundColor()} py-1 text-center font-medium border-t border-neutral-400">
 			{#if hasZeroStock}
-				<span class="text-yellow-900">{$t('Donate')}</span>
+				<div class="text-yellow-900">{$t('Donate')}</div>
 			{:else if isInList}
-				<span class="text-indigo-900">{$t('Bookmarked')}</span>
+				<div class="text-indigo-900">{$t('Bookmarked')}</div>
 			{:else if noneAvailable}
-				<span class="text-red-900">
+				<div class="text-red-900">
 					{isMobile ? `${thing.available} / ${thing.stock}` : $t('Unavailable')}
-				</span>
+				</div>
 			{:else}
-				<span class="text-green-900">
+				<div class="text-green-900">
 					{isMobile
 						? `${thing.available} / ${thing.stock}`
 						: `${thing.available} / ${thing.stock} ${$t('Available')}`}
-				</span>
+				</div>
 			{/if}
 		</div>
 	{/key}

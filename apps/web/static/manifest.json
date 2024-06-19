@@ -1,5 +1,5 @@
 {
-    "name": "PVD Things Catalog",
+    "name": "PVD Things",
     "short_name": "PVD Things",
     "icons": [
         {
@@ -27,8 +27,8 @@
             "purpose": "maskable"
         }
     ],
-    "theme_color": "#A5B4FC",
-    "background_color": "#A5B4FC",
+    "theme_color": "#6366F1",
+    "background_color": "#F5F5F5",
     "display": "standalone",
     "start_url": "/"
 }

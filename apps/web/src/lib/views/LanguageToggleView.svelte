@@ -6,7 +6,7 @@
 
 <button
 	on:click={() => $locale = otherLocale}
-	class="btn btn-ghost btn-circle font-sans text-lg lg:text-2xl text-indigo-900"
+	class="btn btn-ghost btn-circle font-sans text-lg lg:text-2xl"
 	aria-label="Language"
 >
 	{otherLocale.toUpperCase()}

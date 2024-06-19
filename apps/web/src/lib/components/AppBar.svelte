@@ -1,13 +1,13 @@
-<div class="navbar fixed top-0 left-0 right-0 z-50 shadow-lg bg-indigo-300">
-  <div class="navbar-start lg:pl-4">
+<div class="navbar fixed top-0 left-0 right-0 z-50 shadow-lg bg-neutral-100 border-b border-neutral-400">
+  <div class="navbar-start lg:pl-4 text-neutral-800 stroke-neutral-800">
     <slot name="start" />
   </div>
   <div class="navbar-center">
     <a href="https://pvdthings.coop">
-      <img src="/PVD_Things_Logo_White.png" alt="PVD Things" class="h-16 lg:h-20" />
+      <img src="/logo.png" alt="PVD Things" class="h-16 lg:h-20" />
     </a>
   </div>
-  <div class="navbar-end lg:pr-4">
+  <div class="navbar-end lg:pr-4 text-neutral-800 stroke-neutral-800">
     <slot name="end" />
   </div>
 </div>
