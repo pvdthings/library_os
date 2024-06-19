@@ -64,15 +64,15 @@ const createItems = async (thingId, { quantity, brand, description, estimatedVal
 const updateItem = async (id, { brand, description, estimatedValue, hidden, condition, image, manuals }) => {
   let updatedFields = {};
 
-  if (brand) {
+  if (brand !== null) {
       updatedFields['Brand'] = brand;
   }
 
-  if (description) {
+  if (description !== null) {
       updatedFields['Description'] = description;
   }
 
-  if (estimatedValue) {
+  if (estimatedValue !== null) {
       updatedFields['Estimated Value'] = estimatedValue;
   }
 
