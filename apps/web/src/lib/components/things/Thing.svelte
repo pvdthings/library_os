@@ -94,7 +94,11 @@
 			{#if hasZeroStock}
 				<div class="text-yellow-900">{$t('Donate')}</div>
 			{:else if isInList}
-				<div class="text-indigo-900">{$t('Bookmarked')}</div>
+				<div class="text-indigo-900">
+					{isMobile
+						? `${thing.available} / ${thing.stock}`
+						: `${thing.available} / ${thing.stock} ${$t('Available')}`}
+				</div>
 			{:else if noneAvailable}
 				<div class="text-red-900">
 					{isMobile ? `${thing.available} / ${thing.stock}` : $t('Unavailable')}
