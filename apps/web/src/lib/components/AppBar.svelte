@@ -3,9 +3,7 @@
     <slot name="start" />
   </div>
   <div class="navbar-center">
-    <a href="https://pvdthings.coop">
-      <img src="/logo.png" alt="PVD Things" class="h-16" />
-    </a>
+    <img src="/logo.png" alt="PVD Things" class="h-16" />
   </div>
   <div class="navbar-end lg:pr-4 text-neutral-800 stroke-neutral-800">
     <slot name="end" />

@@ -11,11 +11,11 @@
 </script>
 
 <div class="relative">
-	<img src={SearchIcon} alt="searchIcon" class="w-6 h-6 absolute top-2.5 left-2 transform" />
+	<img src={SearchIcon} alt="Search" class="w-6 h-6 absolute top-2.5 left-2 transform" />
 	<TextInput bind:value={$searchFilter} placeholder={$t('Input.Search')} />
 	{#if $searchFilter.length > 0}
 		<button class="btn btn-circle btn-sm btn-ghost absolute right-2 top-1.5" on:click={clearSearch}>
-			<img src={XMarkIcon} alt="searchIcon" class="w-5 h-5 absolute top-1.75 left-2.25 transform" />
+			<img src={XMarkIcon} alt="Clear Search" class="w-5 h-5 absolute top-1.75 left-2.25 transform" />
 		</button>
 	{/if}
 </div>
