@@ -4,7 +4,7 @@
   </div>
   <div class="navbar-center">
     <a href="https://pvdthings.coop">
-      <img src="/logo.png" alt="PVD Things" class="h-16 lg:h-20" />
+      <img src="/logo.png" alt="PVD Things" class="h-16" />
     </a>
   </div>
   <div class="navbar-end lg:pr-4 text-neutral-800 stroke-neutral-800">
