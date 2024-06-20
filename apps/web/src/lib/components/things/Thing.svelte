@@ -22,13 +22,13 @@
 
 	const getBackgroundColor = () => {
 		if (isInList)
-			return 'bg-indigo-300';
+			return 'bg-indigo-200';
 		if (hasZeroStock)
-			return 'bg-yellow-300';
+			return 'bg-yellow-200';
 		if (noneAvailable)
-			return 'bg-red-300';
+			return 'bg-red-200';
 
-		return 'bg-green-300';
+		return 'bg-green-200';
 	};
 
 	const getShortName = (name) => {
