@@ -1,28 +1,15 @@
 <script>
-    import Scroller from "./Scroller.svelte";
-    import { filterByCategory } from "$lib/utils/filters";
+	import Thing from './Thing.svelte';
 
-    export let things;
-    export let categories;
-    export let shownCategory;
+	export let things;
 </script>
 
 <div>
-  {#key things}
-    {#if shownCategory}
-      <Scroller things={filterByCategory(things, shownCategory)} wrap={true} />
-    {:else}
-      {#each categories as category}
-        {@const filteredThings = filterByCategory(things, category)}
-        {#if filteredThings.length > 0}
-          <div>
-            <div class="pl-4 text-4xl lg:text-5xl font-display font-bold text-black">
-              {category}
-            </div>
-            <Scroller things={filteredThings} />
-          </div>
-        {/if}
-      {/each}
-    {/if}
-  {/key}
+	{#key things}
+		<div class="grid grid-cols-3 md:grid-cols-5 gap-x-4 gap-y-6 place-content-between">
+			{#each things as thing}
+				<Thing {thing} />
+			{/each}
+		</div>
+	{/key}
 </div>
