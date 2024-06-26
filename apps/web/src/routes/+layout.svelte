@@ -12,7 +12,7 @@
 	description="PVD Things Catalog"
 	keywords="Providence, Library, Things, PVD, Tools, Rentals, Sharing"
 	image="/PVD_Things_Twitter_Header.png"
-	url="https://app.pvdthings.coop"
+	url="https://web.pvdthings.coop"
 	twitterHandle="@pvdthings"
 />
 <main class="bg-neutral-200 flex flex-col min-h-screen w-full">
