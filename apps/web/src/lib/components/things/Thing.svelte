@@ -67,10 +67,11 @@
 <svelte:window bind:innerWidth />
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
 	class="relative flex flex-col justify-between bg-white border border-neutral-400 rounded-md {isInList ? 'shadow-lowest' : 'shadow-low'} overflow-hidden cursor-pointer"
 	on:click={onClick}
+	role="button"
+	tabindex="-1"
 >
 	{#if isInList}
 		<div class="absolute -top-2 right-1">
