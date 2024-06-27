@@ -7,7 +7,7 @@
 <button
   on:click
   class:selected
-  class="text-2xl md:text-lg p-4 md:py-2 text-left hover:bg-gray-300 align-middle"
+  class="text-2xl md:text-lg p-4 md:py-2 text-left hover:bg-neutral-300 align-middle"
   >
     <slot />
     {#if selected}

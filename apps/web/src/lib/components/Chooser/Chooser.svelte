@@ -34,10 +34,11 @@
 
 <svelte:window bind:innerWidth on:click={() => (dropdownHidden = true)} />
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="relative h-11" on:click|stopPropagation={() => {}} on:keypress={() => {}}>
 	<button
 		on:click={toggleDropdown}
-		class="chooser-button bg-white hover:bg-indigo-50 rounded-md border border-gray-500 shadow-high h-full w-48"
+		class="chooser-button bg-white hover:bg-neutral-50 rounded-md border border-neutral-400 shadow-high h-full w-48"
 	>
 		<img
 			class="inline mr-1"
