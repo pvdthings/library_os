@@ -26,7 +26,7 @@
     class:defaultToggled={isToggled(ButtonTheme.default)}
     class:primary={theme === ButtonTheme.primary}
     class:primaryToggled={isToggled(ButtonTheme.primary)}
-    class="{padding} rounded-md border border-gray-500 font-semibold font-display outline-none">
+    class="{padding} rounded-md border border-neutral-400 font-semibold font-display outline-none">
         {#if icon && !selected}
             <img class="icon" src={icon} alt={text} />
         {/if}
@@ -42,7 +42,7 @@
     }
 
     button.default {
-        @apply bg-white hover:bg-indigo-50;
+        @apply bg-white hover:bg-neutral-50;
     }
 
     button.defaultToggled {

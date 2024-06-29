@@ -16,7 +16,7 @@
   <td>
     <div class="flex space-x-3">
       <div class="avatar">
-        <div class="mask rounded-md border border-gray-300 bg-white w-14 h-14">
+        <div class="mask rounded-md border border-neutral-300 bg-white w-14 h-14">
           <img src={imgSrc ?? BoxIcon} alt={thingName} />
         </div>
       </div>

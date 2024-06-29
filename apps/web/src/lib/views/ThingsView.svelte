@@ -1,6 +1,6 @@
 <script>
-	import { categories, categoryFilter, filteredThings } from '$lib/stores/catalog';
-	import Things from '$lib/components/things/Things.svelte';
+	import { filteredThings } from '$lib/stores/catalog';
+	import { Things } from '$lib/components/things';
 </script>
 
-<Things things={$filteredThings} categories={$categories} shownCategory={$categoryFilter} />
+<Things things={$filteredThings} />
