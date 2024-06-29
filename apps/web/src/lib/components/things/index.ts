@@ -1,1 +1,1 @@
-export { default } from "./Things.svelte";
+export { default as Things } from "./Things.svelte";
