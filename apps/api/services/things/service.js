@@ -9,9 +9,9 @@ const thingFields = ['Name', 'name_es', 'Stock', 'Available', 'Image', 'Category
 
 const fetchCategories = () => ThingCategories;
 
-const fetchThings = async () => {
+const fetchThings = async ({ view = 'api_by_name' }) => {
   const records = await things.select({
-      view: 'api_by_name',
+      view,
       fields: thingFields,
       pageSize: 100
   }).all();
