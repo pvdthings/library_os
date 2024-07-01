@@ -15,7 +15,7 @@
 	url="https://web.pvdthings.coop"
 	twitterHandle="@pvdthings"
 />
-<main class="bg-neutral-200 flex flex-col min-h-screen w-full">
+<main class="flex flex-col w-full">
 	<AppBar>
 		<HomeButton slot="start" />
 		<LanguageToggleView slot="end" />
