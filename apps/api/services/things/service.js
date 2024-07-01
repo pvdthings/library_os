@@ -9,9 +9,9 @@ const thingFields = ['Name', 'name_es', 'Stock', 'Available', 'Image', 'Category
 
 const fetchCategories = () => ThingCategories;
 
-const fetchThings = async ({ view = 'api_by_name' }) => {
+const fetchThings = async ({ byPopularity = false }) => {
   const records = await things.select({
-      view,
+      view: byPopularity ? 'api_by_popularity' : 'api_by_name',
       fields: thingFields,
       pageSize: 100
   }).all();
