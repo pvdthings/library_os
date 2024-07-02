@@ -33,11 +33,13 @@ export default {
         "Wednesday": "Wednesday",
         "Saturday": "Saturday",
         "Catalog": "Catalog",
+        "Bookmark": "Bookmark",
         "Bookmarks": "Bookmarks",
         "Learn": "Learn",
         "Bookmarked": "Bookmarked",
         "No Bookmarks": "No Bookmarks",
-        "It's not loading!": "It's not loading!"
+        "It's not loading!": "It's not loading!",
+        "Due Back": "Due Back"
     },
     es: {
         "Button.Home": "Inicio",
@@ -74,10 +76,12 @@ export default {
         "Automotive": "Automotor",
         "Health": "Salud",
         "Catalog": "Catálago",
+        "Bookmark": "Marcar",
         "Bookmarks": "Marcadores",
         "Learn": "Aprende",
         "Bookmarked": "Marcado",
         "No Bookmarks": "No hay marcadores",
-        "It's not loading!": "¡No se está cargando!"
+        "It's not loading!": "¡No se está cargando!",
+        "Due Back": "Fecha de regreso"
     }
 }
