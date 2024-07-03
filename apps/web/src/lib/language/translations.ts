@@ -39,7 +39,8 @@ export default {
         "Bookmarked": "Bookmarked",
         "No Bookmarks": "No Bookmarks",
         "It's not loading!": "It's not loading!",
-        "Due Back": "Due Back"
+        "Due Back": "Due Back",
+        "Due Back Disclaimer": "We cannot guarantee that the item will be returned by the expected due date. Please check with the Lead Librarian during open hours."
     },
     es: {
         "Button.Home": "Inicio",
@@ -82,6 +83,7 @@ export default {
         "Bookmarked": "Marcado",
         "No Bookmarks": "No hay marcadores",
         "It's not loading!": "¡No se está cargando!",
-        "Due Back": "Fecha de regreso"
+        "Due Back": "Fecha de regreso",
+        "Due Back Disclaimer": "No podemos garantizar que el artículo será devuelto antes de la fecha de vencimiento prevista. Consulte con el Bibliotecario Principal durante el horario de atención."
     }
 }

@@ -33,7 +33,7 @@
 
 {#if thing.availableDate}
   <p class="p-1 my-3 text-sm">
-    We cannot guarantee that the item will be returned by the expected due date. Please check with the Lead Librarian during open hours.
+    {$t('Due Back Disclaimer')}
   </p>
 {/if}
 

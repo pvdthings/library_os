@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { locale } from '$lib/language/translate';
 	import { things as bookmarks } from '$lib/stores/myList';
 	import type { Thing } from '$lib/models/Thing';
 	import ThingCard from './ThingCard.svelte';
@@ -12,7 +13,7 @@
 
 <ThingCard
 	image={thing.image}
-	name={thing.name}
+	name={$locale === 'en' ? thing.name : thing.spanishName ?? thing.name}
 	bookmarked={$bookmarks.find((t) => t.id === thing.id) !== undefined}
 	totalStock={thing.stock}
 	remainingStock={thing.available}
