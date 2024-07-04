@@ -1,7 +1,7 @@
 <script lang="ts">
 	import MyListTableRow from './MyListTableRow.svelte';
   import { locale, t } from '$lib/language/translate';
-  import { bookmarks } from '$lib/stores/myList';
+  import { bookmarks } from '$lib/stores/bookmarks';
 	import type { Thing } from '$lib/models/Thing';
 
   $: isSpanish = $locale === 'es';

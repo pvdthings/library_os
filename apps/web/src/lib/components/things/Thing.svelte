@@ -2,7 +2,7 @@
 	import BoxIcon from '$lib/icons/box.svg';
 	import BookmarkIcon from './BookmarkIcon.svelte';
 	import { t, locale } from '$lib/language/translate';
-	import { bookmarks } from '$lib/stores/myList';
+	import { bookmarks } from '$lib/stores/bookmarks';
 	import { showBorrowModal } from '../BorrowModal/stores';
 
 	export let thing;

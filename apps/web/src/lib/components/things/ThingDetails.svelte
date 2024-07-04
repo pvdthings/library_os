@@ -3,7 +3,7 @@
   import { t } from '$lib/language/translate';
   import Button from '../Button/Button.svelte';
 	import { ButtonTheme } from '../Button';
-  import { bookmarks } from "$lib/stores/myList";
+  import { bookmarks } from "$lib/stores/bookmarks";
 
   export let thing: Thing;
 

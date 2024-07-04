@@ -8,7 +8,7 @@
 
 	import { t } from '$lib/language/translate';
 	import { activeScreen, Screen } from '$lib/stores/app';
-	import { bookmarks } from '$lib/stores/myList';
+	import { bookmarks } from '$lib/stores/bookmarks';
 
 	$: catalogText = $t('Catalog');
 	$: bookmarksText = $t('Bookmarks');
