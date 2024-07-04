@@ -8,13 +8,12 @@
 	export let totalStock: number;
 	export let remainingStock: number;
 	export let bookmarked: boolean;
-	export let onTap: () => void;
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
 	class="h-max relative flex flex-col bg-white border border-neutral-400 rounded-md shadow-low overflow-hidden cursor-pointer"
-	on:click={onTap}
+	on:click
 	role="button"
 	tabindex="-1"
 >

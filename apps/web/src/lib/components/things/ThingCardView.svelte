@@ -23,7 +23,7 @@
 	bookmarked={bookmarked}
 	totalStock={thing.stock}
 	remainingStock={thing.available}
-	onTap={() => {
+	on:click={() => {
     showModal = true;
   }}
 />
