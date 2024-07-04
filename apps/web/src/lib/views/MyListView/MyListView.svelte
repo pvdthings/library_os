@@ -1,22 +1,23 @@
 <script lang="ts">
 	import MyListTableRow from './MyListTableRow.svelte';
   import { locale, t } from '$lib/language/translate';
-  import { things } from '$lib/stores/myList';
+  import { bookmarks } from '$lib/stores/myList';
+	import type { Thing } from '$lib/models/Thing';
 
   $: isSpanish = $locale === 'es';
 
-  const removeThing = (id: String) => {
-    things.update(value => value.filter(t => t.id !== id));
+  const removeThing = (thing: Thing) => {
+    bookmarks.addRemove(thing);
   };
 </script>
 
-{#if $things.length > 0}
+{#if $bookmarks.length > 0}
   <table class="table">
     <tbody>
-      {#each $things as thing}
+      {#each $bookmarks as thing}
         {@const thingName = isSpanish ? thing.spanishName ?? thing.name : thing.name}
         <MyListTableRow
-          on:remove={() => removeThing(thing.id)}
+          on:remove={() => removeThing(thing)}
           {thingName}
           category={thing.categories[0]}
           available={thing.available}

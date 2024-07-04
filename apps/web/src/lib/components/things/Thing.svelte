@@ -2,7 +2,7 @@
 	import BoxIcon from '$lib/icons/box.svg';
 	import BookmarkIcon from './BookmarkIcon.svelte';
 	import { t, locale } from '$lib/language/translate';
-	import { things } from '$lib/stores/myList';
+	import { bookmarks } from '$lib/stores/myList';
 	import { showBorrowModal } from '../BorrowModal/stores';
 
 	export let thing;
@@ -12,7 +12,7 @@
 
 	$: isMobile = innerWidth < 1024;
 	$: fontSize = thing.name.length > 13 || isMobile ? 'text-sm' : 'text-base';
-	$: isInList = $things.find(t => t.id === thing.id) !== undefined;
+	$: isInList = $bookmarks.find(t => t.id === thing.id) !== undefined;
 
 	const donateURL = `https://airtable.com/shrwMSrzvSLpQgQWC?prefill_Description=${encodeURIComponent(
 		thing.name
@@ -39,23 +39,12 @@
 	const onClick = () => {
 		if (!hasZeroStock) {
 			if (isMobile) {
-				updateList();
+				bookmarks.addRemove(thing);
 			} else {
 				showBorrowModal.set(true);
 			}
 		} else {
 			window.open(donateURL, '_blank').focus();
-		}
-	};
-
-	const updateList = () => {
-		const existingThing = $things.find(t => t.id === thing.id);
-		if (existingThing) {
-			// remove
-			things.update(value => value.filter(t => t.id !== thing.id));
-		} else {
-			// add
-			things.update(value => [thing, ...value]);
 		}
 	};
 

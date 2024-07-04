@@ -8,7 +8,7 @@
 
 	import { t } from '$lib/language/translate';
 	import { activeScreen, Screen } from '$lib/stores/app';
-	import { thingsLength } from '$lib/stores/myList';
+	import { bookmarks } from '$lib/stores/myList';
 
 	$: catalogText = $t('Catalog');
 	$: bookmarksText = $t('Bookmarks');
@@ -34,9 +34,9 @@
 		on:click={() => ($activeScreen = Screen.myList)}
 	>
 		<div class="indicator">
-			{#if $thingsLength}
+			{#if $bookmarks.length}
 				<span class="indicator-item badge bg-indigo-500 border-indigo-600 text-white">
-					{$thingsLength}
+					{$bookmarks.length}
 				</span>
 			{/if}
 			<img

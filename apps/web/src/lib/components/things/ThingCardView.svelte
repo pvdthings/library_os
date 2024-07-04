@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { locale } from '$lib/language/translate';
-	import { things as bookmarks } from '$lib/stores/myList';
+	import { bookmarks } from '$lib/stores/myList';
 	import type { Thing } from '$lib/models/Thing';
 	import ThingCard from './ThingCard.svelte';
 	import { Modal } from '../Modal';

@@ -3,6 +3,7 @@
   import { t } from '$lib/language/translate';
   import Button from '../Button/Button.svelte';
 	import { ButtonTheme } from '../Button';
+  import { bookmarks } from "$lib/stores/myList";
 
   export let thing: Thing;
 
@@ -12,6 +13,10 @@
     }
 
     return 'bg-green-200 text-green-900';
+  };
+
+  const addRemoveBookmark = () => {
+    bookmarks.addRemove(thing);
   };
 </script>
 
@@ -38,7 +43,7 @@
 {/if}
 
 <div class="mt-8 float-right">
-  <Button theme={ButtonTheme.primary}>
+  <Button theme={ButtonTheme.primary} on:click={addRemoveBookmark}>
     <span class="text-xl">{$t('Bookmark')}</span>
   </Button>
 </div>
