@@ -5,6 +5,7 @@
 	import { ButtonTheme } from '../Button';
   import { bookmarks } from "$lib/stores/bookmarks";
 	import { createEventDispatcher } from "svelte";
+	import { openDonationForm } from "$lib/utils/donations";
 
   export let thing: Thing;
   export let bookmarked: boolean;
@@ -45,7 +46,13 @@
   </p>
 {/if}
 
-<div class="mt-8 float-right">
+<div class="mt-8 flex flex-row gap-2 justify-end">
+  {#if thing.stock === 0}
+    <Button on:click={() => openDonationForm(thing.name)}>
+      <span class="text-xl">{$t('Donate')}</span>
+    </Button>
+  {/if}
+
   <Button theme={ButtonTheme.primary} on:click={addRemoveBookmark}>
     <span class="text-xl">
         {bookmarked ? $t('Unbookmark') : $t('Bookmark')}

@@ -51,7 +51,7 @@ export default {
         "Category": "Categoría",
         "Input.Search": "Buscar...",
         "No Results": "No hay resultados",
-        "Donate": "Done",
+        "Donate": "Donar",
         "How to Borrow": "Como pedir prestado",
         "How to Borrow.Step1": "Compre una membresía de PVD Things y pague cuotas anuales.",
         "How to Borrow.Step2": "Visítenos en 12 Library Court en Providence.",
