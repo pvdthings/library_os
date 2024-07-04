@@ -11,6 +11,10 @@
 	$: bookmarked = $bookmarks.find((t) => t.id === thing.id) !== undefined;
 
   let showModal = false;
+
+	const closeModal = () => {
+		showModal = false;
+	};
 </script>
 
 <ThingCard
@@ -25,7 +29,7 @@
 />
 
 {#if showModal}
-  <Modal show={showModal} on:close={() => showModal = false}>
-    <ThingDetails {thing} {bookmarked} />
+  <Modal show={showModal} on:close={closeModal}>
+    <ThingDetails {thing} {bookmarked} on:click={closeModal} />
   </Modal>
 {/if}

@@ -4,9 +4,12 @@
   import Button from '../Button/Button.svelte';
 	import { ButtonTheme } from '../Button';
   import { bookmarks } from "$lib/stores/bookmarks";
+	import { createEventDispatcher } from "svelte";
 
   export let thing: Thing;
   export let bookmarked: boolean;
+
+  const dispatch = createEventDispatcher();
 
   const stockContainerStyle = (available: number) => {
     if (available === 0) {
@@ -18,6 +21,7 @@
 
   const addRemoveBookmark = () => {
     bookmarks.addRemove(thing);
+    dispatch('click');
   };
 </script>
 
