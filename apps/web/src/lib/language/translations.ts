@@ -37,7 +37,7 @@ export default {
         "Bookmarks": "Bookmarks",
         "Learn": "Learn",
         "Bookmarked": "Bookmarked",
-        "Unbookmark": "Remove from Bookmarks",
+        "Unbookmark": "Remove Bookmark",
         "No Bookmarks": "No Bookmarks",
         "It's not loading!": "It's not loading!",
         "Due Back": "Due Back",
