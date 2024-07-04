@@ -8,13 +8,15 @@
 
 	export let thing: Thing;
 
+	$: bookmarked = $bookmarks.find((t) => t.id === thing.id) !== undefined;
+
   let showModal = false;
 </script>
 
 <ThingCard
 	image={thing.image}
 	name={$locale === 'en' ? thing.name : thing.spanishName ?? thing.name}
-	bookmarked={$bookmarks.find((t) => t.id === thing.id) !== undefined}
+	bookmarked={bookmarked}
 	totalStock={thing.stock}
 	remainingStock={thing.available}
 	onTap={() => {
@@ -24,6 +26,6 @@
 
 {#if showModal}
   <Modal show={showModal} on:close={() => showModal = false}>
-    <ThingDetails {thing} />
+    <ThingDetails {thing} {bookmarked} />
   </Modal>
 {/if}

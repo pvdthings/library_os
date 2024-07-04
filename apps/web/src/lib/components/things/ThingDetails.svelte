@@ -6,6 +6,7 @@
   import { bookmarks } from "$lib/stores/bookmarks";
 
   export let thing: Thing;
+  export let bookmarked: boolean;
 
   const stockContainerStyle = (available: number) => {
     if (available === 0) {
@@ -44,6 +45,8 @@
 
 <div class="mt-8 float-right">
   <Button theme={ButtonTheme.primary} on:click={addRemoveBookmark}>
-    <span class="text-xl">{$t('Bookmark')}</span>
+    <span class="text-xl">
+        {bookmarked ? $t('Unbookmark') : $t('Bookmark')}
+    </span>
   </Button>
 </div>

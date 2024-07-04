@@ -23,9 +23,21 @@
 		<ThingCardBookmark />
 	{/if}
 	<img src={image ?? BoxIcon} alt={name} class="p-2 w-full aspect-square object-contain" />
-	<div
-		class="px-2 py-1 text-center text-ellipsis font-display font-medium border-t border-neutral-400"
-	>
-		{name}
-	</div>
+	{#if bookmarked}
+		<div class="bg-indigo-200 text-indigo-900 name">
+			{name}
+		</div>
+	{:else}
+		<div class="name">
+			{name}
+		</div>
+	{/if}
 </div>
+
+<style>
+	.name {
+		@apply px-2 py-1;
+		@apply text-center text-ellipsis font-display font-medium;
+		@apply border-t border-neutral-400;
+	}
+</style>
