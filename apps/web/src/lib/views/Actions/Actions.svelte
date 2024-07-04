@@ -1,6 +1,10 @@
 <script>
-	import LanguageToggleButton from "./LanguageToggleButton.svelte";
+	import BookmarksButton from "./BookmarksButton.svelte";
+  import LanguageToggleButton from "./LanguageToggleButton.svelte";
 
 </script>
 
-<LanguageToggleButton />
+<div class="flex flex-row gap-1">
+  <LanguageToggleButton />
+  <BookmarksButton />
+</div>

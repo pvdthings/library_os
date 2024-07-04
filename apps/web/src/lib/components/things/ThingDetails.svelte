@@ -25,8 +25,6 @@
   };
 </script>
 
-<h2 class="font-bold font-display text-2xl mb-3">{thing.name}</h2>
-
 <div class="rounded-md overflow-hidden text-xl border border-neutral-400 flex flex-row items-center">
   <div class="px-2 py-1 border-r border-neutral-400 {stockContainerStyle(thing.available)}">
     {thing.available} / {thing.stock}

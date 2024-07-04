@@ -9,6 +9,7 @@
 	export let thing: Thing;
 
 	$: bookmarked = $bookmarks.find((t) => t.id === thing.id) !== undefined;
+	$: thingName = $locale === 'en' ? thing.name : thing.spanishName ?? thing.name;
 
   let showModal = false;
 
@@ -19,7 +20,7 @@
 
 <ThingCard
 	image={thing.image}
-	name={$locale === 'en' ? thing.name : thing.spanishName ?? thing.name}
+	name={thingName}
 	bookmarked={bookmarked}
 	totalStock={thing.stock}
 	remainingStock={thing.available}
@@ -29,7 +30,7 @@
 />
 
 {#if showModal}
-  <Modal show={showModal} on:close={closeModal}>
+  <Modal title={thingName} show={showModal} on:close={closeModal}>
     <ThingDetails {thing} {bookmarked} on:click={closeModal} />
   </Modal>
 {/if}
