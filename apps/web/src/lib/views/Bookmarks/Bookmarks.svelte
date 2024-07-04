@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MyListTableRow from './MyListTableRow.svelte';
+	import BookmarksRow from './BookmarksRow.svelte';
 	import { locale, t } from '$lib/language/translate';
 	import { bookmarks } from '$lib/stores/bookmarks';
 	import type { Thing } from '$lib/models/Thing';
@@ -16,7 +16,7 @@
 		<tbody>
 			{#each $bookmarks as thing}
 				{@const thingName = isSpanish ? thing.spanishName ?? thing.name : thing.name}
-				<MyListTableRow
+				<BookmarksRow
 					on:remove={() => removeThing(thing)}
 					{thingName}
 					category={thing.categories[0]}
