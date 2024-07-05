@@ -1,13 +1,14 @@
-<script>
-	import Thing from './Thing.svelte';
+<script lang="ts">
+	import type { Thing } from '$lib/models/Thing';
+	import ThingCardView from './ThingCardView.svelte';
 
-	export let things;
+	export let things: Thing[];
 </script>
 
 {#key things}
-	<div class="grid grid-cols-2 md:grid-cols-6 gap-x-4 gap-y-6 place-content-between">
+	<div class="grid grid-cols-2 md:grid-cols-6 gap-4 place-content-between">
 		{#each things as thing}
-			<Thing {thing} />
+			<ThingCardView {thing} />
 		{/each}
 	</div>
 {/key}

@@ -3,8 +3,8 @@
 	import { Head } from '$lib/components';
 	import BottomNavigationView from '$lib/views/BottomNavigationView.svelte';
 	import AppBar from '$lib/components/AppBar.svelte';
-	import LanguageToggleView from '$lib/views/LanguageToggleView.svelte';
 	import HomeButton from '$lib/components/HomeButton.svelte';
+	import { Actions } from '$lib/views/Actions';
 </script>
 
 <Head
@@ -15,10 +15,10 @@
 	url="https://web.pvdthings.coop"
 	twitterHandle="@pvdthings"
 />
-<main class="bg-neutral-200 flex flex-col min-h-screen w-full">
+<main class="flex flex-col w-full">
 	<AppBar>
 		<HomeButton slot="start" />
-		<LanguageToggleView slot="end" />
+		<Actions slot="end" />
 	</AppBar>
 	<div class="flex-grow pt-24 lg:pt-32 pb-20">
 		<slot />

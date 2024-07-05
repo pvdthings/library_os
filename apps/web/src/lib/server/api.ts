@@ -9,8 +9,5 @@ export const fetchThings = async (fetch): Promise<AppData> => {
     }
   });
 
-  const data: AppData = await result.json();
-  data.things = data.things.filter(thing => thing.categories);
-
-  return data;
+  return await result.json();
 };

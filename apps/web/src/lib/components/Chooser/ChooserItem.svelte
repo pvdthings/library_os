@@ -7,11 +7,13 @@
 <button
   on:click
   class:selected
-  class="text-2xl md:text-lg p-4 md:py-2 text-left hover:bg-neutral-300 align-middle"
+  class="flex flex-row text-2xl md:text-sm p-4 md:px-4 md:py-2 font-display font-medium text-left hover:bg-neutral-200 items-center justify-between overflow-hidden"
   >
-    <slot />
+    <span>
+      <slot />
+    </span>
     {#if selected}
-      <img class="inline-block float-right mt-1 w-[20px] h-[20px]" src={CheckIcon} alt="Selected" />
+      <img class="w-[20px] h-[20px]" src={CheckIcon} alt="Selected" />
     {/if}
   </button
 >

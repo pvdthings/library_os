@@ -5,15 +5,15 @@ const { mapItem } = require('../inventory');
 const things = base(Table.Things);
 const inventory = base(Table.Inventory);
 
-const thingFields = ['Name', 'name_es', 'Stock', 'Available', 'Image', 'Category', 'Hidden'];
+const thingFields = ['Name', 'name_es', 'Stock', 'Available', 'Image', 'Category', 'Hidden', 'Next Due Back'];
 
 const fetchCategories = () => ThingCategories;
 
-const fetchThings = async () => {
+const fetchThings = async ({ byPopularity = false }) => {
   const records = await things.select({
-      view: 'api_by_name',
-      fields: thingFields,
-      pageSize: 100
+    view: byPopularity ? 'api_by_popularity' : 'api_by_name',
+    fields: thingFields,
+    pageSize: 100
   }).all();
 
   return records.map(mapThing);
@@ -25,7 +25,7 @@ const fetchThing = async (id) => {
   const itemIds = record.get('Inventory');
 
   const itemPromises = itemIds?.map(id => {
-      return inventory.find(id)
+    return inventory.find(id)
   });
 
   const items = (await Promise.all(itemPromises || [])).map(mapItem);
@@ -35,11 +35,11 @@ const fetchThing = async (id) => {
 
 const createThing = async ({ name, spanishName, hidden, image, eyeProtection }) => {
   const record = await things.create({
-      'Name': name,
-      'name_es': spanishName,
-      'Eye Protection': eyeProtection,
-      'Hidden': hidden,
-      'Image': image?.url ? [{ url: image.url }] : []
+    'Name': name,
+    'name_es': spanishName,
+    'Eye Protection': eyeProtection,
+    'Hidden': hidden,
+    'Image': image?.url ? [{ url: image.url }] : []
   });
 
   return record ? mapThingDetails(record, []) : null;
@@ -49,23 +49,23 @@ const updateThing = async (id, { name, spanishName, hidden, image, eyeProtection
   let updatedFields = {};
 
   if (name) {
-      updatedFields['Name'] = name;
+    updatedFields['Name'] = name;
   }
 
   if (spanishName) {
-      updatedFields['name_es'] = spanishName;
+    updatedFields['name_es'] = spanishName;
   }
 
   if (hidden !== null) {
-      updatedFields['Hidden'] = hidden;
+    updatedFields['Hidden'] = hidden;
   }
 
   if (image?.url) {
-      updatedFields['Image'] = [{ url: image.url }];
+    updatedFields['Image'] = [{ url: image.url }];
   }
 
   if (eyeProtection !== null) {
-      updatedFields['Eye Protection'] = eyeProtection;
+    updatedFields['Eye Protection'] = eyeProtection;
   }
 
   await things.update(id, updatedFields);
