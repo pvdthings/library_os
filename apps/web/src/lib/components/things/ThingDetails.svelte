@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Thing } from "$lib/models/Thing";
-  import { t } from '$lib/language/translate';
+  import { t, locale } from '$lib/language/translate';
   import Button from '../Button/Button.svelte';
 	import { ButtonTheme } from '../Button';
   import { bookmarks } from "$lib/stores/bookmarks";
@@ -26,16 +26,16 @@
   };
 </script>
 
-<div class="rounded-md overflow-hidden text-xl border border-neutral-400 flex flex-row items-center">
-  <div class="px-2 py-1 border-r border-neutral-400 {stockContainerStyle(thing.available)}">
+<div class="rounded-md overflow-hidden lg:text-lg border border-neutral-400 flex flex-row items-stretch">
+  <div class="px-2 py-1 flex flex-row items-center flex-grow-0 border-r border-neutral-400 {stockContainerStyle(thing.available)}">
     {thing.available} / {thing.stock}
   </div>
-  <div class="px-2 py-1 text-right flex-grow">
+  <div class="px-2 py-1 flex-grow flex flex-row justify-between items-center">
     {#if thing.availableDate}
-      <span class="float-left font-display text-neutral-500">{$t('Due Back')}</span>
-      <span class="float-right">{thing.availableDate}</span>
+      <div class="font-display text-neutral-500">{$t('Due Back')}</div>
+      <div class="text-right text-xl">{new Date(thing.availableDate).toLocaleDateString($locale)}</div>
     {:else}
-      <span class="float-left font-display text-neutral-500">{$t('Available')}</span>
+      <div class="font-display text-neutral-500">{$t('Available')}</div>
     {/if}
   </div>
 </div>
