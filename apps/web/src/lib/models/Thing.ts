@@ -6,4 +6,5 @@ export interface Thing {
   image?: string;
   stock: number;
   available: number;
+  availableDate?: string;
 }

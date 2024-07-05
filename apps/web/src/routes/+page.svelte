@@ -4,7 +4,7 @@
 	import { activeScreen, Screen } from '$lib/stores/app';
 	import { categories, things, wishListFilter } from '$lib/stores/catalog';
 	import CatalogView from '$lib/views/CatalogView.svelte';
-	import MyListView from '$lib/views/MyListView';
+	import { Bookmarks } from '$lib/views/Bookmarks';
 	import InfoView from '$lib/views/InfoView';
 
 	export let data;
@@ -28,7 +28,7 @@
 			{/if}
 
 			{#if $activeScreen === Screen.myList}
-				<MyListView />
+				<Bookmarks />
 			{/if}
 
 			{#if $activeScreen === Screen.info}
