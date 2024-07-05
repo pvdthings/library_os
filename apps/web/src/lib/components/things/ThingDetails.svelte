@@ -34,6 +34,8 @@
     {#if thing.availableDate}
       <div class="font-display text-neutral-500">{$t('Due Back')}</div>
       <div class="text-right text-xl">{new Date(thing.availableDate).toLocaleDateString($locale)}</div>
+    {:else if thing.stock === 0}
+      <div class="font-display text-neutral-500">{$t('Wanted')}</div>
     {:else}
       <div class="font-display text-neutral-500">{$t('Available')}</div>
     {/if}
