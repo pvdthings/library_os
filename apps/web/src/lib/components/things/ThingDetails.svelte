@@ -48,7 +48,7 @@
   </p>
 {/if}
 
-<div class="mt-8 flex flex-row gap-2 justify-end">
+<div class="mt-8 grid grid-cols-1 sm:flex sm:flex-row justify-end gap-3">
   {#if thing.stock === 0}
     <Button on:click={() => openDonationForm(thing.name)}>
       <span class="text-xl">{$t('Donate')}</span>
