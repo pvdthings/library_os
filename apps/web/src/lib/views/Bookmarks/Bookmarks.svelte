@@ -27,5 +27,5 @@
 		</tbody>
 	</table>
 {:else}
-	<div class="text-lg min-h-10 flex flex-col items-center">{$t('No Bookmarks')}</div>
+	<div class="min-h-12 text-lg text-center">{$t('No Bookmarks')}</div>
 {/if}

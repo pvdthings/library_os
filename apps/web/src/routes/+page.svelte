@@ -18,22 +18,18 @@
 	});
 </script>
 
-<div class="mx-3 lg:mx-auto lg:w-3/4">
-	{#if !data}
-		<LoadingIndicator />
-	{:else}
-		<div id="AppView" class="relative">
-			{#if $activeScreen === Screen.catalog}
-				<CatalogView />
-			{/if}
-
-			{#if $activeScreen === Screen.myList}
-				<Bookmarks />
-			{/if}
-
-			{#if $activeScreen === Screen.info}
-				<InfoView />
-			{/if}
-		</div>
+{#if !data}
+	<LoadingIndicator />
+{:else}
+	{#if $activeScreen === Screen.catalog}
+		<CatalogView />
 	{/if}
-</div>
+
+	{#if $activeScreen === Screen.myList}
+		<Bookmarks />
+	{/if}
+
+	{#if $activeScreen === Screen.info}
+		<InfoView />
+	{/if}
+{/if}

@@ -20,7 +20,7 @@
 		<HomeButton slot="start" />
 		<Actions slot="end" />
 	</AppBar>
-	<div class="flex-grow pt-24 lg:pt-32 pb-20">
+	<div class="flex-grow pt-24 lg:pt-32 pb-20 mx-3 lg:mx-auto lg:w-3/4 relative">
 		<slot />
 	</div>
 	<BottomNavigationView />
