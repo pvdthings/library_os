@@ -5,11 +5,11 @@
 @tailwind utilities;
 
 :root {
-    @apply bg-neutral-200;
     font-family: 'Roboto Mono', monospace;
 }
 
 body {
+    @apply bg-neutral-200;
     @apply font-body;
 }
 
