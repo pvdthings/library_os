@@ -26,7 +26,7 @@
   };
 </script>
 
-<div class="rounded-md overflow-hidden lg:text-lg border border-neutral-400 flex flex-row items-stretch">
+<div class="rounded-md overflow-hidden text-lg border border-neutral-400 flex flex-row items-stretch">
   <div class="px-2 py-1 flex flex-row items-center flex-grow-0 border-r border-neutral-400 {stockContainerStyle(thing.available)}">
     {thing.available} / {thing.stock}
   </div>
