@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
 	import BookOpenIcon from '$lib/icons/book-open.svg';
 	import BookmarkIcon from '$lib/icons/bookmark.svg';
 	import LightbulbIcon from '$lib/icons/lightbulb.svg';
@@ -9,17 +9,23 @@
 	import { t } from '$lib/language/translate';
 	import { activeScreen, Screen } from '$lib/stores/app';
 	import { bookmarks } from '$lib/stores/bookmarks';
+	import { vibrate } from '$lib/utils/haptics';
 
 	$: catalogText = $t('Catalog');
 	$: bookmarksText = $t('Bookmarks');
 	$: learnText = $t('Learn');
+
+	const switchScreen = (screen: Screen) => {
+		$activeScreen = screen;
+		vibrate();
+	};
 </script>
 
 <div class="btm-nav bg-neutral-100 border-t border-neutral-400 upward-shadow box-content lg:hidden">
 	<button
 		class="bg-transparent"
 		class:active={$activeScreen === Screen.catalog}
-		on:click={() => ($activeScreen = Screen.catalog)}
+		on:click={() => switchScreen(Screen.catalog)}
 	>
 		<img
 			src={$activeScreen === Screen.catalog ? SolidBookOpenIcon : BookOpenIcon}
@@ -31,7 +37,7 @@
 	<button
 		class="bg-transparent"
 		class:active={$activeScreen === Screen.myList}
-		on:click={() => ($activeScreen = Screen.myList)}
+		on:click={() => switchScreen(Screen.myList)}
 	>
 		<div class="indicator">
 			{#if $bookmarks.length}
@@ -50,7 +56,7 @@
 	<button
 		class="bg-transparent"
 		class:active={$activeScreen === Screen.info}
-		on:click={() => ($activeScreen = Screen.info)}
+		on:click={() => switchScreen(Screen.info)}
 	>
 		<img
 			src={$activeScreen === Screen.info ? SolidLightbulbIcon : LightbulbIcon}

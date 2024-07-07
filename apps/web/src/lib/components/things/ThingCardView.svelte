@@ -5,6 +5,7 @@
 	import ThingCard from './ThingCard.svelte';
 	import { Modal } from '../Modal';
 	import ThingDetails from './ThingDetails.svelte';
+	import { vibrate } from '$lib/utils/haptics';
 
 	export let thing: Thing;
 
@@ -26,6 +27,7 @@
 	remainingStock={thing.available}
 	on:click={() => {
     showModal = true;
+		vibrate();
   }}
 />
 

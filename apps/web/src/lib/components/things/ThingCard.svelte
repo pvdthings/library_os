@@ -12,7 +12,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
-	class="h-max relative flex flex-col bg-white border border-neutral-400 rounded-md shadow-low overflow-hidden cursor-pointer"
+	class="h-max relative flex flex-col bg-white border border-neutral-400 rounded-md shadow-low overflow-hidden cursor-pointer outline-none"
 	on:click
 	role="button"
 	tabindex="-1"

@@ -15,12 +15,12 @@
 	url="https://web.pvdthings.coop"
 	twitterHandle="@pvdthings"
 />
-<main class="flex flex-col w-full">
+<main class="flex flex-col w-full min-h-screen">
 	<AppBar>
 		<HomeButton slot="start" />
 		<Actions slot="end" />
 	</AppBar>
-	<div class="flex-grow pt-24 lg:pt-32 pb-20">
+	<div class="flex-grow pt-24 lg:pt-32 pb-20 mx-3 lg:mx-auto lg:w-3/4 relative">
 		<slot />
 	</div>
 	<BottomNavigationView />
