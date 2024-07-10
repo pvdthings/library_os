@@ -8,6 +8,7 @@
   export let category: string;
   export let imgSrc: string;
   export let available: number;
+  export let totalStock: number;
 
   const dispatch = createEventDispatcher();
 </script>
@@ -16,13 +17,13 @@
   <td>
     <div class="flex space-x-3">
       <div class="avatar">
-        <div class="mask rounded-md border border-neutral-300 bg-white w-14 h-14">
+        <div class="mask rounded-md border border-neutral-400 bg-white w-14 h-14 shadow-low">
           <img src={imgSrc ?? BoxIcon} alt={thingName} />
         </div>
       </div>
       <div>
         <div class="text-base font-bold">{thingName}</div>
-        <div class="text-sm">{available} {$t('Available')}</div>
+        <div class="text-sm">{available} / {totalStock} {$t('Available')}</div>
         <span class="badge badge-ghost mt-2 bg-yellow-300 border-yellow-400">{$t(category)}</span>
       </div>
     </div>

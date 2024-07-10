@@ -29,7 +29,6 @@ module.exports = {
 				'1/4-screen': '25vw'
 			},
 			backgroundImage: (theme) => ({
-				'purple-city': "url('/2.png')",
 				'long-city': "url('/long-city.png')"
 			})
 		}

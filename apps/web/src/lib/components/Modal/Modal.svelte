@@ -20,7 +20,7 @@
 </script>
 
 <dialog bind:this={dialog} class="modal modal-bottom sm:modal-middle">
-  <div class="modal-box relative">
+  <div class="modal-box relative modal-responsive">
     <button class="btn btn-circle btn-ghost outline-none absolute right-2 top-2" on:click={closeModal}>
       <img src={CloseIcon} alt="Close" height="24" width="24" />
     </button>
@@ -30,3 +30,9 @@
     <slot />
   </div>
 </dialog>
+
+<style>
+  .modal-responsive {
+    padding-bottom: max(env(safe-area-inset-bottom, 0), 1.5rem);
+  }
+</style>
