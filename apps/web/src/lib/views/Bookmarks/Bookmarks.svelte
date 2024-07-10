@@ -21,6 +21,7 @@
 					{thingName}
 					category={thing.categories[0]}
 					available={thing.available}
+					totalStock={thing.stock}
 					imgSrc={thing.image}
 				/>
 			{/each}
