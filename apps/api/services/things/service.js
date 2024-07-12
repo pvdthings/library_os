@@ -9,7 +9,7 @@ const thingFields = ['Name', 'name_es', 'Stock', 'Available', 'Image', 'Category
 
 const fetchCategories = () => ThingCategories;
 
-const fetchThings = async ({ byPopularity = false }) => {
+const fetchThings = async ({ byPopularity } = {}) => {
   const records = await things.select({
     view: byPopularity ? 'api_by_popularity' : 'api_by_name',
     fields: thingFields,
