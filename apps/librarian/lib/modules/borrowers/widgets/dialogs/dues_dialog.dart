@@ -4,7 +4,7 @@ import 'record_payment_dialog.dart';
 class DuesNotPaidDialog extends StatefulWidget {
   final String instructions;
   final String? imageUrl;
-  final void Function(double cash) onConfirmPayment;
+  final Future<void> Function(double cash) onConfirmPayment;
 
   const DuesNotPaidDialog({
     super.key,
