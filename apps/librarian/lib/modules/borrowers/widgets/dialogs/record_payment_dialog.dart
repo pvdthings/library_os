@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RecordPaymentDialog extends StatefulWidget {
-  final void Function(double cash) onConfirmPayment;
+  final Future<void> Function(double cash) onConfirmPayment;
 
   const RecordPaymentDialog({
     super.key,
@@ -26,9 +26,12 @@ class _RecordPaymentDialogState extends State<RecordPaymentDialog> {
           'Are you sure you want to record a \$${_cashController.text} cash payment?',
           style: Theme.of(context).textTheme.bodyLarge,
         ),
-        onConfirm: () {
-          widget.onConfirmPayment(double.parse(_cashController.text));
-          Navigator.pop(context, true);
+        onConfirm: () async {
+          await widget.onConfirmPayment(double.parse(_cashController.text));
+
+          Future.delayed(Duration.zero, () {
+            Navigator.pop(context, true);
+          });
         },
         onCancel: () => Navigator.pop(context, false),
       );

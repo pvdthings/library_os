@@ -38,15 +38,17 @@ class BorrowerIssues extends ConsumerWidget {
                       context: context,
                       builder: (context) {
                         return DuesNotPaidDialog(
-                            instructions: issue.instructions!,
-                            imageUrl: issue.graphicUrl,
-                            onConfirmPayment: (cash) {
-                              ref
-                                  .read(borrowersRepositoryProvider.notifier)
-                                  .recordCashPayment(
-                                      borrowerId: borrowerId, cash: cash)
-                                  .then(onRecordCashPayment);
-                            });
+                          instructions: issue.instructions!,
+                          imageUrl: issue.graphicUrl,
+                          onConfirmPayment: (cash) async {
+                            final result = await ref
+                                .read(borrowersRepositoryProvider.notifier)
+                                .recordPayment(
+                                    borrowerId: borrowerId, cash: cash);
+
+                            onRecordCashPayment(result);
+                          },
+                        );
                       },
                     );
                   },
