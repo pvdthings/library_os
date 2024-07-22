@@ -44,7 +44,7 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
         .toList();
   }
 
-  Future<bool> recordCashPayment({
+  Future<bool> recordPayment({
     required String borrowerId,
     required double cash,
   }) async {

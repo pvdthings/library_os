@@ -74,7 +74,10 @@ class BorrowerDetails extends ConsumerWidget {
               },
             ),
             const SizedBox(height: 32),
-            const IssuesCard(),
+            IssuesCard(
+              borrowerId: borrower.id,
+              issues: borrower.issues,
+            ),
             const SizedBox(height: 32),
             const PaymentsCard(),
           ],
