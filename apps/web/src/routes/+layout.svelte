@@ -2,9 +2,9 @@
 	import '../app.css';
 	import { Head } from '$lib/components';
 	import BottomNavigationView from '$lib/views/BottomNavigationView.svelte';
-	import AppBar from '$lib/components/AppBar.svelte';
 	import HomeButton from '$lib/components/HomeButton.svelte';
 	import { Actions } from '$lib/views/Actions';
+	import { AppBar } from '$lib/components/Shell';
 </script>
 
 <Head
