@@ -1,4 +1,4 @@
-<div class="navbar fixed top-0 left-0 right-0 z-50 shadow-lg bg-neutral-100 border-b border-neutral-400">
+<div class="navbar flex-shrink-0 z-50 shadow-lg bg-neutral-100 border-b border-neutral-400">
   <div class="navbar-start lg:pl-4 text-neutral-800 stroke-neutral-800">
     <slot name="start" />
   </div>

@@ -4,7 +4,7 @@
 	import BottomNavigationView from '$lib/views/BottomNavigationView.svelte';
 	import HomeButton from '$lib/components/HomeButton.svelte';
 	import { Actions } from '$lib/views/Actions';
-	import { AppBar } from '$lib/components/Shell';
+	import { AppBar, Shell } from '$lib/components/Shell';
 </script>
 
 <Head
@@ -15,13 +15,13 @@
 	url="https://web.pvdthings.coop"
 	twitterHandle="@pvdthings"
 />
-<main class="flex flex-col w-full min-h-screen">
-	<AppBar>
+<Shell>
+	<AppBar slot="top">
 		<HomeButton slot="start" />
 		<Actions slot="end" />
 	</AppBar>
-	<div class="flex-grow pt-24 lg:pt-32 mx-3 lg:mx-auto lg:w-3/4 relative">
+	<svelte:fragment slot="body">
 		<slot />
-	</div>
-	<BottomNavigationView />
-</main>
+	</svelte:fragment>
+	<BottomNavigationView slot="bottom" />
+</Shell>
