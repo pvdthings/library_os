@@ -2,9 +2,9 @@
 	import '../app.css';
 	import { Head } from '$lib/components';
 	import BottomNavigationView from '$lib/views/BottomNavigationView.svelte';
-	import AppBar from '$lib/components/AppBar.svelte';
 	import HomeButton from '$lib/components/HomeButton.svelte';
 	import { Actions } from '$lib/views/Actions';
+	import { AppBar } from '$lib/components/Shell';
 </script>
 
 <Head
@@ -20,7 +20,7 @@
 		<HomeButton slot="start" />
 		<Actions slot="end" />
 	</AppBar>
-	<div class="flex-grow pt-24 lg:pt-32 pb-28 mx-3 lg:mx-auto lg:w-3/4 relative">
+	<div class="flex-grow pt-24 lg:pt-32 mx-3 lg:mx-auto lg:w-3/4 relative">
 		<slot />
 	</div>
 	<BottomNavigationView />

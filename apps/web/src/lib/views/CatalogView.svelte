@@ -18,7 +18,9 @@
 <hr class="border-black border-opacity-20 my-6" />
 <BorrowModal />
 {#if $filteredThings.length > 0}
-	<ThingsView />
+	<div class="pb-20 lg:pb-0">
+		<ThingsView />
+	</div>
 {:else}
 	<div class="text-lg text-center font-bold uppercase">{$t('No Results')}</div>
 {/if}

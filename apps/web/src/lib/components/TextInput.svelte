@@ -1,30 +1,54 @@
-<script>
-    import { createEventDispatcher } from 'svelte';
+<script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+	import XMarkIcon from '$lib/icons/x-mark.svg';
 
-    export let value = "";
-    export let customClass = "";
-    export let invalid = false;
+	export let clear: boolean = false;
+	export let value: string = '';
+	export let invalid: boolean = false;
+	export let leadingIcon: string = undefined;
 
-    const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher();
 
-    function keyReleased(event) {
-        if (event.key === 'Enter')
-            dispatch('enter');
-    }
+	const keyReleased = (event: { key: string }) => {
+		if (event.key === 'Enter') dispatch('enter');
+	};
+
+	const onClear = () => {
+		dispatch('clear');
+	};
 </script>
 
-<input
-    {...$$props}
-    bind:value
-    on:input
-    on:change
-    on:keyup={keyReleased}
-    class:invalid
-    class="w-full px-4 py-2 pl-10 rounded-md border border-neutral-400 shadow-high outline-none {customClass}"
-/>
+<div
+	class="bg-white flex flex-row items-center px-2 rounded-md border border-neutral-400 shadow-high overflow-hidden"
+>
+	{#if leadingIcon}
+		<img src={leadingIcon} alt="" class="w-6 h-6 mr-2" />
+	{/if}
+	<input
+		{...$$props}
+		bind:value
+		on:input
+		on:change
+		on:keyup={keyReleased}
+		class:invalid
+		class="flex-grow py-2 outline-none"
+	/>
+	<button
+		class="btn btn-circle btn-sm btn-ghost"
+		class:invisible={!clear}
+		disabled={!clear}
+		on:click={onClear}
+	>
+		<img src={XMarkIcon} alt="Clear" class="w-5 h-5" />
+	</button>
+</div>
 
 <style lang="postcss">
-    .invalid {
-        @apply bg-red-200;
-    }
+	.invalid {
+		@apply bg-red-200;
+	}
+
+	button.invisible {
+		visibility: hidden;
+	}
 </style>

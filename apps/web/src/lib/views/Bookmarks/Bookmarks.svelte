@@ -28,5 +28,5 @@
 		</tbody>
 	</table>
 {:else}
-	<div class="min-h-12 text-lg text-center">{$t('No Bookmarks')}</div>
+	<div class="min-h-12 font-bold uppercase text-lg text-center">{$t('No Bookmarks')}</div>
 {/if}

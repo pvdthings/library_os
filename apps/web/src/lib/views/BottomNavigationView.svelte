@@ -1,4 +1,5 @@
-<script lang='ts'>
+<script lang="ts">
+	import { BottomNavigation, BottomNavigationItem } from '$lib/components/Shell';
 	import BookOpenIcon from '$lib/icons/book-open.svg';
 	import BookmarkIcon from '$lib/icons/bookmark.svg';
 	import LightbulbIcon from '$lib/icons/lightbulb.svg';
@@ -21,54 +22,24 @@
 	};
 </script>
 
-<div class="btm-nav bg-neutral-100 border-t border-neutral-400 upward-shadow box-content lg:hidden">
-	<button
-		class="bg-transparent"
-		class:active={$activeScreen === Screen.catalog}
+<BottomNavigation>
+	<BottomNavigationItem
+		active={$activeScreen === Screen.catalog}
+		icon={$activeScreen === Screen.catalog ? SolidBookOpenIcon : BookOpenIcon}
+		label={catalogText}
 		on:click={() => switchScreen(Screen.catalog)}
-	>
-		<img
-			src={$activeScreen === Screen.catalog ? SolidBookOpenIcon : BookOpenIcon}
-			alt={catalogText}
-			class="w-5 h-5"
-		/>
-		<span class="text-xs font-display font-semibold">{catalogText}</span>
-	</button>
-	<button
-		class="bg-transparent"
-		class:active={$activeScreen === Screen.myList}
+	/>
+	<BottomNavigationItem
+		active={$activeScreen === Screen.myList}
+		icon={$activeScreen === Screen.myList ? SolidBookmarkIcon : BookmarkIcon}
+		indicatorValue={$bookmarks.length}
+		label={bookmarksText}
 		on:click={() => switchScreen(Screen.myList)}
-	>
-		<div class="indicator">
-			{#if $bookmarks.length}
-				<span class="indicator-item badge bg-indigo-500 border-indigo-600 text-white">
-					{$bookmarks.length}
-				</span>
-			{/if}
-			<img
-				src={$activeScreen === Screen.myList ? SolidBookmarkIcon : BookmarkIcon}
-				alt={bookmarksText}
-				class="w-5 h-5"
-			/>
-		</div>
-		<div class="text-xs font-display font-semibold">{bookmarksText}</div>
-	</button>
-	<button
-		class="bg-transparent"
-		class:active={$activeScreen === Screen.info}
+	/>
+	<BottomNavigationItem
+		active={$activeScreen === Screen.info}
+		icon={$activeScreen === Screen.info ? SolidLightbulbIcon : LightbulbIcon}
+		label={learnText}
 		on:click={() => switchScreen(Screen.info)}
-	>
-		<img
-			src={$activeScreen === Screen.info ? SolidLightbulbIcon : LightbulbIcon}
-			alt={learnText}
-			class="w-5 h-5"
-		/>
-		<span class="text-xs font-display font-semibold">{learnText}</span>
-	</button>
-</div>
-
-<style>
-	.upward-shadow {
-		box-shadow: 0 -1px 4px rgba(50, 50, 50, 0.2);
-	}
-</style>
+	/>
+</BottomNavigation>
