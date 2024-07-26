@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import XMarkIcon from '$lib/icons/x-mark.svg';
-	import { vibrate } from '$lib/utils/haptics';
 
 	export let clear: boolean = false;
 	export let value: string = '';
@@ -15,7 +14,6 @@
 	};
 
 	const onClear = () => {
-		vibrate();
 		dispatch('clear');
 	};
 </script>
@@ -35,9 +33,14 @@
 		class:invalid
 		class="flex-grow py-2 outline-none"
 	/>
-	<button class="btn btn-circle btn-sm btn-ghost" class:invisible={!clear} disabled={!clear} on:click={onClear}>
-        <img src={XMarkIcon} alt="Clear" class="w-5 h-5" />
-    </button>
+	<button
+		class="btn btn-circle btn-sm btn-ghost"
+		class:invisible={!clear}
+		disabled={!clear}
+		on:click={onClear}
+	>
+		<img src={XMarkIcon} alt="Clear" class="w-5 h-5" />
+	</button>
 </div>
 
 <style lang="postcss">
@@ -45,7 +48,7 @@
 		@apply bg-red-200;
 	}
 
-    button.invisible {
-        visibility: hidden;
-    }
+	button.invisible {
+		visibility: hidden;
+	}
 </style>
