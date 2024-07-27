@@ -14,10 +14,6 @@ html, body {
     @apply overflow-hidden;
 }
 
-* {
-    @apply touch-none;
-}
-
 input[type=text],
 input[type=email],
 input[type=password],
