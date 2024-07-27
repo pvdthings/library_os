@@ -8,10 +8,14 @@
     font-family: 'Roboto Mono', monospace;
 }
 
-body {
+html, body {
     @apply bg-neutral-200;
     @apply font-body;
-    @apply overflow-hidden touch-none;
+    @apply overflow-hidden;
+}
+
+* {
+    @apply touch-none;
 }
 
 input[type=text],
