@@ -1,10 +1,10 @@
 <script>
 	import '../app.css';
 	import { Head } from '$lib/components';
+	import { AppBar, Body, Shell } from '$lib/components/Shell';
 	import BottomNavigationView from '$lib/views/BottomNavigationView.svelte';
 	import HomeButton from '$lib/components/HomeButton.svelte';
 	import { Actions } from '$lib/views/Actions';
-	import { AppBar, Shell } from '$lib/components/Shell';
 </script>
 
 <Head
@@ -16,12 +16,12 @@
 	twitterHandle="@pvdthings"
 />
 <Shell>
-	<AppBar slot="top">
+	<AppBar>
 		<HomeButton slot="start" />
 		<Actions slot="end" />
 	</AppBar>
-	<svelte:fragment slot="body">
+	<Body>
 		<slot />
-	</svelte:fragment>
-	<BottomNavigationView slot="bottom" />
+	</Body>
+	<BottomNavigationView />
 </Shell>
