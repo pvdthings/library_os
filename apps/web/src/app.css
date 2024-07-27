@@ -11,7 +11,7 @@
 body {
     @apply bg-neutral-200;
     @apply font-body;
-    @apply touch-none;
+    @apply overflow-hidden touch-none;
 }
 
 input[type=text],
