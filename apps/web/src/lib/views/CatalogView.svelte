@@ -1,5 +1,4 @@
 <script>
-	import BorrowModal from '$lib/components/BorrowModal/BorrowModal.svelte';
 	import { t } from '$lib/language/translate';
 	import { filteredThings } from '$lib/stores/catalog';
 	import CategoryChooserView from './CategoryChooserView.svelte';
@@ -16,7 +15,6 @@
 	<SearchInputView />
 </div>
 <hr class="border-black border-opacity-20 my-6" />
-<BorrowModal />
 {#if $filteredThings.length > 0}
 	<div class="pb-20 lg:pb-0">
 		<ThingsView />

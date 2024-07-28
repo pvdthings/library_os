@@ -1,10 +1,10 @@
 <script>
 	import '../app.css';
 	import { Head } from '$lib/components';
+	import { AppBar, Body, Shell } from '$lib/components/Shell';
 	import BottomNavigationView from '$lib/views/BottomNavigationView.svelte';
 	import HomeButton from '$lib/components/HomeButton.svelte';
 	import { Actions } from '$lib/views/Actions';
-	import { AppBar } from '$lib/components/Shell';
 </script>
 
 <Head
@@ -15,13 +15,13 @@
 	url="https://web.pvdthings.coop"
 	twitterHandle="@pvdthings"
 />
-<main class="flex flex-col w-full min-h-screen">
+<Shell>
 	<AppBar>
 		<HomeButton slot="start" />
 		<Actions slot="end" />
 	</AppBar>
-	<div class="flex-grow pt-24 lg:pt-32 mx-3 lg:mx-auto lg:w-3/4 relative">
+	<Body>
 		<slot />
-	</div>
+	</Body>
 	<BottomNavigationView />
-</main>
+</Shell>
