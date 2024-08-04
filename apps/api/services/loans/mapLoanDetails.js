@@ -21,7 +21,8 @@ function mapLoanDetails(loan, item) {
       id: item.id,
       number: Number(item.get('ID')),
       name: item.get('Name')[0],
-      images
+      images,
+      lastLoanId: item.get('Last Loan ID')?.[0]
     },
     notes: loan.get('Notes'),
     extensions: loan.get('extensions_count'),
