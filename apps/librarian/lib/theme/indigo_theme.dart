@@ -12,6 +12,11 @@ ThemeData _createIndigoTheme() {
     cardTheme: baseTheme.cardTheme.copyWith(
       color: baseTheme.colorScheme.surfaceContainerLow,
     ),
+    dialogTheme: DialogTheme(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+    ),
     dialogBackgroundColor: baseTheme.colorScheme.surfaceContainerHigh,
     drawerTheme: baseTheme.drawerTheme.copyWith(
       backgroundColor: baseTheme.colorScheme.surfaceContainerHigh,
