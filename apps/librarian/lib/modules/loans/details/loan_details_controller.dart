@@ -26,9 +26,12 @@ class LoanDetailsController {
           title: 'Previous Loan',
           content: SingleChildScrollView(
             controller: ScrollController(),
-            child: PreviousLoanDetails(
-              loanId: id,
-              itemId: itemId,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: PreviousLoanDetails(
+                loanId: id,
+                itemId: itemId,
+              ),
             ),
           ),
         );
