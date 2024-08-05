@@ -16,12 +16,12 @@ class UpdateButton extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return IconButton(
+        return FilledButton.tonalIcon(
           onPressed: () {
             UpdateDialogController(context).showUpdateDialog(newVersion);
           },
-          tooltip: 'Update Available',
           icon: const Icon(Icons.update, color: Colors.amber),
+          label: const Text('Update Available'),
         );
       },
     );

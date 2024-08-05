@@ -138,34 +138,31 @@ class LoanDetails extends StatelessWidget {
       ),
     );
 
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Wrap(
-            children: [
-              FractionallySizedBox(
-                widthFactor: isMobileScreen ? 1 : 0.5,
-                child: thingsCard,
-              ),
-              FractionallySizedBox(
-                widthFactor: isMobileScreen ? 1 : 0.5,
-                child: datesCard,
-              ),
-              FractionallySizedBox(
-                widthFactor: isMobileScreen ? 1 : 0.5,
-                child: notesCard,
-              ),
-              FractionallySizedBox(
-                widthFactor: isMobileScreen ? 1 : 0.5,
-                child: borrowerCard,
-              ),
-            ],
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          children: [
+            FractionallySizedBox(
+              widthFactor: isMobileScreen ? 1 : 0.5,
+              child: thingsCard,
+            ),
+            FractionallySizedBox(
+              widthFactor: isMobileScreen ? 1 : 0.5,
+              child: datesCard,
+            ),
+            FractionallySizedBox(
+              widthFactor: isMobileScreen ? 1 : 0.5,
+              child: notesCard,
+            ),
+            FractionallySizedBox(
+              widthFactor: isMobileScreen ? 1 : 0.5,
+              child: borrowerCard,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

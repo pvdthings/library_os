@@ -47,8 +47,10 @@ const fetchLoans = async ({ includeClosed }) => {
 
 // Loan Details
 const fetchLoan = async ({ loanId, itemId }) => {
-  const loan = await loans.find(loanId);
-  const item = await items.find(itemId);
+  const [loan, item] = await Promise.all([
+    loans.find(loanId),
+    items.find(itemId)
+  ]);
 
   return loan ? mapLoanDetails(loan, item) : null;
 };
