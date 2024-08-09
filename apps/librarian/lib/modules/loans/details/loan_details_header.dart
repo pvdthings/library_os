@@ -72,6 +72,7 @@ class LoanDetailsHeader extends ConsumerWidget {
                         controller.viewPreviousLoan(
                           id: loan.thing.lastLoanId!,
                           itemId: loan.thing.id,
+                          itemNumber: loan.thing.number,
                         );
                       }
                     : null,
