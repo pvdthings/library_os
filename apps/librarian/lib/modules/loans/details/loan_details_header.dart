@@ -67,6 +67,20 @@ class LoanDetailsHeader extends ConsumerWidget {
                 ),
               ),
               IconButton(
+                onPressed: loan.thing.lastLoanId != null
+                    ? () {
+                        controller.viewPreviousLoan(
+                          id: loan.thing.lastLoanId!,
+                          itemId: loan.thing.id,
+                          itemNumber: loan.thing.number,
+                        );
+                      }
+                    : null,
+                tooltip: 'Previous Loan',
+                icon: const Icon(Icons.history),
+              ),
+              const SizedBox(width: 4),
+              IconButton(
                 onPressed: loan.borrower.email != null
                     ? () {
                         showDialog(
