@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/api.dart' as api;
+import 'package:librarian_app/modules/loans/details/thing_number.dart';
 import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
 import 'package:librarian_app/widgets/dialogs/general_dialog.dart';
 
@@ -18,11 +19,13 @@ class LoanDetailsController {
   void viewPreviousLoan({
     required String id,
     required String itemId,
+    required int itemNumber,
   }) {
     showDialog(
       context: context,
       builder: (context) {
         return GeneralDialog(
+          titlePrefix: ThingNumber(number: itemNumber),
           title: 'Previous Loan',
           content: SingleChildScrollView(
             controller: ScrollController(),

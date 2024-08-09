@@ -5,10 +5,12 @@ class GeneralDialog extends StatelessWidget {
     super.key,
     required this.content,
     this.title,
+    this.titlePrefix,
   });
 
   final Widget content;
   final String? title;
+  final Widget? titlePrefix;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +24,13 @@ class GeneralDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                if (titlePrefix != null) titlePrefix!,
+                const SizedBox(width: 8.0),
                 if (title != null)
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        title!,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
+                    child: Text(
+                      title!,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
                 CloseButton(
