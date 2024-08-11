@@ -1,6 +1,6 @@
 {
 	"name": "@library_os/web",
-	"version": "0.15.3",
+	"version": "0.15.4",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
