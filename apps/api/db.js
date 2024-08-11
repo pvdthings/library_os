@@ -17,20 +17,21 @@ const BorrowerIssue = {
 };
 
 const ThingCategories = [
-    'Media',
-    'Games',
-    'Outdoors',
-    'DIY',
-    'Sports',
-    'Entertainment',
-    'Yard',
+    'Automotive',
+    'Books',
     'Cleaning',
     'Cooking',
     'Crafts',
-    'Pet',
-    'Automotive',
+    'DIY',
+    'Entertainment',
+    'Games',
     'Health',
-    'Household'
+    'Household',
+    'Media',
+    'Outdoors',
+    'Pet',
+    'Sports',
+    'Yard'
 ];
 
 module.exports = {
