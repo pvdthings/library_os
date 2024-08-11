@@ -4,7 +4,7 @@ import 'package:librarian_app/modules/borrowers/providers/borrowers_provider.dar
 import 'package:librarian_app/modules/borrowers/providers/edited_borrower_details_providers.dart';
 import 'package:librarian_app/modules/borrowers/providers/selected_borrower_provider.dart';
 
-import '../../models/borrower_model.dart';
+import '../../../core/api/models/borrower_model.dart';
 import 'borrowers_list.dart';
 
 class BorrowersListView extends ConsumerWidget {

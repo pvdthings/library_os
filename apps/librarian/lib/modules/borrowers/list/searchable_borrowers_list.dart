@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/borrowers/models/borrower_model.dart';
+import 'package:librarian_app/core/api/models/borrower_model.dart';
 import 'package:librarian_app/modules/borrowers/providers/borrowers_filter_provider.dart';
-import 'package:librarian_app/modules/borrowers/widgets/borrowers_list/borrowers_list_view.dart';
+import 'package:librarian_app/modules/borrowers/list/borrowers_list_view.dart';
 
-import '../../../../widgets/fields/submit_text_field.dart';
+import '../../../widgets/fields/submit_text_field.dart';
 
 class SearchableBorrowersList extends ConsumerWidget {
   final void Function(BorrowerModel borrower)? onTapBorrower;
