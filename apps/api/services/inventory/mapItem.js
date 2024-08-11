@@ -16,7 +16,7 @@ function mapItem(record) {
       eyeProtection: Boolean(record.get('Eye Protection')),
       condition: record.get('Condition'),
       totalLoans: record.get('Total Loans'),
-      images: record.get('Picture')?.map(image => image.url) || [],
+      images: record.get('Picture')?.map(image => image.thumbnails.large.url) || [],
       manuals: record.get('Manuals')?.map(manual => ({
         filename: manual.filename,
         url: manual.url 
