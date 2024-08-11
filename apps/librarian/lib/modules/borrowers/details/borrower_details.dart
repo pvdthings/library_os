@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/modules/borrowers/details/contact_card.dart';
 import 'package:librarian_app/modules/borrowers/providers/borrower_details_provider.dart';
-import 'package:librarian_app/modules/borrowers/providers/edited_borrower_details_providers.dart';
 import 'package:librarian_app/modules/borrowers/details/issues_card.dart';
 import 'package:librarian_app/modules/borrowers/details/payments_card.dart';
 
@@ -29,49 +28,10 @@ class BorrowerDetails extends ConsumerWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: TextEditingController(text: borrower.name),
-              readOnly: true,
-              decoration: const InputDecoration(
-                icon: Icon(Icons.person_rounded),
-                labelText: 'Name',
-                border: OutlineInputBorder(),
-                constraints: BoxConstraints(maxWidth: 500),
-              ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: TextEditingController(
-                text: ref.read(emailProvider) ?? borrower.email,
-              ),
-              decoration: const InputDecoration(
-                icon: Icon(Icons.email_rounded),
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-                constraints: BoxConstraints(maxWidth: 500),
-              ),
-              onChanged: (value) {
-                ref.read(emailProvider.notifier).state = value;
-              },
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: TextEditingController(
-                text: ref.read(phoneProvider) ?? borrower.phone,
-              ),
-              decoration: const InputDecoration(
-                icon: Icon(Icons.phone_rounded),
-                labelText: 'Phone',
-                border: OutlineInputBorder(),
-                constraints: BoxConstraints(maxWidth: 500),
-              ),
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              keyboardType: TextInputType.phone,
-              onChanged: (value) {
-                ref.read(phoneProvider.notifier).state = value;
-              },
+            ContactCard(
+              name: borrower.name,
+              email: borrower.email,
+              phone: borrower.phone,
             ),
             const SizedBox(height: 32),
             IssuesCard(
