@@ -1,9 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/api.dart';
-import 'package:librarian_app/modules/borrowers/models/payment_model.dart';
+import 'package:librarian_app/core/api/models/payment_model.dart';
 
-import '../models/borrower_model.dart';
+import '../api/models/borrower_model.dart';
 
 class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
   @override

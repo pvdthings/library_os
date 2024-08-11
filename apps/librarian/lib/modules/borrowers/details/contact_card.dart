@@ -1,36 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/borrowers/providers/borrower_details_provider.dart';
-import 'package:librarian_app/modules/borrowers/providers/edited_borrower_details_providers.dart';
-import 'package:librarian_app/modules/borrowers/widgets/borrower_details/issues_card.dart';
-import 'package:librarian_app/modules/borrowers/widgets/borrower_details/payments_card.dart';
+import 'package:librarian_app/widgets/details_card/card_header.dart';
+import 'package:librarian_app/widgets/details_card/details_card.dart';
 
-class BorrowerDetails extends ConsumerWidget {
-  const BorrowerDetails({super.key});
+import '../providers/edited_borrower_details_providers.dart';
+
+class ContactCard extends ConsumerWidget {
+  const ContactCard({
+    super.key,
+    required this.name,
+    this.email,
+    this.phone,
+  });
+
+  final String name;
+  final String? email;
+  final String? phone;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final borrowerDetails = ref.watch(borrowerDetailsProvider);
-
-    return FutureBuilder(
-      future: borrowerDetails,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (snapshot.hasError) {
-          return Center(child: Text(snapshot.error.toString()));
-        }
-
-        final borrower = snapshot.data!;
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return DetailsCard(
+      header: const CardHeader(title: 'Contact Details'),
+      showDivider: true,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
           children: [
             TextField(
-              controller: TextEditingController(text: borrower.name),
+              controller: TextEditingController(text: name),
               readOnly: true,
               decoration: const InputDecoration(
                 icon: Icon(Icons.person_rounded),
@@ -42,7 +40,7 @@ class BorrowerDetails extends ConsumerWidget {
             const SizedBox(height: 16),
             TextField(
               controller: TextEditingController(
-                text: ref.read(emailProvider) ?? borrower.email,
+                text: ref.read(emailProvider) ?? email,
               ),
               decoration: const InputDecoration(
                 icon: Icon(Icons.email_rounded),
@@ -57,7 +55,7 @@ class BorrowerDetails extends ConsumerWidget {
             const SizedBox(height: 16),
             TextField(
               controller: TextEditingController(
-                text: ref.read(phoneProvider) ?? borrower.phone,
+                text: ref.read(phoneProvider) ?? phone,
               ),
               decoration: const InputDecoration(
                 icon: Icon(Icons.phone_rounded),
@@ -73,16 +71,9 @@ class BorrowerDetails extends ConsumerWidget {
                 ref.read(phoneProvider.notifier).state = value;
               },
             ),
-            const SizedBox(height: 32),
-            IssuesCard(
-              borrowerId: borrower.id,
-              issues: borrower.issues,
-            ),
-            const SizedBox(height: 32),
-            const PaymentsCard(),
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }

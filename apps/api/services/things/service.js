@@ -22,13 +22,11 @@ const fetchThings = async ({ byPopularity } = {}) => {
 const fetchThing = async (id) => {
   const record = await things.find(id);
 
-  const itemIds = record.get('Inventory');
-
-  const itemPromises = itemIds?.map(id => {
+  const itemPromises = record.get('Inventory')?.map(id => {
     return inventory.find(id)
   });
 
-  const items = (await Promise.all(itemPromises || [])).map(mapItem);
+  const items = itemPromises ? (await Promise.all(itemPromises)).map(mapItem) : [];
 
   return record ? mapThingDetails(record, items) : null;
 }
