@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:librarian_app/utils/media_query.dart';
 
-import '../../../../core/api/models/borrower_model.dart';
+import '../../../core/api/models/borrower_model.dart';
 
 class BorrowersList extends StatefulWidget {
   final List<BorrowerModel> borrowers;
