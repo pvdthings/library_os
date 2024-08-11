@@ -5,9 +5,9 @@ import 'package:librarian_app/dashboard/providers/create_loan_controller.dart';
 import 'package:librarian_app/dashboard/providers/workspace.dart';
 import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
 import 'package:librarian_app/modules/authentication/providers/user_tray.dart';
-import 'package:librarian_app/modules/borrowers/widgets/layouts/borrowers_desktop_layout.dart';
-import 'package:librarian_app/modules/borrowers/widgets/borrowers_list/searchable_borrowers_list.dart';
-import 'package:librarian_app/modules/borrowers/widgets/needs_attention_view.dart';
+import 'package:librarian_app/modules/borrowers/widgets/details/needs_attention_page.dart';
+import 'package:librarian_app/dashboard/layouts/borrowers_desktop_layout.dart';
+import 'package:librarian_app/modules/borrowers/widgets/list/searchable_borrowers_list.dart';
 import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/dashboard/widgets/create_menu_item.dart';
 import 'package:librarian_app/dashboard/layouts/inventory_desktop_layout.dart';
@@ -78,10 +78,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
       mobileLayout: SearchableBorrowersList(
         onTapBorrower: (borrower) {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return Scaffold(
-              appBar: AppBar(title: Text(borrower.name)),
-              body: NeedsAttentionView(borrower: borrower),
-            );
+            return NeedsAttentionPage(borrower: borrower);
           }));
         },
       ),

@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/borrowers/providers/borrower_details_provider.dart';
 import 'package:librarian_app/modules/borrowers/providers/edited_borrower_details_providers.dart';
-import 'package:librarian_app/modules/borrowers/widgets/borrower_details/issues_card.dart';
-import 'package:librarian_app/modules/borrowers/widgets/borrower_details/payments_card.dart';
+import 'package:librarian_app/modules/borrowers/widgets/details/issues_card.dart';
+import 'package:librarian_app/modules/borrowers/widgets/details/payments_card.dart';
 
 class BorrowerDetails extends ConsumerWidget {
   const BorrowerDetails({super.key});

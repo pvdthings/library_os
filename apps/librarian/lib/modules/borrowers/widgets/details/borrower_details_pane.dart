@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/borrowers/providers/edited_borrower_details_providers.dart';
-import 'package:librarian_app/modules/borrowers/widgets/borrower_details/borrower_details.dart';
+import 'package:librarian_app/modules/borrowers/widgets/details/borrower_details.dart';
 import 'package:librarian_app/widgets/dialogs/save_dialog.dart';
 import 'package:librarian_app/widgets/panes/pane_header.dart';
 

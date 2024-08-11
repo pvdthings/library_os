@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/borrowers/models/issue_model.dart';
-import 'package:librarian_app/modules/borrowers/widgets/borrower_details/borrower_issues.dart';
+import 'package:librarian_app/modules/borrowers/widgets/details/borrower_issues.dart';
 import 'package:librarian_app/widgets/details_card/card_header.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
 
