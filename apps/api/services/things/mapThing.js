@@ -12,7 +12,7 @@ function mapThing(record) {
       stock,
       available,
       availableDate: isAvailable || isWanted ? undefined : record.get('Next Due Back'),
-      images: record.get('Image')?.map(image => image.url) || [],
+      images: record.get('Image')?.map(image => image.thumbnails.large.url) || [],
       categories: record.get('Category') || [],
       hidden: Boolean(record.get('Hidden'))
   };
