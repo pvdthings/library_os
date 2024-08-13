@@ -1,13 +1,17 @@
 class Issue {
   final IssueType type;
   final String title;
+  final String okTitle;
   final String? explanation;
+  final String? okExplanation;
   final String? instructions;
   final String? graphicUrl;
 
   const Issue({
     required this.title,
+    required this.okTitle,
     this.explanation,
+    this.okExplanation,
     this.instructions,
     this.graphicUrl,
     required this.type,
@@ -18,33 +22,48 @@ class Issue {
   }
 
   static final _reasonMap = <String, Issue>{
-    'duesNotPaid': const Issue(
-      title: "Dues Not Paid",
-      explanation: "Annual dues must be paid before borrowing.",
-      instructions:
-          "The borrower can pay their dues from the library's website or by scanning the QR code.",
-      graphicUrl: "qr_givebutter.png",
-      type: IssueType.duesNotPaid,
-    ),
-    'overdueLoan': const Issue(
-      title: "Overdue Loan",
-      explanation:
-          "All overdue items must be returned before they can borrow again.",
-      type: IssueType.overdueLoan,
-    ),
-    'suspended': const Issue(
-      title: "Suspended",
-      explanation: "This person has been suspended from borrowing.",
-      type: IssueType.suspended,
-    ),
-    'needsLiabilityWaiver': const Issue(
-      title: "Needs Liability Waiver",
-      explanation:
-          "This borrower needs to sign our library's liability waiver before they can check anything out.",
-      type: IssueType.needsLiabilityWaiver,
-    ),
+    'duesNotPaid': duesNotPaidIssue,
+    'overdueLoan': overdueLoanIssue,
+    'suspended': suspendedIssue,
+    'needsLiabilityWaiver': needsLiabilityWaiverIssue,
   };
 }
+
+const duesNotPaidIssue = Issue(
+  title: "Dues Not Paid",
+  okTitle: "Dues Paid",
+  explanation: "Annual dues must be paid before borrowing.",
+  okExplanation: "Annual dues have been paid.",
+  instructions:
+      "The borrower can pay their dues from the library's website or by scanning the QR code.",
+  graphicUrl: "qr_givebutter.png",
+  type: IssueType.duesNotPaid,
+);
+
+const overdueLoanIssue = Issue(
+  title: "Overdue Loan",
+  okTitle: "No Overdue Loans",
+  explanation: "All overdue items must be returned before borrowing again.",
+  okExplanation: "All loans have been returned.",
+  type: IssueType.overdueLoan,
+);
+
+const needsLiabilityWaiverIssue = Issue(
+  title: "Needs Liability Waiver",
+  okTitle: "Liability Waiver Signed",
+  explanation:
+      "A liability waiver must be signed before checking anything out.",
+  okExplanation: "Liability waived!",
+  type: IssueType.needsLiabilityWaiver,
+);
+
+const suspendedIssue = Issue(
+  title: "Suspended",
+  okTitle: "In Good Standing",
+  explanation: "This person is no longer a member of the library.",
+  okExplanation: "This member is in good standing.",
+  type: IssueType.suspended,
+);
 
 enum IssueType {
   duesNotPaid,

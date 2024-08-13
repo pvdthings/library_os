@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/widgets/details_card/card_body.dart';
 import 'package:librarian_app/widgets/details_card/card_header.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
 
@@ -22,9 +23,7 @@ class ContactCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return DetailsCard(
       header: const CardHeader(title: 'Contact Details'),
-      showDivider: true,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: CardBody(
         child: Column(
           children: [
             TextField(
