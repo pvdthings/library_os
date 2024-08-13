@@ -5,6 +5,7 @@ import 'package:librarian_app/widgets/details_card/card_header.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
+import 'package:librarian_app/widgets/hint_text.dart';
 
 import '../../providers/thing_details_provider.dart';
 
@@ -46,7 +47,6 @@ class CategoriesCard extends ConsumerWidget {
               label: const Text('Add category'),
             ),
           ),
-          showDivider: categories.isNotEmpty,
           body: categories.isNotEmpty
               ? CardBody(
                   child: Row(
@@ -64,7 +64,10 @@ class CategoriesCard extends ConsumerWidget {
                     }).toList(),
                   ),
                 )
-              : null,
+              : const CardBody(
+                  child: HintText(
+                      'Add a category to show this thing in the catalog.'),
+                ),
         );
       },
     );

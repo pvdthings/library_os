@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_controller_provider.dart';
+import 'package:librarian_app/widgets/details_card/card_body.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
+import 'package:librarian_app/widgets/hint_text.dart';
 
 import '../../../../core/api/models/item_model.dart';
 import '../../../../widgets/details_card/card_header.dart';
@@ -49,59 +51,57 @@ class ItemsCard extends ConsumerWidget {
           const SizedBox(height: 8),
         ],
       ),
-      showDivider: items.isNotEmpty,
       body: items.isNotEmpty
-          ? Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
+          ? ListView.separated(
+              shrinkWrap: true,
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
 
-                  return ListTile(
-                    leading: getIcon(item),
-                    onTap: () => onTap?.call(item),
-                    title: Text('#${item.number}'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(item.brand ?? 'Generic'),
-                        const SizedBox(width: 16),
-                        IconButton(
-                          onPressed: onToggleHidden != null
-                              ? () => onToggleHidden!(item.id, !item.hidden)
-                              : null,
-                          tooltip: onToggleHidden == null
-                              ? null
-                              : item.hidden
-                                  ? 'Unhide'
-                                  : 'Hide',
-                          icon: item.hidden
-                              ? const Icon(Icons.visibility_off)
-                              : const Icon(Icons.visibility),
+                return ListTile(
+                  leading: getIcon(item),
+                  onTap: () => onTap?.call(item),
+                  title: Text('#${item.number}'),
+                  subtitle: Text(item.brand ?? 'Generic'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: onToggleHidden != null
+                            ? () => onToggleHidden!(item.id, !item.hidden)
+                            : null,
+                        tooltip: onToggleHidden == null
+                            ? null
+                            : item.hidden
+                                ? 'Unhide'
+                                : 'Hide',
+                        icon: item.hidden
+                            ? const Icon(Icons.visibility_off)
+                            : const Icon(Icons.visibility),
+                      ),
+                      const SizedBox(width: 16),
+                      IconButton(
+                        onPressed: () => deleteItem(
+                          item.id,
+                          item.number,
+                          item.name,
                         ),
-                        const SizedBox(width: 16),
-                        IconButton(
-                          onPressed: () => deleteItem(
-                            item.id,
-                            item.number,
-                            item.name,
-                          ),
-                          tooltip: 'Delete',
-                          icon: const Icon(
-                            Icons.delete_outline,
-                            color: Colors.red,
-                          ),
+                        tooltip: 'Delete',
+                        icon: const Icon(
+                          Icons.delete_outline,
+                          color: Colors.red,
                         ),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (c, i) => const Divider(),
-              ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              separatorBuilder: (c, i) => const Divider(height: 1),
             )
-          : null,
+          : const CardBody(
+              child: HintText(
+                  'Since this thing has no items, it will be shown on the Wish List.'),
+            ),
     );
   }
 
