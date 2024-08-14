@@ -6,6 +6,7 @@ import 'package:librarian_app/modules/borrowers/providers/selected_borrower_prov
 import 'package:librarian_app/widgets/details_card/card_body.dart';
 import 'package:librarian_app/widgets/details_card/card_header.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
+import 'package:librarian_app/widgets/hint_text.dart';
 
 class PaymentsCard extends ConsumerWidget {
   const PaymentsCard({super.key});
@@ -25,20 +26,20 @@ class PaymentsCard extends ConsumerWidget {
 
         return DetailsCard(
           header: const CardHeader(title: 'Payments'),
-          showDivider: payments.isNotEmpty,
-          body: Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: ListView.builder(
-              itemBuilder: (context, i) {
-                return _PaymentListTile(
-                  cash: payments[i].cash,
-                  date: payments[i].date,
-                );
-              },
-              itemCount: payments.length,
-              shrinkWrap: true,
-            ),
-          ),
+          body: payments.isNotEmpty
+              ? ListView.separated(
+                  itemBuilder: (context, i) {
+                    return _PaymentListTile(
+                      cash: payments[i].cash,
+                      date: payments[i].date,
+                    );
+                  },
+                  itemCount: payments.length,
+                  separatorBuilder: (context, index) =>
+                      const Divider(height: 1),
+                  shrinkWrap: true,
+                )
+              : const CardBody(child: HintText('No recorded payments.')),
         );
       },
     );

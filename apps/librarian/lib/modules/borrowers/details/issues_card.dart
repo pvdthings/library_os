@@ -19,21 +19,16 @@ class IssuesCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return DetailsCard(
       header: const CardHeader(title: 'Issues'),
-      showDivider: issues.isNotEmpty,
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: BorrowerIssues(
-          borrowerId: borrowerId,
-          issues: issues,
-          onRecordCashPayment: (success) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content:
-                    Text(success ? 'Success!' : 'Failed to record payment'),
-              ),
-            );
-          },
-        ),
+      body: BorrowerIssues(
+        borrowerId: borrowerId,
+        issues: issues,
+        onRecordCashPayment: (success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(success ? 'Success!' : 'Failed to record payment'),
+            ),
+          );
+        },
       ),
     );
   }

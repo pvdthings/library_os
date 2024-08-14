@@ -5,8 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items_dialog.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_details_drawer/drawer.dart';
-import 'package:librarian_app/widgets/fields/checkbox_field.dart';
-import 'package:librarian_app/widgets/input_decoration.dart';
+import 'package:librarian_app/modules/things/details/thing_details/thing_details_card.dart';
 import 'package:librarian_app/core/api/models/updated_image_model.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_details_page.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
@@ -37,7 +36,7 @@ class InventoryDetails extends ConsumerWidget {
         final details = snapshot.data!;
 
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Wrap(
               spacing: 16,
@@ -66,45 +65,7 @@ class InventoryDetails extends ConsumerWidget {
                     }
                   },
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextField(
-                      controller: TextEditingController(text: details.name),
-                      decoration: inputDecoration.copyWith(labelText: 'Name'),
-                      onChanged: (value) =>
-                          ref.read(nameProvider.notifier).state = value,
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      controller:
-                          TextEditingController(text: details.spanishName),
-                      decoration:
-                          inputDecoration.copyWith(labelText: 'Name (Spanish)'),
-                      onChanged: (value) =>
-                          ref.read(spanishNameProvider.notifier).state = value,
-                    ),
-                    const SizedBox(height: 32),
-                    CheckboxField(
-                      title: 'Hidden',
-                      value: ref.watch(hiddenProvider) ?? details.hidden,
-                      onChanged: (bool? value) {
-                        ref.read(hiddenProvider.notifier).state =
-                            value ?? false;
-                      },
-                    ),
-                    const SizedBox(height: 32),
-                    CheckboxField(
-                      title: 'Eye Protection Required',
-                      value: ref.watch(eyeProtectionProvider) ??
-                          details.eyeProtection,
-                      onChanged: (bool? value) {
-                        ref.read(eyeProtectionProvider.notifier).state =
-                            value ?? false;
-                      },
-                    ),
-                  ],
-                ),
+                ThingDetailsCard(details: details),
               ],
             ),
             const SizedBox(height: 32),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/widgets/details_card/card_header.dart';
+import 'package:librarian_app/widgets/details_card/card_body.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
 
 import '../providers/edited_borrower_details_providers.dart';
@@ -21,10 +21,7 @@ class ContactCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DetailsCard(
-      header: const CardHeader(title: 'Contact Details'),
-      showDivider: true,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: CardBody(
         child: Column(
           children: [
             TextField(
@@ -34,7 +31,6 @@ class ContactCard extends ConsumerWidget {
                 icon: Icon(Icons.person_rounded),
                 labelText: 'Name',
                 border: OutlineInputBorder(),
-                constraints: BoxConstraints(maxWidth: 500),
               ),
             ),
             const SizedBox(height: 16),
@@ -46,7 +42,6 @@ class ContactCard extends ConsumerWidget {
                 icon: Icon(Icons.email_rounded),
                 labelText: 'Email',
                 border: OutlineInputBorder(),
-                constraints: BoxConstraints(maxWidth: 500),
               ),
               onChanged: (value) {
                 ref.read(emailProvider.notifier).state = value;
@@ -61,7 +56,6 @@ class ContactCard extends ConsumerWidget {
                 icon: Icon(Icons.phone_rounded),
                 labelText: 'Phone',
                 border: OutlineInputBorder(),
-                constraints: BoxConstraints(maxWidth: 500),
               ),
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
