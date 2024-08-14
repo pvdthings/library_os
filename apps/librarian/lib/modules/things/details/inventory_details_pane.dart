@@ -54,11 +54,16 @@ class InventoryDetailsPane extends ConsumerWidget {
                   children: [
                     PaneHeader(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            thingDetails.name,
-                            style: const TextStyle(fontSize: 24),
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 16.0),
+                              child: Text(
+                                thingDetails.name,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 24),
+                              ),
+                            ),
                           ),
                           Row(
                             children: [

@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/api.dart';
+import 'package:librarian_app/core/api/api.dart' as api;
 import 'package:librarian_app/core/api/models/payment_model.dart';
 
 import '../api/models/borrower_model.dart';
@@ -10,7 +10,7 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
   Future<List<BorrowerModel>> build() async => await getBorrowers();
 
   Future<List<BorrowerModel>> getBorrowers() async {
-    final response = await fetchBorrowers();
+    final response = await api.fetchBorrowers();
     return (response.data as List)
         .map((json) => BorrowerModel.fromJson(json))
         .toList();
@@ -22,13 +22,13 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
   }
 
   Future<BorrowerModel?> getBorrowerDetails(String id) async {
-    final response = await fetchBorrower(id);
+    final response = await api.fetchBorrower(id);
     return BorrowerModel.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<bool> updateBorrower(String id, {String? email, String? phone}) async {
     try {
-      await updateBorrower(id, email: email, phone: phone);
+      await api.updateBorrower(id, email: email, phone: phone);
 
       ref.invalidateSelf();
       return true;
@@ -38,7 +38,7 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
   }
 
   Future<List<PaymentModel>> getPayments(String borrowerId) async {
-    final response = await fetchPayments(borrowerId: borrowerId);
+    final response = await api.fetchPayments(borrowerId: borrowerId);
     return (response.data as List)
         .map((e) => PaymentModel.fromJson(e))
         .toList();
@@ -49,7 +49,7 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
     required double cash,
   }) async {
     try {
-      await recordCashPayment(
+      await api.recordCashPayment(
         cash: cash,
         borrowerId: borrowerId,
       );

@@ -26,7 +26,7 @@ class BorrowerDetails extends ConsumerWidget {
         final borrower = snapshot.data!;
 
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ContactCard(
               name: borrower.name,
