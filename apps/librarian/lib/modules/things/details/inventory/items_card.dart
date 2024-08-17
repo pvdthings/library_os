@@ -7,6 +7,7 @@ import 'package:librarian_app/widgets/hint_text.dart';
 
 import '../../../../core/api/models/item_model.dart';
 import '../../../../widgets/details_card/card_header.dart';
+import 'icons.dart';
 
 class ItemsCard extends ConsumerWidget {
   const ItemsCard({
@@ -104,27 +105,4 @@ class ItemsCard extends ConsumerWidget {
             ),
     );
   }
-
-  Widget getIcon(ItemModel item) {
-    if (item.hidden) {
-      return hiddenIcon;
-    }
-
-    return item.available ? checkedInIcon : checkedOutIcon;
-  }
 }
-
-const checkedInIcon = Tooltip(
-  message: 'Available',
-  child: Icon(Icons.circle, color: Colors.green, size: 16),
-);
-
-const checkedOutIcon = Tooltip(
-  message: 'Unavailable',
-  child: Icon(Icons.circle, color: Colors.amber, size: 16),
-);
-
-const hiddenIcon = Tooltip(
-  message: 'Hidden',
-  child: Icon(Icons.circle, color: Colors.red, size: 16),
-);

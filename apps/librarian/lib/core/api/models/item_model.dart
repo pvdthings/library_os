@@ -15,6 +15,7 @@ class ItemModel {
     this.condition,
     this.description,
     this.estimatedValue,
+    this.location,
   });
 
   final String id;
@@ -23,6 +24,7 @@ class ItemModel {
   final String? description;
   final String? brand;
   final String? condition;
+  final String? location;
   final double? estimatedValue;
   final bool available;
   final bool hidden;
@@ -42,6 +44,7 @@ class ItemModel {
       totalLoans: json['totalLoans'] as int,
       brand: json['brand'] as String?,
       condition: json['condition'] as String?,
+      location: json['location'] as String?,
       estimatedValue: json['estimatedValue'] as double?,
       eyeProtection: json['eyeProtection'] as bool,
       imageUrls: (json['images'] as List).cast<String>(),

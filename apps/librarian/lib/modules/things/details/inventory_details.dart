@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items_dialog.dart';
-import 'package:librarian_app/modules/things/details/inventory/item_details_drawer/drawer.dart';
+import 'package:librarian_app/modules/things/details/inventory/item_details/drawer.dart';
 import 'package:librarian_app/modules/things/details/thing_details/thing_details_card.dart';
 import 'package:librarian_app/core/api/models/updated_image_model.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_details_page.dart';
