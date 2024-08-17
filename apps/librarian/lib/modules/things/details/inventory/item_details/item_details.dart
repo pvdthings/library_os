@@ -166,6 +166,15 @@ class ItemDetails extends ConsumerWidget {
                           },
                           value: controller.conditionNotifier.value,
                         ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Location',
+                          ),
+                          enabled: false,
+                          initialValue: controller.item?.location,
+                          readOnly: true,
+                        ),
                       ],
                     ),
                   ),
