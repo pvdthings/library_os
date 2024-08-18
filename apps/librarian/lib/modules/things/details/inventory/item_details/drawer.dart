@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:librarian_app/modules/things/details/inventory/icons.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_details/item_details_controller.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
 
-import '../item_details/item_details.dart';
+import 'item_details.dart';
 
 class ItemDetailsDrawer extends StatefulWidget {
   const ItemDetailsDrawer({
@@ -38,11 +39,14 @@ class _ItemDetailsDrawerState extends State<ItemDetailsDrawer> {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '#${widget.controller.item!.number}',
-                      style: Theme.of(context).textTheme.titleLarge,
+                    getIcon(widget.controller.item!),
+                    const SizedBox(width: 8.0),
+                    Expanded(
+                      child: Text(
+                        '#${widget.controller.item!.number}',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
                     ),
                     MenuAnchor(
                       controller: menuController,
@@ -71,7 +75,7 @@ class _ItemDetailsDrawerState extends State<ItemDetailsDrawer> {
                         ItemDetails(
                           controller: widget.controller,
                           item: widget.controller.item!,
-                          hiddenLocked: widget.isHiddenLocked,
+                          isThingHidden: widget.isHiddenLocked,
                         ),
                         const SizedBox(height: 80),
                       ],
