@@ -75,7 +75,7 @@ class _ItemDetailsDrawerState extends State<ItemDetailsDrawer> {
                         ItemDetails(
                           controller: widget.controller,
                           item: widget.controller.item!,
-                          hiddenLocked: widget.isHiddenLocked,
+                          isThingHidden: widget.isHiddenLocked,
                         ),
                         const SizedBox(height: 80),
                       ],

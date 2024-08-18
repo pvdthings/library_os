@@ -26,7 +26,7 @@ Widget getIcon(ItemModel item) {
     return hiddenIcon;
   }
 
-  if (item.location == 'Providence Public Library') {
+  if (item.isManagedByPartner) {
     return partnerLocationIcon;
   }
 
