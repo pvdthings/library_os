@@ -33,6 +33,11 @@ class ItemModel {
   final List<String> imageUrls;
   final List<ManualModel> manuals;
 
+  // TECH DEBT - Will be replaced by a location system in the future.
+  bool get isManagedByPartner {
+    return location == 'Providence Public Library';
+  }
+
   factory ItemModel.fromJson(Map<String, dynamic> json) {
     return ItemModel(
       id: json['id'] as String,

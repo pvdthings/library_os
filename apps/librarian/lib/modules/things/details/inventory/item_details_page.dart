@@ -38,7 +38,7 @@ class _ItemDetailsPageState extends ConsumerState<ItemDetailsPage> {
           child: ItemDetails(
             controller: _controller,
             item: widget.item,
-            hiddenLocked: widget.hiddenLocked,
+            isThingHidden: widget.hiddenLocked,
           ),
         ),
       ),

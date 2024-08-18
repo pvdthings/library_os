@@ -14,12 +14,12 @@ class ItemDetails extends ConsumerWidget {
     super.key,
     required this.controller,
     required this.item,
-    required this.hiddenLocked,
+    required this.isThingHidden,
   });
 
   final ItemDetailsController controller;
   final ItemModel item;
-  final bool hiddenLocked;
+  final bool isThingHidden;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,27 +43,12 @@ class ItemDetails extends ConsumerWidget {
               clipBehavior: Clip.antiAlias,
               elevation: isMobile(context) ? 1 : 0,
               margin: EdgeInsets.zero,
-              child: Builder(
-                builder: (context) {
-                  final newCheckbox = CheckboxListTile(
-                    title: const Text('Hidden'),
-                    secondary: const Icon(Icons.visibility_off_outlined),
-                    value: controller.hiddenNotifier.value,
-                    onChanged: hiddenLocked
-                        ? null
-                        : (value) {
-                            controller.hiddenNotifier.value = value ?? false;
-                          },
-                  );
-
-                  if (!hiddenLocked) {
-                    return newCheckbox;
-                  }
-
-                  return Tooltip(
-                    message: 'Unable to unhide because the thing is hidden.',
-                    child: newCheckbox,
-                  );
+              child: _HiddenCheckboxListTile(
+                isThingHidden: isThingHidden,
+                isManagedByPartner: item.isManagedByPartner,
+                value: controller.hiddenNotifier.value,
+                onChanged: (value) {
+                  controller.hiddenNotifier.value = value ?? false;
                 },
               ),
             ),
@@ -192,6 +177,58 @@ class ItemDetails extends ConsumerWidget {
               },
             ),
           ],
+        );
+      },
+    );
+  }
+}
+
+class _HiddenCheckboxListTile extends StatelessWidget {
+  const _HiddenCheckboxListTile({
+    required this.isThingHidden,
+    required this.isManagedByPartner,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final bool isThingHidden;
+  final bool isManagedByPartner;
+  final bool? value;
+  final void Function(bool?) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+      builder: (context) {
+        if (isThingHidden) {
+          return const CheckboxListTile(
+            title: Text('Hidden'),
+            subtitle:
+                Text('Unable to unhide because the parent thing is hidden.'),
+            secondary: Icon(Icons.visibility_off_outlined),
+            value: true,
+            onChanged: null,
+          );
+        }
+
+        if (isManagedByPartner) {
+          return const CheckboxListTile(
+            title: Text('Hidden'),
+            subtitle: Text(
+                'Unable to unhide because this item is at a partner location.'),
+            secondary: Icon(Icons.visibility_off_outlined),
+            value: true,
+            onChanged: null,
+          );
+        }
+
+        return CheckboxListTile(
+          title: const Text('Hidden'),
+          secondary: value == true
+              ? const Icon(Icons.visibility_off_outlined)
+              : const Icon(Icons.visibility_outlined),
+          value: value,
+          onChanged: onChanged,
         );
       },
     );
