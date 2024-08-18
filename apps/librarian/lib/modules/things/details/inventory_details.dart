@@ -98,10 +98,12 @@ class InventoryDetails extends ConsumerWidget {
                 );
 
                 ref.read(endDrawerProvider).openEndDrawer(
-                    context,
-                    ItemDetailsDrawer(
-                      controller: detailsController,
-                    ));
+                      context,
+                      ItemDetailsDrawer(
+                        controller: detailsController,
+                        isHiddenLocked: details.hidden,
+                      ),
+                    );
               },
               onAddItemsPressed: () {
                 showDialog(
