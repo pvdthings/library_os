@@ -7,6 +7,7 @@ class DetailedThingModel {
     required this.id,
     required this.name,
     required this.categories,
+    required this.linkedThings,
     required this.images,
     required this.items,
     required this.hidden,
@@ -24,6 +25,7 @@ class DetailedThingModel {
   final int stock;
   final int available;
   final List<String> categories;
+  final List<LinkedThing> linkedThings;
   final List<ImageModel> images;
   final List<ItemModel> items;
 
@@ -37,9 +39,17 @@ class DetailedThingModel {
       stock: json['stock'] as int,
       available: json['available'] as int,
       categories: (json['categories'] as List).cast<String>(),
+      linkedThings: [],
       images:
           (json['images'] as List).map((e) => ImageModel.fromJson(e)).toList(),
       items: (json['items'] as List).map((e) => ItemModel.fromJson(e)).toList(),
     );
   }
+}
+
+class LinkedThing {
+  const LinkedThing({required this.id, required this.name});
+
+  final String id;
+  final String name;
 }

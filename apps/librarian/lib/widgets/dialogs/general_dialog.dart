@@ -6,11 +6,13 @@ class GeneralDialog extends StatelessWidget {
     required this.content,
     this.title,
     this.titlePrefix,
+    this.closeWidget,
   });
 
   final Widget content;
   final String? title;
   final Widget? titlePrefix;
+  final Widget? closeWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +35,16 @@ class GeneralDialog extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
-                CloseButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
+                closeWidget ??
+                    CloseButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
               ],
             ),
           ),
-          content,
+          Expanded(child: content),
         ],
       ),
     );

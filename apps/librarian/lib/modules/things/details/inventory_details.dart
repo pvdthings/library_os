@@ -18,6 +18,7 @@ import 'package:librarian_app/modules/things/details/image/thing_image_card.dart
 import 'package:librarian_app/utils/media_query.dart';
 
 import 'inventory/item_details/item_details_controller.dart';
+import 'linked_things/card.dart';
 
 class InventoryDetails extends ConsumerWidget {
   const InventoryDetails({super.key});
@@ -69,7 +70,14 @@ class InventoryDetails extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 32),
-            const CategoriesCard(),
+            const Wrap(
+              spacing: 16,
+              runSpacing: 32,
+              children: [
+                CategoriesCard(),
+                LinkedThingsCard(),
+              ],
+            ),
             const SizedBox(height: 32),
             ItemsCard(
               items: details.items,

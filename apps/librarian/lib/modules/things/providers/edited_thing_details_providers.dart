@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/api/models/detailed_thing_model.dart';
 import 'package:librarian_app/core/api/models/image_model.dart';
 import 'package:librarian_app/core/api/models/updated_image_model.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
@@ -15,6 +16,8 @@ final eyeProtectionProvider = StateProvider<bool?>((ref) => null);
 
 final categoriesProvider = StateProvider<List<String>?>((ref) => null);
 
+final linkedThingsProvider = StateProvider<List<LinkedThing>?>((ref) => null);
+
 final imageProvider = StateProvider<ImageModel?>((ref) => null);
 
 final imageUploadProvider = StateProvider<UpdatedImageModel?>((ref) => null);
@@ -25,7 +28,8 @@ final unsavedChangesProvider = Provider<bool>((ref) {
       ref.watch(hiddenProvider) != null ||
       ref.watch(eyeProtectionProvider) != null ||
       ref.watch(imageUploadProvider) != null ||
-      ref.watch(categoriesProvider) != null;
+      ref.watch(categoriesProvider) != null ||
+      ref.watch(linkedThingsProvider) != null;
 });
 
 class ThingDetailsEditor {
@@ -51,6 +55,7 @@ class ThingDetailsEditor {
     ref.read(hiddenProvider.notifier).state = null;
     ref.read(eyeProtectionProvider.notifier).state = null;
     ref.read(categoriesProvider.notifier).state = null;
+    ref.read(linkedThingsProvider.notifier).state = null;
     ref.read(imageUploadProvider.notifier).state = null;
     ref.invalidate(thingDetailsProvider);
   }
