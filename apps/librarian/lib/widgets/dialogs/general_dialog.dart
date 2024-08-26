@@ -6,13 +6,13 @@ class GeneralDialog extends StatelessWidget {
     required this.content,
     this.title,
     this.titlePrefix,
-    this.closeWidget,
+    this.footerActions,
   });
 
   final Widget content;
   final String? title;
   final Widget? titlePrefix;
-  final Widget? closeWidget;
+  final List<Widget>? footerActions;
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +35,25 @@ class GeneralDialog extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
-                closeWidget ??
-                    CloseButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
+                CloseButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ],
             ),
           ),
           Expanded(child: content),
+          if (footerActions != null && footerActions!.isNotEmpty)
+            Container(
+              color: Theme.of(context).colorScheme.surface.withAlpha(180),
+              padding: const EdgeInsets.all(16.0),
+              child: Wrap(
+                alignment: WrapAlignment.end,
+                spacing: 8.0,
+                children: footerActions!,
+              ),
+            ),
         ],
       ),
     );

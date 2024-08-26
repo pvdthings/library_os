@@ -43,24 +43,21 @@ class _ChooseThingsDialogState extends ConsumerState<ChooseThingsDialog> {
     return FractionallySizedBox(
       widthFactor: 1 / 2,
       child: GeneralDialog(
-        title: 'Linked Things',
-        closeWidget: Row(
-          children: [
-            OutlinedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            const SizedBox(width: 8.0),
-            FilledButton(
-              onPressed: () {
-                Navigator.of(context).pop(selected);
-              },
-              child: const Text('Finish'),
-            ),
-          ],
-        ),
+        title: 'Link Things',
+        footerActions: [
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: selected.isNotEmpty
+                ? () => Navigator.of(context).pop(selected)
+                : null,
+            child: const Text('Link'),
+          ),
+        ],
         content: FutureBuilder(
           future: thingsFuture,
           builder: (context, snapshot) {
