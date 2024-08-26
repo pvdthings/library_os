@@ -41,7 +41,7 @@ class LinkedThingsCard extends ConsumerWidget {
                 final chosen = await _chooseThings(context);
                 ref.read(linkedThingsProvider.notifier).state = chosen;
               },
-              label: const Text('Link thing'),
+              label: const Text('Link things'),
               icon: const Icon(Icons.add),
             ),
           ),
@@ -54,7 +54,15 @@ class LinkedThingsCard extends ConsumerWidget {
                     spacing: 8,
                     runSpacing: 8,
                     children: linkedThings
-                        .map((t) => Chip(label: Text(t.name)))
+                        .map((t) => Chip(
+                              label: Text(t.name),
+                              onDeleted: () {
+                                ref.read(linkedThingsProvider.notifier).state =
+                                    linkedThings
+                                        .where((lt) => lt.id != t.id)
+                                        .toList();
+                              },
+                            ))
                         .toList(),
                   ),
                 ),
