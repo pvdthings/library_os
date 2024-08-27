@@ -20,11 +20,18 @@ class _ChooseThingsDialogState extends ConsumerState<ChooseThingsDialog> {
   late Future<List<ThingModel>> thingsFuture;
 
   String? searchFilter;
+  final searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     thingsFuture = ref.read(thingsRepositoryProvider);
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   List<ThingModel> filtered(List<ThingModel> things) {
@@ -38,12 +45,34 @@ class _ChooseThingsDialogState extends ConsumerState<ChooseThingsDialog> {
         .toList();
   }
 
+  void clearSearch() {
+    searchController.clear();
+    setState(() => searchFilter = null);
+  }
+
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       widthFactor: 1 / 2,
       child: GeneralDialog(
-        title: 'Link Things',
+        title: 'Add Linked Things',
+        titleSuffix: Chip(label: Text('Adding ${selected.length} Things')),
+        closeButton: false,
+        toolbar: TextField(
+          controller: searchController,
+          onChanged: (value) => setState(() {
+            searchFilter = value;
+          }),
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.search),
+            suffixIcon: IconButton(
+              onPressed: searchFilter == null ? null : clearSearch,
+              icon: const Icon(Icons.clear),
+            ),
+            label: const Text('Search'),
+            border: const OutlineInputBorder(),
+          ),
+        ),
         footerActions: [
           OutlinedButton(
             onPressed: () {
@@ -55,7 +84,7 @@ class _ChooseThingsDialogState extends ConsumerState<ChooseThingsDialog> {
             onPressed: selected.isNotEmpty
                 ? () => Navigator.of(context).pop(selected)
                 : null,
-            child: const Text('Link'),
+            child: const Text('Add'),
           ),
         ],
         content: FutureBuilder(
@@ -68,58 +97,38 @@ class _ChooseThingsDialogState extends ConsumerState<ChooseThingsDialog> {
             final things = snapshot.data ?? [];
             final filteredThings = filtered(things);
 
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    onChanged: (value) => setState(() {
-                      searchFilter = value;
-                    }),
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.search),
-                      label: Text('Search'),
-                      border: OutlineInputBorder(),
-                    ),
+            return SingleChildScrollView(
+              child: DataTable(
+                columns: [
+                  DataColumn(
+                    label: Text('${selected.length} things selected'),
                   ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: DataTable(
-                      columns: [
-                        DataColumn(
-                          label: Text('${selected.length} things selected'),
-                        ),
-                      ],
-                      rows: filteredThings
-                          .map((thing) => DataRow(
-                                cells: [
-                                  DataCell(Text(thing.name)),
-                                ],
-                                selected: selected.contains(thing),
-                                onSelectChanged: (value) => setState(() {
-                                  if (value == false &&
-                                      selected.contains(thing)) {
-                                    selected.remove(thing);
-                                  }
+                ],
+                rows: filteredThings
+                    .map((thing) => DataRow(
+                          cells: [
+                            DataCell(Text(thing.name)),
+                          ],
+                          selected: selected.contains(thing),
+                          onSelectChanged: (value) => setState(() {
+                            if (value == false && selected.contains(thing)) {
+                              selected.remove(thing);
+                            }
 
-                                  if (value == true) {
-                                    selected.add(thing);
-                                  }
-                                }),
-                              ))
-                          .toList(),
-                      onSelectAll: (value) => setState(() {
-                        selected.clear();
+                            if (value == true) {
+                              selected.add(thing);
+                            }
+                          }),
+                        ))
+                    .toList(),
+                onSelectAll: (value) => setState(() {
+                  selected.clear();
 
-                        if (value == true) {
-                          selected.addAll(things);
-                        }
-                      }),
-                    ),
-                  ),
-                ),
-              ],
+                  if (value == true) {
+                    selected.addAll(things);
+                  }
+                }),
+              ),
             );
           },
         ),
