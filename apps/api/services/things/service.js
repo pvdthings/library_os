@@ -22,13 +22,15 @@ const fetchThings = async ({ byPopularity } = {}) => {
 const fetchThing = async (id) => {
   const record = await things.find(id);
 
-  const itemPromises = record.get('Inventory')?.map(id => {
-    return inventory.find(id)
-  });
+  const itemPromises = record?.get('Inventory')?.map(id => inventory.find(id)) || [];
+  const linkedThingPromises = record?.get('Linked Things')?.map(id => things.find(id)) || [];
 
-  const items = itemPromises ? (await Promise.all(itemPromises)).map(mapItem) : [];
+  const [itemRecords, linkedThingRecords] = await Promise.all([
+    Promise.all(itemPromises),
+    Promise.all(linkedThingPromises)
+  ]);
 
-  return record ? mapThingDetails(record, items) : null;
+  return record ? mapThingDetails(record, itemRecords, linkedThingRecords) : null;
 }
 
 const createThing = async ({ name, spanishName, hidden, image, eyeProtection }) => {
@@ -40,7 +42,7 @@ const createThing = async ({ name, spanishName, hidden, image, eyeProtection }) 
     'Image': image?.url ? [{ url: image.url }] : []
   });
 
-  return record ? mapThingDetails(record, []) : null;
+  return record ? mapThingDetails(record) : null;
 }
 
 const updateThing = async (id, { name, spanishName, hidden, image, eyeProtection }) => {
