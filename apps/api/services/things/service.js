@@ -1,7 +1,6 @@
 const { base, Table, ThingCategories } = require('../../db');
 const mapThing = require('./mapThing');
 const mapThingDetails = require('./mapThingDetails');
-const { mapItem } = require('../inventory');
 const things = base(Table.Things);
 const inventory = base(Table.Inventory);
 
@@ -22,13 +21,15 @@ const fetchThings = async ({ byPopularity } = {}) => {
 const fetchThing = async (id) => {
   const record = await things.find(id);
 
-  const itemPromises = record.get('Inventory')?.map(id => {
-    return inventory.find(id)
-  });
+  const itemPromises = record?.get('Inventory')?.map(id => inventory.find(id)) || [];
+  const linkedThingPromises = record?.get('Linked Things')?.map(id => things.find(id)) || [];
 
-  const items = itemPromises ? (await Promise.all(itemPromises)).map(mapItem) : [];
+  const [itemRecords, linkedThingRecords] = await Promise.all([
+    Promise.all(itemPromises),
+    Promise.all(linkedThingPromises)
+  ]);
 
-  return record ? mapThingDetails(record, items) : null;
+  return record ? mapThingDetails(record, itemRecords, linkedThingRecords) : null;
 }
 
 const createThing = async ({ name, spanishName, hidden, image, eyeProtection }) => {
@@ -40,10 +41,10 @@ const createThing = async ({ name, spanishName, hidden, image, eyeProtection }) 
     'Image': image?.url ? [{ url: image.url }] : []
   });
 
-  return record ? mapThingDetails(record, []) : null;
+  return record ? mapThingDetails(record) : null;
 }
 
-const updateThing = async (id, { name, spanishName, hidden, image, eyeProtection }) => {
+const updateThing = async (id, { name, spanishName, categories, hidden, image, eyeProtection, linkedThings }) => {
   let updatedFields = {};
 
   if (name) {
@@ -52,6 +53,10 @@ const updateThing = async (id, { name, spanishName, hidden, image, eyeProtection
 
   if (spanishName) {
     updatedFields['name_es'] = spanishName;
+  }
+
+  if (categories !== null) {
+    updatedFields['Category'] = categories;
   }
 
   if (hidden !== null) {
@@ -66,15 +71,15 @@ const updateThing = async (id, { name, spanishName, hidden, image, eyeProtection
     updatedFields['Eye Protection'] = eyeProtection;
   }
 
+  if (linkedThings !== null) {
+    updatedFields['Linked Things'] = linkedThings;
+  }
+
   await things.update(id, updatedFields);
 }
 
 const deleteThing = async (id) => {
   await things.destroy(id);
-}
-
-const updateThingCategories = async (id, { categories }) => {
-  await things.update(id, { 'Category': categories });
 }
 
 const deleteThingImage = async (id) => {
@@ -88,7 +93,6 @@ module.exports = {
   fetchThing,
   createThing,
   updateThing,
-  updateThingCategories,
   deleteThingImage,
   deleteThing,
 };

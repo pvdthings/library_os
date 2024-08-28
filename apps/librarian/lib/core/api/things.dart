@@ -26,6 +26,8 @@ Future<Response> updateThing(
   String thingId, {
   String? name,
   String? spanishName,
+  List<String>? categories,
+  List<String>? linkedThings,
   bool? hidden,
   bool? eyeProtection,
   ImageDTO? image,
@@ -33,6 +35,8 @@ Future<Response> updateThing(
   return await DioClient.instance.patch('/things/$thingId', data: {
     'name': name,
     'spanishName': spanishName,
+    'categories': categories,
+    'linkedThings': linkedThings,
     'hidden': hidden,
     'eyeProtection': eyeProtection,
     'image': image != null ? {'url': image.url} : null,
@@ -41,15 +45,6 @@ Future<Response> updateThing(
 
 Future<Response> deleteThing(String id) async {
   return await DioClient.instance.delete('/things/$id');
-}
-
-Future<Response> updateThingCategories(
-  String id, {
-  required List<String> categories,
-}) async {
-  return await DioClient.instance.patch('/things/$id/categories', data: {
-    'categories': categories,
-  });
 }
 
 Future<Response> deleteThingImage(String thingId) async {
