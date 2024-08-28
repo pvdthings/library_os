@@ -1,7 +1,6 @@
 const { base, Table, ThingCategories } = require('../../db');
 const mapThing = require('./mapThing');
 const mapThingDetails = require('./mapThingDetails');
-const { mapItem } = require('../inventory');
 const things = base(Table.Things);
 const inventory = base(Table.Inventory);
 
@@ -45,7 +44,7 @@ const createThing = async ({ name, spanishName, hidden, image, eyeProtection }) 
   return record ? mapThingDetails(record) : null;
 }
 
-const updateThing = async (id, { name, spanishName, hidden, image, eyeProtection }) => {
+const updateThing = async (id, { name, spanishName, categories, hidden, image, eyeProtection, linkedThings }) => {
   let updatedFields = {};
 
   if (name) {
@@ -54,6 +53,10 @@ const updateThing = async (id, { name, spanishName, hidden, image, eyeProtection
 
   if (spanishName) {
     updatedFields['name_es'] = spanishName;
+  }
+
+  if (categories !== null) {
+    updatedFields['Category'] = categories;
   }
 
   if (hidden !== null) {
@@ -68,15 +71,15 @@ const updateThing = async (id, { name, spanishName, hidden, image, eyeProtection
     updatedFields['Eye Protection'] = eyeProtection;
   }
 
+  if (linkedThings !== null) {
+    updatedFields['Linked Things'] = linkedThings;
+  }
+
   await things.update(id, updatedFields);
 }
 
 const deleteThing = async (id) => {
   await things.destroy(id);
-}
-
-const updateThingCategories = async (id, { categories }) => {
-  await things.update(id, { 'Category': categories });
 }
 
 const deleteThingImage = async (id) => {
@@ -90,7 +93,6 @@ module.exports = {
   fetchThing,
   createThing,
   updateThing,
-  updateThingCategories,
   deleteThingImage,
   deleteThing,
 };
