@@ -39,7 +39,9 @@ class DetailedThingModel {
       stock: json['stock'] as int,
       available: json['available'] as int,
       categories: (json['categories'] as List).cast<String>(),
-      linkedThings: [],
+      linkedThings: (json['linkedThings'] as List)
+          .map((e) => LinkedThing.fromJson(e))
+          .toList(),
       images:
           (json['images'] as List).map((e) => ImageModel.fromJson(e)).toList(),
       items: (json['items'] as List).map((e) => ItemModel.fromJson(e)).toList(),
@@ -52,4 +54,11 @@ class LinkedThing {
 
   final String id;
   final String name;
+
+  factory LinkedThing.fromJson(Map<String, dynamic> json) {
+    return LinkedThing(
+      id: json['id'] as String,
+      name: json['name'] as String,
+    );
+  }
 }
