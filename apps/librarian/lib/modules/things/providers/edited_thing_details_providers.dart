@@ -45,6 +45,7 @@ class ThingDetailsEditor {
         hidden: ref.read(hiddenProvider),
         eyeProtection: ref.read(eyeProtectionProvider),
         categories: ref.read(categoriesProvider),
+        linkedThings: ref.read(linkedThingsProvider),
         image: ref.read(imageUploadProvider));
     discardChanges();
   }
