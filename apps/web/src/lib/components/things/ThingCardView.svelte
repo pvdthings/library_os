@@ -9,7 +9,7 @@
 
 	export let thing: Thing;
 
-	$: bookmarked = $bookmarks.find((t) => t.id === thing.id) !== undefined;
+	$: bookmarked = $bookmarks.find((t) => t === thing.id) !== undefined;
 	$: thingName = $locale === 'en' ? thing.name : thing.spanishName ?? thing.name;
 
   let showModal = false;

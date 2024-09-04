@@ -1,6 +1,6 @@
-import type { Thing } from "$lib/models/Thing";
+import type { Thing, ThingID } from "$lib/models/Thing";
 import { defaultFilterCategory, filter } from "$lib/utils/filters";
-import { derived, writable } from "svelte/store";
+import { derived, get, writable } from "svelte/store";
 
 export const categoryFilter = writable<string>(defaultFilterCategory);
 
@@ -20,5 +20,9 @@ export const filteredThings = derived(
 		});
   }
 );
+
+export const findThingById = (id: ThingID) => {
+  return get(things).find(t => t.id === id);
+};
 
 export const categories = writable<string[]>(undefined);
