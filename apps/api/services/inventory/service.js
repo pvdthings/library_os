@@ -10,6 +10,7 @@ const inventoryFields = [
   'Eye Protection',
   'Active Loans', 
   'Total Loans',
+  'Linked Things',
   'Location',
   'Manuals',
   'Picture', 
