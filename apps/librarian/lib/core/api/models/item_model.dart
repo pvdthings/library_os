@@ -11,6 +11,7 @@ class ItemModel {
     required this.totalLoans,
     required this.imageUrls,
     required this.manuals,
+    required this.linkedThingIds,
     this.brand,
     this.condition,
     this.description,
@@ -30,6 +31,7 @@ class ItemModel {
   final bool hidden;
   final bool eyeProtection;
   final int totalLoans;
+  final List<String> linkedThingIds;
   final List<String> imageUrls;
   final List<ManualModel> manuals;
 
@@ -52,6 +54,7 @@ class ItemModel {
       location: json['location'] as String?,
       estimatedValue: json['estimatedValue'] as double?,
       eyeProtection: json['eyeProtection'] as bool,
+      linkedThingIds: (json['linkedThingIds'] as List).cast<String>(),
       imageUrls: (json['images'] as List).cast<String>(),
       manuals: (json['manuals'] as List)
           .map((m) => ManualModel.fromJson(m))

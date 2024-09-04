@@ -15,6 +15,7 @@ function mapItem(record) {
       estimatedValue: record.get('Estimated Value'),
       eyeProtection: Boolean(record.get('Eye Protection')),
       condition: record.get('Condition'),
+      linkedThingIds: record.get('Linked Things') || [],
       location: record.get('Location')?.[0],
       totalLoans: record.get('Total Loans'),
       images: record.get('Picture')?.map(image => image.thumbnails.large.url) || [],

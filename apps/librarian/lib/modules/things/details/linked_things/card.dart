@@ -14,10 +14,11 @@ import 'dialog.dart';
 class LinkedThingsCard extends ConsumerWidget {
   const LinkedThingsCard({super.key});
 
-  Future<List<LinkedThing>?> _chooseThings(context) async {
+  Future<List<LinkedThing>?> _chooseThings(
+      context, Iterable<String> linkedIds) async {
     final things = await showDialog<List<ThingModel>?>(
       context: context,
-      builder: (context) => const ChooseThingsDialog(),
+      builder: (context) => ChooseThingsDialog(existing: linkedIds),
     );
 
     return things?.map((t) => LinkedThing(id: t.id, name: t.name)).toList();
@@ -38,8 +39,15 @@ class LinkedThingsCard extends ConsumerWidget {
             title: 'Linked Things',
             trailing: TextButton.icon(
               onPressed: () async {
-                final chosen = await _chooseThings(context);
-                ref.read(linkedThingsProvider.notifier).state = chosen;
+                final chosen =
+                    await _chooseThings(context, linkedThings.map((t) => t.id));
+
+                final List<LinkedThing> newState = [
+                  ...linkedThings,
+                  ...(chosen ?? [])
+                ];
+
+                ref.read(linkedThingsProvider.notifier).state = newState;
               },
               label: const Text('Link things'),
               icon: const Icon(Icons.add),

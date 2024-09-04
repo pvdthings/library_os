@@ -6,7 +6,9 @@ import 'package:librarian_app/widgets/dialogs/general_dialog.dart';
 import '../../providers/things_repository_provider.dart';
 
 class ChooseThingsDialog extends ConsumerStatefulWidget {
-  const ChooseThingsDialog({super.key});
+  const ChooseThingsDialog({super.key, required this.existing});
+
+  final Iterable<String> existing;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -94,7 +96,10 @@ class _ChooseThingsDialogState extends ConsumerState<ChooseThingsDialog> {
               return const Center(child: CircularProgressIndicator());
             }
 
-            final things = snapshot.data ?? [];
+            final things = snapshot.data
+                    ?.where((t) => !widget.existing.contains(t.id))
+                    .toList() ??
+                [];
             final filteredThings = filtered(things);
 
             return SingleChildScrollView(

@@ -34,6 +34,11 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         .toList();
   }
 
+  Future<List<ThingModel>> getCachedThingsById(Iterable<String> ids) async {
+    final all = await state;
+    return all.where((t) => ids.contains(t.id)).toList();
+  }
+
   Future<DetailedThingModel> getThingDetails({required String id}) async {
     final response = await api.fetchThing(id: id);
     return DetailedThingModel.fromJson(response.data as Map<String, dynamic>);
