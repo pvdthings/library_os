@@ -1,5 +1,5 @@
 import { browser } from "$app/environment";
-import type { Thing } from "$lib/models/Thing";
+import type { ThingID } from "$lib/models/Thing";
 import { derived, writable } from "svelte/store";
 
 const defaultValue = [];
@@ -8,7 +8,7 @@ function createBookmarks() {
   const initialValue = browser ? JSON.parse(window.localStorage.getItem('myList'))
   ?? defaultValue : defaultValue;
 
-  const things = writable<Thing[]>(initialValue);
+  const things = writable<ThingID[]>(initialValue);
 
   things.subscribe((value) => {
     if (browser) {
@@ -18,15 +18,15 @@ function createBookmarks() {
 
   const length = derived([things], ([$things]) => $things.length);
 
-  const addRemove = (thing: Thing) => {
+  const addRemove = (id: ThingID) => {
     things.update((value) => {
-      const existingThing = value.find(t => t.id === thing.id);
+      const existingThing = value.find(t => t === id);
       if (existingThing) {
         // remove
-        return value.filter(t => t.id !== thing.id);
+        return value.filter(t => t !== id);
       } else {
         // add
-        return [thing, ...value];
+        return [id, ...value];
       }
     });
   };
