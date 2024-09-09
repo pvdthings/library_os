@@ -5,8 +5,15 @@ import { derived, writable } from "svelte/store";
 const defaultValue = [];
 
 function createBookmarks() {
-  const initialValue = browser ? JSON.parse(window.localStorage.getItem('myList'))
+  let initialValue = browser ? JSON.parse(window.localStorage.getItem('myList'))
   ?? defaultValue : defaultValue;
+
+  // convert from old format to new
+  if (initialValue.length && (typeof initialValue[0]) !== 'string') {
+    console.log('Converting old bookmarks...');
+    initialValue = initialValue.map(b => b.id);
+    window.localStorage.setItem('myList', JSON.stringify(initialValue));
+  }
 
   const things = writable<ThingID[]>(initialValue);
 
