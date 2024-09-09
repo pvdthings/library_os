@@ -21,7 +21,7 @@
   };
 
   const addRemoveBookmark = () => {
-    bookmarks.addRemove(thing);
+    bookmarks.addRemove(thing.id);
     dispatch('click');
   };
 </script>

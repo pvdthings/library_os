@@ -1,5 +1,7 @@
+export type ThingID = string;
+
 export interface Thing {
-  id: string;
+  id: ThingID;
   name: string;
   spanishName?: string;
   categories: string[];

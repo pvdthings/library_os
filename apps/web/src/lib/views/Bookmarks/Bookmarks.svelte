@@ -2,22 +2,19 @@
 	import BookmarksRow from './BookmarksRow.svelte';
 	import { locale, t } from '$lib/language/translate';
 	import { bookmarks } from '$lib/stores/bookmarks';
-	import type { Thing } from '$lib/models/Thing';
+	import { findThingById } from '$lib/stores/catalog';
 
 	$: isSpanish = $locale === 'es';
-
-	const removeThing = (thing: Thing) => {
-		bookmarks.addRemove(thing);
-	};
 </script>
 
 {#if $bookmarks.length}
 	<table class="table">
 		<tbody>
-			{#each $bookmarks as thing}
+			{#each $bookmarks as thingId}
+				{@const thing = findThingById(thingId)}
 				{@const thingName = isSpanish ? thing.spanishName ?? thing.name : thing.name}
 				<BookmarksRow
-					on:remove={() => removeThing(thing)}
+					on:remove={() => bookmarks.addRemove(thing.id)}
 					{thingName}
 					category={thing.categories[0]}
 					available={thing.available}

@@ -34,6 +34,11 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         .toList();
   }
 
+  Future<List<ThingModel>> getCachedThingsById(Iterable<String> ids) async {
+    final all = await state;
+    return all.where((t) => ids.contains(t.id)).toList();
+  }
+
   Future<DetailedThingModel> getThingDetails({required String id}) async {
     final response = await api.fetchThing(id: id);
     return DetailedThingModel.fromJson(response.data as Map<String, dynamic>);
@@ -69,20 +74,19 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     bool? hidden,
     bool? eyeProtection,
     List<String>? categories,
+    List<LinkedThing>? linkedThings,
     UpdatedImageModel? image,
   }) async {
     if (image != null && image.bytes == null) {
       await deleteThingImage(thingId: thingId);
     }
 
-    if (categories != null) {
-      await api.updateThingCategories(thingId, categories: categories);
-    }
-
     await api.updateThing(
       thingId,
       name: name,
       spanishName: spanishName,
+      categories: categories,
+      linkedThings: linkedThings?.map((t) => t.id).toList(),
       hidden: hidden,
       eyeProtection: eyeProtection,
       image: await _convert(image),
