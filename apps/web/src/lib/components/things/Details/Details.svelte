@@ -7,6 +7,21 @@
   export let availableStock = 0;
   export let totalStock = 0;
   export let categories = [];
+
+  const inventory = [
+    {
+      number: 1146,
+      brand: 'DeWalt'
+    },
+    {
+      number: 1147,
+      brand: 'Milwaukee'
+    },
+    {
+      number: 1148,
+      brand: 'Ryobi'
+    }
+  ]; 
 </script>
 
 <div class="p-4 flex flex-col min-w-80">
@@ -37,13 +52,19 @@
   <div class="divider" />
   <section>
     <div class="section-title">Inventory</div>
-    <div>Item 1</div>
-    <div>Item 2</div>
+    <div class="flex flex-col gap-2">
+      {#each inventory as item}
+        <div class="flex flex-row gap-2">
+          <div>#{item.number}</div>
+          <div>{item.brand}</div>
+        </div>
+      {/each}
+    </div>
   </section>
 </div>
 
 <style>
   .section-title {
-    @apply font-display font-semibold text-lg mb-1;
+    @apply font-display font-semibold text-lg mb-2;
   }
 </style>
