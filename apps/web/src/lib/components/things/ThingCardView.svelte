@@ -5,18 +5,19 @@
 	import ThingCard from './ThingCard.svelte';
 	import { vibrate } from '$lib/utils/haptics';
 	import { getShellContext } from '../Shell/ShellContext';
+	import ThingDetails from './ThingDetails.svelte';
 
 	export let thing: Thing;
+
+	$: bookmarked = $bookmarks.find((t) => t === thing.id) !== undefined;
+	$: thingName = $locale === 'en' ? thing.name : thing.spanishName ?? thing.name;
 
 	const { drawer } = getShellContext();
 
 	const openThingDetails = () => {
-		drawer.open();
+		drawer.open(ThingDetails, { thing, bookmarked });
 		vibrate();
 	};
-
-	$: bookmarked = $bookmarks.find((t) => t === thing.id) !== undefined;
-	$: thingName = $locale === 'en' ? thing.name : thing.spanishName ?? thing.name;
 </script>
 
 <ThingCard

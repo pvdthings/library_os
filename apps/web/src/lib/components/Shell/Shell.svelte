@@ -1,12 +1,14 @@
-<script>
+<script lang="ts">
 	import { setContext } from "svelte";
 
-	let drawerToggle;
-	let drawerContent = 'Drawer Content!';
+	let drawerToggle: HTMLLabelElement;
+	let drawerContent: any;
+	let drawerContentProps: any;
 
 	const drawer = {
-		open: () => {
-			// drawerContent = content;
+		open: (content, props = {}) => {
+			drawerContent = content;
+			drawerContentProps = props;
 			drawerToggle.click();
 		}
 	};
@@ -25,7 +27,7 @@
 	<div class="drawer-side z-50">
     <label for="drawer-toggle" aria-label="close sidebar" class="drawer-overlay"></label>
     <div class="bg-base-200 text-base-content min-h-full">
-      {drawerContent}
+      <svelte:component this={drawerContent} {...drawerContentProps} />
     </div>
   </div>
 </div>
