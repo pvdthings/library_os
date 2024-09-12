@@ -5,7 +5,7 @@
 	import ThingCard from './ThingCard.svelte';
 	import { vibrate } from '$lib/utils/haptics';
 	import { getShellContext } from '../Shell/ShellContext';
-	import ThingDetails from './ThingDetails.svelte';
+	import Details from './Details';
 
 	export let thing: Thing;
 
@@ -15,7 +15,14 @@
 	const { drawer } = getShellContext();
 
 	const openThingDetails = () => {
-		drawer.open(ThingDetails, { thing, bookmarked });
+		drawer.open(Details, {
+			name: thingName,
+			imageUrl: thing.image,
+			availableStock: thing.available,
+			totalStock: thing.stock,
+			categories: thing.categories
+		});
+
 		vibrate();
 	};
 </script>
