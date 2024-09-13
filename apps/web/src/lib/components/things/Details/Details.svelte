@@ -31,8 +31,8 @@
 	];
 </script>
 
-<div class="w-80">
-	<section class="h-64 border-b border-base-300 overflow-hidden relative shadow-sm">
+<div class="w-80 lg:w-96">
+	<section class="h-48 md:h-64 border-b border-base-300 overflow-hidden relative shadow-sm">
 		<img
 			src={imageUrl ?? BoxIcon}
 			alt={name}
