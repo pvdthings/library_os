@@ -5,7 +5,8 @@ export type ShellContext = {
 };
 
 export type DrawerContext = {
-  open: (content, props: any) => void;
+  open: (content: any, props: any) => void;
+  close: () => void;
 };
 
 export function getShellContext(): ShellContext {

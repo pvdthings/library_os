@@ -6,10 +6,15 @@
 	let drawerContentProps: any;
 
 	const drawer = {
-		open: (content, props = {}) => {
+		open: (content: any, props = {}) => {
 			drawerContent = content;
 			drawerContentProps = props;
 			drawerToggle.click();
+		},
+		close: () => {
+			drawerToggle.click();
+			drawerContent = null;
+			drawerContentProps = null;
 		}
 	};
 

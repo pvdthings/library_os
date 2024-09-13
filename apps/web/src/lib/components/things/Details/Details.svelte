@@ -1,12 +1,16 @@
 <script>
 	import CategoryBadge from "./CategoryBadge.svelte";
   import BoxIcon from '$lib/icons/box.svg';
+	import CloseButton from "$lib/components/CloseButton.svelte";
+	import { getShellContext } from "$lib/components/Shell/ShellContext";
 
   export let name = 'Unnamed Thing';
   export let imageUrl = undefined;
   export let availableStock = 0;
   export let totalStock = 0;
   export let categories = [];
+
+  const { drawer } = getShellContext();
 
   const inventory = [
     {
@@ -24,17 +28,14 @@
   ]; 
 </script>
 
-<div class="p-4 flex flex-col min-w-80">
-  <section class="flex flex-row gap-4">
-    <div class="avatar">
-      <div class="bg-neutral-400 border border-neutral-400 w-32 rounded">
-        <img src={imageUrl ?? BoxIcon} alt={name} />
-      </div>
-    </div>
-    <div class="flex flex-col gap-1">
-      <div class="font-display font-semibold text-xl">{name}</div>
-      <div class="badge badge-success badge-lg">{availableStock} / {totalStock}</div>
-    </div>
+<div class="p-4 flex flex-col w-80">
+  <section class="-mx-4 -mt-4 mb-4 h-64 border-b border-base-300 overflow-hidden relative shadow-sm">
+    <img src={imageUrl ?? BoxIcon} alt={name} class="object-center object-contain bg-white h-full w-full" />
+    <CloseButton class="absolute top-4 right-4" on:click={drawer.close} />
+  </section>
+  <section class="flex flex-col gap-2">
+    <div class="font-display font-semibold text-2xl">{name}</div>
+    <div class="badge badge-success badge-lg">{availableStock} / {totalStock}</div>
   </section>
   <div class="divider" />
   <section>
@@ -65,6 +66,6 @@
 
 <style>
   .section-title {
-    @apply font-display font-semibold text-lg mb-2;
+    @apply font-display font-semibold text-xl mb-2;
   }
 </style>
