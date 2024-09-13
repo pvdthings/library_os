@@ -31,7 +31,7 @@
 	</div>
 	<div class="drawer-side z-50">
     <label for="drawer-toggle" aria-label="close sidebar" class="drawer-overlay"></label>
-    <div class="bg-base-200 text-base-content min-h-full">
+    <div class="bg-base-200 text-base-content h-screen">
       <svelte:component this={drawerContent} {...drawerContentProps} />
     </div>
   </div>

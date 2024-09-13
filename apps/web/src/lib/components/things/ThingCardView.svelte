@@ -16,6 +16,7 @@
 
 	const openThingDetails = () => {
 		drawer.open(Details, {
+			id: thing.id,
 			name: thingName,
 			imageUrl: thing.image,
 			availableStock: thing.available,
