@@ -5,6 +5,7 @@
 	import { getShellContext } from '$lib/components/Shell/ShellContext';
 	import InventoryItem from './InventoryItem.svelte';
 	import BookmarkButton from './BookmarkButton.svelte';
+	import { bookmarks } from '$lib/stores/bookmarks';
 
   // TODO: Refactor to accept Thing ID, then load from API
 
@@ -16,6 +17,9 @@
 	export let categories = [];
 
 	const { drawer } = getShellContext();
+
+	$: bookmarked = bookmarks.isBookmarked(id);
+	$: isBookmarked = $bookmarked;
 
 	const inventory = [
 		{
@@ -45,8 +49,13 @@
 	</section>
 	<div class="p-4 flex flex-col overflow-y-scroll">
 		<section class="flex flex-col gap-2">
-			<div class="font-display font-semibold text-2xl">{name}</div>
-			<div class="badge badge-success badge-lg">{availableStock} / {totalStock}</div>
+			<div class="font-display font-semibold text-2xl lg:text-3xl">{name}</div>
+			<div class="flex flex-wrap gap-2">
+				<div class="badge badge-success badge-lg">{availableStock} / {totalStock}</div>
+				{#if isBookmarked}
+					<div class="badge badge-primary badge-lg">Bookmarked</div>
+				{/if}
+			</div>
 		</section>
 		<div class="divider" />
 		<section>
