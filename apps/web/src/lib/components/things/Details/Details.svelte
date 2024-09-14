@@ -19,6 +19,8 @@
 
 	const { drawer } = getShellContext();
 
+	const stockBadgeVariant = availableStock ? 'badge-success' : 'badge-error';
+
 	$: bookmarked = bookmarks.isBookmarked(id);
 	$: isBookmarked = $bookmarked;
 
@@ -52,7 +54,7 @@
 		<section class="flex flex-col gap-2">
 			<div class="font-display font-semibold text-2xl lg:text-3xl">{name}</div>
 			<div class="flex flex-wrap gap-2">
-				<div class="badge badge-success badge-lg">{availableStock} / {totalStock}</div>
+				<div class="badge {stockBadgeVariant} badge-lg">{availableStock} / {totalStock}</div>
 				{#if isBookmarked}
 					<div class="badge badge-primary badge-lg">{$t('Bookmarked')}</div>
 				{/if}
