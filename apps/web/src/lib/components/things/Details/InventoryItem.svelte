@@ -1,6 +1,5 @@
 <script lang="ts">
   export let number: number;
-  export let imageUrl: string|undefined;
   export let brand: string|undefined;
   export let available: boolean;
 

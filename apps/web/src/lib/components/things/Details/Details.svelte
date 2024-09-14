@@ -6,6 +6,7 @@
 	import InventoryItem from './InventoryItem.svelte';
 	import BookmarkButton from './BookmarkButton.svelte';
 	import { bookmarks } from '$lib/stores/bookmarks';
+	import { t } from '$lib/language/translate';
 
   // TODO: Refactor to accept Thing ID, then load from API
 
@@ -53,17 +54,17 @@
 			<div class="flex flex-wrap gap-2">
 				<div class="badge badge-success badge-lg">{availableStock} / {totalStock}</div>
 				{#if isBookmarked}
-					<div class="badge badge-primary badge-lg">Bookmarked</div>
+					<div class="badge badge-primary badge-lg">{$t('Bookmarked')}</div>
 				{/if}
 			</div>
 		</section>
 		<div class="divider" />
 		<section>
-			<div class="section-title">Categories</div>
+			<div class="section-title">{$t('Categories')}</div>
 			<div class="flex flex-wrap gap-2">
 				{#if categories.length}
 					{#each categories as category}
-						<CategoryBadge text={category} />
+						<CategoryBadge text={$t(category)} />
 					{/each}
 				{:else}
 					<div>None</div>
@@ -72,10 +73,10 @@
 		</section>
 		<div class="divider" />
 		<section>
-			<div class="section-title">Inventory</div>
+			<div class="section-title">{$t('Inventory')}</div>
 			<div class="flex flex-col gap-2">
 				{#each inventory as item}
-					<InventoryItem number={item.number} {imageUrl} brand={item.brand} available={false} />
+					<InventoryItem number={item.number} brand={item.brand} available={false} />
 				{/each}
 			</div>
 		</section>
