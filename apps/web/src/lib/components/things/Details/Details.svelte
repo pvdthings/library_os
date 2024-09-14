@@ -6,20 +6,21 @@
 	import InventoryItem from './InventoryItem.svelte';
 	import BookmarkButton from './BookmarkButton.svelte';
 	import { bookmarks } from '$lib/stores/bookmarks';
-	import { t } from '$lib/language/translate';
+	import { locale, t } from '$lib/language/translate';
 
   // TODO: Refactor to accept Thing ID, then load from API
 
 	export let id;
 	export let name = 'Unnamed Thing';
 	export let imageUrl = undefined;
+	export let availableDate = undefined;
 	export let availableStock = 0;
 	export let totalStock = 0;
 	export let categories = [];
 
 	const { drawer } = getShellContext();
 
-	const stockBadgeVariant = availableStock ? 'badge-success' : 'badge-error';
+	$: stockBadgeVariant = availableStock ? 'badge-success' : 'badge-error';
 
 	$: bookmarked = bookmarks.isBookmarked(id);
 	$: isBookmarked = $bookmarked;
@@ -55,6 +56,9 @@
 			<div class="font-display font-semibold text-2xl lg:text-3xl">{name}</div>
 			<div class="flex flex-wrap gap-2">
 				<div class="badge {stockBadgeVariant} badge-lg">{availableStock} / {totalStock}</div>
+				{#if !availableStock && availableDate}
+					<div class="badge badge-neutral badge-lg">{$t('Due Back')} {new Date(availableDate).toLocaleDateString($locale)}</div>
+				{/if}
 				{#if isBookmarked}
 					<div class="badge badge-primary badge-lg">{$t('Bookmarked')}</div>
 				{/if}
