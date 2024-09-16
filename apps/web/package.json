@@ -1,6 +1,6 @@
 {
 	"name": "@library_os/web",
-	"version": "0.15.7",
+	"version": "0.16.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -32,5 +32,8 @@
 		"typescript": "^5.0.0",
 		"vite": "^5.2.10"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@phosphor-icons/web": "^2.1.1"
+	}
 }

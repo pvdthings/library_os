@@ -7,6 +7,7 @@ function mapThingDetails(record, items = [], linkedThings = []) {
       name_es: record.get('name_es'),
       stock: Number(record.get('Stock')),
       available: Number(record.get('Available')),
+      availableDate: record.get('Next Due Back')?.[0],
       hidden: Boolean(record.get('Hidden')),
       categories: record.get('Category') || [],
       eyeProtection: Boolean(record.get('Eye Protection')),

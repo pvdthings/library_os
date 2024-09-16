@@ -3,19 +3,20 @@
 	import { bookmarks } from '$lib/stores/bookmarks';
 	import type { Thing } from '$lib/models/Thing';
 	import ThingCard from './ThingCard.svelte';
-	import { Modal } from '../Modal';
-	import ThingDetails from './ThingDetails.svelte';
 	import { vibrate } from '$lib/utils/haptics';
+	import { getShellContext } from '../Shell/ShellContext';
+	import Details from './Details';
 
 	export let thing: Thing;
 
 	$: bookmarked = $bookmarks.find((t) => t === thing.id) !== undefined;
 	$: thingName = $locale === 'en' ? thing.name : thing.spanishName ?? thing.name;
 
-  let showModal = false;
+	const { drawer } = getShellContext();
 
-	const closeModal = () => {
-		showModal = false;
+	const openThingDetails = () => {
+		drawer.open(Details, { id: thing.id });
+		vibrate();
 	};
 </script>
 
@@ -25,14 +26,5 @@
 	bookmarked={bookmarked}
 	totalStock={thing.stock}
 	remainingStock={thing.available}
-	on:click={() => {
-    showModal = true;
-		vibrate();
-  }}
+	on:click={openThingDetails}
 />
-
-{#if showModal}
-  <Modal title={thingName} show={showModal} on:close={closeModal}>
-    <ThingDetails {thing} {bookmarked} on:click={closeModal} />
-  </Modal>
-{/if}

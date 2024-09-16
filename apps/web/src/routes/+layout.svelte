@@ -1,5 +1,8 @@
 <script>
 	import '../app.css';
+	import '@phosphor-icons/web/light';
+	import '@phosphor-icons/web/bold';
+	import '@phosphor-icons/web/fill';
 	import { Head } from '$lib/components';
 	import { AppBar, Body, Shell } from '$lib/components/Shell';
 	import BottomNavigationView from '$lib/views/BottomNavigationView.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import CloseIcon from "$lib/icons/x-mark.svg";
 	import { createEventDispatcher, onMount } from "svelte";
+	import CloseButton from "../CloseButton.svelte";
 
   export let show: boolean = false;
   export let title: string = undefined;
@@ -21,9 +21,7 @@
 
 <dialog bind:this={dialog} class="modal modal-bottom sm:modal-middle">
   <div class="modal-box relative modal-responsive">
-    <button class="btn btn-circle btn-ghost outline-none absolute right-2 top-2" on:click={closeModal}>
-      <img src={CloseIcon} alt="Close" height="24" width="24" />
-    </button>
+    <CloseButton class="absolute right-2 top-2" on:click={closeModal} />
     {#if title}
       <h2 class="font-bold font-display text-2xl mb-3">{title}</h2>
     {/if}
