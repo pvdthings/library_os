@@ -25,14 +25,14 @@
 	$: isBookmarked = $bookmarked;
 </script>
 
-<div class="h-full w-screen md:w-80 lg:w-96 overflow-y-scroll relative">
+<div class="flex flex-col h-full w-screen md:w-80 lg:w-96 relative">
 	{#if loading}
 		<AbsoluteCenter>
 			<LoadingSpinner />
 		</AbsoluteCenter>
 	{:else}
 		<BookmarkButton {id} />
-		<section class="h-48 md:h-64 border-b border-base-300 overflow-hidden relative shadow-sm">
+		<section class="flex-grow-0 flex-shrink-0 h-48 md:h-64 border-b border-base-300 overflow-hidden relative shadow-sm">
 			<img
 				src={thing.image ?? BoxIcon}
 				alt={thing.name}
@@ -40,7 +40,7 @@
 			/>
 			<CloseButton class="absolute top-4 right-4" on:click={drawer.close} />
 		</section>
-		<div class="p-4 flex flex-col overflow-y-scroll">
+		<div class="p-4 flex flex-col flex-grow overflow-y-scroll">
 			<section class="flex flex-col gap-2">
 				<div class="font-display font-semibold text-2xl lg:text-3xl">{thing.name}</div>
 				<div class="flex flex-wrap gap-2">
