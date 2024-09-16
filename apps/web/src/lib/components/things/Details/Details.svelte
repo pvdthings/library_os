@@ -10,6 +10,12 @@
 	import { locale, t } from '$lib/language/translate';
 	import { things } from '$lib/stores/things';
 	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
+	import Divider from "$lib/components/Divider.svelte";
+	import Wrap from "$lib/components/Wrap.svelte";
+	import Title from "./Title.svelte";
+	import List from "./List.svelte";
+	import Contents from "$lib/components/Drawer";
+	import Section from "./Section.svelte";
 
 	export let id;
 
@@ -25,7 +31,7 @@
 	$: isBookmarked = $bookmarked;
 </script>
 
-<div class="flex flex-col h-full w-screen md:w-80 lg:w-96 relative">
+<Contents>
 	{#if loading}
 		<AbsoluteCenter>
 			<LoadingSpinner />
@@ -41,9 +47,9 @@
 			<CloseButton class="absolute top-4 right-4" on:click={drawer.close} />
 		</section>
 		<div class="p-4 flex flex-col flex-grow overflow-y-scroll">
-			<section class="flex flex-col gap-2">
-				<div class="font-display font-semibold text-2xl lg:text-3xl">{thing.name}</div>
-				<div class="flex flex-wrap gap-2">
+			<section>
+				<Title>{thing.name}</Title>
+				<Wrap>
 					<div class="badge {stockBadgeVariant} badge-lg">{thing.available} / {thing.stock}</div>
 					{#if !thing.available && thing.availableDate}
 						<div class="badge badge-neutral badge-lg">{$t('Due Back')} {new Date(thing.availableDate).toLocaleDateString($locale)}</div>
@@ -51,12 +57,11 @@
 					{#if isBookmarked}
 						<div class="badge badge-primary badge-lg">{$t('Bookmarked')}</div>
 					{/if}
-				</div>
+				</Wrap>
 			</section>
-			<div class="divider" />
-			<section>
-				<div class="section-title">{$t('Categories')}</div>
-				<div class="flex flex-wrap gap-2">
+			<Divider />
+			<Section title={$t('Categories')}>
+				<Wrap>
 					{#if thing.categories.length}
 						{#each thing.categories as category}
 							<CategoryBadge text={$t(category)} />
@@ -64,23 +69,16 @@
 					{:else}
 						<div>None</div>
 					{/if}
-				</div>
-			</section>
-			<div class="divider" />
-			<section>
-				<div class="section-title">{$t('Inventory')}</div>
-				<div class="flex flex-col gap-2">
+				</Wrap>
+			</Section>
+			<Divider />
+			<Section title={$t('Inventory')}>
+				<List>
 					{#each thing.items as item}
 						<InventoryItem number={item.number} brand={item.brand} hidden={item.hidden} status={item.status} />
 					{/each}
-				</div>
-			</section>
+				</List>
+			</Section>
 		</div>
 	{/if}
-</div>
-
-<style>
-	.section-title {
-		@apply font-display font-semibold text-xl mb-2;
-	}
-</style>
+</Contents>
