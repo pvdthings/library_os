@@ -1,1 +1,1 @@
-export { default } from "./Details.svelte";
+export { default } from "./DetailsView.svelte";
