@@ -13,7 +13,7 @@
 
 	export let id;
 
-	const details = things.details(id);
+	$: details = things.details(id);
 	$: loading = $details.loading;
 	$: thing = $details.value;
 
