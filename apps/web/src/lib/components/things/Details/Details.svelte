@@ -32,58 +32,58 @@
 </script>
 
 <BookmarkButton {id} />
-	<section class="flex-grow-0 flex-shrink-0 h-48 md:h-64 border-b border-base-300 overflow-hidden relative shadow-sm">
-		<img
-			src={image ?? BoxIcon}
-			alt={name}
-			class="object-center object-contain bg-white h-full w-full"
-		/>
-		<CloseButton class="absolute top-4 right-4" on:click={drawer.close} />
+<section class="flex-grow-0 flex-shrink-0 h-48 md:h-64 border-b border-base-300 overflow-hidden relative shadow-sm">
+	<img
+		src={image ?? BoxIcon}
+		alt={name}
+		class="object-center object-contain bg-white h-full w-full"
+	/>
+	<CloseButton class="absolute top-4 right-4" on:click={drawer.close} />
+</section>
+<div class="p-4 flex flex-col flex-grow overflow-y-scroll">
+	<section>
+		<Title>{name}</Title>
+		<Wrap>
+			<Badge type={stockBadgeVariant}>{available} / {stock}</Badge>
+			{#if !available && availableDate}
+				<Badge>{$t('Due Back')} {new Date(availableDate).toLocaleDateString($locale)}</Badge>
+			{/if}
+			{#if isBookmarked}
+				<Badge type='primary'>{$t('Bookmarked')}</Badge>
+			{/if}
+		</Wrap>
 	</section>
-	<div class="p-4 flex flex-col flex-grow overflow-y-scroll">
-		<section>
-			<Title>{name}</Title>
-			<Wrap>
-				<Badge type={stockBadgeVariant}>{available} / {stock}</Badge>
-				{#if !available && availableDate}
-					<Badge>{$t('Due Back')} {new Date(availableDate).toLocaleDateString($locale)}</Badge>
-				{/if}
-				{#if isBookmarked}
-					<Badge type='primary'>{$t('Bookmarked')}</Badge>
-				{/if}
-			</Wrap>
-		</section>
-		<Divider />
-		<Section title={$t('Categories')}>
-			<Wrap>
-				{#if categories.length}
-					{#each categories as category}
-						<Badge>{$t(category)}</Badge>
-					{/each}
-				{:else}
-					<div>None</div>
-				{/if}
-			</Wrap>
-		</Section>
-		<Divider />
-		<Section title={$t('Inventory')}>
-			{@const availableItems = items.filter((i) => i.status === 'available' && !i.hidden)}
-			{@const unavailableItems = items.filter((i) => i.status === 'checkedOut' || i.hidden)}
-
-			{#if availableItems.length}
-				<List title={$t('Available')}>
-					{#each availableItems as item}
-						<InventoryItem number={item.number} brand={item.brand} status={item.status} />
-					{/each}
-				</List>
+	<Divider />
+	<Section title={$t('Categories')}>
+		<Wrap>
+			{#if categories.length}
+				{#each categories as category}
+					<Badge>{$t(category)}</Badge>
+				{/each}
+			{:else}
+				<div>None</div>
 			{/if}
+		</Wrap>
+	</Section>
+	<Divider />
+	<Section title={$t('Inventory')}>
+		{@const availableItems = items.filter((i) => i.status === 'available' && !i.hidden)}
+		{@const unavailableItems = items.filter((i) => i.status === 'checkedOut' || i.hidden)}
 
-			{#if unavailableItems.length}
-				<List title={$t('Unavailable')}>
-					{#each unavailableItems as item}
-						<InventoryItem number={item.number} brand={item.brand} status={item.status} />
-					{/each}
-				</List>
-			{/if}
-		</Section>
-	</div>
+		{#if availableItems.length}
+			<List title={$t('Available')}>
+				{#each availableItems as item}
+					<InventoryItem number={item.number} brand={item.brand} status={item.status} />
+				{/each}
+			</List>
+		{/if}
+
+		{#if unavailableItems.length}
+			<List title={$t('Unavailable')}>
+				{#each unavailableItems as item}
+					<InventoryItem number={item.number} brand={item.brand} status={item.status} />
+				{/each}
+			</List>
+		{/if}
+	</Section>
+</div>
