@@ -1,6 +1,5 @@
-<script>
+<script lang="ts">
 	import AbsoluteCenter from "$lib/components/AbsoluteCenter.svelte";
-	import CategoryBadge from './CategoryBadge.svelte';
 	import BoxIcon from '$lib/icons/box.svg';
 	import CloseButton from '$lib/components/CloseButton.svelte';
 	import { getShellContext } from '$lib/components/Shell/ShellContext';
@@ -16,6 +15,7 @@
 	import List from "./List.svelte";
 	import Contents from "$lib/components/Drawer";
 	import Section from "./Section.svelte";
+	import { Badge, type BadgeType } from "$lib/components/Badge";
 
 	export let id;
 
@@ -25,7 +25,7 @@
 
 	const { drawer } = getShellContext();
 
-	$: stockBadgeVariant = thing?.available ? 'badge-success' : 'badge-error';
+	$: stockBadgeVariant = (thing?.available ? 'success' : 'error') as BadgeType;
 
 	$: bookmarked = bookmarks.isBookmarked(id);
 	$: isBookmarked = $bookmarked;
@@ -50,12 +50,12 @@
 			<section>
 				<Title>{thing.name}</Title>
 				<Wrap>
-					<div class="badge {stockBadgeVariant} badge-lg">{thing.available} / {thing.stock}</div>
+					<Badge type={stockBadgeVariant}>{thing.available} / {thing.stock}</Badge>
 					{#if !thing.available && thing.availableDate}
-						<div class="badge badge-neutral badge-lg">{$t('Due Back')} {new Date(thing.availableDate).toLocaleDateString($locale)}</div>
+						<Badge>{$t('Due Back')} {new Date(thing.availableDate).toLocaleDateString($locale)}</Badge>
 					{/if}
 					{#if isBookmarked}
-						<div class="badge badge-primary badge-lg">{$t('Bookmarked')}</div>
+						<Badge type='primary'>{$t('Bookmarked')}</Badge>
 					{/if}
 				</Wrap>
 			</section>
@@ -64,7 +64,7 @@
 				<Wrap>
 					{#if thing.categories.length}
 						{#each thing.categories as category}
-							<CategoryBadge text={$t(category)} />
+							<Badge>{$t(category)}</Badge>
 						{/each}
 					{:else}
 						<div>None</div>
