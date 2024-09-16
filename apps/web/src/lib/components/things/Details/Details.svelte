@@ -17,7 +17,7 @@
 	import Section from "./Section.svelte";
 	import { Badge, type BadgeType } from "$lib/components/Badge";
 
-	export let id;
+	export let id: string;
 
 	$: details = things.details(id);
 	$: loading = $details.loading;
@@ -73,11 +73,24 @@
 			</Section>
 			<Divider />
 			<Section title={$t('Inventory')}>
-				<List>
-					{#each thing.items as item}
-						<InventoryItem number={item.number} brand={item.brand} hidden={item.hidden} status={item.status} />
-					{/each}
-				</List>
+				{@const availableItems = thing.items.filter((i) => i.status === 'available' && !i.hidden)}
+				{@const unavailableItems = thing.items.filter((i) => i.status === 'checkedOut' || i.hidden)}
+
+				{#if availableItems.length}
+					<List title={$t('Available')}>
+						{#each availableItems as item}
+							<InventoryItem number={item.number} brand={item.brand} status={item.status} />
+						{/each}
+					</List>
+				{/if}
+
+				{#if unavailableItems.length}
+					<List title={$t('Unavailable')}>
+						{#each unavailableItems as item}
+							<InventoryItem number={item.number} brand={item.brand} status={item.status} />
+						{/each}
+					</List>
+				{/if}
 			</Section>
 		</div>
 	{/if}
