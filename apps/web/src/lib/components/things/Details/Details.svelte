@@ -1,4 +1,5 @@
 <script>
+	import AbsoluteCenter from "$lib/components/AbsoluteCenter.svelte";
 	import CategoryBadge from './CategoryBadge.svelte';
 	import BoxIcon from '$lib/icons/box.svg';
 	import CloseButton from '$lib/components/CloseButton.svelte';
@@ -7,86 +8,75 @@
 	import BookmarkButton from './BookmarkButton.svelte';
 	import { bookmarks } from '$lib/stores/bookmarks';
 	import { locale, t } from '$lib/language/translate';
-
-  // TODO: Refactor to accept Thing ID, then load from API
+	import { things } from '$lib/stores/things';
+	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
 	export let id;
-	export let name = 'Unnamed Thing';
-	export let imageUrl = undefined;
-	export let availableDate = undefined;
-	export let availableStock = 0;
-	export let totalStock = 0;
-	export let categories = [];
+
+	const details = things.details(id);
+	$: loading = $details.loading;
+	$: thing = $details.value;
 
 	const { drawer } = getShellContext();
 
-	$: stockBadgeVariant = availableStock ? 'badge-success' : 'badge-error';
+	$: stockBadgeVariant = thing?.available ? 'badge-success' : 'badge-error';
 
 	$: bookmarked = bookmarks.isBookmarked(id);
 	$: isBookmarked = $bookmarked;
-
-	const inventory = [
-		{
-			number: 1146,
-			brand: 'DeWalt'
-		},
-		{
-			number: 1147,
-			brand: 'Milwaukee'
-		},
-		{
-			number: 1148,
-			brand: 'Ryobi'
-		}
-	];
 </script>
 
-<div class="h-full w-screen md:w-80 lg:w-96 relative">
-	<BookmarkButton {id} />
-	<section class="h-48 md:h-64 border-b border-base-300 overflow-hidden relative shadow-sm">
-		<img
-			src={imageUrl ?? BoxIcon}
-			alt={name}
-			class="object-center object-contain bg-white h-full w-full"
-		/>
-		<CloseButton class="absolute top-4 right-4" on:click={drawer.close} />
-	</section>
-	<div class="p-4 flex flex-col overflow-y-scroll">
-		<section class="flex flex-col gap-2">
-			<div class="font-display font-semibold text-2xl lg:text-3xl">{name}</div>
-			<div class="flex flex-wrap gap-2">
-				<div class="badge {stockBadgeVariant} badge-lg">{availableStock} / {totalStock}</div>
-				{#if !availableStock && availableDate}
-					<div class="badge badge-neutral badge-lg">{$t('Due Back')} {new Date(availableDate).toLocaleDateString($locale)}</div>
-				{/if}
-				{#if isBookmarked}
-					<div class="badge badge-primary badge-lg">{$t('Bookmarked')}</div>
-				{/if}
-			</div>
+<div class="h-full w-screen md:w-80 lg:w-96 overflow-y-scroll relative">
+	{#if loading}
+		<AbsoluteCenter>
+			<LoadingSpinner />
+		</AbsoluteCenter>
+	{:else}
+		<BookmarkButton {id} />
+		<section class="h-48 md:h-64 border-b border-base-300 overflow-hidden relative shadow-sm">
+			<img
+				src={thing.image ?? BoxIcon}
+				alt={thing.name}
+				class="object-center object-contain bg-white h-full w-full"
+			/>
+			<CloseButton class="absolute top-4 right-4" on:click={drawer.close} />
 		</section>
-		<div class="divider" />
-		<section>
-			<div class="section-title">{$t('Categories')}</div>
-			<div class="flex flex-wrap gap-2">
-				{#if categories.length}
-					{#each categories as category}
-						<CategoryBadge text={$t(category)} />
+		<div class="p-4 flex flex-col overflow-y-scroll">
+			<section class="flex flex-col gap-2">
+				<div class="font-display font-semibold text-2xl lg:text-3xl">{thing.name}</div>
+				<div class="flex flex-wrap gap-2">
+					<div class="badge {stockBadgeVariant} badge-lg">{thing.available} / {thing.stock}</div>
+					{#if !thing.available && thing.availableDate}
+						<div class="badge badge-neutral badge-lg">{$t('Due Back')} {new Date(thing.availableDate).toLocaleDateString($locale)}</div>
+					{/if}
+					{#if isBookmarked}
+						<div class="badge badge-primary badge-lg">{$t('Bookmarked')}</div>
+					{/if}
+				</div>
+			</section>
+			<div class="divider" />
+			<section>
+				<div class="section-title">{$t('Categories')}</div>
+				<div class="flex flex-wrap gap-2">
+					{#if thing.categories.length}
+						{#each thing.categories as category}
+							<CategoryBadge text={$t(category)} />
+						{/each}
+					{:else}
+						<div>None</div>
+					{/if}
+				</div>
+			</section>
+			<div class="divider" />
+			<section>
+				<div class="section-title">{$t('Inventory')}</div>
+				<div class="flex flex-col gap-2">
+					{#each thing.items as item}
+						<InventoryItem number={item.number} brand={item.brand} hidden={item.hidden} status={item.status} />
 					{/each}
-				{:else}
-					<div>None</div>
-				{/if}
-			</div>
-		</section>
-		<div class="divider" />
-		<section>
-			<div class="section-title">{$t('Inventory')}</div>
-			<div class="flex flex-col gap-2">
-				{#each inventory as item}
-					<InventoryItem number={item.number} brand={item.brand} available={false} />
-				{/each}
-			</div>
-		</section>
-	</div>
+				</div>
+			</section>
+		</div>
+	{/if}
 </div>
 
 <style>

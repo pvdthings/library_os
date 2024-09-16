@@ -12,6 +12,6 @@
   };
 </script>
 
-<button on:click={toggle} class="absolute bottom-4 right-4 btn btn-circle btn-lg btn-primary shadow-lg z-50">
+<button on:click={toggle} class="fixed bottom-4 right-4 btn btn-circle btn-lg btn-primary shadow-lg z-50">
   <span class="{iconVariant} ph-bookmark-simple text-white text-4xl" />
 </button>

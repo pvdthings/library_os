@@ -15,16 +15,7 @@
 	const { drawer } = getShellContext();
 
 	const openThingDetails = () => {
-		drawer.open(Details, {
-			id: thing.id,
-			name: thingName,
-			imageUrl: thing.image,
-			availableDate: thing.availableDate,
-			availableStock: thing.available,
-			totalStock: thing.stock,
-			categories: thing.categories
-		});
-
+		drawer.open(Details, { id: thing.id });
 		vibrate();
 	};
 </script>
