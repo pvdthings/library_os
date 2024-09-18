@@ -3,12 +3,14 @@
 	import { things } from '$lib/stores/things';
 	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 	import Details from './Details.svelte';
+	import { locale } from '$lib/language/translate';
 
 	export let id: string;
 
 	$: details = things.details(id);
 	$: loading = $details.loading;
 	$: thing = $details.value;
+	$: thingName = $locale === 'en' ? thing?.name : thing?.spanishName ?? thing?.name;
 </script>
 
 {#if loading}
@@ -18,7 +20,7 @@
 {:else}
 	<Details
 		id={thing.id}
-		name={thing.name}
+		name={thingName}
 		image={thing.image}
 		categories={thing.categories}
 		stock={thing.stock}
