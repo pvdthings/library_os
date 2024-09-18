@@ -25,6 +25,10 @@ function createBookmarks() {
 
   const length = derived([things], ([$things]) => $things.length);
 
+  const isBookmarked = (id: ThingID) => {
+    return derived([things], ([$things]) => $things.includes(id));
+  };
+
   const addRemove = (id: ThingID) => {
     things.update((value) => {
       const existingThing = value.find(t => t === id);
@@ -41,6 +45,7 @@ function createBookmarks() {
   return {
     length,
     subscribe: things.subscribe,
+    isBookmarked,
     addRemove
   };
 }

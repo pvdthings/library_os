@@ -27,6 +27,7 @@ app.all('*', (req, res, next) => {
 app.get('/', (_, res) => {
     res.send('You have reached the Things API');
 });
+app.use('/web', things);
 app.use('/things', things);
 app.use('/lending', lending);
 app.use('/auth', auth);
