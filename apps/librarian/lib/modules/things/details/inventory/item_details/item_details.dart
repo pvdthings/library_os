@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/modules/things/details/inventory/item_details/condition_dropdown.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_details/item_details_controller.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_manuals_card.dart';
 import 'package:librarian_app/modules/things/details/image/thing_image_card.dart';
@@ -20,6 +21,11 @@ class ItemDetails extends ConsumerWidget {
   final ItemDetailsController controller;
   final ItemModel item;
   final bool isThingHidden;
+
+  get _isItemDamaged {
+    final condition = controller.conditionNotifier.value;
+    return ConditionDropdown.isDamagedCondition(condition);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,13 +49,35 @@ class ItemDetails extends ConsumerWidget {
               clipBehavior: Clip.antiAlias,
               elevation: isMobile(context) ? 1 : 0,
               margin: EdgeInsets.zero,
-              child: _HiddenCheckboxListTile(
-                isThingHidden: isThingHidden,
-                isManagedByPartner: item.isManagedByPartner,
-                value: controller.hiddenNotifier.value,
-                onChanged: (value) {
-                  controller.hiddenNotifier.value = value ?? false;
-                },
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ConditionDropdown(
+                      editable: !controller.isLoading,
+                      onChanged: (option) {
+                        controller.conditionNotifier.value = option?.value;
+
+                        // Some conditions are also treated as "hidden"
+                        if (option?.hidden == true) {
+                          controller.hiddenNotifier.value = true;
+                        } else {
+                          controller.hiddenNotifier.value = item.hidden;
+                        }
+                      },
+                      value: controller.conditionNotifier.value,
+                    ),
+                  ),
+                  _HiddenCheckboxListTile(
+                    isItemDamaged: _isItemDamaged,
+                    isThingHidden: isThingHidden,
+                    isManagedByPartner: item.isManagedByPartner,
+                    value: controller.hiddenNotifier.value,
+                    onChanged: (value) {
+                      controller.hiddenNotifier.value = value ?? false;
+                    },
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 32),
@@ -118,40 +146,6 @@ class ItemDetails extends ConsumerWidget {
                           keyboardType: TextInputType.number,
                         ),
                         const SizedBox(height: 16),
-                        DropdownButtonFormField<String?>(
-                          decoration: const InputDecoration(
-                            labelText: 'Condition',
-                          ),
-                          items: controller.isLoading
-                              ? null
-                              : const [
-                                  DropdownMenuItem(
-                                    value: null,
-                                    child: Text('None'),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'Like New',
-                                    child: Text('Like New'),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'Lightly Used',
-                                    child: Text('Lightly Used'),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'Heavily Used',
-                                    child: Text('Heavily Used'),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'Damaged',
-                                    child: Text('Damaged'),
-                                  ),
-                                ],
-                          onChanged: (value) {
-                            controller.conditionNotifier.value = value;
-                          },
-                          value: controller.conditionNotifier.value,
-                        ),
-                        const SizedBox(height: 16),
                         TextFormField(
                           decoration: const InputDecoration(
                             labelText: 'Location',
@@ -185,12 +179,14 @@ class ItemDetails extends ConsumerWidget {
 
 class _HiddenCheckboxListTile extends StatelessWidget {
   const _HiddenCheckboxListTile({
+    required this.isItemDamaged,
     required this.isThingHidden,
     required this.isManagedByPartner,
     required this.value,
     required this.onChanged,
   });
 
+  final bool isItemDamaged;
   final bool isThingHidden;
   final bool isManagedByPartner;
   final bool? value;
@@ -216,6 +212,17 @@ class _HiddenCheckboxListTile extends StatelessWidget {
             title: Text('Hidden'),
             subtitle: Text(
                 'Unable to unhide because this item is at a partner location.'),
+            secondary: Icon(Icons.visibility_off_outlined),
+            value: true,
+            onChanged: null,
+          );
+        }
+
+        if (isItemDamaged) {
+          return const CheckboxListTile(
+            title: Text('Hidden'),
+            subtitle: Text(
+                'Unable to unhide because this item is not in working condition.'),
             secondary: Icon(Icons.visibility_off_outlined),
             value: true,
             onChanged: null,
