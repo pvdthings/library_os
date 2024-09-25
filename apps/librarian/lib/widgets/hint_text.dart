@@ -9,8 +9,11 @@ class HintText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style:
-          Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+      style: hintTextStyle(context),
     );
   }
+}
+
+TextStyle? hintTextStyle(BuildContext context) {
+  return Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey);
 }
