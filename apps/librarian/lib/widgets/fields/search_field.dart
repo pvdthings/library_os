@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:librarian_app/widgets/panes/header_divider.dart';
 
 class SearchField extends StatefulWidget {
   const SearchField({
@@ -6,8 +7,10 @@ class SearchField extends StatefulWidget {
     required this.onChanged,
     this.onClearPressed,
     this.text,
+    this.trailing,
   });
 
+  final Widget? trailing;
   final void Function(String value) onChanged;
   final void Function()? onClearPressed;
   final String? text;
@@ -22,20 +25,21 @@ class _SearchFieldState extends State<SearchField> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TextField(
-          controller: _searchController,
-          onChanged: widget.onChanged,
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            constraints: const BoxConstraints(maxWidth: 400),
-            hintText: 'Search...',
-            icon: Icon(
-              Icons.search_rounded,
-              color: _searchController.text.isEmpty
-                  ? null
-                  : Theme.of(context).primaryIconTheme.color,
+        Expanded(
+          child: TextField(
+            controller: _searchController,
+            onChanged: widget.onChanged,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              constraints: const BoxConstraints(maxWidth: 400),
+              hintText: 'Search...',
+              icon: Icon(
+                Icons.search_rounded,
+                color: _searchController.text.isEmpty
+                    ? null
+                    : Theme.of(context).primaryIconTheme.color,
+              ),
             ),
           ),
         ),
@@ -49,6 +53,10 @@ class _SearchFieldState extends State<SearchField> {
           icon: const Icon(Icons.clear_rounded),
           tooltip: 'Clear',
         ),
+        if (widget.trailing != null) ...[
+          const HeaderDivider(),
+          widget.trailing!,
+        ],
       ],
     );
   }
