@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_controller_provider.dart';
 import 'package:librarian_app/widgets/dialogs/save_dialog.dart';
+import 'package:librarian_app/widgets/panes/header_divider.dart';
 import 'package:librarian_app/widgets/panes/pane_header.dart';
 import 'package:librarian_app/core/api/models/detailed_thing_model.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
@@ -92,13 +93,7 @@ class InventoryDetailsPane extends ConsumerWidget {
                                 icon: const Icon(Icons.cancel),
                                 tooltip: 'Discard Changes',
                               ),
-                              SizedBox(
-                                height: 24,
-                                width: 24,
-                                child: VerticalDivider(
-                                  color: Colors.white.withOpacity(0.3),
-                                ),
-                              ),
+                              const HeaderDivider(),
                               IconButton(
                                 onPressed: delete,
                                 icon: const Icon(Icons.delete_forever),
