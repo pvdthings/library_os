@@ -4,6 +4,7 @@ import 'package:librarian_app/widgets/fields/search_field.dart';
 
 import '../providers/selected_thing_provider.dart';
 import '../providers/things_filter_provider.dart';
+import 'item_lookup_button.dart';
 
 class ThingsSearchField extends ConsumerWidget {
   const ThingsSearchField({super.key});
@@ -19,26 +20,10 @@ class ThingsSearchField extends ConsumerWidget {
         ref.read(thingsFilterProvider.notifier).state = null;
         ref.read(selectedThingProvider.notifier).state = null;
       },
-      trailing: const _ItemSearchButton(),
-    );
-  }
-}
-
-class _ItemSearchButton extends StatelessWidget {
-  const _ItemSearchButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (context) => const Dialog(
-            child: Text('Enter Item Number'),
-          ),
-        );
-      },
-      icon: const Icon(Icons.numbers),
+      trailing: const Tooltip(
+        message: 'Item Lookup',
+        child: ItemLookupButton(),
+      ),
     );
   }
 }
