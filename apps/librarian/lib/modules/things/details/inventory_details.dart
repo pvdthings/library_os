@@ -2,22 +2,18 @@ import 'package:file_picker/_internal/file_picker_web.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items_dialog.dart';
-import 'package:librarian_app/modules/things/details/inventory/item_details/drawer.dart';
 import 'package:librarian_app/modules/things/details/thing_details/thing_details_card.dart';
 import 'package:librarian_app/core/api/models/updated_image_model.dart';
-import 'package:librarian_app/modules/things/details/inventory/item_details_page.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
+import 'package:librarian_app/modules/things/providers/item_details_orchestrator.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_provider.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/modules/things/details/categories/categories_card.dart';
 import 'package:librarian_app/modules/things/details/inventory/items_card.dart';
 import 'package:librarian_app/modules/things/details/image/thing_image_card.dart';
-import 'package:librarian_app/utils/media_query.dart';
 
-import 'inventory/item_details/item_details_controller.dart';
 import 'linked_things/card.dart';
 
 class InventoryDetails extends ConsumerWidget {
@@ -82,37 +78,9 @@ class InventoryDetails extends ConsumerWidget {
             ItemsCard(
               items: details.items,
               availableItemsCount: details.available,
-              onTap: (item) {
-                if (isMobile(context)) {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return ItemDetailsPage(
-                      item: item,
-                      hiddenLocked: details.hidden,
-                    );
-                  }));
-                  return;
-                }
-
-                final detailsController = ItemDetailsController(
-                  item: item,
-                  repository: ref.read(thingsRepositoryProvider.notifier),
-                  onSave: () {
-                    // setState(() => _isLoading = true);
-                  },
-                  onSaveComplete: () {
-                    // setState(() => _isLoading = false);
-                  },
-                );
-
-                ref.read(endDrawerProvider).openEndDrawer(
-                      context,
-                      ItemDetailsDrawer(
-                        controller: detailsController,
-                        isHiddenLocked: details.hidden,
-                      ),
-                    );
-              },
+              onTap: (item) => ref
+                  .read(itemDetailsOrchestrator)
+                  .openItem(context, item: item, hiddenLocked: details.hidden),
               onAddItemsPressed: () {
                 showDialog(
                   context: context,
