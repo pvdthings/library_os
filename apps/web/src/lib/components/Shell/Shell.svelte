@@ -1,26 +1,13 @@
 <script lang="ts">
-	import { setContext } from "svelte";
+	import { onDestroy } from "svelte";
+	import { NavigationButton } from "./Drawer/NavigationButton";
+	import { state as drawer, toggle } from "./drawer";
 
 	let drawerToggle: HTMLLabelElement;
-	let drawerContent: any;
-	let drawerContentProps: any;
 
-	const drawer = {
-		open: (content: any, props = {}) => {
-			drawerContent = content;
-			drawerContentProps = props;
-			drawerToggle.click();
-		},
-		close: () => {
-			drawerToggle.click();
-			drawerContent = null;
-			drawerContentProps = null;
-		}
-	};
+	const unsubscribe = toggle(() => drawerToggle?.click());
 
-	setContext('shell', {
-		drawer
-	});
+	onDestroy(unsubscribe);
 </script>
 
 <div class="drawer drawer-end">
@@ -31,8 +18,11 @@
 	</div>
 	<div class="drawer-side z-50">
     <label for="drawer-toggle" aria-label="close sidebar" class="drawer-overlay"></label>
-    <div class="bg-base-200 text-base-content flex flex-col h-dvh w-screen overflow-hidden md:w-80 lg:w-96 relative">
-      <svelte:component this={drawerContent} {...drawerContentProps} />
+    <div class="bg-neutral-200 flex flex-col h-dvh w-screen overflow-hidden md:w-80 lg:w-96 relative">
+      {#if $drawer.views.length}
+				<NavigationButton class="absolute top-4 left-4 z-50" />
+				<svelte:component this={$drawer.views[0].component} {...$drawer.views[0].props} />
+			{/if}
     </div>
   </div>
 </div>
