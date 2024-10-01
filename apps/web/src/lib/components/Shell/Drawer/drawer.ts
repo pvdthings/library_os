@@ -13,7 +13,7 @@ export type DrawerContent = {
 	props: any;
 };
 
-export const state = writable<DrawerState>(emptyState);
+const state = writable<DrawerState>(emptyState);
 
 export const view = derived(state, (s) => {
 	return s.views.length ? s.views[0] : undefined;
@@ -30,6 +30,8 @@ export const pop = () => {
 		views: s.views.slice(1)
 	}));
 };
+
+export const poppable = derived(state, (s) => s.views.length && s.views.length > 1);
 
 export const close = () => {
 	state.update((s) => emptyState);
