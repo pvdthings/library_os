@@ -5,7 +5,7 @@
 	import ThingCard from './ThingCard.svelte';
 	import { vibrate } from '$lib/utils/haptics';
 	import Details from './Details';
-	import { push } from '$lib/components/Shell/drawer';
+	import { push } from '$lib/components/Shell/Drawer';
 
 	export let thing: Thing;
 

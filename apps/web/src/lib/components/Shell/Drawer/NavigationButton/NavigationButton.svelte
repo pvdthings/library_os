@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BackButton from "./BackButton.svelte";
 	import CloseButton from "./CloseButton.svelte";
-  import { state as drawer } from "../../drawer";
+  import { state as drawer } from "../drawer";
 
   let className: string = '';
   export { className as class };

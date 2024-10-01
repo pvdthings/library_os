@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { pop } from "../../drawer";
+  import { pop } from "../drawer";
 
   let className: string = '';
   export { className as class };

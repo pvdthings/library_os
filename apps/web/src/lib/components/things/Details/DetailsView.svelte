@@ -6,7 +6,7 @@
 	import { locale } from '$lib/language/translate';
 	import type { InventoryItemModel } from '$lib/models/ThingDetails';
 	import { ItemDetails } from './Item';
-	import { push } from '$lib/components/Shell/drawer';
+	import { push } from '$lib/components/Shell/Drawer';
 
 	export let id: string;
 

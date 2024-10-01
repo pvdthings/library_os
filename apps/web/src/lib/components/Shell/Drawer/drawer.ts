@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 
 const emptyState = Object.freeze({ views: [] });
 
@@ -14,6 +14,10 @@ export type DrawerContent = {
 };
 
 export const state = writable<DrawerState>(emptyState);
+
+export const view = derived(state, (s) => {
+	return s.views.length ? s.views[0] : undefined;
+});
 
 export const push = (component: any, props: any) => {
 	state.update((s) => ({

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { close } from "../../drawer";
+  import { close } from "../drawer";
 
   let className: string = '';
   export { className as class };
