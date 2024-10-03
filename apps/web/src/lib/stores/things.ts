@@ -1,10 +1,6 @@
 import type { ThingDetailsModel } from "$lib/models/ThingDetails";
 import { derived, get, readable, writable, type Readable } from "svelte/store";
-
-type Async<T> = {
-  loading: boolean;
-  value: T;
-};
+import type { Async } from "./types";
 
 function createThingsRepository() {
   const things = writable(new Map());
