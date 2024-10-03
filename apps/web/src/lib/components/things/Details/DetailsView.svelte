@@ -5,7 +5,7 @@
 	import Details from './Details.svelte';
 	import { locale } from '$lib/language/translate';
 	import type { InventoryItemModel } from '$lib/models/ThingDetails';
-	import { ItemDetails } from './Item';
+	import { ItemDetailsView } from './Item';
 	import { push } from '$lib/components/Shell/Drawer';
 
 	export let id: string;
@@ -16,7 +16,7 @@
 	$: thingName = $locale === 'en' ? thing?.name : thing?.spanishName ?? thing?.name;
 
 	const onClickItem = (event: CustomEvent<InventoryItemModel>) => {
-		push(ItemDetails, {});
+		push(ItemDetailsView, { id: event.detail.id });
 	};
 </script>
 
