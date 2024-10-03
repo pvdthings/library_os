@@ -43,11 +43,11 @@
     </Wrap>
 	</section>
 	<Divider />
-  <Section title='Brand'>
-    <span>{brand ?? 'None'}</span>
+  <Section title={$t('Brand')}>
+    <span>{brand ?? $t('None')}</span>
   </Section>
   <Divider />
-  <Section title='Attachments'>
+  <Section title={$t('Attachments')}>
     <div class="grid grid-cols-3 gap-4">
       {#each manuals as url}
         <a href={url} target="_blank" class="aspect-square p-2 bg-white card flex flex-row items-center justify-center border border-base-300 shadow active:shadow-sm">
@@ -55,7 +55,7 @@
         </a>
       {/each}
       {#if !manuals.length}
-        <span>None</span>
+        <span>{$t('None')}</span>
       {/if}
     </div>
   </Section>

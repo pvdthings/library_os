@@ -1,5 +1,6 @@
 export default {
     en: {
+        "Attachments": "Attachments",
         "Button.Home": "Home",
         "Button.WishList": "Wish List",
         "Name": "Name",
@@ -7,6 +8,8 @@ export default {
         "Categories": "Categories",
         "Inventory": "Inventory",
         "Input.Search": "Search...",
+        "Brand": "Brand",
+        "None": "None",
         "No Results": "No Results",
         "No Brand": "No Brand",
         "Donate": "Donate",
@@ -49,6 +52,7 @@ export default {
         "Due Back Disclaimer": "We cannot guarantee that the item will be returned by the expected due date. Please check with the Lead Librarian during open hours."
     },
     es: {
+        "Attachments": "Archivos adjuntos",
         "Button.Home": "Inicio",
         "Button.Donate": "Done",
         "Button.WishList": "Donaciones",
@@ -57,7 +61,9 @@ export default {
         "Categories": "Categorías",
         "Inventory": "Inventario",
         "Input.Search": "Buscar...",
+        "None": "Nada",
         "No Results": "No hay resultados",
+        "Brand": "Marca",
         "No Brand": "No Marca",
         "Donate": "Donar",
         "How to Borrow": "Como pedir prestado",

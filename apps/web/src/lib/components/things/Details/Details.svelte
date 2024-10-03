@@ -65,7 +65,7 @@
 					<Badge>{$t(category)}</Badge>
 				{/each}
 			{:else}
-				<div>None</div>
+				<div>{$t('None')}</div>
 			{/if}
 		</Wrap>
 	</Section>
@@ -73,6 +73,10 @@
 	<Section title={$t('Inventory')}>
 		{@const availableItems = items.filter((i) => i.status === 'available' && !i.hidden)}
 		{@const unavailableItems = items.filter((i) => i.status === 'checkedOut' || i.hidden)}
+
+		{#if !availableItems.length && !unavailableItems.length}
+			<span>{$t('None')}</span>
+		{/if}
 
 		{#if availableItems.length}
 			<List title={$t('Available')}>
