@@ -1,4 +1,5 @@
 const { fetchThing } = require("../../../services/things");
+const mapItemStatus = require("./mapItemStatus");
 
 async function getThingDetails(id) {
   const details = await fetchThing(id);
@@ -20,14 +21,6 @@ async function getThingDetails(id) {
       status: mapItemStatus(item)
     }))
   };
-}
-
-function mapItemStatus(item) {
-  if (item.available) {
-    return 'available';
-  }
-
-  return 'checkedOut';
 }
 
 module.exports = {

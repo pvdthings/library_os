@@ -7,6 +7,7 @@ const inventoryFields = [
   'Name', 
   'Brand',
   'Description',
+  'Due Back',
   'Eye Protection',
   'Active Loans', 
   'Total Loans',
@@ -30,7 +31,13 @@ const fetchItems = async () => {
   return records.map((r) => mapItem(r));
 }
 
-const fetchItem = async (id) => {
+// Tech Debt: "id" here is actually the item number
+const fetchItem = async (id, { recordId }) => {
+  if (recordId) {
+    const record = await items.find(recordId);
+    return mapItem(record);
+  }
+
   const records = await items.select({
       view: 'api_fetch_things',
       fields: inventoryFields,

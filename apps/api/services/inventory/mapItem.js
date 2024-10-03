@@ -12,6 +12,7 @@ function mapItem(record) {
       hidden: hidden || isThingHidden,
       brand: record.get('Brand'),
       description: record.get('Description'),
+      dueBack: record.get('Due Back')?.[0],
       estimatedValue: record.get('Estimated Value'),
       eyeProtection: Boolean(record.get('Eye Protection')),
       condition: record.get('Condition'),
