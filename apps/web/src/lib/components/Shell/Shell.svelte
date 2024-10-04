@@ -17,7 +17,7 @@
 		<slot />
 	</div>
 	<div class="drawer-side z-50">
-    <label for="drawer-toggle" aria-label="close sidebar" class="drawer-overlay"></label>
+    <div class="drawer-overlay !cursor-default" />
     <div class="bg-neutral-200 flex flex-col h-dvh w-screen overflow-hidden md:w-80 lg:w-96 relative">
       {#if $view}
 				<NavigationButton class="absolute top-4 left-4 z-50" />
