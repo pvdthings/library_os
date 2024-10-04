@@ -1,0 +1,1 @@
+export { default as ItemDetailsView } from "./ItemDetailsView.svelte";
