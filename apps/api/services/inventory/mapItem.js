@@ -6,6 +6,7 @@ function mapItem(record) {
       id: record.id,
       number: Number(record.get('ID')),
       name: record.get('Name')[0],
+      name_es: record.get('name_es')?.[0],
       available: record.get('Active Loans') === 0
           && !hidden
           && !isThingHidden,
