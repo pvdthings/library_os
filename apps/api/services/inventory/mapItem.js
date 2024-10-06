@@ -6,12 +6,14 @@ function mapItem(record) {
       id: record.id,
       number: Number(record.get('ID')),
       name: record.get('Name')[0],
+      name_es: record.get('name_es')?.[0],
       available: record.get('Active Loans') === 0
           && !hidden
           && !isThingHidden,
       hidden: hidden || isThingHidden,
       brand: record.get('Brand'),
       description: record.get('Description'),
+      dueBack: record.get('Due Back')?.[0],
       estimatedValue: record.get('Estimated Value'),
       eyeProtection: Boolean(record.get('Eye Protection')),
       condition: record.get('Condition'),

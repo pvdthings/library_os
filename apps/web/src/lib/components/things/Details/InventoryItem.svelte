@@ -6,7 +6,8 @@
   export let status: 'available'|'checkedOut';
 </script>
 
-<div class="card bg-white border border-base-300 flex flex-row gap-2 relative shadow-sm">
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="card bg-white border border-base-300 flex flex-row gap-2 relative shadow-sm" role="button" tabindex="-1" on:click>
   {#if status === 'available'}
     <span class="absolute -top-1 -left-1 badge badge-sm badge-success border border-white shadow" />
   {/if}

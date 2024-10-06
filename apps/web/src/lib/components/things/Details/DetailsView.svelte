@@ -4,6 +4,9 @@
 	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 	import Details from './Details.svelte';
 	import { locale } from '$lib/language/translate';
+	import type { InventoryItemModel } from '$lib/models/ThingDetails';
+	import { ItemDetailsView } from './Item';
+	import { push } from '$lib/components/Shell/Drawer';
 
 	export let id: string;
 
@@ -11,6 +14,10 @@
 	$: loading = $details.loading;
 	$: thing = $details.value;
 	$: thingName = $locale === 'en' ? thing?.name : thing?.spanishName ?? thing?.name;
+
+	const onClickItem = (event: CustomEvent<InventoryItemModel>) => {
+		push(ItemDetailsView, { id: event.detail.id });
+	};
 </script>
 
 {#if loading}
@@ -27,5 +34,6 @@
 		available={thing.available}
 		availableDate={thing.availableDate}
 		items={thing.items}
+		on:clickItem={onClickItem}
 	/>
 {/if}
