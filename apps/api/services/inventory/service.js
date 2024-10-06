@@ -32,7 +32,7 @@ const fetchItems = async () => {
 }
 
 // Tech Debt: "id" here is actually the item number
-const fetchItem = async (id, { recordId }) => {
+const fetchItem = async (id, { recordId } = { recordId: undefined }) => {
   if (recordId) {
     const record = await items.find(recordId);
     return mapItem(record);
