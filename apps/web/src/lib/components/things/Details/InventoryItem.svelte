@@ -12,9 +12,8 @@
     <span class="absolute -top-1 -left-1 badge badge-sm badge-success border border-white shadow" />
   {/if}
   <div class="p-2 border-r border-base-300 col-span-1 font-display font-semibold text-center">#{number}</div>
-  {#if brand}
-    <div class="p-2 col-span-3">{brand}</div>
-  {:else}
-    <div class="p-2 col-span-3 text-base-300">{$t('No Brand')}</div>
-  {/if}
+  <div class="p-2 col-span-3 flex flex-row items-center justify-between text-base-300">
+    <span>{brand ?? $t('No Brand')}</span>
+    <span class="ph-bold ph-caret-right" />
+  </div>
 </div>
