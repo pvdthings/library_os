@@ -11,6 +11,7 @@ async function getItemDetails(id) {
     spanishName: details.name_es,
     available: details.available,
     availableDate: details.dueBack,
+    brand: details.brand,
     condition: details.condition,
     eyeProtection: details.eyeProtection,
     totalLoans: details.totalLoans,
