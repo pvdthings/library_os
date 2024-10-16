@@ -38,6 +38,7 @@ dependencies:
   riverpod_annotation: ^2.1.6
   collection: ^1.17.2
   url_launcher: ^6.2.5
+  skeletonizer: ^1.4.2
 
 dev_dependencies:
   flutter_test:

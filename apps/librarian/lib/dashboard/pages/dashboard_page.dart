@@ -11,6 +11,7 @@ import 'package:librarian_app/modules/borrowers/list/searchable_borrowers_list.d
 import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/dashboard/widgets/create_menu_item.dart';
 import 'package:librarian_app/dashboard/layouts/inventory_desktop_layout.dart';
+import 'package:librarian_app/modules/things/maintenance/view.dart';
 import 'package:librarian_app/modules/things/details/inventory_details_page.dart';
 import 'package:librarian_app/modules/things/details/inventory/inventory_list/searchable_inventory_list.dart';
 import 'package:librarian_app/modules/things/create/create_thing_dialog.dart';
@@ -93,6 +94,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
           ));
         },
       ),
+    ),
+    const DashboardModule(
+      title: 'Thing Doctor',
+      desktopLayout: MaintenanceView(),
+      mobileLayout: null,
     ),
     const DashboardModule(
       title: 'Actions',
