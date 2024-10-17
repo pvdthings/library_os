@@ -4,16 +4,21 @@ import 'package:librarian_app/modules/things/providers/items.dart';
 
 final items = Provider((ref) async {
   final items = await ref.watch(allItems);
-  final model = ItemsViewModel();
-  model.damagedItems =
-      items.where((item) => item.condition == 'Damaged').toList();
-  model.inRepairItems =
-      items.where((item) => item.condition == 'In Repair').toList();
-
-  return model;
+  return ItemsViewModel(
+    damagedItems: items.where((item) => item.condition == damaged).toList(),
+    inRepairItems: items.where((item) => item.condition == inRepair).toList(),
+  );
 });
 
+const damaged = 'Damaged';
+const inRepair = 'In Repair';
+
 class ItemsViewModel {
-  late List<ItemModel> damagedItems;
-  late List<ItemModel> inRepairItems;
+  const ItemsViewModel({
+    required this.damagedItems,
+    required this.inRepairItems,
+  });
+
+  final List<ItemModel> damagedItems;
+  final List<ItemModel> inRepairItems;
 }

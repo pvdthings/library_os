@@ -43,9 +43,9 @@ class DesktopDashboard extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 8),
               ),
               NavigationRailDestination(
-                selectedIcon: Icon(Icons.medical_services),
-                icon: Icon(Icons.medical_services_outlined),
-                label: Text('Doctor'),
+                selectedIcon: Icon(Icons.healing),
+                icon: Icon(Icons.healing_outlined),
+                label: Text('Repair'),
                 padding: EdgeInsets.symmetric(vertical: 8),
               ),
               NavigationRailDestination(

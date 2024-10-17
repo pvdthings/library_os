@@ -96,7 +96,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
       ),
     ),
     const DashboardModule(
-      title: 'Thing Doctor',
+      title: 'Thing Repair',
       desktopLayout: MaintenanceView(),
       mobileLayout: null,
     ),
