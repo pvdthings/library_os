@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/item_model.dart';
 import 'package:librarian_app/modules/things/maintenance/providers/items.dart';
 import 'package:librarian_app/utils/pluralize.dart';
 import 'package:librarian_app/widgets/no_image.dart';
@@ -28,8 +27,8 @@ class MaintenanceView extends ConsumerWidget {
               final orchestrator = ref.read(itemDetailsOrchestrator);
               orchestrator.openItem(
                 context,
-                item: item,
-                hiddenLocked: false,
+                item: item.item,
+                hiddenLocked: item.isThingHidden ?? false,
               );
             },
           ),
@@ -47,9 +46,9 @@ class MaintenanceKanban extends StatelessWidget {
     this.onTapItem,
   });
 
-  final List<ItemModel> damagedItems;
-  final List<ItemModel> inRepairItems;
-  final void Function(ItemModel)? onTapItem;
+  final List<RepairItemModel> damagedItems;
+  final List<RepairItemModel> inRepairItems;
+  final void Function(RepairItemModel)? onTapItem;
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +81,8 @@ class KanbanColumn extends StatelessWidget {
   });
 
   final String title;
-  final List<ItemModel> items;
-  final void Function(ItemModel)? onTapItem;
+  final List<RepairItemModel> items;
+  final void Function(RepairItemModel)? onTapItem;
 
   @override
   Widget build(BuildContext context) {
@@ -108,8 +107,8 @@ class KanbanColumn extends StatelessWidget {
                 crossAxisCount: 4,
                 children: items
                     .map((item) => ItemCard(
-                          number: item.number,
-                          imageUrl: item.imageUrls.firstOrNull,
+                          number: item.item.number,
+                          imageUrl: item.item.imageUrls.firstOrNull,
                           onTap: () => onTapItem?.call(item),
                         ))
                     .toList(),

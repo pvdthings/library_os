@@ -4,6 +4,7 @@ function mapItem(record) {
 
   return {
       id: record.id,
+      thingId: record.get('Thing')?.[0],
       number: Number(record.get('ID')),
       name: record.get('Name')[0],
       name_es: record.get('name_es')?.[0],
