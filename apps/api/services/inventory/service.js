@@ -3,7 +3,8 @@ const mapItem = require('./mapItem');
 const items = base(Table.Inventory);
 
 const inventoryFields = [
-  'ID', 
+  'ID',
+  'Thing',
   'Name', 
   'Brand',
   'Description',

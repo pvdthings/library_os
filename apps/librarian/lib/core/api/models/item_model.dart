@@ -3,6 +3,7 @@ import 'manual_model.dart';
 class ItemModel {
   ItemModel({
     required this.id,
+    required this.thingId,
     required this.number,
     required this.name,
     required this.available,
@@ -20,6 +21,7 @@ class ItemModel {
   });
 
   final String id;
+  final String thingId;
   final int number;
   final String name;
   final String? description;
@@ -43,6 +45,7 @@ class ItemModel {
   factory ItemModel.fromJson(Map<String, dynamic> json) {
     return ItemModel(
       id: json['id'] as String,
+      thingId: json['thingId'] as String,
       number: json['number'] as int,
       name: json['name'] as String? ?? 'Unknown Thing',
       description: json['description'] as String?,

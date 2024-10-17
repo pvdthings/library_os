@@ -1,5 +1,9 @@
 part of 'api.dart';
 
+Future<Response> fetchInventoryItems() async {
+  return await DioClient.instance.get('/inventory');
+}
+
 Future<Response> fetchInventoryItem({required int number}) async {
   return await DioClient.instance.get('/inventory/$number');
 }
