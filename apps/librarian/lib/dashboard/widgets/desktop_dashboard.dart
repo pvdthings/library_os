@@ -43,6 +43,12 @@ class DesktopDashboard extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 8),
               ),
               NavigationRailDestination(
+                selectedIcon: Icon(Icons.healing),
+                icon: Icon(Icons.healing_outlined),
+                label: Text('Repair'),
+                padding: EdgeInsets.symmetric(vertical: 8),
+              ),
+              NavigationRailDestination(
                 selectedIcon: Icon(Icons.electric_bolt),
                 icon: Icon(Icons.electric_bolt_outlined),
                 label: Text('Actions'),

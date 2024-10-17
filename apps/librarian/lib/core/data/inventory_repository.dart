@@ -44,6 +44,12 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     return DetailedThingModel.fromJson(response.data as Map<String, dynamic>);
   }
 
+  Future<List<ItemModel>> getItems() async {
+    final response = await api.fetchInventoryItems();
+    final objects = response.data as List;
+    return objects.map((e) => ItemModel.fromJson(e)).toList();
+  }
+
   Future<ItemModel?> getItem({required int number}) async {
     try {
       final response = await api.fetchInventoryItem(number: number);
