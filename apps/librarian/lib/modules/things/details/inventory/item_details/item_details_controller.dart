@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/api/models/manual_model.dart';
 import 'package:librarian_app/core/core.dart';
 import 'package:librarian_app/core/data/inventory_repository.dart';
 import 'package:librarian_app/core/api/models/updated_image_model.dart';
 import 'package:librarian_app/modules/things/convert/convert_dialog.dart';
 import 'package:librarian_app/modules/things/details/inventory/item_manuals_card.dart';
+import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
+import 'package:librarian_app/utils/editable.dart';
 import 'package:librarian_app/utils/format.dart';
 
 import '../../../../../core/api/models/item_model.dart';
@@ -232,4 +236,101 @@ class ItemDetailsController extends ChangeNotifier {
         conditionNotifier.value != item?.condition ||
         _removeExistingImage;
   }
+}
+
+class ItemDetailsViewModel {
+  ItemDetailsViewModel({required ItemModel model, required this.onSave}) {
+    id = model.id;
+    name = model.name;
+
+    brand = Editable(model.brand);
+    condition = Editable(model.condition);
+    description = Editable(model.description);
+    estimatedValue = Editable(model.estimatedValue);
+    hidden = Editable(model.hidden);
+    manuals = Editable(model.manuals);
+
+    _controller = EditableController([
+      brand,
+      condition,
+      description,
+      estimatedValue,
+      hidden,
+      manuals,
+    ]);
+  }
+
+  final Future<void> Function(UpdateItemEntity) onSave;
+
+  late final String id;
+  late final String name;
+
+  late final Editable<String?> brand;
+  late final Editable<String?> condition;
+  late final Editable<String?> description;
+  late final Editable<double?> estimatedValue;
+  late final Editable<bool> hidden;
+  late final Editable<List<ManualModel>> manuals;
+
+  late final EditableController _controller;
+
+  bool get hasUnsavedChanges => _controller.edited;
+
+  void Function()? get discardChanges {
+    return hasUnsavedChanges ? _controller.reset : null;
+  }
+
+  Future<void> Function()? get saveChanges {
+    return hasUnsavedChanges
+        ? () => onSave(UpdateItemEntity(
+              id: id,
+              brand: brand.value,
+              condition: condition.value,
+              description: description.value,
+              estimatedValue: estimatedValue.value,
+              hidden: hidden.value,
+              manuals: manuals.value,
+            ))
+        : null;
+  }
+}
+
+class UpdateItemEntity {
+  const UpdateItemEntity({
+    required this.id,
+    required this.brand,
+    required this.condition,
+    required this.description,
+    required this.estimatedValue,
+    required this.hidden,
+    required this.manuals,
+  });
+
+  final String id;
+  final String? brand;
+  final String? condition;
+  final String? description;
+  final double? estimatedValue;
+  final bool hidden;
+  final List<ManualModel> manuals;
+}
+
+Provider<Future<ItemDetailsViewModel>> itemDetails(int number) {
+  return Provider((ref) async {
+    final repository = ref.read(thingsRepositoryProvider.notifier);
+    final item = await repository.getItem(number: number);
+    return ItemDetailsViewModel(
+      model: item!,
+      onSave: (item) async {
+        await repository.updateItem(
+          item.id,
+          brand: item.brand,
+          description: item.description,
+          condition: item.condition,
+          estimatedValue: item.estimatedValue,
+          hidden: item.hidden,
+        );
+      },
+    );
+  });
 }
