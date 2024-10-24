@@ -22,10 +22,10 @@ router.get('/:id', async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-    const { thingId, quantity, brand, condition, description, estimatedValue, hidden, image, manuals } = req.body;
+    const { thingId, quantity, brand, condition, notes, estimatedValue, hidden, image, manuals } = req.body;
 
     try {
-        res.send(await createItems(thingId, { quantity, brand, condition, description, estimatedValue, hidden, image, manuals }));
+        res.send(await createItems(thingId, { quantity, brand, condition, notes, estimatedValue, hidden, image, manuals }));
     } catch (error) {
         console.error(error);
         res.status(error.status || 500).send({ errors: [error] });
@@ -33,10 +33,10 @@ router.put('/', async (req, res) => {
 });
 
 router.patch('/:id', async (req, res) => {
-    const { brand, description, estimatedValue, hidden, condition, image, manuals } = req.body;
+    const { brand, notes, estimatedValue, hidden, condition, image, manuals } = req.body;
 
     try {
-        await updateItem(req.params.id, { brand, description, estimatedValue, hidden, condition, image, manuals });
+        await updateItem(req.params.id, { brand, notes, estimatedValue, hidden, condition, image, manuals });
         res.status(204).send();
     } catch (error) {
         console.error(error);

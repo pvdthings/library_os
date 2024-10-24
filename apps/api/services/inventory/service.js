@@ -7,7 +7,7 @@ const inventoryFields = [
   'Thing',
   'Name', 
   'Brand',
-  'Description',
+  'Notes',
   'Due Back',
   'Eye Protection',
   'Active Loans', 
@@ -53,13 +53,13 @@ const fetchItem = async (id, { recordId } = { recordId: undefined }) => {
   return mapItem(records[0]);
 }
 
-const createItems = async (thingId, { quantity, brand, description, estimatedValue, hidden, condition, image, manuals }) => {
+const createItems = async (thingId, { quantity, brand, notes, estimatedValue, hidden, condition, image, manuals }) => {
   const inventoryData = Array.from(Array(Number(quantity))).map(() => ({
       fields: {
           'Thing': [thingId],
           'Brand': brand,
           'Condition': condition,
-          'Description': description,
+          'Notes': notes,
           'Estimated Value': Number(estimatedValue),
           'Hidden': hidden,
           'Picture': image?.url ? [{ url: image.url }] : [],
@@ -71,15 +71,15 @@ const createItems = async (thingId, { quantity, brand, description, estimatedVal
   return records.map(mapItem);
 }
 
-const updateItem = async (id, { brand, description, estimatedValue, hidden, condition, image, manuals }) => {
+const updateItem = async (id, { brand, notes, estimatedValue, hidden, condition, image, manuals }) => {
   let updatedFields = {};
 
   if (brand !== null) {
       updatedFields['Brand'] = brand;
   }
 
-  if (description !== null) {
-      updatedFields['Description'] = description;
+  if (notes !== null) {
+      updatedFields['Notes'] = notes;
   }
 
   if (estimatedValue !== null) {

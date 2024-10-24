@@ -78,7 +78,7 @@ class CreateItems extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              controller: controller.descriptionController,
+              controller: controller.notesController,
               decoration: inputDecoration.copyWith(labelText: 'Description'),
               enabled: !controller.isLoading,
             ),
