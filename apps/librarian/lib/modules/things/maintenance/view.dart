@@ -105,13 +105,15 @@ class KanbanColumn extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: GridView.count(
                 crossAxisCount: 4,
-                children: items
-                    .map((item) => ItemCard(
-                          number: item.item.number,
-                          imageUrl: item.item.imageUrls.firstOrNull,
-                          onTap: () => onTapItem?.call(item),
-                        ))
-                    .toList(),
+                children: items.map((model) {
+                  final item = model.item;
+                  return ItemCard(
+                    number: item.number,
+                    imageUrl: item.imageUrls.firstOrNull,
+                    notes: item.notes,
+                    onTap: () => onTapItem?.call(model),
+                  );
+                }).toList(),
               ),
             ),
           ),
@@ -126,11 +128,13 @@ class ItemCard extends StatelessWidget {
     super.key,
     required this.number,
     this.imageUrl,
+    this.notes,
     this.onTap,
   });
 
   final int number;
   final String? imageUrl;
+  final String? notes;
   final void Function()? onTap;
 
   @override
@@ -156,9 +160,24 @@ class ItemCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                '#$number',
-                style: Theme.of(context).textTheme.titleMedium,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '#$number',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  if (notes != null)
+                    Tooltip(
+                      message: '#$number: $notes',
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(color: Colors.black, fontSize: 18),
+                      child: const Icon(Icons.info),
+                    ),
+                ],
               ),
             ),
           ],
