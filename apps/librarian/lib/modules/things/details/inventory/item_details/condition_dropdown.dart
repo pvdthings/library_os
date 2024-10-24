@@ -50,6 +50,7 @@ class ConditionDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<ConditionDropdownOption>(
       decoration: const InputDecoration(
+        border: OutlineInputBorder(),
         labelText: 'Condition',
       ),
       items: editable

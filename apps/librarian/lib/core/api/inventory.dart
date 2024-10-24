@@ -13,7 +13,7 @@ Future<Response> createInventoryItems(
   required int quantity,
   required String? brand,
   String? condition,
-  required String? description,
+  required String? notes,
   required double? estimatedValue,
   bool? hidden,
   ImageDTO? image,
@@ -24,7 +24,7 @@ Future<Response> createInventoryItems(
     'quantity': quantity,
     'brand': brand,
     'condition': condition,
-    'description': description,
+    'notes': notes,
     'estimatedValue': estimatedValue,
     'hidden': hidden,
     'image': {
@@ -38,7 +38,7 @@ Future<Response> updateInventoryItem(
   String id, {
   String? brand,
   String? condition,
-  String? description,
+  String? notes,
   double? estimatedValue,
   bool? hidden,
   ImageDTO? image,
@@ -47,7 +47,7 @@ Future<Response> updateInventoryItem(
   return await DioClient.instance.patch('/inventory/$id', data: {
     'brand': brand,
     'condition': condition,
-    'description': description,
+    'notes': notes,
     'estimatedValue': estimatedValue,
     'hidden': hidden,
     'image': image != null ? {'url': image.url} : null,

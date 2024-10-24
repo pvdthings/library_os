@@ -68,16 +68,37 @@ class ItemDetails extends ConsumerWidget {
                       value: controller.conditionNotifier.value,
                     ),
                   ),
-                  _HiddenCheckboxListTile(
-                    isItemDamaged: _isItemDamaged,
-                    isThingHidden: isThingHidden,
-                    isManagedByPartner: item.isManagedByPartner,
-                    value: controller.hiddenNotifier.value,
-                    onChanged: (value) {
-                      controller.hiddenNotifier.value = value ?? false;
-                    },
+                  const Divider(height: 1),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextFormField(
+                      controller: controller.notesController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Needs a new part installed.',
+                        labelText: 'Notes',
+                      ),
+                      enabled: !controller.isLoading,
+                      maxLines: 128,
+                      minLines: 3,
+                    ),
                   ),
                 ],
+              ),
+            ),
+            const SizedBox(height: 32),
+            Card(
+              clipBehavior: Clip.antiAlias,
+              elevation: isMobile(context) ? 1 : 0,
+              margin: EdgeInsets.zero,
+              child: _HiddenCheckboxListTile(
+                isItemDamaged: _isItemDamaged,
+                isThingHidden: isThingHidden,
+                isManagedByPartner: item.isManagedByPartner,
+                value: controller.hiddenNotifier.value,
+                onChanged: (value) {
+                  controller.hiddenNotifier.value = value ?? false;
+                },
               ),
             ),
             const SizedBox(height: 32),
@@ -102,14 +123,18 @@ class ItemDetails extends ConsumerWidget {
                           readOnly: true,
                           controller: controller.nameController,
                           decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
                             labelText: 'Thing',
-                            suffix: Tooltip(
-                              message: 'Convert',
-                              child: IconButton(
-                                onPressed: () {
-                                  controller.convertThing(context);
-                                },
-                                icon: const Icon(convertIcon),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Tooltip(
+                                message: 'Convert',
+                                child: IconButton(
+                                  onPressed: () {
+                                    controller.convertThing(context);
+                                  },
+                                  icon: const Icon(convertIcon),
+                                ),
                               ),
                             ),
                           ),
@@ -119,6 +144,7 @@ class ItemDetails extends ConsumerWidget {
                         TextFormField(
                           controller: controller.brandController,
                           decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
                             labelText: 'Brand',
                             hintText: 'Generic',
                           ),
@@ -126,16 +152,9 @@ class ItemDetails extends ConsumerWidget {
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
-                          controller: controller.descriptionController,
-                          decoration: const InputDecoration(
-                            labelText: 'Description',
-                          ),
-                          enabled: !controller.isLoading,
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
                           controller: controller.estimatedValueController,
                           decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
                             labelText: 'Estimated Value (\$)',
                             prefixText: '\$ ',
                           ),
@@ -148,6 +167,7 @@ class ItemDetails extends ConsumerWidget {
                         const SizedBox(height: 16),
                         TextFormField(
                           decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
                             labelText: 'Location',
                           ),
                           enabled: false,

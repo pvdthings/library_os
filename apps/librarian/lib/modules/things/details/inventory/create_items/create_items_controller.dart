@@ -27,7 +27,7 @@ class CreateItemsController extends ChangeNotifier {
   late final brandController = TextEditingController()
     ..addListener(notifyListeners);
 
-  late final descriptionController = TextEditingController()
+  late final notesController = TextEditingController()
     ..addListener(notifyListeners);
 
   late final estimatedValueController = TextEditingController()
@@ -105,7 +105,7 @@ class CreateItemsController extends ChangeNotifier {
       quantity: quantity,
       brand: brandController.text,
       condition: conditionNotifier.value,
-      description: descriptionController.text,
+      notes: notesController.text,
       estimatedValue: estimatedValue,
       hidden: hiddenNotifier.value,
       image: createUpdatedImageModel(),
