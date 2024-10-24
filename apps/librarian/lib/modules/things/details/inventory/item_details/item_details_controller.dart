@@ -27,7 +27,7 @@ class ItemDetailsController extends ChangeNotifier {
   late TextEditingController nameController;
   late ValueNotifier<bool> hiddenNotifier;
   late TextEditingController brandController;
-  late TextEditingController descriptionController;
+  late TextEditingController notesController;
   late TextEditingController estimatedValueController;
   late ValueNotifier<String?> conditionNotifier;
   late ValueNotifier<List<ManualData>> manualsNotifier;
@@ -45,8 +45,7 @@ class ItemDetailsController extends ChangeNotifier {
     nameController = TextEditingController(text: item!.name);
     hiddenNotifier = ValueNotifier(false)..addListener(notifyListeners);
     brandController = TextEditingController()..addListener(notifyListeners);
-    descriptionController = TextEditingController()
-      ..addListener(notifyListeners);
+    notesController = TextEditingController()..addListener(notifyListeners);
     estimatedValueController = TextEditingController()
       ..addListener(notifyListeners);
     conditionNotifier = ValueNotifier(null)..addListener(notifyListeners);
@@ -58,8 +57,8 @@ class ItemDetailsController extends ChangeNotifier {
       brandController.text = item!.brand!;
     }
 
-    if (item?.description != null) {
-      descriptionController.text = item!.description!;
+    if (item?.notes != null) {
+      notesController.text = item!.notes!;
     }
 
     final estimatedValue = formatNumber(item?.estimatedValue);
@@ -163,7 +162,7 @@ class ItemDetailsController extends ChangeNotifier {
     await repository?.updateItem(
       item!.id,
       brand: brandController.text,
-      description: descriptionController.text,
+      notes: notesController.text,
       condition: conditionNotifier.value,
       estimatedValue: estimatedValue,
       hidden: hiddenNotifier.value,
@@ -226,7 +225,7 @@ class ItemDetailsController extends ChangeNotifier {
         !listEquals(manualsNotifier.value, _originalManuals) ||
         hiddenNotifier.value != (item?.hidden ?? false) ||
         brandController.text != (item?.brand ?? '') ||
-        descriptionController.text != (item?.description ?? '') ||
+        notesController.text != (item?.notes ?? '') ||
         estimatedValueController.text !=
             (formatNumber(item?.estimatedValue) ?? '') ||
         conditionNotifier.value != item?.condition ||

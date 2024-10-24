@@ -15,7 +15,7 @@ class ItemModel {
     required this.linkedThingIds,
     this.brand,
     this.condition,
-    this.description,
+    this.notes,
     this.estimatedValue,
     this.location,
   });
@@ -24,7 +24,7 @@ class ItemModel {
   final String thingId;
   final int number;
   final String name;
-  final String? description;
+  final String? notes;
   final String? brand;
   final String? condition;
   final String? location;
@@ -48,7 +48,7 @@ class ItemModel {
       thingId: json['thingId'] as String,
       number: json['number'] as int,
       name: json['name'] as String? ?? 'Unknown Thing',
-      description: json['description'] as String?,
+      notes: json['notes'] as String?,
       available: json['available'] as bool,
       hidden: json['hidden'] as bool,
       totalLoans: json['totalLoans'] as int,
