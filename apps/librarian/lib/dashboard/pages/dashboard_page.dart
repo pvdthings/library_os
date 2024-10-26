@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/dashboard/providers/create_loan_controller.dart';
 import 'package:librarian_app/dashboard/providers/workspace.dart';
-import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
-import 'package:librarian_app/modules/authentication/providers/user_tray.dart';
 import 'package:librarian_app/modules/borrowers/details/needs_attention_page.dart';
 import 'package:librarian_app/dashboard/layouts/borrowers_desktop_layout.dart';
 import 'package:librarian_app/modules/borrowers/list/searchable_borrowers_list.dart';
@@ -26,7 +24,6 @@ import 'package:librarian_app/modules/actions/widgets/actions.dart'
 
 import '../module.dart';
 import '../widgets/desktop_dashboard.dart';
-import '../widgets/update_button.dart';
 
 class DashboardPage extends ConsumerStatefulWidget {
   const DashboardPage({super.key});
@@ -59,19 +56,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
   int _moduleIndex = 0;
 
   late final List<DashboardModule> _modules = [
-    DashboardModule(
-      title: 'Loans',
-      desktopLayout: const LoansDesktopLayout(),
-      mobileLayout: SearchableLoansList(
-        onLoanTapped: (loan) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const LoanDetailsPage(),
-            ),
-          );
-        },
-      ),
+    const DashboardModule(
+      desktopLayout: LoansDesktopLayout(),
+      mobileLayout: LoansDesktopLayout(),
     ),
     DashboardModule(
       title: 'Borrowers',
@@ -169,31 +156,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text(module.title),
-            backgroundColor: isMobile(context) ? null : Colors.transparent,
-            centerTitle: mobile,
-            actions: [
-              if (!mobile) ...[
-                const UpdateButton(),
-                const SizedBox(width: 32),
-                const UserTray(),
-                const SizedBox(width: 32),
-              ],
-              IconButton(
-                onPressed: () {
-                  ref.read(authServiceProvider).signOut();
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/', (route) => false);
-                },
-                icon: const Icon(Icons.logout),
-                tooltip: 'Log out',
-              ),
-              const SizedBox(width: 16),
-            ],
-            elevation: 0,
-            scrolledUnderElevation: isMobile(context) ? 1 : 0,
-          ),
           body: mobile
               ? SafeArea(child: module.mobileLayout!)
               : DesktopDashboard(
