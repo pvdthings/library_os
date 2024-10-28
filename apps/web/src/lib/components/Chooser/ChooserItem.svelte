@@ -1,6 +1,4 @@
 <script lang="ts">
-  import CheckIcon from "$lib/icons/check.svg";
-
   export let selected: boolean;
 </script>
 
@@ -13,7 +11,7 @@
       <slot />
     </span>
     {#if selected}
-      <img class="w-[20px] h-[20px]" src={CheckIcon} alt="Selected" />
+      <span class="ph-bold ph-check text-xl" />
     {/if}
   </button
 >
