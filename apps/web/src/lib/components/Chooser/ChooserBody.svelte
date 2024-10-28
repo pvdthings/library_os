@@ -29,7 +29,7 @@
 		class="chooser-button !hidden md:!flex bg-primary h-11 w-full border-b border-neutral-400"
 	>
     <span class="ml-1">{$t(chosenOption)}</span>
-    <span class="ml-2 ph-bold ph-caret-up text-2xl" />
+    <span class="ml-2 ph-bold ph-caret-up text-xl" />
 	</button>
   <div class="flex flex-col overflow-y-scroll">
     {#each options as option}
