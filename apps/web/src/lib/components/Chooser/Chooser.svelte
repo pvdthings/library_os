@@ -2,7 +2,6 @@
 	import "./Chooser.css";
 	import { createEventDispatcher } from 'svelte';
 	import { t, locale } from '$lib/language/translate';
-	import ChevronIcon from "$lib/icons/chevron.svg";
 	import ChooserBody from './ChooserBody.svelte';
 
 	export let options = [];
@@ -41,11 +40,7 @@
 		class="chooser-button bg-white hover:bg-neutral-50 rounded-md border border-neutral-400 shadow-high h-full w-48"
 	>
 		<span class="ml-1">{isEnglish ? chosenOption : $t(chosenOption)}</span>
-		<img
-			class="ml-2"
-			src={ChevronIcon}
-			alt="Dropdown"
-		/>
+		<span class="ml-2 ph-bold ph-caret-down text-2xl" />
 	</button>
 	<ChooserBody
 		hidden={dropdownHidden}
