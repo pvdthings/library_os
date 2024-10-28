@@ -28,14 +28,14 @@
   </div>
   <button
 		on:click={onClose}
-		class="chooser-button hidden md:block bg-primary h-11 w-full border-b border-neutral-400"
+		class="chooser-button !hidden md:!flex bg-primary h-11 w-full border-b border-neutral-400"
 	>
+    <span class="ml-1">{$t(chosenOption)}</span>
     <img
-      class="inline rotate-180 mr-1"
+      class="rotate-180 ml-2"
       src={ChevronIcon}
       alt="Dropdown"
     />
-		<span>{$t(chosenOption)}</span>
 	</button>
   <div class="flex flex-col overflow-y-scroll">
     {#each options as option}

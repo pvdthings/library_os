@@ -40,12 +40,12 @@
 		on:click={toggleDropdown}
 		class="chooser-button bg-white hover:bg-neutral-50 rounded-md border border-neutral-400 shadow-high h-full w-48"
 	>
+		<span class="ml-1">{isEnglish ? chosenOption : $t(chosenOption)}</span>
 		<img
-			class="inline mr-1"
+			class="ml-2"
 			src={ChevronIcon}
 			alt="Dropdown"
 		/>
-		<span>{isEnglish ? chosenOption : $t(chosenOption)}</span>
 	</button>
 	<ChooserBody
 		hidden={dropdownHidden}
