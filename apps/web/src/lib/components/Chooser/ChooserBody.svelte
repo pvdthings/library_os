@@ -1,7 +1,5 @@
 <script lang="ts">
   import "./Chooser.css";
-  import ChevronIcon from "$lib/icons/chevron.svg";
-  import CloseIcon from '$lib/icons/x-mark.svg';
 	import ChooserItem from './ChooserItem.svelte';
 	import { t } from "$lib/language/translate";
 
@@ -21,21 +19,17 @@
     <div class="p-4 bg-primary text-2xl font-bold text-left sticky top-0">
       {title}
       <button class="float-right" on:click={onClose}>
-        <img class="w-[30px] h-[30px]" src={CloseIcon} alt="close" />
+        <span class="ph-bold ph-x text-2xl" />
       </button>
     </div>
     <hr class="border-neutral-500" />
   </div>
   <button
 		on:click={onClose}
-		class="chooser-button hidden md:block bg-primary h-11 w-full border-b border-neutral-400"
+		class="chooser-button !hidden md:!flex bg-primary h-11 w-full border-b border-neutral-400"
 	>
-    <img
-      class="inline rotate-180 mr-1"
-      src={ChevronIcon}
-      alt="Dropdown"
-    />
-		<span>{$t(chosenOption)}</span>
+    <span class="ml-1">{$t(chosenOption)}</span>
+    <span class="ml-2 ph-bold ph-caret-up text-xl" />
 	</button>
   <div class="flex flex-col overflow-y-scroll">
     {#each options as option}

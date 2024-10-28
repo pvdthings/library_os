@@ -4,6 +4,7 @@
 
   export let show: boolean = false;
   export let title: string = undefined;
+  export let closeButton: boolean = true;
 
   const dispatch = createEventDispatcher();
 
@@ -21,7 +22,9 @@
 
 <dialog bind:this={dialog} class="modal modal-bottom sm:modal-middle">
   <div class="modal-box relative modal-responsive">
-    <CloseButton class="absolute right-2 top-2" on:click={closeModal} />
+    {#if closeButton}
+      <CloseButton class="absolute right-2 top-2" on:click={closeModal} />
+    {/if}
     {#if title}
       <h2 class="font-bold font-display text-2xl mb-3">{title}</h2>
     {/if}
