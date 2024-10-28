@@ -1,9 +1,9 @@
 <script lang="ts">
-	import "./Chooser.css";
+	import './Chooser.css';
 	import { createEventDispatcher } from 'svelte';
 	import { t, locale } from '$lib/language/translate';
 	import ChooserBody from './ChooserBody.svelte';
-	import { Modal } from "../Modal";
+	import { Modal } from '../Modal';
 
 	const tabletBreakpoint = 768;
 
@@ -60,8 +60,11 @@
 		<div class="flex flex-col items-stretch divide-y">
 			{#each options as option}
 				{@const isChosen = chosenOption === option}
-				<button class="flex flex-row justify-between items-center p-2" on:click={() => optionChosen(option)}>
-					<span class="font-display {isChosen ? 'font-semibold' : ''} text-xl">{option}</span>
+				<button
+					class="flex flex-row justify-between items-center p-2"
+					on:click={() => optionChosen(option)}
+				>
+					<span class="font-display {isChosen ? 'font-semibold' : ''} text-xl">{$t(option)}</span>
 					{#if isChosen}
 						<span class="ph-bold ph-check text-2xl" />
 					{/if}
