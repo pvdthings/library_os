@@ -61,7 +61,7 @@
 			{#each options as option}
 				{@const isChosen = chosenOption === option}
 				<button
-					class="flex flex-row justify-between items-center p-2"
+					class="flex flex-row justify-between items-center outline-none p-2"
 					on:click={() => optionChosen(option)}
 				>
 					<span class="font-display {isChosen ? 'font-semibold' : ''} text-xl">{$t(option)}</span>
