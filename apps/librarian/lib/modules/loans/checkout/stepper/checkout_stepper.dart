@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/borrower_model.dart';
 import 'package:librarian_app/modules/loans/checkout/stepper/steps/borrower_step.dart';
+import 'package:librarian_app/modules/loans/checkout/stepper/steps/confirm_step.dart';
 import 'package:librarian_app/modules/loans/checkout/stepper/steps/items_step.dart';
 import 'package:librarian_app/modules/loans/details/loan_details_page.dart';
 import 'package:librarian_app/modules/loans/providers/loans_controller_provider.dart';
 import 'package:librarian_app/utils/media_query.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
 import 'package:librarian_app/core/api/models/item_model.dart';
-import 'package:librarian_app/core/api/models/thing_summary_model.dart';
-
-import '../checkout_details.dart';
 
 class CheckoutStepper extends ConsumerStatefulWidget {
   const CheckoutStepper({super.key, this.onFinish});
@@ -134,27 +132,14 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
             setState(() => didPromptForEyeProtection = true);
           },
         ),
-        Step(
-          title: const Text('Confirm Details'),
-          content: Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: CheckoutDetails(
-              borrower: borrower,
-              things: items
-                  .map((t) => ThingSummaryModel(
-                        id: t.id,
-                        name: t.name,
-                        number: t.number,
-                        images: [],
-                      ))
-                  .toList(),
-              dueDate: dueDate,
-              onDueDateUpdated: (newDate) {
-                setState(() => dueDate = newDate);
-              },
-            ),
-          ),
+        buildConfirmStep(
           isActive: stepIndex >= 2,
+          borrower: borrower,
+          items: items,
+          dueDate: dueDate,
+          onDueDateUpdated: (newDate) {
+            setState(() => dueDate = newDate);
+          },
         ),
       ],
     );
