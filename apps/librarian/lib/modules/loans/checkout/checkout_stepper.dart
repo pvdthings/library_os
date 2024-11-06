@@ -197,6 +197,14 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
                   return ItemCard(
                     number: item.number,
                     imageUrl: item.imageUrls.firstOrNull,
+                    trailing: IconButton(
+                      icon: const Icon(Icons.remove_circle),
+                      onPressed: () {
+                        setState(() => _things.remove(item));
+                      },
+                      padding: EdgeInsets.zero,
+                      tooltip: 'Remove',
+                    ),
                   );
                 }).toList(),
               ),

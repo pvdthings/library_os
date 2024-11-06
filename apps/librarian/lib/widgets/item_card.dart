@@ -41,7 +41,9 @@ class ItemCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: trailing == null
+                  ? const EdgeInsets.all(8.0)
+                  : const EdgeInsets.only(left: 8.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
