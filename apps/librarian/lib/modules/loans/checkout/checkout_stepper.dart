@@ -4,6 +4,7 @@ import 'package:librarian_app/core/api/models/borrower_model.dart';
 import 'package:librarian_app/modules/borrowers/providers/borrowers_repository_provider.dart';
 import 'package:librarian_app/modules/borrowers/details/borrower_issues.dart';
 import 'package:librarian_app/modules/loans/checkout/borrower_search_delegate.dart';
+import 'package:librarian_app/modules/loans/checkout/existing_item_dialog.dart';
 import 'package:librarian_app/modules/loans/checkout/suggested_things_dialog.dart';
 import 'package:librarian_app/modules/loans/details/loan_details_page.dart';
 import 'package:librarian_app/modules/loans/providers/loans_controller_provider.dart';
@@ -166,6 +167,16 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
                 controller: ThingSearchController(
                   context: context,
                   onMatchFound: (thing) {
+                    if (_things.any((t) => t.id == thing.id)) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return ExistingItemDialog(number: thing.number);
+                        },
+                      );
+                      return;
+                    }
+
                     setState(() => _things.add(thing));
 
                     if (thing.eyeProtection && !_didPromptForEyeProtection) {
