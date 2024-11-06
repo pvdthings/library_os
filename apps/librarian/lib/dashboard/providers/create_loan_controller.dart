@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/dashboard/providers/workspace.dart';
 import 'package:librarian_app/dashboard/widgets/workspace_window.dart';
 import 'package:librarian_app/modules/loans/checkout/checkout_page.dart';
-import 'package:librarian_app/modules/loans/checkout/checkout_stepper.dart';
+import 'package:librarian_app/modules/loans/checkout/stepper/checkout_stepper.dart';
 import 'package:librarian_app/utils/media_query.dart';
 
 class CreateLoanController {

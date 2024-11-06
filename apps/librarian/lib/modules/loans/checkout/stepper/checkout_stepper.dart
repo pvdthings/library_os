@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/borrower_model.dart';
-import 'package:librarian_app/modules/borrowers/providers/borrowers_repository_provider.dart';
-import 'package:librarian_app/modules/borrowers/details/borrower_issues.dart';
-import 'package:librarian_app/modules/loans/checkout/borrower_search_delegate.dart';
 import 'package:librarian_app/modules/loans/checkout/existing_item_dialog.dart';
+import 'package:librarian_app/modules/loans/checkout/stepper/steps/borrower_step.dart';
 import 'package:librarian_app/modules/loans/checkout/suggested_things_dialog.dart';
 import 'package:librarian_app/modules/loans/details/loan_details_page.dart';
 import 'package:librarian_app/modules/loans/providers/loans_controller_provider.dart';
@@ -17,7 +15,7 @@ import 'package:librarian_app/core/api/models/thing_summary_model.dart';
 import 'package:librarian_app/modules/loans/checkout/connected_thing_search_field.dart';
 import 'package:librarian_app/widgets/item_card.dart';
 
-import 'checkout_details.dart';
+import '../checkout_details.dart';
 
 class CheckoutStepper extends ConsumerStatefulWidget {
   const CheckoutStepper({super.key, this.onFinish});
@@ -116,46 +114,14 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
             }
           : null,
       steps: [
-        Step(
-          title: const Text('Select Borrower'),
-          subtitle: _borrower != null ? Text(_borrower!.name) : null,
-          content: Column(
-            children: [
-              _SelectBorrowerTextField(
-                text: _borrower?.name,
-                onSelected: (borrower) {
-                  if (borrower != null) {
-                    setState(() => _borrower = borrower);
-                  }
-                },
-              ),
-              if (_borrower != null && !_borrower!.active) ...[
-                const SizedBox(height: 16),
-                BorrowerIssues(
-                  borrowerId: _borrower!.id,
-                  issues: _borrower!.issues,
-                  onRecordCashPayment: (success) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                            success ? 'Success!' : 'Failed to record payment'),
-                      ),
-                    );
-
-                    if (success) {
-                      ref
-                          .read(borrowersRepositoryProvider.notifier)
-                          .getBorrower(_borrower!.id)
-                          .then((b) {
-                        setState(() => _borrower = b);
-                      });
-                    }
-                  },
-                ),
-              ],
-            ],
-          ),
+        buildBorrowerStep(
+          context: context,
+          ref: ref,
           isActive: _index >= 0,
+          borrower: _borrower,
+          onBorrowerSelected: (b) {
+            setState(() => _borrower = b);
+          },
         ),
         Step(
           title: const Text('Add Items'),
@@ -246,53 +212,6 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
           isActive: _index >= 2,
         ),
       ],
-    );
-  }
-}
-
-class _SelectBorrowerTextField extends ConsumerStatefulWidget {
-  const _SelectBorrowerTextField({
-    required this.text,
-    required this.onSelected,
-  });
-
-  final String? text;
-  final void Function(BorrowerModel? borrower) onSelected;
-
-  @override
-  ConsumerState<_SelectBorrowerTextField> createState() =>
-      _SelectBorrowerTextFieldState();
-}
-
-class _SelectBorrowerTextFieldState
-    extends ConsumerState<_SelectBorrowerTextField> {
-  bool _isLoading = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: TextEditingController(text: widget.text),
-      canRequestFocus: false,
-      decoration: InputDecoration(
-        labelText: _isLoading ? 'Loading...' : 'Borrower',
-        prefixIcon: const Icon(Icons.person_rounded),
-      ),
-      enabled: !_isLoading,
-      onTap: () {
-        setState(() => _isLoading = true);
-
-        ref.invalidate(borrowersRepositoryProvider);
-        ref.read(borrowersRepositoryProvider).then((borrowers) async {
-          return await showSearch(
-            context: context,
-            delegate: BorrowerSearchDelegate(borrowers),
-            useRootNavigator: true,
-          );
-        }).then((borrower) {
-          widget.onSelected(borrower);
-          setState(() => _isLoading = false);
-        });
-      },
     );
   }
 }
