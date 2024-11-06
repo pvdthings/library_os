@@ -14,6 +14,7 @@ import 'package:librarian_app/core/api/models/item_model.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/core/api/models/thing_summary_model.dart';
 import 'package:librarian_app/modules/loans/checkout/connected_thing_search_field.dart';
+import 'package:librarian_app/widgets/item_card.dart';
 
 import 'checkout_details.dart';
 
@@ -156,9 +157,9 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
           isActive: _index >= 0,
         ),
         Step(
-          title: const Text('Add Things'),
+          title: const Text('Add Items'),
           subtitle: Text(
-              '${_things.length} Thing${_things.length == 1 ? '' : 's'} Added'),
+              '${_things.length} Item${_things.length == 1 ? '' : 's'} Added'),
           content: Column(
             children: [
               ConnectedThingSearchField(
@@ -188,26 +189,16 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
                   repository: ref.read(thingsRepositoryProvider.notifier),
                 ),
               ),
-              const SizedBox(height: 8),
-              ListView.builder(
-                itemCount: _things.length,
-                itemBuilder: (context, index) {
-                  final thing = _things[index];
-                  return Card(
-                    child: ListTile(
-                      leading: Text('#${thing.number}'),
-                      title: Text(thing.name),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.remove_circle_rounded),
-                        onPressed: () {
-                          setState(() => _things.remove(thing));
-                        },
-                        tooltip: 'Remove #${thing.number}',
-                      ),
-                    ),
-                  );
-                },
+              const SizedBox(height: 16.0),
+              GridView.count(
+                crossAxisCount: 8,
                 shrinkWrap: true,
+                children: _things.map((item) {
+                  return ItemCard(
+                    number: item.number,
+                    imageUrl: item.imageUrls.firstOrNull,
+                  );
+                }).toList(),
               ),
             ],
           ),
