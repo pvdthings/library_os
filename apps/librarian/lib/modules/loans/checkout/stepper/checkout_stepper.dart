@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/borrower_model.dart';
-import 'package:librarian_app/modules/loans/checkout/existing_item_dialog.dart';
 import 'package:librarian_app/modules/loans/checkout/stepper/steps/borrower_step.dart';
-import 'package:librarian_app/modules/loans/checkout/suggested_things_dialog.dart';
+import 'package:librarian_app/modules/loans/checkout/stepper/steps/items_step.dart';
 import 'package:librarian_app/modules/loans/details/loan_details_page.dart';
 import 'package:librarian_app/modules/loans/providers/loans_controller_provider.dart';
-import 'package:librarian_app/modules/loans/checkout/eye_protection_dialog.dart';
 import 'package:librarian_app/utils/media_query.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
 import 'package:librarian_app/core/api/models/item_model.dart';
-import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/core/api/models/thing_summary_model.dart';
-import 'package:librarian_app/modules/loans/checkout/connected_thing_search_field.dart';
-import 'package:librarian_app/widgets/item_card.dart';
 
 import '../checkout_details.dart';
 
@@ -27,31 +22,31 @@ class CheckoutStepper extends ConsumerStatefulWidget {
 }
 
 class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
-  int _index = 0;
-  BorrowerModel? _borrower;
-  DateTime _dueDate = DateTime.now().add(const Duration(days: 7));
+  int stepIndex = 0;
+  BorrowerModel? borrower;
+  DateTime dueDate = DateTime.now().add(const Duration(days: 7));
 
-  bool _didPromptForEyeProtection = false;
+  bool didPromptForEyeProtection = false;
 
-  final List<ItemModel> _things = [];
+  final List<ItemModel> items = [];
 
   void Function()? _onStepContinueFactory(int index) {
     switch (index) {
       case 0:
-        if (_borrower == null || !_borrower!.active) {
+        if (borrower == null || !borrower!.active) {
           return null;
         }
 
         return () {
-          setState(() => _index++);
+          setState(() => stepIndex++);
         };
       case 1:
-        if (_things.isEmpty) {
+        if (items.isEmpty) {
           return null;
         }
 
         return () {
-          setState(() => _index++);
+          setState(() => stepIndex++);
         };
       default:
         return _finish;
@@ -60,9 +55,9 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
 
   void _finish() async {
     final success = await ref.read(loansControllerProvider).openLoan(
-        borrowerId: _borrower!.id,
-        thingIds: _things.map((e) => e.id).toList(),
-        dueDate: _dueDate);
+        borrowerId: borrower!.id,
+        thingIds: items.map((e) => e.id).toList(),
+        dueDate: dueDate);
 
     Future.delayed(Duration.zero, () {
       widget.onFinish?.call();
@@ -83,7 +78,7 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
   @override
   Widget build(BuildContext context) {
     return Stepper(
-      currentStep: _index,
+      currentStep: stepIndex,
       controlsBuilder: (context, details) {
         return Padding(
           padding: const EdgeInsets.only(top: 16),
@@ -103,99 +98,49 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
         );
       },
       onStepTapped: (value) {
-        if (value < _index) {
-          setState(() => _index = value);
+        if (value < stepIndex) {
+          setState(() => stepIndex = value);
         }
       },
-      onStepContinue: _onStepContinueFactory(_index),
-      onStepCancel: _index > 0
+      onStepContinue: _onStepContinueFactory(stepIndex),
+      onStepCancel: stepIndex > 0
           ? () {
-              setState(() => _index--);
+              setState(() => stepIndex--);
             }
           : null,
       steps: [
         buildBorrowerStep(
           context: context,
           ref: ref,
-          isActive: _index >= 0,
-          borrower: _borrower,
+          isActive: stepIndex >= 0,
+          borrower: borrower,
           onBorrowerSelected: (b) {
-            setState(() => _borrower = b);
+            setState(() => borrower = b);
           },
         ),
-        Step(
-          title: const Text('Add Items'),
-          subtitle: Text(
-              '${_things.length} Item${_things.length == 1 ? '' : 's'} Added'),
-          content: Column(
-            children: [
-              ConnectedThingSearchField(
-                controller: ThingSearchController(
-                  context: context,
-                  onMatchFound: (thing) {
-                    if (_things.any((t) => t.id == thing.id)) {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return ExistingItemDialog(number: thing.number);
-                        },
-                      );
-                      return;
-                    }
-
-                    setState(() => _things.add(thing));
-
-                    if (thing.eyeProtection && !_didPromptForEyeProtection) {
-                      showDialog(
-                        context: context,
-                        builder: (_) => const EyeProtectionDialog(),
-                      );
-                      _didPromptForEyeProtection = true;
-                    }
-
-                    if (thing.linkedThingIds.isNotEmpty) {
-                      showDialog(
-                        context: context,
-                        builder: (_) => SuggestedThingsDialog(
-                          thingName: thing.name,
-                          thingIds: thing.linkedThingIds,
-                        ),
-                      );
-                    }
-                  },
-                  repository: ref.read(thingsRepositoryProvider.notifier),
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              GridView.count(
-                crossAxisCount: 8,
-                shrinkWrap: true,
-                children: _things.map((item) {
-                  return ItemCard(
-                    number: item.number,
-                    imageUrl: item.imageUrls.firstOrNull,
-                    trailing: IconButton(
-                      icon: const Icon(Icons.remove_circle),
-                      onPressed: () {
-                        setState(() => _things.remove(item));
-                      },
-                      padding: EdgeInsets.zero,
-                      tooltip: 'Remove',
-                    ),
-                  );
-                }).toList(),
-              ),
-            ],
-          ),
-          isActive: _index >= 1,
+        buildItemsStep(
+          context: context,
+          ref: ref,
+          isActive: stepIndex >= 1,
+          didPromptForEyeProtection: didPromptForEyeProtection,
+          items: items,
+          onAddItem: (item) {
+            setState(() => items.add(item));
+          },
+          onRemoveItem: (item) {
+            setState(() => items.remove(item));
+          },
+          onPromptForEyeProtection: () {
+            setState(() => didPromptForEyeProtection = true);
+          },
         ),
         Step(
           title: const Text('Confirm Details'),
           content: Padding(
             padding: const EdgeInsets.only(top: 8),
             child: CheckoutDetails(
-              borrower: _borrower,
-              things: _things
+              borrower: borrower,
+              things: items
                   .map((t) => ThingSummaryModel(
                         id: t.id,
                         name: t.name,
@@ -203,13 +148,13 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
                         images: [],
                       ))
                   .toList(),
-              dueDate: _dueDate,
+              dueDate: dueDate,
               onDueDateUpdated: (newDate) {
-                setState(() => _dueDate = newDate);
+                setState(() => dueDate = newDate);
               },
             ),
           ),
-          isActive: _index >= 2,
+          isActive: stepIndex >= 2,
         ),
       ],
     );
