@@ -3,7 +3,7 @@ import 'package:librarian_app/core/api/models/borrower_model.dart';
 import 'package:librarian_app/core/api/models/item_model.dart';
 import 'package:librarian_app/core/api/models/thing_summary_model.dart';
 
-import '../../checkout_details.dart';
+import 'checkout_details.dart';
 
 Step buildConfirmStep({
   required bool isActive,

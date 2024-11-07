@@ -7,9 +7,9 @@ import 'package:librarian_app/utils/media_query.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
 import 'package:librarian_app/core/api/models/item_model.dart';
 
-import 'steps/borrower_step.dart';
-import 'steps/confirm_step.dart';
-import 'steps/items_step.dart';
+import 'borrower/borrower_step.dart';
+import 'confirm/confirm_step.dart';
+import 'items/items_step.dart';
 
 class CheckoutStepper extends ConsumerStatefulWidget {
   const CheckoutStepper({super.key, this.onFinish});
