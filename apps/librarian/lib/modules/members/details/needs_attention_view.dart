@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:librarian_app/core/api/models/borrower_model.dart';
 
 class NeedsAttentionView extends StatelessWidget {
-  final BorrowerModel borrower;
+  final BorrowerModel member;
 
-  const NeedsAttentionView({super.key, required this.borrower});
+  const NeedsAttentionView({super.key, required this.member});
 
   @override
   Widget build(BuildContext context) {
-    if (borrower.issues.isEmpty) {
+    if (member.issues.isEmpty) {
       return const Center(child: Text('Ready to borrow!'));
     }
 
     return Padding(
       padding: const EdgeInsets.all(8),
       child: ListView.builder(
-        itemCount: borrower.issues.length,
+        itemCount: member.issues.length,
         itemBuilder: (context, index) {
-          final reason = borrower.issues[index];
+          final reason = member.issues[index];
 
           return Card(
             child: Padding(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/borrower_model.dart';
-import 'package:librarian_app/modules/borrowers/details/borrower_issues.dart';
-import 'package:librarian_app/modules/borrowers/providers/borrowers_repository_provider.dart';
+import 'package:librarian_app/modules/members/details/issues.dart';
+import 'package:librarian_app/modules/members/providers/borrowers_repository_provider.dart';
 import 'package:librarian_app/modules/loans/checkout/stepper/borrower/borrower_search_delegate.dart';
 
 Step buildBorrowerStep({
@@ -23,7 +23,7 @@ Step buildBorrowerStep({
         ),
         if (borrower != null && !borrower.active) ...[
           const SizedBox(height: 16),
-          BorrowerIssues(
+          MemberIssues(
             borrowerId: borrower.id,
             issues: borrower.issues,
             onRecordCashPayment: (success) {

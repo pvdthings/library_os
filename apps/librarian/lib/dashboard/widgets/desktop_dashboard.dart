@@ -33,7 +33,7 @@ class DesktopDashboard extends StatelessWidget {
               NavigationRailDestination(
                 selectedIcon: Icon(Icons.people),
                 icon: Icon(Icons.people_outlined),
-                label: Text('Borrowers'),
+                label: Text('Members'),
                 padding: EdgeInsets.symmetric(vertical: 8),
               ),
               NavigationRailDestination(

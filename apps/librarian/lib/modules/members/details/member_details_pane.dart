@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/borrowers/providers/edited_borrower_details_providers.dart';
-import 'package:librarian_app/modules/borrowers/details/borrower_details.dart';
+import 'package:librarian_app/modules/members/providers/edited_borrower_details_providers.dart';
+import 'package:librarian_app/modules/members/details/member_details.dart';
 import 'package:librarian_app/widgets/dialogs/save_dialog.dart';
 import 'package:librarian_app/widgets/panes/pane_header.dart';
 
 import '../../../core/api/models/borrower_model.dart';
 
-class BorrowerDetailsPane extends ConsumerWidget {
+class MemberDetailsPane extends ConsumerWidget {
   final Future<BorrowerModel?> borrowerFuture;
 
-  const BorrowerDetailsPane({
+  const MemberDetailsPane({
     super.key,
     required this.borrowerFuture,
   });
@@ -97,7 +97,7 @@ class BorrowerDetailsPane extends ConsumerWidget {
                       child: SingleChildScrollView(
                         child: Padding(
                           padding: EdgeInsets.all(16),
-                          child: BorrowerDetails(),
+                          child: MemberDetails(),
                         ),
                       ),
                     ),

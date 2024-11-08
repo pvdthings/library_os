@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/borrowers/details/contact_card.dart';
-import 'package:librarian_app/modules/borrowers/providers/borrower_details_provider.dart';
-import 'package:librarian_app/modules/borrowers/details/issues_card.dart';
-import 'package:librarian_app/modules/borrowers/details/payments_card.dart';
+import 'package:librarian_app/modules/members/details/contact_card.dart';
+import 'package:librarian_app/modules/members/providers/borrower_details_provider.dart';
+import 'package:librarian_app/modules/members/details/issues_card.dart';
+import 'package:librarian_app/modules/members/details/payments_card.dart';
 
-class BorrowerDetails extends ConsumerWidget {
-  const BorrowerDetails({super.key});
+class MemberDetails extends ConsumerWidget {
+  const MemberDetails({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
