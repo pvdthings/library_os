@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:librarian_app/modules/borrowers/providers/borrowers_repository_provider.dart';
-import 'package:librarian_app/modules/borrowers/providers/selected_borrower_provider.dart';
+import 'package:librarian_app/modules/members/providers/borrowers_repository_provider.dart';
+import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
 import 'package:librarian_app/widgets/details_card/card_body.dart';
 import 'package:librarian_app/widgets/details_card/card_header.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';

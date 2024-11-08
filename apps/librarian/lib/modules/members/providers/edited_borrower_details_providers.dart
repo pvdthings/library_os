@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/borrowers/providers/borrower_details_provider.dart';
-import 'package:librarian_app/modules/borrowers/providers/borrowers_repository_provider.dart';
-import 'package:librarian_app/modules/borrowers/providers/selected_borrower_provider.dart';
+import 'package:librarian_app/modules/members/providers/borrower_details_provider.dart';
+import 'package:librarian_app/modules/members/providers/borrowers_repository_provider.dart';
+import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
 import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
 
 final phoneProvider = StateProvider<String?>((ref) => null);
