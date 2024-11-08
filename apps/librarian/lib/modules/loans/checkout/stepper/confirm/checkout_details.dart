@@ -50,7 +50,7 @@ class CheckoutDetails extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Detail(
                     prefixIcon: const Icon(Icons.build_rounded),
-                    label: 'Thing',
+                    label: 'Item',
                     value: '#${thing.number} ${thing.name}',
                   ),
                 );

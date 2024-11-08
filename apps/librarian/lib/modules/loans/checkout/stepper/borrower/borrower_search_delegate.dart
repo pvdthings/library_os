@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/api/models/borrower_model.dart';
-import '../../borrowers/list/borrowers_list.dart';
+import '../../../../../core/api/models/borrower_model.dart';
+import '../../../../borrowers/list/borrowers_list.dart';
 
 class BorrowerSearchDelegate extends SearchDelegate<BorrowerModel?> {
   BorrowerSearchDelegate(this.borrowers);
