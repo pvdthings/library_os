@@ -4,15 +4,15 @@ import 'package:librarian_app/core/api/models/borrower_model.dart';
 import 'needs_attention_view.dart';
 
 class NeedsAttentionPage extends StatelessWidget {
-  const NeedsAttentionPage({super.key, required this.borrower});
+  const NeedsAttentionPage({super.key, required this.member});
 
-  final BorrowerModel borrower;
+  final BorrowerModel member;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(borrower.name)),
-      body: NeedsAttentionView(borrower: borrower),
+      appBar: AppBar(title: Text(member.name)),
+      body: NeedsAttentionView(member: member),
     );
   }
 }

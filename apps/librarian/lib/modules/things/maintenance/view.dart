@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/maintenance/providers/items.dart';
 import 'package:librarian_app/utils/pluralize.dart';
-import 'package:librarian_app/widgets/no_image.dart';
+import 'package:librarian_app/widgets/item_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../providers/item_details_orchestrator.dart';
@@ -118,70 +118,6 @@ class KanbanColumn extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ItemCard extends StatelessWidget {
-  const ItemCard({
-    super.key,
-    required this.number,
-    this.imageUrl,
-    this.notes,
-    this.onTap,
-  });
-
-  final int number;
-  final String? imageUrl;
-  final String? notes;
-  final void Function()? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      color: Theme.of(context).colorScheme.secondaryContainer,
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: Container(
-                color: Theme.of(context).canvasColor.withOpacity(0.5),
-                child: imageUrl != null
-                    ? Image.network(
-                        imageUrl!,
-                        fit: BoxFit.cover,
-                      )
-                    : const NoImage(),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '#$number',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  if (notes != null)
-                    Tooltip(
-                      message: '#$number: $notes',
-                      textStyle: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(color: Colors.black, fontSize: 18),
-                      child: const Icon(Icons.info),
-                    ),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

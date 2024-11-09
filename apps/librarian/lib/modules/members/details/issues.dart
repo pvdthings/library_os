@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/borrowers/providers/borrowers_repository_provider.dart';
+import 'package:librarian_app/modules/members/providers/borrowers_repository_provider.dart';
 
 import '../../../core/api/models/issue_model.dart';
 import '../payments/dues_dialog.dart';
 
-class BorrowerIssues extends ConsumerWidget {
+class MemberIssues extends ConsumerWidget {
   final String borrowerId;
   final List<Issue> issues;
   final void Function(bool success) onRecordCashPayment;
 
-  const BorrowerIssues({
+  const MemberIssues({
     super.key,
     required this.borrowerId,
     required this.issues,
@@ -26,7 +26,7 @@ class BorrowerIssues extends ConsumerWidget {
           duesNotPaidIssue,
           isOk: !issues.contains(duesNotPaidIssue),
           trailing: _PayDuesButton(
-            borrowerId: borrowerId,
+            memberId: borrowerId,
             onRecordCashPayment: onRecordCashPayment,
           ),
         ),
@@ -86,11 +86,11 @@ class _IssueTile extends StatelessWidget {
 
 class _PayDuesButton extends ConsumerWidget {
   const _PayDuesButton({
-    required this.borrowerId,
+    required this.memberId,
     required this.onRecordCashPayment,
   });
 
-  final String borrowerId;
+  final String memberId;
   final void Function(bool success) onRecordCashPayment;
 
   @override
@@ -107,7 +107,7 @@ class _PayDuesButton extends ConsumerWidget {
               onConfirmPayment: (cash) async {
                 final result = await ref
                     .read(borrowersRepositoryProvider.notifier)
-                    .recordPayment(borrowerId: borrowerId, cash: cash);
+                    .recordPayment(borrowerId: memberId, cash: cash);
 
                 onRecordCashPayment(result);
               },

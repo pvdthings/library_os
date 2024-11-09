@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/api/models/borrower_model.dart';
-import '../../borrowers/list/borrowers_list.dart';
+import '../../../../../core/api/models/borrower_model.dart';
+import '../../../../members/list/members_list.dart';
 
 class BorrowerSearchDelegate extends SearchDelegate<BorrowerModel?> {
   BorrowerSearchDelegate(this.borrowers);
@@ -44,7 +44,7 @@ class BorrowerSearchDelegate extends SearchDelegate<BorrowerModel?> {
         .where((b) => b.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
-    return BorrowersList(
+    return MembersList(
       borrowers: results,
       onTap: (borrower) {
         close(context, borrower);

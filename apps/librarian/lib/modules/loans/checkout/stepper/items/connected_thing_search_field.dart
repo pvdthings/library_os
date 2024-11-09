@@ -30,10 +30,10 @@ class ConnectedThingSearchField extends StatelessWidget {
       controller: _textController,
       onSubmitted: (_) => _submit(),
       decoration: InputDecoration(
-        hintText: 'Enter Thing Number',
+        hintText: 'Enter Item Number',
         prefixIcon: const Icon(Icons.numbers),
         suffixIcon: IconButton(
-          tooltip: 'Add Thing',
+          tooltip: 'Add Item',
           onPressed: () => _submit(),
           icon: const Icon(Icons.add_rounded),
         ),
@@ -79,9 +79,9 @@ class ThingSearchController {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Thing Unavailable"),
+          title: const Text("Item Unavailable"),
           content: Text(
-              "Thing #${thing.number} is checked out or not available for lending."),
+              "Item #${thing.number} is checked out or not available for lending."),
           actions: [
             TextButton(
               child: const Text("OK"),
@@ -98,7 +98,7 @@ class ThingSearchController {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Thing #$searchValue does not exist"),
+          title: Text("Item #$searchValue does not exist."),
           content: const Text("Try another number."),
           actions: [
             TextButton(

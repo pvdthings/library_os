@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/borrowers/providers/borrower_details_provider.dart';
-import 'package:librarian_app/modules/borrowers/providers/borrowers_filter_provider.dart';
-import 'package:librarian_app/modules/borrowers/providers/selected_borrower_provider.dart';
-import 'package:librarian_app/modules/borrowers/details/borrower_details_pane.dart';
+import 'package:librarian_app/modules/members/providers/borrower_details_provider.dart';
+import 'package:librarian_app/modules/members/providers/borrowers_filter_provider.dart';
+import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
+import 'package:librarian_app/modules/members/details/member_details_pane.dart';
 import 'package:librarian_app/widgets/fields/search_field.dart';
 import 'package:librarian_app/widgets/panes/list_pane.dart';
 import 'package:librarian_app/widgets/panes/pane_header.dart';
 
-import '../../modules/borrowers/list/borrowers_list_view.dart';
+import '../../modules/members/list/members_list_view.dart';
 
-class BorrowersDesktopLayout extends ConsumerWidget {
-  const BorrowersDesktopLayout({super.key});
+class MembersDesktopLayout extends ConsumerWidget {
+  const MembersDesktopLayout({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,10 +30,10 @@ class BorrowersDesktopLayout extends ConsumerWidget {
               },
             ),
           ),
-          child: const BorrowersListView(),
+          child: const MembersListView(),
         ),
         Expanded(
-          child: BorrowerDetailsPane(
+          child: MemberDetailsPane(
             borrowerFuture: ref.watch(borrowerDetailsProvider),
           ),
         ),
