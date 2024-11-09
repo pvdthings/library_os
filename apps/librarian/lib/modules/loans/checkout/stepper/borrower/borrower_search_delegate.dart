@@ -44,7 +44,7 @@ class BorrowerSearchDelegate extends SearchDelegate<BorrowerModel?> {
         .where((b) => b.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
-    return BorrowersList(
+    return MembersList(
       borrowers: results,
       onTap: (borrower) {
         close(context, borrower);

@@ -3,12 +3,12 @@ import 'package:librarian_app/utils/media_query.dart';
 
 import '../../../core/api/models/borrower_model.dart';
 
-class BorrowersList extends StatefulWidget {
+class MembersList extends StatefulWidget {
   final List<BorrowerModel> borrowers;
   final BorrowerModel? selected;
   final void Function(BorrowerModel borrower)? onTap;
 
-  const BorrowersList({
+  const MembersList({
     super.key,
     required this.borrowers,
     this.selected,
@@ -16,10 +16,10 @@ class BorrowersList extends StatefulWidget {
   });
 
   @override
-  State<BorrowersList> createState() => _BorrowersListState();
+  State<MembersList> createState() => _MembersListState();
 }
 
-class _BorrowersListState extends State<BorrowersList> {
+class _MembersListState extends State<MembersList> {
   final _scrollController = ScrollController();
 
   @override

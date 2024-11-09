@@ -29,7 +29,7 @@ class MembersListView extends ConsumerWidget {
           return const Center(child: Text('No results found'));
         }
 
-        return BorrowersList(
+        return MembersList(
           borrowers: snapshot.data!,
           selected: ref.watch(selectedBorrowerProvider),
           onTap: (borrower) {
