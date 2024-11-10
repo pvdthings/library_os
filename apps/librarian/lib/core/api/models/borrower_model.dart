@@ -9,7 +9,7 @@ class BorrowerModel {
 
   bool get active => issues.isEmpty;
 
-  BorrowerModel({
+  const BorrowerModel({
     required this.id,
     required this.name,
     required this.issues,
