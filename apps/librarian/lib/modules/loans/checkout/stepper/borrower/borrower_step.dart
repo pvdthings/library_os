@@ -4,6 +4,7 @@ import 'package:librarian_app/core/api/models/borrower_model.dart';
 import 'package:librarian_app/modules/members/details/issues.dart';
 import 'package:librarian_app/modules/members/providers/borrowers_repository_provider.dart';
 import 'package:librarian_app/modules/loans/checkout/stepper/borrower/borrower_search_delegate.dart';
+import 'package:librarian_app/providers/members.dart';
 
 Step buildBorrowerStep({
   required BuildContext context,
@@ -80,8 +81,8 @@ class _SelectBorrowerTextFieldState
       onTap: () {
         setState(() => _isLoading = true);
 
-        ref.invalidate(borrowersRepositoryProvider);
-        ref.read(borrowersRepositoryProvider).then((borrowers) async {
+        ref.invalidate(membersProvider);
+        ref.read(membersProvider).then((borrowers) async {
           return await showSearch(
             context: context,
             delegate: BorrowerSearchDelegate(borrowers),
