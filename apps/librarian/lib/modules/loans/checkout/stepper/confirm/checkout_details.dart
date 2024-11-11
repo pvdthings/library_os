@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:librarian_app/core/api/models/borrower_model.dart';
 import 'package:librarian_app/widgets/detail.dart';
@@ -17,11 +18,13 @@ class CheckoutDetails extends StatelessWidget {
   final DateTime dueDate;
   final void Function(DateTime newDate) onDueDateUpdated;
 
+  DateTime get _twoWeeksAgo => DateTime.now().add(const Duration(days: -14));
+
   void showDateSelection(BuildContext context) async {
     showDatePicker(
       context: context,
       initialDate: dueDate,
-      firstDate: dueDate,
+      firstDate: kDebugMode ? _twoWeeksAgo : dueDate,
       lastDate: dueDate.add(const Duration(days: 14)),
     ).then((value) {
       if (value == null) return;
