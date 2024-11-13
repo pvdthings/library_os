@@ -14,6 +14,7 @@ class Skeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Skeletonizer(
+      enabled: enabled,
       child: child,
     );
   }
