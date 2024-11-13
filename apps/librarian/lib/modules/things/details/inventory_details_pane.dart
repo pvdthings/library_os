@@ -44,11 +44,7 @@ class InventoryDetailsPane extends ConsumerWidget {
                   return Center(child: Text(snapshot.error.toString()));
                 }
 
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                final thingDetails = snapshot.data!;
+                final thingDetails = snapshot.data;
                 final hasUnsavedChanges = ref.watch(unsavedChangesProvider);
 
                 return Column(
@@ -60,7 +56,7 @@ class InventoryDetailsPane extends ConsumerWidget {
                             child: Container(
                               margin: const EdgeInsets.only(right: 16.0),
                               child: Text(
-                                thingDetails.name,
+                                thingDetails?.name ?? '',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(fontSize: 24),
                               ),
