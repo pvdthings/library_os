@@ -46,18 +46,20 @@ class LoanDetailsHeader extends ConsumerWidget {
           Row(
             children: [
               IconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return EditLoanDialog(
-                        dueDate: loan.dueDate,
-                        notes: loan.notes,
-                        onSavePressed: onSave,
-                      );
-                    },
-                  );
-                },
+                onPressed: loading
+                    ? null
+                    : () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return EditLoanDialog(
+                              dueDate: loan.dueDate,
+                              notes: loan.notes,
+                              onSavePressed: onSave,
+                            );
+                          },
+                        );
+                      },
                 icon: const Icon(Icons.edit),
                 tooltip: 'Edit',
               ),
@@ -69,7 +71,7 @@ class LoanDetailsHeader extends ConsumerWidget {
                 ),
               ),
               IconButton(
-                onPressed: loan.thing.lastLoanId != null
+                onPressed: !loading && loan.thing.lastLoanId != null
                     ? () {
                         controller.viewPreviousLoan(
                           id: loan.thing.lastLoanId!,
@@ -83,7 +85,7 @@ class LoanDetailsHeader extends ConsumerWidget {
               ),
               const SizedBox(width: 4),
               IconButton(
-                onPressed: loan.borrower.email != null
+                onPressed: !loading && loan.borrower.email != null
                     ? () {
                         showDialog(
                           context: context,
@@ -105,7 +107,7 @@ class LoanDetailsHeader extends ConsumerWidget {
               ),
               const SizedBox(width: 4),
               IconButton(
-                onPressed: onCheckIn != null
+                onPressed: !loading && onCheckIn != null
                     ? () {
                         showDialog(
                           context: context,
