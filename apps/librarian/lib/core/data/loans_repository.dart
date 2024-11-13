@@ -1,14 +1,10 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:librarian_app/core/api/api.dart' as API;
 
 import '../api/models/loan_details_model.dart';
 import '../api/models/loan_model.dart';
 
-class LoansRepository extends Notifier<Future<List<LoanModel>>> {
-  @override
-  Future<List<LoanModel>> build() async => await getLoans();
-
+class LoansRepository {
   Future<LoanDetailsModel?> getLoan({
     required String id,
     required String thingId,
