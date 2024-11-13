@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/data/borrowers_repository.dart';
 import 'package:librarian_app/modules/members/providers/borrower_details_provider.dart';
-import 'package:librarian_app/modules/members/providers/borrowers_repository_provider.dart';
 import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
-import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
+import 'package:librarian_app/providers/loans.dart';
+import 'package:librarian_app/providers/members.dart';
 
 final phoneProvider = StateProvider<String?>((ref) => null);
 
@@ -18,14 +19,15 @@ class BorrowerDetailsEditor {
   final ProviderRef ref;
 
   Future<void> save() async {
-    await ref.read(borrowersRepositoryProvider.notifier).updateBorrower(
+    await BorrowersRepository().updateBorrower(
         ref.read(selectedBorrowerProvider)!.id,
         email: ref.read(emailProvider),
         phone: ref.read(phoneProvider));
 
     discardChanges();
 
-    ref.invalidate(loansRepositoryProvider);
+    ref.invalidate(loansProvider);
+    ref.invalidate(membersProvider);
   }
 
   void discardChanges() {
@@ -33,7 +35,7 @@ class BorrowerDetailsEditor {
     ref.read(emailProvider.notifier).state = null;
 
     // Causes borrower details to refresh from the API
-    ref.invalidate(borrowerDetailsProvider);
+    ref.invalidate(memberDetailsProvider);
   }
 }
 

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/providers/things_provider.dart';
+import 'package:librarian_app/widgets/skeleton.dart';
 
 import '../../../../../core/api/models/thing_model.dart';
 import 'inventory_list.dart';
@@ -20,24 +21,31 @@ class InventoryListView extends ConsumerWidget {
     return FutureBuilder(
       future: things,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
         if (snapshot.hasData && snapshot.data!.isEmpty) {
           return const Center(child: Text('Nothing to see here'));
         }
 
-        return InventoryList(
-          things: snapshot.data!,
-          selected: selectedThing,
-          onTap: (thing) {
-            ref.read(thingDetailsEditorProvider).discardChanges();
-            ref.read(selectedThingProvider.notifier).state = thing;
-            onTap?.call(thing);
-          },
+        return Skeleton(
+          enabled: snapshot.connectionState == ConnectionState.waiting,
+          child: InventoryList(
+            things: snapshot.data ?? [dummyThing, dummyThing, dummyThing],
+            selected: selectedThing,
+            onTap: (thing) {
+              ref.read(thingDetailsEditorProvider).discardChanges();
+              ref.read(selectedThingProvider.notifier).state = thing;
+              onTap?.call(thing);
+            },
+          ),
         );
       },
     );
   }
 }
+
+final dummyThing = ThingModel(
+  id: '',
+  name: 'Something',
+  hidden: false,
+  stock: 1,
+  available: 1,
+);

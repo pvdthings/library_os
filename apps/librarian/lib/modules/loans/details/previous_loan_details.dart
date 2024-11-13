@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/data/loans_repository.dart';
 
-import '../providers/loans_repository_provider.dart';
 import 'loan_details.dart';
 
 class PreviousLoanDetails extends ConsumerWidget {
@@ -17,9 +17,7 @@ class PreviousLoanDetails extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return FutureBuilder(
-      future: ref
-          .read(loansRepositoryProvider.notifier)
-          .getLoan(id: loanId, thingId: itemId),
+      future: LoansRepository().getLoan(id: loanId, thingId: itemId),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final previousLoan = snapshot.data!;

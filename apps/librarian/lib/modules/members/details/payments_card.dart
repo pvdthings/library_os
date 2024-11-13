@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:librarian_app/modules/members/providers/borrowers_repository_provider.dart';
+import 'package:librarian_app/core/data/borrowers_repository.dart';
 import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
 import 'package:librarian_app/widgets/details_card/card_body.dart';
 import 'package:librarian_app/widgets/details_card/card_header.dart';
@@ -13,15 +13,10 @@ class PaymentsCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final repository = ref.read(borrowersRepositoryProvider.notifier);
-
     return FutureBuilder(
-      future: repository.getPayments(ref.watch(selectedBorrowerProvider)!.id),
+      future: BorrowersRepository()
+          .getPayments(ref.watch(selectedBorrowerProvider)!.id),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return _LoadingCardPlaceholder();
-        }
-
         final payments = snapshot.data ?? [];
 
         return DetailsCard(
@@ -59,19 +54,6 @@ class _PaymentListTile extends StatelessWidget {
     return ListTile(
       title: Text(_dateFormat.format(date)),
       subtitle: cash != null ? Text('\$ $cash') : const Text('Unknown amount'),
-    );
-  }
-}
-
-class _LoadingCardPlaceholder extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const DetailsCard(
-      body: CardBody(
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
     );
   }
 }
