@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/api/models/borrower_model.dart';
+import 'package:librarian_app/core/api/models/loan_model.dart';
+import 'package:librarian_app/core/api/models/thing_summary_model.dart';
 import 'package:librarian_app/modules/loans/providers/loans_provider.dart';
 import 'package:librarian_app/modules/loans/providers/selected_loan_provider.dart';
+import 'package:librarian_app/widgets/skeleton.dart';
 
-import '../../../core/api/models/loan_model.dart';
 import 'loans_list.dart';
 
 class LoansListView extends ConsumerWidget {
@@ -16,25 +19,15 @@ class LoansListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final filteredLoans = ref.watch(loansProvider);
-
-    return FutureBuilder(
-      future: filteredLoans,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text(snapshot.error.toString()));
-        }
-
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (snapshot.hasData && snapshot.data!.isEmpty) {
+    final filteredLoans = ref.watch(loansListProvider);
+    return filteredLoans.when(
+      data: (model) {
+        if (model.loans.isEmpty) {
           return const Center(child: Text('No results found'));
         }
 
         return LoansList(
-          loans: snapshot.data!,
+          loans: model.loans,
           selected: ref.watch(selectedLoanProvider),
           onTap: (loan) {
             ref.read(selectedLoanProvider.notifier).state = loan;
@@ -42,6 +35,39 @@ class LoansListView extends ConsumerWidget {
           },
         );
       },
+      loading: () {
+        return Skeleton(
+          enabled: true,
+          child: LoansList(
+            loans: [
+              dummyLoan,
+              dummyLoan,
+              dummyLoan,
+            ],
+          ),
+        );
+      },
+      error: (error, stackTrace) {
+        return Center(child: Text(stackTrace.toString()));
+      },
     );
   }
 }
+
+final dummyLoan = LoanModel(
+  id: '',
+  number: 0,
+  thing: const ThingSummaryModel(
+    id: '',
+    name: 'Thing',
+    number: 0,
+    images: [],
+  ),
+  borrower: const BorrowerModel(
+    id: '',
+    name: 'Borrower Borrowersson',
+    issues: [],
+  ),
+  checkedOutDate: DateTime.now(),
+  dueDate: DateTime.now(),
+);

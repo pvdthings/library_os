@@ -58,8 +58,6 @@ class LoansRepository extends Notifier<Future<List<LoanModel>>> {
       thingId: thingId,
       checkedInDate: dateFormat.format(DateTime.now()),
     ));
-
-    ref.invalidateSelf();
   }
 
   Future<void> updateLoan({
@@ -76,7 +74,5 @@ class LoansRepository extends Notifier<Future<List<LoanModel>>> {
       dueBackDate: dateFormat.format(dueBackDate),
       notes: notes,
     ));
-
-    ref.invalidateSelf();
   }
 }

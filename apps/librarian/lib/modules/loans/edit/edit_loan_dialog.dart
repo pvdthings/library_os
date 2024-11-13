@@ -11,7 +11,7 @@ class EditLoanDialog extends StatefulWidget {
 
   final DateTime dueDate;
   final String? notes;
-  final void Function(DateTime newDueDate, String? notes) onSavePressed;
+  final void Function(DateTime newDueDate, String? notes)? onSavePressed;
 
   @override
   State<EditLoanDialog> createState() => _EditLoanDialogState();
@@ -38,9 +38,10 @@ class _EditLoanDialogState extends State<EditLoanDialog> {
           listenable: _notesController,
           builder: (context, child) {
             return FilledProgressButton(
-              onPressed: _hasUnsavedChanges()
+              onPressed: _hasUnsavedChanges() && widget.onSavePressed != null
                   ? () {
-                      widget.onSavePressed(dueDate, _notesController.text);
+                      widget.onSavePressed
+                          ?.call(dueDate, _notesController.text);
                       Navigator.of(context).pop(true);
                     }
                   : null,

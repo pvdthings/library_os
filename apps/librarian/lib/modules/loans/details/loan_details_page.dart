@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/things/details/inventory_details_page.dart';
 import 'package:librarian_app/modules/loans/providers/loan_details_provider.dart';
-import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
 import 'package:librarian_app/modules/loans/checkin/checkin_dialog.dart';
 import 'package:librarian_app/modules/loans/email/send_email_dialog.dart';
 import 'package:librarian_app/modules/loans/details/loan_details.dart';
@@ -16,57 +14,11 @@ class LoanDetailsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loanDetailsFuture = ref.watch(loanDetailsProvider);
+    final loanDetailsAsync = ref.watch(loanDetailsProvider);
 
-    return FutureBuilder(
-      future: loanDetailsFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return loadingScaffold;
-        }
-
-        if (snapshot.hasError) {
-          return errorScaffold(snapshot.error.toString());
-        }
-
-        final loan = snapshot.data!;
-
-        Future<void> updateLoan(String loanId, String thingId,
-            DateTime newDueDate, String? notes) async {
-          final loans = ref.read(loansRepositoryProvider.notifier);
-          try {
-            await loans.updateLoan(
-                loanId: loanId,
-                thingId: thingId,
-                dueBackDate: newDueDate,
-                notes: notes);
-          } catch (error) {
-            if (kDebugMode) {
-              print(error);
-            }
-          }
-        }
-
-        void checkIn() async {
-          showDialog<bool>(
-            context: context,
-            builder: (context) {
-              return CheckinDialog(
-                thingNumber: loan.thing.number,
-                onCheckin: () async {
-                  final loans = ref.read(loansRepositoryProvider.notifier);
-                  await loans.closeLoan(
-                      loanId: loan.id, thingId: loan.thing.id);
-                },
-              );
-            },
-          ).then((result) {
-            if (result ?? false) {
-              Navigator.of(context).pop();
-            }
-          });
-        }
-
+    return loanDetailsAsync.when(
+      data: (model) {
+        final loan = model.loan!;
         return Scaffold(
           appBar: AppBar(
             title: Text('#${loan.thing.number}'),
@@ -80,9 +32,8 @@ class LoanDetailsPage extends ConsumerWidget {
                       return EditLoanDialog(
                         dueDate: loan.dueDate,
                         notes: loan.notes,
-                        onSavePressed: (newDueDate, notes) async {
-                          await updateLoan(
-                              loan.id, loan.thing.id, newDueDate, notes);
+                        onSavePressed: (newDueDate, notes) {
+                          model.onSave?.call(newDueDate, notes);
                         },
                       );
                     },
@@ -134,11 +85,33 @@ class LoanDetailsPage extends ConsumerWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: checkIn,
+            onPressed: () {
+              showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return CheckinDialog(
+                    thingNumber: loan.thing.number,
+                    onCheckin: () async {
+                      model.onCheckIn?.call();
+                    },
+                  );
+                },
+              ).then((result) {
+                if (result ?? false) {
+                  Navigator.of(context).pop();
+                }
+              });
+            },
             tooltip: 'Check in',
             child: const Icon(Icons.check_rounded),
           ),
         );
+      },
+      loading: () {
+        return loadingScaffold;
+      },
+      error: (error, stackTrace) {
+        return errorScaffold(stackTrace.toString());
       },
     );
   }
