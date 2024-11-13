@@ -3,7 +3,6 @@ import 'package:librarian_app/core/api/models/loan_details_model.dart';
 import 'package:librarian_app/core/data/loans_repository.dart';
 import 'package:librarian_app/modules/loans/providers/selected_loan_provider.dart';
 import 'package:librarian_app/providers/loans.dart';
-import 'package:librarian_app/providers/members.dart';
 
 final loanDetailsProvider = FutureProvider((ref) async {
   ref.watch(loansProvider);
@@ -34,7 +33,6 @@ final loanDetailsProvider = FutureProvider((ref) async {
           .then((_) {
         ref.invalidate(loansProvider);
         ref.invalidate(selectedLoanProvider);
-        ref.invalidate(membersProvider);
       });
     },
   );
