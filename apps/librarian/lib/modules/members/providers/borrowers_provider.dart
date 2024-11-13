@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/borrower_model.dart';
 import 'package:librarian_app/modules/members/providers/borrowers_filter_provider.dart';
-import 'package:librarian_app/modules/members/providers/borrowers_repository_provider.dart';
 import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
 import 'package:librarian_app/providers/members.dart';
 
@@ -9,7 +8,7 @@ import 'edited_borrower_details_providers.dart';
 
 final borrowersProvider = Provider<Future<List<BorrowerModel>>>((ref) async {
   final searchFilter = ref.watch(borrowersFilterProvider);
-  final borrowers = await ref.watch(borrowersRepositoryProvider);
+  final borrowers = await ref.watch(membersProvider);
 
   if (searchFilter == null) {
     return borrowers;

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/members/providers/borrowers_repository_provider.dart';
+import 'package:librarian_app/core/api/models/issue_model.dart';
+import 'package:librarian_app/core/data/borrowers_repository.dart';
+import 'package:librarian_app/providers/members.dart';
 
-import '../../../core/api/models/issue_model.dart';
 import '../payments/dues_dialog.dart';
 
 class MemberIssues extends ConsumerWidget {
@@ -105,10 +106,10 @@ class _PayDuesButton extends ConsumerWidget {
               instructions: issue.instructions!,
               imageUrl: issue.graphicUrl,
               onConfirmPayment: (cash) async {
-                final result = await ref
-                    .read(borrowersRepositoryProvider.notifier)
+                final result = await BorrowersRepository()
                     .recordPayment(borrowerId: memberId, cash: cash);
 
+                ref.invalidate(membersProvider);
                 onRecordCashPayment(result);
               },
             );
