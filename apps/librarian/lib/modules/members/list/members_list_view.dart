@@ -35,7 +35,10 @@ class MembersListView extends ConsumerWidget {
         return MembersList(
           borrowers: list.members,
           selected: list.selected,
-          onTap: list.onTap,
+          onTap: (model) {
+            list.onTap(model);
+            onTap?.call(model);
+          },
         );
       },
       error: (error, stackTrace) {
