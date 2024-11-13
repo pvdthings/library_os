@@ -40,7 +40,6 @@ class LoansRepository extends Notifier<Future<List<LoanModel>>> {
         dueBackDate: dateFormat.format(dueBackDate),
       ));
 
-      ref.invalidateSelf();
       return (response.data as Map<String, dynamic>)['id'] as String;
     } catch (error) {
       return null;

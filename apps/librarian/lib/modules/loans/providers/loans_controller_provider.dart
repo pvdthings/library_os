@@ -1,7 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/data/loans_repository.dart';
+import 'package:librarian_app/providers/loans.dart';
 
-import 'loans_repository_provider.dart';
 import 'selected_loan_provider.dart';
 
 class LoansController {
@@ -14,10 +15,10 @@ class LoansController {
     required List<String> thingIds,
     required DateTime dueDate,
   }) async {
-    final loanId = await ref.read(loansRepositoryProvider.notifier).openLoan(
+    final loanId = await LoansRepository().openLoan(
         borrowerId: borrowerId, thingIds: thingIds, dueBackDate: dueDate);
 
-    final loan = (await ref.read(loansRepositoryProvider))
+    final loan = (await ref.refresh(loansProvider))
         .firstWhereOrNull((l) => l.id == loanId);
     ref.read(selectedLoanProvider.notifier).state = loan;
 
