@@ -1,24 +1,14 @@
-import 'package:collection/collection.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/api.dart' as api;
 import 'package:librarian_app/core/api/models/payment_model.dart';
 
 import '../api/models/borrower_model.dart';
 
-class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
-  @override
-  Future<List<BorrowerModel>> build() async => await getBorrowers();
-
+class BorrowersRepository {
   Future<List<BorrowerModel>> getBorrowers() async {
     final response = await api.fetchBorrowers();
     return (response.data as List)
         .map((json) => BorrowerModel.fromJson(json))
         .toList();
-  }
-
-  Future<BorrowerModel?> getBorrower(String id) async {
-    final borrowers = await state;
-    return borrowers.firstWhereOrNull((b) => b.id == id);
   }
 
   Future<BorrowerModel?> getBorrowerDetails(String id) async {
@@ -29,8 +19,6 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
   Future<bool> updateBorrower(String id, {String? email, String? phone}) async {
     try {
       await api.updateBorrower(id, email: email, phone: phone);
-
-      ref.invalidateSelf();
       return true;
     } catch (error) {
       return false;
@@ -56,8 +44,6 @@ class BorrowersRepository extends Notifier<Future<List<BorrowerModel>>> {
     } catch (error) {
       return false;
     }
-
-    ref.invalidateSelf();
     return true;
   }
 }

@@ -44,11 +44,9 @@ class InventoryDetailsPane extends ConsumerWidget {
                   return Center(child: Text(snapshot.error.toString()));
                 }
 
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                final thingDetails = snapshot.data!;
+                final loading =
+                    snapshot.connectionState == ConnectionState.waiting;
+                final thingDetails = snapshot.data;
                 final hasUnsavedChanges = ref.watch(unsavedChangesProvider);
 
                 return Column(
@@ -60,7 +58,9 @@ class InventoryDetailsPane extends ConsumerWidget {
                             child: Container(
                               margin: const EdgeInsets.only(right: 16.0),
                               child: Text(
-                                thingDetails.name,
+                                !loading && thingDetails?.name != null
+                                    ? thingDetails!.name
+                                    : '',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(fontSize: 24),
                               ),
@@ -82,20 +82,22 @@ class InventoryDetailsPane extends ConsumerWidget {
                                 const SizedBox(width: 8),
                               ],
                               IconButton(
-                                onPressed: hasUnsavedChanges ? save : null,
+                                onPressed:
+                                    !loading && hasUnsavedChanges ? save : null,
                                 icon: const Icon(Icons.save_rounded),
                                 tooltip: 'Save',
                               ),
                               const SizedBox(width: 4),
                               IconButton(
-                                onPressed:
-                                    hasUnsavedChanges ? discardChanges : null,
+                                onPressed: !loading && hasUnsavedChanges
+                                    ? discardChanges
+                                    : null,
                                 icon: const Icon(Icons.cancel),
                                 tooltip: 'Discard Changes',
                               ),
                               const HeaderDivider(),
                               IconButton(
-                                onPressed: delete,
+                                onPressed: !loading ? delete : null,
                                 icon: const Icon(Icons.delete_forever),
                                 tooltip: 'Delete Thing',
                               ),

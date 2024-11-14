@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/members/providers/edited_borrower_details_providers.dart';
 import 'package:librarian_app/modules/members/details/member_details.dart';
+import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
 import 'package:librarian_app/widgets/dialogs/save_dialog.dart';
 import 'package:librarian_app/widgets/panes/pane_header.dart';
 
@@ -27,13 +28,10 @@ class MemberDetailsPane extends ConsumerWidget {
             return Center(child: Text(snapshot.error!.toString()));
           }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
+          final loading = snapshot.connectionState == ConnectionState.waiting;
           final borrower = snapshot.data;
 
-          return borrower == null
+          return ref.watch(selectedBorrowerProvider) == null
               ? const Center(child: Text('Borrower Details'))
               : Column(
                   children: [
@@ -42,7 +40,7 @@ class MemberDetailsPane extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            borrower.name,
+                            loading ? '' : borrower!.name,
                             style: const TextStyle(
                               fontSize: 24,
                             ),

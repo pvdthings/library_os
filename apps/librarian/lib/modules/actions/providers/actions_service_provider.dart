@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/api.dart';
-import 'package:librarian_app/modules/loans/providers/loans_repository_provider.dart';
+import 'package:librarian_app/providers/loans.dart';
 import 'package:librarian_app/utils/format.dart';
 
 class ActionsService {
@@ -26,7 +26,7 @@ class ActionsService {
 
       if (result) {
         Future.delayed(const Duration(seconds: 2), () {
-          ref.invalidate(loansRepositoryProvider);
+          ref.invalidate(loansProvider);
         });
       }
 

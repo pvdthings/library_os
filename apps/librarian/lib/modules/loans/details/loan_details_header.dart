@@ -12,14 +12,16 @@ import 'thing_number.dart';
 class LoanDetailsHeader extends ConsumerWidget {
   const LoanDetailsHeader({
     super.key,
+    required this.loading,
     required this.loan,
     required this.onSave,
     required this.onCheckIn,
   });
 
+  final bool loading;
   final LoanDetailsModel loan;
-  final void Function(DateTime dueDate, String? notes) onSave;
-  final void Function() onCheckIn;
+  final void Function(DateTime dueDate, String? notes)? onSave;
+  final void Function()? onCheckIn;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,32 +32,34 @@ class LoanDetailsHeader extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            children: [
-              ThingNumber(number: loan.thing.number),
-              const SizedBox(width: 16),
-              Text(
-                loan.thing.name,
-                style: const TextStyle(fontSize: 24),
-              ),
-            ],
+            children: loading
+                ? []
+                : [
+                    ThingNumber(number: loan.thing.number),
+                    const SizedBox(width: 16),
+                    Text(
+                      loan.thing.name,
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                  ],
           ),
           Row(
             children: [
               IconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return EditLoanDialog(
-                        dueDate: loan.dueDate,
-                        notes: loan.notes,
-                        onSavePressed: (newDueDate, notes) {
-                          onSave(newDueDate, notes);
-                        },
-                      );
-                    },
-                  );
-                },
+                onPressed: loading
+                    ? null
+                    : () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return EditLoanDialog(
+                              dueDate: loan.dueDate,
+                              notes: loan.notes,
+                              onSavePressed: onSave,
+                            );
+                          },
+                        );
+                      },
                 icon: const Icon(Icons.edit),
                 tooltip: 'Edit',
               ),
@@ -67,7 +71,7 @@ class LoanDetailsHeader extends ConsumerWidget {
                 ),
               ),
               IconButton(
-                onPressed: loan.thing.lastLoanId != null
+                onPressed: !loading && loan.thing.lastLoanId != null
                     ? () {
                         controller.viewPreviousLoan(
                           id: loan.thing.lastLoanId!,
@@ -81,7 +85,7 @@ class LoanDetailsHeader extends ConsumerWidget {
               ),
               const SizedBox(width: 4),
               IconButton(
-                onPressed: loan.borrower.email != null
+                onPressed: !loading && loan.borrower.email != null
                     ? () {
                         showDialog(
                           context: context,
@@ -103,19 +107,21 @@ class LoanDetailsHeader extends ConsumerWidget {
               ),
               const SizedBox(width: 4),
               IconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return CheckinDialog(
-                        thingNumber: loan.thing.number,
-                        onCheckin: () async {
-                          await Future(onCheckIn);
-                        },
-                      );
-                    },
-                  );
-                },
+                onPressed: !loading && onCheckIn != null
+                    ? () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CheckinDialog(
+                              thingNumber: loan.thing.number,
+                              onCheckin: () async {
+                                await Future(onCheckIn!);
+                              },
+                            );
+                          },
+                        );
+                      }
+                    : null,
                 tooltip: 'Check in',
                 icon: const Icon(Icons.library_add_check),
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/dashboard/providers/create_loan_controller.dart';
+import 'package:librarian_app/dashboard/providers/invalidate_module.dart';
 import 'package:librarian_app/dashboard/providers/workspace.dart';
 import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
 import 'package:librarian_app/modules/authentication/providers/user_tray.dart';
@@ -200,6 +201,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                   selectedIndex: _moduleIndex,
                   onDestinationSelected: (index) {
                     setState(() => _moduleIndex = index);
+                    invalidateModule(ref, index);
                   },
                   leading: menuAnchor,
                   child: module.desktopLayout,
@@ -209,6 +211,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                   selectedIndex: _moduleIndex,
                   onDestinationSelected: (index) {
                     setState(() => _moduleIndex = index);
+                    invalidateModule(ref, index);
                   },
                   destinations: const [
                     NavigationDestination(
