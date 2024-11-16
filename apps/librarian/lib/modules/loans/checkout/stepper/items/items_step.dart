@@ -65,9 +65,11 @@ Step buildItemsStep({
         GridView.count(
           crossAxisCount: 8,
           shrinkWrap: true,
+          childAspectRatio: 1.0 / 1.2,
           children: items.map((item) {
             return ItemCard(
               number: item.number,
+              name: item.name,
               imageUrl: item.imageUrls.firstOrNull,
               trailing: IconButton(
                 icon: const Icon(Icons.remove_circle),
