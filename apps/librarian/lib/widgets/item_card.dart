@@ -6,6 +6,7 @@ class ItemCard extends StatelessWidget {
   const ItemCard({
     super.key,
     required this.number,
+    this.name,
     this.imageUrl,
     this.notes,
     this.trailing,
@@ -13,6 +14,7 @@ class ItemCard extends StatelessWidget {
   });
 
   final int number;
+  final String? name;
   final String? imageUrl;
   final String? notes;
   final Widget? trailing;
@@ -65,6 +67,19 @@ class ItemCard extends StatelessWidget {
                 ],
               ),
             ),
+            if (name != null)
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 8.0,
+                  right: 8.0,
+                  bottom: 8.0,
+                ),
+                child: Text(
+                  name!,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+              ),
           ],
         ),
       ),
