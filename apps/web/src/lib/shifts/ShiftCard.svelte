@@ -1,8 +1,5 @@
-<script lang="ts">
-  export let selected: boolean = false;
-	export let title: string;
-  export let date: string;
-  export let volunteers: string[];
+<script>
+  let { id, date, title, selected, volunteers, onAdd, onRemove } = $props();
 </script>
 
 <div class="card bg-white border border-base-300 p-4 lg:p-8 shadow-sm">
@@ -13,13 +10,13 @@
 		</div>
 		<div class="flex justify-end">
       {#if selected}
-      <button class="font-display btn btn-sm lg:btn-md btn-success border border-success shadow-sm">
-        <span class="ph-bold ph-check text-xl" />
-        <span>Added</span>
-      </button>
+        <button onclick={() => onRemove(id)} class="font-display btn btn-sm lg:btn-md btn-success border border-success shadow-sm">
+          <span class="ph-bold ph-check text-xl"></span>
+          <span>Added</span>
+        </button>
       {:else}
-        <button class="font-display btn btn-sm lg:btn-md btn-secondary border border-base-300 shadow-sm">
-          <span class="ph-bold ph-user-plus text-xl" />
+        <button onclick={() => onAdd(id)} class="font-display btn btn-sm lg:btn-md btn-secondary border border-base-300 shadow-sm">
+          <span class="ph-bold ph-user-plus text-xl"></span>
           <span>Add me</span>
         </button>
       {/if}

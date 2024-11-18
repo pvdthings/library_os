@@ -2,6 +2,8 @@
 	import ShiftCard from '$lib/shifts/ShiftCard.svelte';
 	import { pluralize, toBe } from '$lib/utils/pluralize';
 
+	let selectedShifts = $state([]);
+
 	const shifts = [
 		{
 			id: '0',
@@ -22,23 +24,34 @@
 			volunteers: ['Alice']
 		}
 	];
-
-  const selectedShifts = ['1'];
 </script>
 
 <div class="flex flex-col gap-4">
 	{#each shifts as shift}
-		<ShiftCard selected={selectedShifts.includes(shift.id)} date={shift.date} title={shift.title} volunteers={shift.volunteers} />
+		<ShiftCard
+			id={shift.id}
+			selected={selectedShifts.includes(shift.id)}
+			date={shift.date}
+			title={shift.title}
+			volunteers={shift.volunteers}
+			onAdd={(id) => {
+				selectedShifts.push(id);
+			}}
+			onRemove={(id) => {
+				selectedShifts = selectedShifts.filter((s) => s !== id);
+			}}
+		/>
 	{/each}
 	<div class="font-display py-4 text-xl text-center">
-    <span class="font-semibold">{pluralize(selectedShifts.length, 'shift')}</span> {toBe(selectedShifts.length)} assigned to me.
-  </div>
+		<span class="font-semibold">{pluralize(selectedShifts.length, 'shift')}</span>
+		{toBe(selectedShifts.length)} assigned to me.
+	</div>
 	<button class="btn btn-lg btn-primary shadow">Confirm</button>
 </div>
 
 <div class="toast toast-center toast-end hidden">
 	<div class="alert alert-info shadow-lg">
-		<span class="ph-bold ph-warning" />
+		<span class="ph-bold ph-warning"></span>
 		<span class="font-display">Unsaved changes</span>
 	</div>
 </div>
