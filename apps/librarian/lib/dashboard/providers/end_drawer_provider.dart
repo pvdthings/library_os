@@ -5,12 +5,12 @@ class EndDrawerController {
   EndDrawerController(this.ref);
 
   final Ref ref;
-  Widget? drawer;
+  Widget child = const SizedBox.expand();
 
-  openEndDrawer(BuildContext context, Widget drawer) {
-    this.drawer = drawer;
+  openEndDrawer(BuildContext context, Widget child) {
+    this.child = child;
     ref.notifyListeners();
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 750), () {
       Scaffold.of(context).openEndDrawer();
     });
   }
