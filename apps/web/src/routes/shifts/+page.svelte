@@ -1,5 +1,6 @@
 <script>
 	import ShiftCard from '$lib/shifts/ShiftCard.svelte';
+	import { pluralize, toBe } from '$lib/utils/pluralize';
 
 	const shifts = [
 		{
@@ -30,12 +31,12 @@
 		<ShiftCard selected={selectedShifts.includes(shift.id)} date={shift.date} title={shift.title} volunteers={shift.volunteers} />
 	{/each}
 	<div class="font-display py-4 text-xl text-center">
-    <span class="font-semibold">{selectedShifts.length} shifts</span> are assigned to me.
+    <span class="font-semibold">{pluralize(selectedShifts.length, 'shift')}</span> {toBe(selectedShifts.length)} assigned to me.
   </div>
 	<button class="btn btn-lg btn-primary shadow">Confirm</button>
 </div>
 
-<div class="toast toast-center toast-end">
+<div class="toast toast-center toast-end hidden">
 	<div class="alert alert-info shadow-lg">
 		<span class="ph-bold ph-warning" />
 		<span class="font-display">Unsaved changes</span>
