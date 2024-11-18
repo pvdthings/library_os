@@ -1,11 +1,12 @@
 <script>
-  let { id, date, title, selected, volunteers, onAdd, onRemove } = $props();
+  let { id, date, time, title, selected, volunteers, onAdd, onRemove } = $props();
 </script>
 
 <div class="card bg-white border border-base-300 p-4 lg:p-8 shadow-sm">
-	<div class="grid grid-cols-2 mb-4 lg:mb-6">
-		<div>
-			<div class="mb-1 font-display font-semibold">{date}</div>
+	<div class="flex mb-4 lg:mb-6">
+		<div class="flex-grow">
+			<div class="font-display font-semibold">{date}</div>
+      <div class="mb-2 text-sm">{time}</div>
 			<div class="font-display text-xl lg:text-2xl">{title}</div>
 		</div>
 		<div class="flex justify-end">
