@@ -52,6 +52,7 @@ class ConnectedThingSearchField extends StatelessWidget {
 
 class ThingSearchController extends ChangeNotifier {
   final BuildContext context;
+  final List<ItemModel> items;
   final InventoryRepository repository;
   final void Function(ItemModel) onMatchFound;
 
@@ -61,13 +62,22 @@ class ThingSearchController extends ChangeNotifier {
 
   ThingSearchController({
     required this.context,
+    required this.items,
     required this.repository,
     required this.onMatchFound,
   });
 
   Future<void> search(String value) async {
+    final itemNumber = int.parse(value);
+
+    if (items.any((t) => t.number == itemNumber)) {
+      errorText = '#$value is already added to this loan.';
+      notifyListeners();
+      return;
+    }
+
     isLoading = true;
-    final match = await repository.getItem(number: int.parse(value));
+    final match = await repository.getItem(number: itemNumber);
     isLoading = false;
 
     if (match == null) {
@@ -79,8 +89,9 @@ class ThingSearchController extends ChangeNotifier {
     if (!match.available) {
       errorText = '#$value is unavailable.';
       notifyListeners();
-    } else {
-      onMatchFound(match);
+      return;
     }
+
+    onMatchFound(match);
   }
 }
