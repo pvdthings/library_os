@@ -42,4 +42,10 @@
 		label={learnText}
 		on:click={() => switchScreen(Screen.info)}
 	/>
+	<BottomNavigationItem
+		active={$activeScreen === Screen.shifts}
+		iconStyle={$activeScreen === Screen.shifts ? 'ph-fill ph-clock text-xl' : 'ph-bold ph-clock text-xl'}
+		label={'Shifts'}
+		on:click={() => switchScreen(Screen.shifts)}
+	/>
 </BottomNavigation>

@@ -6,6 +6,7 @@
 	import CatalogView from '$lib/views/CatalogView.svelte';
 	import { Bookmarks } from '$lib/views/Bookmarks';
 	import InfoView from '$lib/views/InfoView';
+	import ShiftsView from '$lib/shifts/ShiftsView.svelte';
 
 	export let data;
 
@@ -31,5 +32,9 @@
 
 	{#if $activeScreen === Screen.info}
 		<InfoView />
+	{/if}
+
+	{#if $activeScreen === Screen.shifts}
+		<ShiftsView />
 	{/if}
 {/if}
