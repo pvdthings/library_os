@@ -24,7 +24,7 @@ class _ItemDetailsDrawerState extends State<ItemDetailsDrawer> {
 
   bool isLoading = false;
 
-  convert() {
+  void convert() {
     widget.controller.convertThing(context);
   }
 
@@ -40,7 +40,12 @@ class _ItemDetailsDrawerState extends State<ItemDetailsDrawer> {
                 padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
-                    getIcon(widget.controller.item!),
+                    ListenableBuilder(
+                      listenable: widget.controller,
+                      builder: (context, child) {
+                        return getIcon(widget.controller.item!);
+                      },
+                    ),
                     const SizedBox(width: 8.0),
                     Expanded(
                       child: Text(
