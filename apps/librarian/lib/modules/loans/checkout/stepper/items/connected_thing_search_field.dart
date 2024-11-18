@@ -26,31 +26,38 @@ class ConnectedThingSearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: _textController,
-      onSubmitted: (_) => _submit(),
-      decoration: InputDecoration(
-        hintText: 'Enter Item Number',
-        prefixIcon: const Icon(Icons.numbers),
-        suffixIcon: IconButton(
-          tooltip: 'Add Item',
-          onPressed: () => _submit(),
-          icon: const Icon(Icons.add_rounded),
-        ),
-      ),
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-      ],
-    );
+    return ListenableBuilder(
+        listenable: controller,
+        builder: (context, child) {
+          return TextField(
+            controller: _textController,
+            onSubmitted: (_) => _submit(),
+            decoration: InputDecoration(
+              errorText: controller.errorText,
+              hintText: 'Enter Item Number',
+              prefixIcon: const Icon(Icons.numbers),
+              suffixIcon: IconButton(
+                tooltip: 'Add Item',
+                onPressed: () => _submit(),
+                icon: const Icon(Icons.add_rounded),
+              ),
+            ),
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+          );
+        });
   }
 }
 
-class ThingSearchController {
+class ThingSearchController extends ChangeNotifier {
   final BuildContext context;
   final InventoryRepository repository;
   final void Function(ItemModel) onMatchFound;
 
   bool isLoading = false;
+
+  String? errorText;
 
   ThingSearchController({
     required this.context,
@@ -63,51 +70,17 @@ class ThingSearchController {
     final match = await repository.getItem(number: int.parse(value));
     isLoading = false;
 
-    if (match != null) {
-      if (!match.available) {
-        _showThingCheckedOutDialog(match);
-      } else {
-        onMatchFound(match);
-      }
-    } else {
-      _showUnknownThingDialog(value);
+    if (match == null) {
+      errorText = '#$value could not be found.';
+      notifyListeners();
+      return;
     }
-  }
 
-  void _showThingCheckedOutDialog(ItemModel thing) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Item Unavailable"),
-          content: Text(
-              "Item #${thing.number} is checked out or not available for lending."),
-          actions: [
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () => Navigator.pop(context),
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  void _showUnknownThingDialog(String searchValue) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Item #$searchValue does not exist."),
-          content: const Text("Try another number."),
-          actions: [
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () => Navigator.pop(context),
-            )
-          ],
-        );
-      },
-    );
+    if (!match.available) {
+      errorText = '#$value is unavailable.';
+      notifyListeners();
+    } else {
+      onMatchFound(match);
+    }
   }
 }
