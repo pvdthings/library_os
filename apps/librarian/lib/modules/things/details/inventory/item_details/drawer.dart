@@ -30,114 +30,111 @@ class _ItemDetailsDrawerState extends State<ItemDetailsDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      width: 500,
-      child: Stack(
-        children: [
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    ListenableBuilder(
-                      listenable: widget.controller,
-                      builder: (context, child) {
-                        return getIcon(widget.controller.item!);
-                      },
+    return Stack(
+      children: [
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  ListenableBuilder(
+                    listenable: widget.controller,
+                    builder: (context, child) {
+                      return getIcon(widget.controller.item!);
+                    },
+                  ),
+                  const SizedBox(width: 8.0),
+                  Expanded(
+                    child: Text(
+                      '#${widget.controller.item!.number}',
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                      child: Text(
-                        '#${widget.controller.item!.number}',
-                        style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  MenuAnchor(
+                    controller: menuController,
+                    menuChildren: [
+                      MenuItemButton(
+                        onPressed: convert,
+                        leadingIcon: const Icon(Icons.transform),
+                        child: const Text('Convert'),
                       ),
+                    ],
+                    child: IconButton.filled(
+                      onPressed: () => menuController.open(),
+                      icon: const Icon(Icons.more_vert),
                     ),
-                    MenuAnchor(
-                      controller: menuController,
-                      menuChildren: [
-                        MenuItemButton(
-                          onPressed: convert,
-                          leadingIcon: const Icon(Icons.transform),
-                          child: const Text('Convert'),
-                        ),
-                      ],
-                      child: IconButton.filled(
-                        onPressed: () => menuController.open(),
-                        icon: const Icon(Icons.more_vert),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const Divider(height: 1),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        ItemDetails(
-                          controller: widget.controller,
-                          item: widget.controller.item!,
-                          isThingHidden: widget.isHiddenLocked,
-                        ),
-                        const SizedBox(height: 80),
-                      ],
-                    ),
+            ),
+            const Divider(height: 1),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      ItemDetails(
+                        controller: widget.controller,
+                        item: widget.controller.item!,
+                        isThingHidden: widget.isHiddenLocked,
+                      ),
+                      const SizedBox(height: 80),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              color: Theme.of(context).colorScheme.surface.withAlpha(180),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ListenableBuilder(
-                      listenable: widget.controller,
-                      builder: (context, child) {
-                        if (!widget.controller.hasUnsavedChanges) {
-                          return child!;
-                        }
+            ),
+          ],
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            color: Theme.of(context).colorScheme.surface.withAlpha(180),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ListenableBuilder(
+                    listenable: widget.controller,
+                    builder: (context, child) {
+                      if (!widget.controller.hasUnsavedChanges) {
+                        return child!;
+                      }
 
-                        return OutlinedButton(
-                          onPressed: () {
-                            widget.controller.discardChanges();
-                          },
-                          child: const Text('Discard'),
-                        );
-                      },
-                      child: OutlinedButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('Cancel'),
-                      ),
+                      return OutlinedButton(
+                        onPressed: () {
+                          widget.controller.discardChanges();
+                        },
+                        child: const Text('Discard'),
+                      );
+                    },
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Cancel'),
                     ),
-                    const SizedBox(width: 8),
-                    ListenableBuilder(
-                      listenable: widget.controller,
-                      builder: (_, __) {
-                        return FilledProgressButton(
-                          onPressed: widget.controller.saveChanges,
-                          isLoading: isLoading,
-                          child: const Text('Save'),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 8),
+                  ListenableBuilder(
+                    listenable: widget.controller,
+                    builder: (_, __) {
+                      return FilledProgressButton(
+                        onPressed: widget.controller.saveChanges,
+                        isLoading: isLoading,
+                        child: const Text('Save'),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

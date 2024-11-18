@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/dashboard/providers/create_loan_controller.dart';
 import 'package:librarian_app/dashboard/providers/invalidate_module.dart';
 import 'package:librarian_app/dashboard/providers/workspace.dart';
+import 'package:librarian_app/dashboard/widgets/end_drawer.dart';
 import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
 import 'package:librarian_app/modules/authentication/providers/user_tray.dart';
 import 'package:librarian_app/modules/members/details/needs_attention_page.dart';
 import 'package:librarian_app/dashboard/layouts/members_desktop_layout.dart';
 import 'package:librarian_app/modules/members/list/searchable_members_list.dart';
-import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/dashboard/widgets/create_menu_item.dart';
 import 'package:librarian_app/dashboard/layouts/inventory_desktop_layout.dart';
 import 'package:librarian_app/modules/things/maintenance/view.dart';
@@ -232,7 +232,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                   ],
                 )
               : null,
-          endDrawer: ref.watch(endDrawerProvider).drawer,
+          endDrawer: const EndDrawer(),
           floatingActionButton: mobile ? menuAnchor : null,
         );
       },
