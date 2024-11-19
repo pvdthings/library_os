@@ -11,7 +11,7 @@
 		</div>
 		<div class="flex justify-end">
       {#if selected}
-        <button onclick={() => onRemove(id)} class="font-display btn btn-sm lg:btn-md btn-success border border-success shadow-sm">
+        <button onclick={() => onRemove(id)} class="font-display btn btn-sm lg:btn-md btn-success border border-success shadow-sm" class:btn-disabled={!onRemove}>
           <span class="ph-bold ph-check text-xl"></span>
           <span>Added</span>
         </button>
@@ -27,6 +27,9 @@
 	<div>
 		<div class="mb-1 font-display font-semibold text-sm lg:text-base">Volunteers</div>
 		<div class="flex flex-wrap gap-2">
+      {#if selected}
+        <div class="badge badge-success lg:p-4 lg:text-lg">Me</div>
+      {/if}
       {#each volunteers as volunteer}
 			  <div class="badge badge-ghost lg:p-4 lg:text-lg">{volunteer}</div>
       {/each}

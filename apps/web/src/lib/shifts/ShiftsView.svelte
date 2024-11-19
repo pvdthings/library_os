@@ -41,7 +41,7 @@
 	{#each shifts as shift}
 		<ShiftCard
 			id={shift.id}
-			selected={loggedIn && selectedShifts.includes(shift.id)}
+			selected={selectedShifts.includes(shift.id)}
 			date={shift.date}
 			time={shift.time}
 			title={shift.title}
