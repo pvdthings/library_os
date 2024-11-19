@@ -5,6 +5,7 @@ const Table = {
     Inventory: 'Inventory',
     Things: 'Things',
     Borrowers: 'Members',
+    Jobs: 'Jobs',
     Loans: 'Loans',
     Payments: 'Transactions'
 };

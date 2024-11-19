@@ -3,6 +3,7 @@ const router = express.Router();
 const { getCatalogData } = require('../services/catalog');
 const { getThingDetails } = require('../services/thingDetails');
 const { getItemDetails } = require('../services/itemDetails');
+const { getShifts } = require('../services/shifts');
 
 router.get('/', async (req, res) => {
     try {
@@ -27,6 +28,15 @@ router.get('/items/:id', async (req, res) => {
     const { id } = req.params;
     try {
         res.send(await getItemDetails(id));
+    } catch (error) {
+        console.error(error);
+        res.status(error.status || 500).send({ errors: [error] });
+    }
+});
+
+router.get('/volunteer/shifts', async (req, res) => {
+    try {
+        res.send(await getShifts());
     } catch (error) {
         console.error(error);
         res.status(error.status || 500).send({ errors: [error] });
