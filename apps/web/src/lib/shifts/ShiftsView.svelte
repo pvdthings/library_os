@@ -62,7 +62,7 @@
 		<span class="font-semibold">{pluralize(selectedShifts.length, 'shift')}</span>
 		{toBe(selectedShifts.length)} assigned to me.
 	</div>
-	<button class="btn btn-lg btn-primary lg:self-center shadow">Confirm</button>
+	<button class="btn btn-lg btn-primary lg:self-center shadow" class:btn-disabled={!loggedIn}>Confirm</button>
 </div>
 
 <div class="toast toast-center toast-end hidden">
