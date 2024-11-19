@@ -21,7 +21,7 @@
 			id={shift.id}
 			selected={selectedShifts.includes(shift.id)}
 			date={shift.date}
-			time={shift.time}
+			time={shift.timespan}
 			title={shift.title}
 			volunteers={shift.volunteers.map((v) => v.firstName)}
 			onAdd={loggedIn
