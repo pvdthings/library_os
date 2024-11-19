@@ -16,7 +16,6 @@ const getShifts = async () => {
   const jobs = await fetchJobs();
 
   return jobs.map((j) => {
-    console.log('job', j);
     const date = new Date(j.startTime);
     let endDate = new Date(j.startTime);
     endDate.setSeconds(date.getSeconds() + j.duration);
