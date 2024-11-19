@@ -27,6 +27,12 @@
 	<div>
 		<div class="mb-1 font-display font-semibold text-sm lg:text-base">Volunteers</div>
 		<div class="flex flex-wrap gap-2">
+      {#if !volunteers.length && !selected}
+        <div>
+          <span class="ph-bold ph-warning text-warning lg:text-lg"></span>
+          <span class="text-sm lg:text-lg">None</span>
+        </div>
+      {/if}
       {#if selected}
         <div class="badge badge-success lg:p-4 lg:text-lg">Me</div>
       {/if}
