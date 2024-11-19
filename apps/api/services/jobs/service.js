@@ -7,7 +7,7 @@ const fetchJobs = async () => {
   const records = await jobs.select({ view: 'Future' }).all();
 
   return await Promise.all(records.map(async (r) => {
-    const memberIds = r.get('Members');
+    const memberIds = r.get('Members') || [];
 
     return {
       id: r.id,
