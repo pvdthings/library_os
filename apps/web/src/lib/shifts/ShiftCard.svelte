@@ -16,7 +16,7 @@
           <span>Added</span>
         </button>
       {:else}
-        <button onclick={() => onAdd(id)} class="font-display btn btn-sm lg:btn-md btn-secondary border border-base-300 shadow-sm">
+        <button onclick={() => onAdd(id)} class="font-display btn btn-sm lg:btn-md btn-secondary border border-base-300 shadow-sm" class:btn-disabled={!onAdd}>
           <span class="ph-bold ph-user-plus text-xl"></span>
           <span>Add me</span>
         </button>
