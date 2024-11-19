@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { BottomNavigation, BottomNavigationItem } from '$lib/components/Shell';
 	import BookOpenIcon from '$lib/icons/book-open.svg';
 	import BookmarkIcon from '$lib/icons/bookmark.svg';
@@ -8,44 +10,37 @@
 	import SolidLightbulbIcon from '$lib/icons/solid/lightbulb.svg';
 
 	import { t } from '$lib/language/translate';
-	import { activeScreen, Screen } from '$lib/stores/app';
 	import { bookmarks } from '$lib/stores/bookmarks';
-	import { vibrate } from '$lib/utils/haptics';
 
 	$: catalogText = $t('Catalog');
 	$: bookmarksText = $t('Bookmarks');
 	$: learnText = $t('Learn');
-
-	const switchScreen = (screen: Screen) => {
-		$activeScreen = screen;
-		vibrate();
-	};
 </script>
 
 <BottomNavigation>
 	<BottomNavigationItem
-		active={$activeScreen === Screen.catalog}
-		icon={$activeScreen === Screen.catalog ? SolidBookOpenIcon : BookOpenIcon}
+		active={$page.url.pathname === '/'}
+		icon={$page.url.pathname === '/' ? SolidBookOpenIcon : BookOpenIcon}
 		label={catalogText}
-		on:click={() => switchScreen(Screen.catalog)}
+		on:click={() => goto('/')}
 	/>
 	<BottomNavigationItem
-		active={$activeScreen === Screen.myList}
-		icon={$activeScreen === Screen.myList ? SolidBookmarkIcon : BookmarkIcon}
+		active={$page.url.pathname === '/bookmarks'}
+		icon={$page.url.pathname === '/bookmarks' ? SolidBookmarkIcon : BookmarkIcon}
 		indicatorValue={$bookmarks.length}
 		label={bookmarksText}
-		on:click={() => switchScreen(Screen.myList)}
+		on:click={() => goto('/bookmarks')}
 	/>
 	<BottomNavigationItem
-		active={$activeScreen === Screen.info}
-		icon={$activeScreen === Screen.info ? SolidLightbulbIcon : LightbulbIcon}
+		active={$page.url.pathname === '/info'}
+		icon={$page.url.pathname === '/info' ? SolidLightbulbIcon : LightbulbIcon}
 		label={learnText}
-		on:click={() => switchScreen(Screen.info)}
+		on:click={() => goto('/info')}
 	/>
 	<BottomNavigationItem
-		active={$activeScreen === Screen.shifts}
-		iconStyle={$activeScreen === Screen.shifts ? 'ph-fill ph-clock text-xl' : 'ph-bold ph-clock text-xl'}
-		label={'Shifts'}
-		on:click={() => switchScreen(Screen.shifts)}
+		active={$page.url.pathname === '/shifts'}
+		iconStyle={$page.url.pathname === '/shifts' ? 'ph-fill ph-clock text-xl' : 'ph-bold ph-clock text-xl'}
+		label={'Volunteer'}
+		on:click={() => goto('/shifts')}
 	/>
 </BottomNavigation>
