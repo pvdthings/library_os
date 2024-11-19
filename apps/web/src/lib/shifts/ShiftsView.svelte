@@ -23,7 +23,7 @@
 			date={shift.date}
 			time={shift.time}
 			title={shift.title}
-			volunteers={shift.volunteers}
+			volunteers={shift.volunteers.map((v) => v.firstName)}
 			onAdd={loggedIn
 				? (id) => {
 						selectedShifts.push(id);
