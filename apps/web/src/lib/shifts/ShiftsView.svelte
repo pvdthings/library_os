@@ -2,32 +2,10 @@
 	import ShiftCard from '$lib/shifts/ShiftCard.svelte';
 	import { pluralize, toBe } from '$lib/utils/pluralize';
 
+	let { shifts } = $props();
+
 	let loggedIn = $state(false);
 	let selectedShifts = $state([]);
-
-	const shifts = [
-		{
-			id: '0',
-			date: 'February 24, 2025',
-			time: '11:00am - 2:00pm',
-			title: 'Saturday Librarian Shift',
-			volunteers: ['Alice', 'Bob']
-		},
-		{
-			id: '1',
-			date: 'March 2, 2025',
-			time: '4:00pm - 6:00pm',
-			title: 'Tuesday Mechanic Shift',
-			volunteers: ['Bob', 'Charlie']
-		},
-		{
-			id: '2',
-			date: 'March 3, 2025',
-			time: '6:00pm - 8:00pm',
-			title: 'Wednesday Librarian Shift',
-			volunteers: ['Alice']
-		}
-	];
 
 	const onLogIn = () => {
 		loggedIn = !loggedIn;
