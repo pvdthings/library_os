@@ -53,7 +53,7 @@
 	{#if loggedIn}
 		<div class="font-display py-4 text-xl text-center">
 			<span class="py-1 px-2 bg-black rounded text-white font-semibold">{pluralize(totalAssigned(), 'shift')}</span>
-			{toBe(totalAssigned())} assigned to me.
+			{toBe(totalAssigned())} assigned to you.
 		</div>
 	{/if}
 	{#each shifts as shift}
