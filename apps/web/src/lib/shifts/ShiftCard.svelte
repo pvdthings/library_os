@@ -7,8 +7,8 @@
 <div class="card bg-white border border-base-300 p-4 lg:p-8 shadow-sm">
 	<div class="flex mb-4 lg:mb-6">
 		<div class="flex-grow">
-			<div class="font-display font-semibold">{date}</div>
-      <div class="mb-2 text-sm">{time}</div>
+			<div class="font-display font-semibold lg:text-lg">{date}</div>
+      <div class="mb-2 text-sm lg:text-base">{time}</div>
 			<div class="font-display text-xl lg:text-2xl">{title}</div>
 		</div>
 		<div class="flex justify-end">

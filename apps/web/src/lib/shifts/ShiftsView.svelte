@@ -30,20 +30,19 @@
 
 <div class="flex flex-col flex-grow items-stretch gap-4">
 	<div class="flex items-center justify-between mb-4">
-		<form class="flex flex-grow gap-2" method="POST" action={loggedIn ? "?/unauthenticate" : "?/authenticate"}>
-			{#if !loggedIn}
-				<label class="input input-bordered flex flex-grow items-center gap-2">
-					<span class="ph ph-envelope text-xl"></span>
-					<input class="grow" type="text" name="email" placeholder="Enter your email">
-				</label>
-			{/if}
+		{#if !loggedIn}
+		<form class="flex flex-grow gap-2" method="POST" action="?/authenticate">
+			<label class="input input-bordered flex flex-grow items-center gap-2">
+				<span class="ph ph-envelope text-xl"></span>
+				<input class="grow" type="text" name="email" placeholder="Enter your email">
+			</label>
 			<button class="btn btn-accent lg:self-center shadow font-display" type="submit">
-				{loggedIn ? 'Sign out' : 'Sign in'}
+				Sign in
 			</button>
 		</form>
-		{#if loggedIn}
-			<div class="font-display mr-4 lg:mr-8 py-4 text-xl text-center">
-				<span class="py-1 px-2 bg-black rounded text-white font-semibold">{pluralize(totalAssigned(), 'shift')}</span>
+		{:else}
+			<div class="font-display mr-4 text-xl text-center">
+				<span class="py-1 px-2 bg-black rounded shadow-sm text-white">{pluralize(totalAssigned(), 'shift')}</span>
 				<span class="hidden lg:inline">{toBe(totalAssigned())} assigned to you.</span>
 			</div>
 			<form class="flex justify-center" method="POST" action="?/confirm">
@@ -69,3 +68,12 @@
 		/>
 	{/each}
 </div>
+
+{#if loggedIn}
+	<form class="flex justify-center my-12" method="POST" action="?/unauthenticate">
+		<button class="btn lg:btn-lg btn-accent shadow font-display" type="submit">
+			Sign out
+			<span class="ph-bold ph-sign-out text-xl lg:text-2xl"></span>
+		</button>
+	</form>
+{/if}
