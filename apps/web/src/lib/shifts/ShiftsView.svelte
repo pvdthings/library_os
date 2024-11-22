@@ -3,7 +3,7 @@
 	import ShiftCard from '$lib/shifts/ShiftCard.svelte';
 	import { setContext } from 'svelte';
 
-	let { shifts, loggedIn, keyholder } = $props();
+	let { email, shifts, loggedIn, keyholder, unauthorized } = $props();
 	let modifiedShifts = $state([]);
 
 	setContext('user', { keyholder });
@@ -32,7 +32,7 @@
 	<div class="flex items-center justify-between mb-4">
 		{#if !loggedIn}
 		<form class="flex flex-grow gap-2" method="POST" action="?/authenticate">
-			<label class="input input-bordered flex flex-grow items-center gap-2">
+			<label class="input input-bordered flex flex-grow items-center gap-2 shadow">
 				<span class="ph ph-envelope text-xl"></span>
 				<input class="grow" type="text" name="email" placeholder="Enter your email">
 			</label>
@@ -53,6 +53,16 @@
 			</form>
 		{/if}
 	</div>
+
+	{#if unauthorized}
+		<div class="alert alert-error">
+			<span>
+				<span class="font-semibold">{email}</span> could not be matched to any existing member.
+				Please come in during the shift you want to join and we'll get you set up.
+			</span>
+		</div>
+	{/if}
+
 	{#each shifts as shift}
 		<ShiftCard
 			id={shift.id}
