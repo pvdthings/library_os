@@ -31,7 +31,8 @@ const getShifts = async ({ email }) => {
       enrolled: j.members.some((m) => m.id === member?.id),
       volunteers: j.members.filter((m) => m.id !== member?.id).map((m) => ({
         name: m.name,
-        firstName: m.name.split(' ')?.[0]
+        firstName: m.name.split(' ')?.[0],
+        keyholder: m.keyholder
       }))
     };
   });

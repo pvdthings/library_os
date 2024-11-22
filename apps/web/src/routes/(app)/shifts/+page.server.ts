@@ -3,6 +3,7 @@ import { fail } from "@sveltejs/kit";
 
 export const load = async ({ cookies, fetch }): Promise<any> => {
   const email = cookies.get('email');
+  const keyholder = cookies.get('keyholder');
 
   const response = await fetch(`${HOST}/web/volunteer/shifts`, {
     headers: {
@@ -13,7 +14,8 @@ export const load = async ({ cookies, fetch }): Promise<any> => {
 
   return {
     shifts: await response.json(),
-    authenticated: !!email
+    authenticated: !!email,
+    keyholder: !!email && keyholder
   };
 };
 
@@ -40,6 +42,7 @@ export const actions = {
 
       cookies.set('firstName', member.name.split(' ')?.[0], { path: '/' });
       cookies.set('email', email, { path: '/' });
+      cookies.set('keyholder', member.keyholder, { path: '/' });
 
       return { success: true };
     }
@@ -49,6 +52,7 @@ export const actions = {
   unauthenticate: async ({ cookies }) => {
     cookies.delete('firstName', { path: '/' });
     cookies.delete('email', { path: '/' });
+    cookies.delete('keyholder', { path: '/' });
     return { success: true };
   },
   confirm: async ({ cookies, fetch, request }) => {
@@ -56,8 +60,6 @@ export const actions = {
 
     const data = await request.formData();
     const shifts = data.getAll('shifts').map((s) => JSON.parse(s.toString()));
-
-    console.log('shifts:', shifts);
 
     const response = await fetch(`${HOST}/web/volunteer/shifts/enroll`, {
 			method: 'POST',

@@ -10,7 +10,8 @@ const mapBorrower = (record) => {
             email: record.get('Email'),
             phone: record.get('Phone')
         },
-        issues: mapIssues(record)
+        issues: mapIssues(record),
+        keyholder: !!record.get('Keyholder')
     }
 }
 

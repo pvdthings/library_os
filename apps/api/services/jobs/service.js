@@ -19,7 +19,8 @@ const fetchJobs = async () => {
 
         return {
           id: memberRecord.id,
-          name: memberRecord.get('Name')
+          name: memberRecord.get('Name'),
+          keyholder: !!memberRecord.get('Keyholder')
         };
       })),
       startTime: r.get('Start Time'),

@@ -1,4 +1,6 @@
 <script>
+	import { getContext } from "svelte";
+
   let { id, date, enrolled, removed, time, title, selected, volunteers, onAdd, onRemove } = $props();
 </script>
 
@@ -26,7 +28,7 @@
 
 	<div>
 		<div class="mb-1 font-display font-semibold text-sm lg:text-base">Volunteers</div>
-		<div class="flex flex-wrap gap-2">
+		<div class="flex flex-wrap items-center gap-2">
       {#if !volunteers.length && !selected}
         <div>
           <span class="ph-bold ph-warning text-warning lg:text-lg"></span>
@@ -34,10 +36,20 @@
         </div>
       {/if}
       {#if enrolled}
-        <div class="badge badge-success lg:p-4 lg:text-lg">Me</div>
+        <div class="badge badge-success flex items-center gap-1 lg:p-4 lg:text-lg select-none">
+          {#if getContext('user')?.keyholder}
+            <span class="ph-fill ph-key text-base-content"></span>
+          {/if}
+          Me
+        </div>
       {/if}
       {#each volunteers as volunteer}
-			  <div class="badge badge-ghost lg:p-4 lg:text-lg">{volunteer}</div>
+			  <div class="badge flex items-center gap-1 lg:p-4 lg:text-lg select-none">
+          {#if volunteer.keyholder}
+            <span class="ph-fill ph-key text-amber-500"></span>
+          {/if}
+          {volunteer.firstName}
+        </div>
       {/each}
 		</div>
 	</div>
