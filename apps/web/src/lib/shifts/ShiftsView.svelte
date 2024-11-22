@@ -29,8 +29,8 @@
 </script>
 
 <div class="flex flex-col flex-grow items-stretch gap-4">
-	<div class="flex justify-between">
-		<form class="flex flex-grow gap-2 mb-4" method="POST" action={loggedIn ? "?/unauthenticate" : "?/authenticate"}>
+	<div class="flex items-center justify-between mb-4">
+		<form class="flex flex-grow gap-2" method="POST" action={loggedIn ? "?/unauthenticate" : "?/authenticate"}>
 			{#if !loggedIn}
 				<label class="input input-bordered flex flex-grow items-center gap-2">
 					<span class="ph ph-envelope text-xl"></span>
@@ -42,6 +42,10 @@
 			</button>
 		</form>
 		{#if loggedIn}
+			<div class="font-display mr-4 lg:mr-8 py-4 text-xl text-center">
+				<span class="py-1 px-2 bg-black rounded text-white font-semibold">{pluralize(totalAssigned(), 'shift')}</span>
+				<span class="hidden lg:inline">{toBe(totalAssigned())} assigned to you.</span>
+			</div>
 			<form class="flex justify-center" method="POST" action="?/confirm">
 				{#each modifiedShifts as shift}
 					<input name="shifts" value={JSON.stringify(shift)} hidden />
@@ -50,12 +54,6 @@
 			</form>
 		{/if}
 	</div>
-	{#if loggedIn}
-		<div class="font-display py-4 text-xl text-center">
-			<span class="py-1 px-2 bg-black rounded text-white font-semibold">{pluralize(totalAssigned(), 'shift')}</span>
-			{toBe(totalAssigned())} assigned to you.
-		</div>
-	{/if}
 	{#each shifts as shift}
 		<ShiftCard
 			id={shift.id}
@@ -66,12 +64,8 @@
 			time={shift.timespan}
 			title={shift.title}
 			volunteers={shift.volunteers}
-			onAdd={loggedIn
-				? (id) => modify(id)
-				: undefined}
-			onRemove={loggedIn
-				? (id) => modify(id, true)
-				: undefined}
+			onAdd={loggedIn ? (id) => modify(id) : undefined}
+			onRemove={loggedIn ? (id) => modify(id, true) : undefined}
 		/>
 	{/each}
 </div>
