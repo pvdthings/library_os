@@ -3,7 +3,7 @@
 
 	let { data, form } = $props();
 
-	const { shifts, authenticated, keyholder } = data;
+	const { shifts, authenticated, firstName, keyholder } = data;
 	const { email, unauthorized } = form ?? {};
 </script>
 
@@ -12,5 +12,6 @@
 	{keyholder}
 	loggedIn={authenticated}
 	{email}
+	{firstName}
 	{unauthorized}
 />

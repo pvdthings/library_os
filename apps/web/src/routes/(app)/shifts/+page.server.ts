@@ -3,6 +3,7 @@ import { fail } from "@sveltejs/kit";
 
 export const load = async ({ cookies, fetch }): Promise<any> => {
   const email = cookies.get('email');
+  const firstName = cookies.get('firstName');
   const keyholder = cookies.get('keyholder');
 
   const response = await fetch(`${HOST}/web/volunteer/shifts`, {
@@ -15,6 +16,7 @@ export const load = async ({ cookies, fetch }): Promise<any> => {
   return {
     shifts: await response.json(),
     authenticated: !!email,
+    firstName,
     keyholder: !!email && keyholder
   };
 };

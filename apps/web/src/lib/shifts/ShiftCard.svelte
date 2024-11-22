@@ -29,7 +29,7 @@
 	<div>
 		<div class="mb-1 font-display font-semibold text-sm lg:text-base">Volunteers</div>
 		<div class="flex flex-wrap items-center gap-2">
-      {#if !volunteers.length && !selected}
+      {#if !volunteers.length && !selected && !enrolled}
         <div>
           <span class="ph-bold ph-warning text-warning lg:text-lg"></span>
           <span class="text-sm lg:text-lg">None</span>

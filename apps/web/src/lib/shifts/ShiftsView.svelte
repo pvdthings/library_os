@@ -3,7 +3,7 @@
 	import ShiftCard from '$lib/shifts/ShiftCard.svelte';
 	import { setContext } from 'svelte';
 
-	let { email, shifts, loggedIn, keyholder, unauthorized } = $props();
+	let { email, firstName, shifts, loggedIn, keyholder, unauthorized } = $props();
 	let modifiedShifts = $state([]);
 
 	setContext('user', { keyholder });
@@ -29,21 +29,28 @@
 </script>
 
 <div class="flex flex-col flex-grow items-stretch gap-4">
-	<div class="flex items-center justify-between mb-4">
+	<div class="flex items-start justify-between mb-4">
 		{#if !loggedIn}
-		<form class="flex flex-grow gap-2" method="POST" action="?/authenticate">
-			<label class="input input-bordered flex flex-grow items-center gap-2 shadow">
-				<span class="ph ph-envelope text-xl"></span>
-				<input class="grow" type="text" name="email" placeholder="Enter your email">
-			</label>
-			<button class="btn btn-accent lg:self-center shadow font-display" type="submit">
-				Sign in
-			</button>
-		</form>
+			<form class="flex flex-grow gap-2" method="POST" action="?/authenticate">
+				<label class="input input-bordered flex flex-grow items-center gap-2 shadow">
+					<span class="ph ph-envelope text-xl"></span>
+					<input class="grow" type="text" name="email" placeholder="Enter your email">
+				</label>
+				<button class="btn btn-accent lg:self-center shadow font-display" type="submit">
+					Sign in
+				</button>
+			</form>
 		{:else}
-			<div class="font-display mr-4 text-xl text-center">
-				<span class="py-1 px-2 bg-black rounded shadow-sm text-white">{pluralize(totalAssigned(), 'shift')}</span>
-				<span class="hidden lg:inline">{toBe(totalAssigned())} assigned to you.</span>
+			<div>
+				{#if firstName}
+					<div class="font-display text-4xl lg:text-5xl mb-4 lg:mb-6">
+						Hi, {firstName}.
+					</div>
+				{/if}
+				<div class="font-display mr-4 text-xl">
+					<span class="py-1 px-2 bg-black rounded shadow-sm text-white">{pluralize(totalAssigned(), 'shift')}</span>
+					<span class="hidden lg:inline">{toBe(totalAssigned())} assigned to you.</span>
+				</div>
 			</div>
 			<form class="flex justify-center" method="POST" action="?/confirm">
 				{#each modifiedShifts as shift}
