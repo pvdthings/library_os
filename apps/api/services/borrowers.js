@@ -51,6 +51,14 @@ const fetchBorrower = async ({ id }) => {
     return mapBorrower(record);
 }
 
+const findMember = async ({ email }) => {
+    const matches = await borrowers.select({
+        filterByFormula: `{Email} = '${email}'`
+    }).all();
+
+    return matches.length ? mapBorrower(matches[0]) : undefined;
+};
+
 const updateBorrower = async (id, { email, phone }) => {
     let updatedFields = {};
 
@@ -63,5 +71,6 @@ const updateBorrower = async (id, { email, phone }) => {
 module.exports = {
     fetchBorrowers,
     fetchBorrower,
+    findMember,
     updateBorrower
 };

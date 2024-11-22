@@ -1,4 +1,5 @@
-const { fetchJobs } = require("../../../services/jobs/service");
+const { findMember } = require("../../../services/borrowers");
+const { fetchJobs, updateJobAssignments } = require("../../../services/jobs/service");
 
 const dateFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -12,7 +13,8 @@ const formatTime = (date) => {
   return hours + ':' + minutes + ampm;
 };
 
-const getShifts = async () => {
+const getShifts = async ({ email }) => {
+  const member = await getMember(email);
   const jobs = await fetchJobs();
 
   return jobs.map((j) => {
@@ -26,12 +28,21 @@ const getShifts = async () => {
       date: date.toLocaleString('en-US', dateFormatOptions),
       timespan: `${formatTime(date)} - ${formatTime(endDate)}`,
       description: j.description,
-      volunteers: j.members.map((m) => ({
-        ...m,
+      enrolled: j.members.some((m) => m.id === member?.id),
+      volunteers: j.members.filter((m) => m.id !== member?.id).map((m) => ({
+        name: m.name,
         firstName: m.name.split(' ')?.[0]
       }))
     };
   });
 };
 
-module.exports = { getShifts };
+const getMember = async (email) => {
+  return !!email ? await findMember({ email }) : undefined;
+};
+
+const enroll = async (email, shifts) => {
+  return await updateJobAssignments(email, shifts);
+};
+
+module.exports = { enroll, getShifts };

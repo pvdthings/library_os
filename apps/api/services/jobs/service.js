@@ -18,6 +18,7 @@ const fetchJobs = async () => {
         const memberRecord = await members.find(id);
 
         return {
+          id: memberRecord.id,
           name: memberRecord.get('Name')
         };
       })),
@@ -27,6 +28,32 @@ const fetchJobs = async () => {
   }));
 };
 
+const updateJobAssignments = async (email, jobs) => {
+  const matches = await members.select({
+    filterByFormula: `{Email} = '${email}'`
+  }).all();
+
+  if (!matches.length) {
+    throw new Error('Email provided does not match any member.');
+  }
+
+  const memberRecord = matches[0];
+  const existingJobs = memberRecord.get('Jobs') || [];
+  
+  const toAdd = jobs.filter((j) => !j.remove).map((j) => j.id);
+  const toRemove = jobs.filter((j) => j.remove).map((j) => j.id);
+
+  const updatedJobs = [
+    ...toAdd,
+    ...existingJobs.filter((j) => !toRemove.includes(j.id))
+  ];
+
+  await memberRecord.updateFields({
+    'Jobs': updatedJobs
+  });
+};
+
 module.exports = {
-  fetchJobs
+  fetchJobs,
+  updateJobAssignments
 };

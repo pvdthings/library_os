@@ -1,5 +1,5 @@
 <script>
-  let { id, date, time, title, selected, volunteers, onAdd, onRemove } = $props();
+  let { id, date, enrolled, removed, time, title, selected, volunteers, onAdd, onRemove } = $props();
 </script>
 
 <div class="card bg-white border border-base-300 p-4 lg:p-8 shadow-sm">
@@ -10,7 +10,7 @@
 			<div class="font-display text-xl lg:text-2xl">{title}</div>
 		</div>
 		<div class="flex justify-end">
-      {#if selected}
+      {#if (selected || enrolled) && !removed}
         <button onclick={() => onRemove(id)} class="font-display btn btn-sm lg:btn-md btn-success border border-success shadow-sm" class:btn-disabled={!onRemove}>
           <span class="ph-bold ph-check text-xl"></span>
           <span>Added</span>
@@ -33,7 +33,7 @@
           <span class="text-sm lg:text-lg">None</span>
         </div>
       {/if}
-      {#if selected}
+      {#if enrolled}
         <div class="badge badge-success lg:p-4 lg:text-lg">Me</div>
       {/if}
       {#each volunteers as volunteer}

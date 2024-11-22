@@ -1,8 +1,11 @@
 <script>
-	import ShiftsView from "$lib/shifts/ShiftsView.svelte";
+	import ShiftsView from '$lib/shifts/ShiftsView.svelte';
 
-	let { data } = $props();
-	const { shifts } = data;
+	let { data, form } = $props();
+	const { shifts, authenticated } = data;
 </script>
 
-<ShiftsView {shifts} />
+<ShiftsView
+	{shifts}
+	loggedIn={authenticated}
+/>
