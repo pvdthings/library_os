@@ -14,6 +14,7 @@
 	};
 
 	const totalSelected = () => {
+		// TODO: account for shifts already assigned
 		return modifiedShifts.filter((s) => !s.remove).length;
 	};
 
@@ -56,10 +57,10 @@
 		<span class="font-semibold">{pluralize(totalSelected(), 'shift')}</span>
 		{toBe(totalSelected())} assigned to me.
 	</div>
-	<form class="" method="POST" action="?/confirm">
-		{#each modifiedShifts as shift, i}
-			<input name="shifts[{i}]" value={shift} hidden />
+	<form class="flex justify-center" method="POST" action="?/confirm">
+		{#each modifiedShifts as shift}
+			<input name="shifts" value={JSON.stringify(shift)} hidden />
 		{/each}
-		<button class="btn btn-lg btn-primary font-display self-center shadow" class:btn-disabled={!loggedIn} type="submit">Confirm</button>
+		<button class="btn btn-lg btn-primary font-display shadow" class:btn-disabled={!loggedIn} type="submit">Confirm</button>
 	</form>
 </div>

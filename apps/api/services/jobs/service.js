@@ -41,11 +41,11 @@ const updateJobAssignments = async (email, jobs) => {
   const existingJobs = memberRecord.get('Jobs') || [];
   
   const toAdd = jobs.filter((j) => !j.remove).map((j) => j.id);
-  const toRemove = jobs.filter((j) => j.remove).map((j) => j.id);
+  const toRemove = jobs.filter((j) => !!j.remove).map((j) => j.id);
 
   const updatedJobs = [
     ...toAdd,
-    ...existingJobs.filter((j) => !toRemove.includes(j.id))
+    ...existingJobs.filter((j) => toRemove.includes(j.id))
   ];
 
   await memberRecord.updateFields({

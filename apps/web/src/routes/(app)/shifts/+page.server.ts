@@ -55,7 +55,9 @@ export const actions = {
     const email = cookies.get('email');
 
     const data = await request.formData();
-    const shifts = data.get('shifts');
+    const shifts = data.getAll('shifts').map((s) => JSON.parse(s.toString()));
+
+    console.log('shifts:', shifts);
 
     const response = await fetch(`${HOST}/web/volunteer/shifts/enroll`, {
 			method: 'POST',
