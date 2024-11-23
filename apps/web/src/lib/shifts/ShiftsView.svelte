@@ -5,8 +5,14 @@
 
 	let { email, firstName, shifts, loggedIn, keyholder, unauthorized } = $props();
 	let modifiedShifts = $state([]);
+	let localEmail = $state(undefined);
 
 	setContext('user', { keyholder });
+
+	const cancel = (event) => {
+		event.preventDefault();
+		modifiedShifts = [];
+	};
 
 	const isSelected = (id) => {
 		return modifiedShifts.some((s) => s.id === id && !s.remove);
@@ -32,11 +38,11 @@
 	<div class="flex items-start justify-between mb-4">
 		{#if !loggedIn}
 			<form class="flex flex-grow gap-2" method="POST" action="?/authenticate">
-				<label class="input input-bordered flex flex-grow items-center gap-2 shadow">
+				<label class="input input-bordered flex flex-grow items-center gap-3 shadow">
 					<span class="ph ph-envelope text-xl"></span>
-					<input class="grow" type="text" name="email" placeholder="Enter your email">
+					<input bind:value={localEmail} class="grow" type="text" name="email" placeholder="Enter your email to sign in">
 				</label>
-				<button class="btn btn-accent lg:self-center shadow font-display" type="submit">
+				<button class="btn btn-accent lg:self-center shadow font-display" type="submit" class:btn-disabled={!localEmail}>
 					Sign in
 				</button>
 			</form>
@@ -56,7 +62,8 @@
 				{#each modifiedShifts as shift}
 					<input name="shifts" value={JSON.stringify(shift)} hidden />
 				{/each}
-				<button class="btn btn-primary font-display shadow" class:btn-disabled={!modifiedShifts.length} type="submit">Save Changes</button>
+				<button class="btn btn-secondary border border-base-300 font-display mr-2 shadow" class:hidden={!modifiedShifts.length} onclick={cancel}>Cancel</button>
+				<button class="btn btn-primary gap-0 font-display shadow" class:btn-disabled={!modifiedShifts.length} type="submit"><span>Save</span> <span class="hidden sm:inline">&nbsp;Changes</span></button>
 			</form>
 		{/if}
 	</div>
