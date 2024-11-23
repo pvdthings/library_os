@@ -29,12 +29,13 @@
 	<div>
 		<div class="mb-1 font-display font-semibold text-sm lg:text-base">Volunteers</div>
 		<div class="flex flex-wrap items-center gap-2">
-      {#if !volunteers.length && !selected && !enrolled}
-        <div>
+      {#if !volunteers.some((v) => v.keyholder) && !enrolled}
+        <div class="flex items-center gap-1">
           <span class="ph-bold ph-warning text-warning lg:text-lg"></span>
-          <span class="text-sm lg:text-lg">None</span>
+          <span class="text-sm lg:text-lg">No Keyholder</span>
         </div>
       {/if}
+
       {#if enrolled}
         <div class="badge badge-success flex items-center gap-1 lg:p-4 lg:text-lg select-none">
           {#if getContext('user')?.keyholder}
@@ -43,6 +44,7 @@
           Me
         </div>
       {/if}
+
       {#each volunteers as volunteer}
 			  <div class="badge flex items-center gap-1 lg:p-4 lg:text-lg select-none">
           {#if volunteer.keyholder}
