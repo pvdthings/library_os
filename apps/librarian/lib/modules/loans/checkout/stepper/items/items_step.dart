@@ -5,7 +5,6 @@ import 'package:librarian_app/modules/things/providers/things_repository_provide
 import 'package:librarian_app/widgets/item_card.dart';
 
 import 'connected_thing_search_field.dart';
-import 'existing_item_dialog.dart';
 import 'eye_protection_dialog.dart';
 import 'suggested_things_dialog.dart';
 
@@ -27,20 +26,11 @@ Step buildItemsStep({
         ConnectedThingSearchField(
           controller: ThingSearchController(
             context: context,
-            onMatchFound: (thing) {
-              if (items.any((t) => t.id == thing.id)) {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ExistingItemDialog(number: thing.number);
-                  },
-                );
-                return;
-              }
+            items: items,
+            onMatchFound: (item) {
+              onAddItem(item);
 
-              onAddItem(thing);
-
-              if (thing.eyeProtection && !didPromptForEyeProtection) {
+              if (item.eyeProtection && !didPromptForEyeProtection) {
                 showDialog(
                   context: context,
                   builder: (_) => const EyeProtectionDialog(),
@@ -48,12 +38,12 @@ Step buildItemsStep({
                 onPromptForEyeProtection();
               }
 
-              if (thing.linkedThingIds.isNotEmpty) {
+              if (item.linkedThingIds.isNotEmpty) {
                 showDialog(
                   context: context,
                   builder: (_) => SuggestedThingsDialog(
-                    thingName: thing.name,
-                    thingIds: thing.linkedThingIds,
+                    thingName: item.name,
+                    thingIds: item.linkedThingIds,
                   ),
                 );
               }
