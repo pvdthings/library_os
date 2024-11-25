@@ -14,8 +14,8 @@
 	"devDependencies": {
 		"@sveltejs/adapter-vercel": "^5.4.7",
 		"@sveltejs/kit": "^2.8.1",
-		"@typescript-eslint/eslint-plugin": "^5.45.0",
-		"@typescript-eslint/parser": "^5.45.0",
+		"@typescript-eslint/eslint-plugin": "^8.0.0",
+		"@typescript-eslint/parser": "^8.0.0",
 		"autoprefixer": "^10.4.13",
 		"daisyui": "^4.12.10",
 		"eslint": "^9.15.0",
