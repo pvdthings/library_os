@@ -1,5 +1,6 @@
 const { findMember } = require("../../../services/borrowers");
 const { fetchJobs, updateJobAssignments } = require("../../../services/jobs/service");
+const { sendJobsNotification } = require("../../../services/messages");
 
 const dateFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -43,7 +44,16 @@ const getMember = async (email) => {
 };
 
 const enroll = async (email, shifts) => {
-  return await updateJobAssignments(email, shifts);
+  try {
+    updateJobAssignments(email, shifts).then(async () => {
+      const newShifts = shifts.filter((s) => !s.remove);
+      if (newShifts.length) {
+        await sendJobsNotification({ recipient: email, ids: newShifts.map((s) => s.id) });
+      }
+    });
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = { enroll, getShifts };
