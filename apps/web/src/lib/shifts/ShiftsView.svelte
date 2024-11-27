@@ -30,7 +30,16 @@
 	};
 
 	const modify = (id, remove = false) => {
-		modifiedShifts = [...modifiedShifts.filter((s) => s.id !== id), { id, remove }];
+		const enrolled = shifts.some((s) => s.id === id && s.enrolled);
+
+		let _modifiedShifts = modifiedShifts.filter((s) => s.id !== id);
+
+		if ((remove && !enrolled) || (!remove && enrolled)) {
+			modifiedShifts = [..._modifiedShifts];
+			return;
+		}
+
+		modifiedShifts = [..._modifiedShifts, { id, remove }];
 	};
 </script>
 
