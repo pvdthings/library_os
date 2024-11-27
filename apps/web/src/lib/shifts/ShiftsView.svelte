@@ -82,6 +82,7 @@
 			id={shift.id}
 			selected={isSelected(shift.id)}
 			date={shift.date}
+			description={shift.description}
 			enrolled={shift.enrolled}
 			removed={isRemoved(shift.id)}
 			time={shift.timespan}
