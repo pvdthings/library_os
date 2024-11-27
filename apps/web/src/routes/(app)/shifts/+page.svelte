@@ -7,11 +7,6 @@
 	const { email, unauthorized } = form ?? {};
 </script>
 
-<ShiftsView
-	{shifts}
-	{keyholder}
-	loggedIn={authenticated}
-	{email}
-	{firstName}
-	{unauthorized}
-/>
+<div class="pb-20 lg:pb-0">
+	<ShiftsView {shifts} {keyholder} loggedIn={authenticated} {email} {firstName} {unauthorized} />
+</div>
