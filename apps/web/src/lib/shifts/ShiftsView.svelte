@@ -40,7 +40,7 @@
 			<form class="flex flex-grow gap-2" method="POST" action="?/authenticate">
 				<label class="input input-bordered flex flex-grow items-center gap-3 shadow">
 					<span class="ph ph-envelope text-xl"></span>
-					<input bind:value={localEmail} class="grow" type="text" name="email" placeholder="Enter your email to sign in">
+					<input bind:value={localEmail} class="grow" type="email" name="email" placeholder="Enter your email to sign in">
 				</label>
 				<button class="btn btn-accent lg:self-center shadow font-display" type="submit" class:btn-disabled={!localEmail}>
 					Sign in
@@ -72,7 +72,7 @@
 		<div class="alert alert-error">
 			<span>
 				<span class="font-semibold">{email}</span> could not be matched to any existing member.
-				Please come in during the shift you want to join and we'll get you set up.
+				Please show up for the shift you wanted to join and we'll get you set up.
 			</span>
 		</div>
 	{/if}
@@ -82,6 +82,7 @@
 			id={shift.id}
 			selected={isSelected(shift.id)}
 			date={shift.date}
+			description={shift.description}
 			enrolled={shift.enrolled}
 			removed={isRemoved(shift.id)}
 			time={shift.timespan}
