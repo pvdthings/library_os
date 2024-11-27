@@ -24,7 +24,7 @@ export const load = async ({ cookies, fetch }): Promise<any> => {
 export const actions = {
   authenticate: async ({ cookies, fetch, request }) => {
     const data = await request.formData();
-    const email = data.get('email').toString();
+    const email = data.get('email').toString().toLowerCase();
 
     if (!email) {
       return fail(400, { invalid: true });

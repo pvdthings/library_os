@@ -72,7 +72,7 @@
 		<div class="alert alert-error">
 			<span>
 				<span class="font-semibold">{email}</span> could not be matched to any existing member.
-				Please come in during the shift you want to join and we'll get you set up.
+				Please show up for the shift you wanted to join and we'll get you set up.
 			</span>
 		</div>
 	{/if}
