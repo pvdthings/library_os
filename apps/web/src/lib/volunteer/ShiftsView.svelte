@@ -1,6 +1,6 @@
 <script>
 	import { pluralize, toBe } from '$lib/utils/pluralize';
-	import ShiftCard from '$lib/shifts/ShiftCard.svelte';
+	import ShiftCard from '$lib/volunteer/ShiftCard.svelte';
 	import { setContext } from 'svelte';
 
 	let { email, firstName, shifts, loggedIn, keyholder, unauthorized } = $props();

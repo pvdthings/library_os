@@ -1,5 +1,5 @@
 <script>
-	import ShiftsView from '$lib/shifts/ShiftsView.svelte';
+	import ShiftsView from '$lib/volunteer/ShiftsView.svelte';
 
 	let { data, form } = $props();
 
