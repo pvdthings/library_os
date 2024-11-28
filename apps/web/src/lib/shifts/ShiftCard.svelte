@@ -7,9 +7,10 @@
 		description,
 		enrolled,
 		removed,
+		selected,
 		time,
 		title,
-		selected,
+		unsavedChanges,
 		volunteers,
 		onAdd,
 		onRemove
@@ -22,29 +23,35 @@
 			<div class="font-display font-semibold lg:text-lg">{date}</div>
 			<div class="mb-2 text-sm lg:text-base">{time}</div>
 			<div class="font-display text-xl lg:text-2xl">{title}</div>
-      {#if description?.length}
-        <div class="mt-1 text-sm max-w-prose">{description}</div>
-      {/if}
+			{#if description?.length}
+				<div class="mt-1 text-sm max-w-prose">{description}</div>
+			{/if}
 		</div>
-		<div class="flex justify-end">
-			{#if (selected || enrolled) && !removed}
-				<button
-					onclick={() => onRemove(id)}
-					class="font-display btn btn-sm lg:btn-md btn-success border border-success shadow-sm"
-					class:btn-disabled={!onRemove}
-				>
-					<span class="ph-bold ph-check text-xl"></span>
-					<span>Added</span>
-				</button>
-			{:else}
-				<button
-					onclick={() => onAdd(id)}
-					class="font-display btn btn-sm lg:btn-md btn-secondary border border-base-300 shadow-sm"
-					class:btn-disabled={!onAdd}
-				>
-					<span class="ph-bold ph-user-plus text-xl"></span>
-					<span>Add me</span>
-				</button>
+		<div>
+			<div class="flex justify-end">
+				{#if (selected || enrolled) && !removed}
+					<button
+						onclick={() => onRemove(id)}
+						class="font-display btn btn-sm lg:btn-md btn-success border border-success shadow-sm"
+						class:btn-disabled={!onRemove}
+					>
+						<span class="ph-bold ph-check text-xl"></span>
+						<span>Added</span>
+					</button>
+				{:else}
+					<button
+						onclick={() => onAdd(id)}
+						class="font-display btn btn-sm lg:btn-md btn-secondary border border-base-300 shadow-sm"
+						class:btn-disabled={!onAdd}
+					>
+						<span class="ph-bold ph-user-plus text-xl"></span>
+						<span>Add me</span>
+					</button>
+				{/if}
+			</div>
+
+			{#if unsavedChanges}
+				<div class="mt-2 text-end text-sm text-neutral-400">*not saved</div>
 			{/if}
 		</div>
 	</div>

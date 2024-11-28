@@ -96,6 +96,7 @@
 			removed={isRemoved(shift.id)}
 			time={shift.timespan}
 			title={shift.title}
+			unsavedChanges={modifiedShifts.some((s) => s.id === shift.id)}
 			volunteers={shift.volunteers}
 			onAdd={loggedIn ? (id) => modify(id) : undefined}
 			onRemove={loggedIn ? (id) => modify(id, true) : undefined}
