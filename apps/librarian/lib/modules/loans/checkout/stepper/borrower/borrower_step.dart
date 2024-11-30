@@ -1,17 +1,20 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/borrower_model.dart';
+import 'package:librarian_app/core/api/models/member_model.dart';
 import 'package:librarian_app/modules/members/details/issues.dart';
 import 'package:librarian_app/modules/loans/checkout/stepper/borrower/borrower_search_delegate.dart';
+import 'package:librarian_app/modules/members/details/stats_card.dart';
 import 'package:librarian_app/providers/members.dart';
+import 'package:librarian_app/utils/media_query.dart';
+import 'package:librarian_app/widgets/details_card/details_card.dart';
 
 Step buildBorrowerStep({
   required BuildContext context,
   required WidgetRef ref,
   required bool isActive,
-  required BorrowerModel? borrower,
-  required void Function(BorrowerModel?) onBorrowerSelected,
+  required MemberModel? borrower,
+  required void Function(MemberModel?) onBorrowerSelected,
 }) {
   return Step(
     title: const Text('Select Borrower'),
@@ -22,26 +25,55 @@ Step buildBorrowerStep({
           text: borrower?.name,
           onSelected: onBorrowerSelected,
         ),
-        if (borrower != null && !borrower.active) ...[
+        if (borrower != null) ...[
           const SizedBox(height: 16),
-          MemberIssues(
-            borrowerId: borrower.id,
-            issues: borrower.issues,
-            onRecordCashPayment: (success) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content:
-                      Text(success ? 'Success!' : 'Failed to record payment'),
-                ),
-              );
+          LayoutBuilder(builder: (context, constraints) {
+            final children = [
+              StatsCard(
+                keyholder: borrower.keyholder,
+                memberSince: borrower.joinDate,
+                volunteerHours: borrower.volunteerHours,
+              ),
+              DetailsCard(
+                body: MemberIssues(
+                  borrowerId: borrower.id,
+                  issues: borrower.issues,
+                  onRecordCashPayment: (success) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            success ? 'Success!' : 'Failed to record payment'),
+                      ),
+                    );
 
-              if (success) {
-                ref.read(membersProvider).then((list) {
-                  return list.firstWhereOrNull((b) => b.id == borrower.id);
-                }).then(onBorrowerSelected);
-              }
-            },
-          ),
+                    if (success) {
+                      ref.read(membersProvider).then((list) {
+                        return list
+                            .firstWhereOrNull((b) => b.id == borrower.id);
+                      }).then(onBorrowerSelected);
+                    }
+                  },
+                ),
+              ),
+            ];
+
+            if (isMobile(context)) {
+              return Wrap(
+                runSpacing: 16.0,
+                spacing: 16.0,
+                children: children,
+              );
+            }
+
+            return GridView.count(
+              childAspectRatio: 2 / 1,
+              crossAxisCount: 2,
+              crossAxisSpacing: 16.0,
+              mainAxisSpacing: 16.0,
+              shrinkWrap: true,
+              children: children,
+            );
+          }),
         ],
       ],
     ),
@@ -56,7 +88,7 @@ class _SelectBorrowerTextField extends ConsumerStatefulWidget {
   });
 
   final String? text;
-  final void Function(BorrowerModel? borrower) onSelected;
+  final void Function(MemberModel? borrower) onSelected;
 
   @override
   ConsumerState<_SelectBorrowerTextField> createState() =>

@@ -1,1 +1,1 @@
-<span class="loading loading-spinner loading-lg text-indigo-500" />
+<span class="loading loading-spinner loading-lg text-indigo-500"></span>

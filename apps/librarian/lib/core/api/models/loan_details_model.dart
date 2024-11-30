@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/core/api/models/borrower_model.dart';
+import 'package:librarian_app/core/api/models/member_model.dart';
 
 import 'thing_summary_model.dart';
 
@@ -7,7 +7,7 @@ class LoanDetailsModel {
   final String id;
   final int number;
   final ThingSummaryModel thing;
-  final BorrowerModel borrower;
+  final MemberModel borrower;
   final DateTime checkedOutDate;
   final String? notes;
   final int remindersSent;
@@ -38,7 +38,7 @@ class LoanDetailsModel {
       id: json['id'] as String? ?? '?',
       number: json['number'] as int,
       thing: ThingSummaryModel.fromJson(json['thing'] as Map<String, dynamic>),
-      borrower: BorrowerModel(
+      borrower: MemberModel(
         id: json['borrower']?['id'] as String? ?? '?',
         name: json['borrower']?['name'] as String? ?? '???',
         email: json['borrower']?['contact']['email'] as String?,

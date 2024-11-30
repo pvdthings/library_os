@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let active: boolean = undefined;
-	export let icon: string;
+	export let icon: string = undefined;
+	export let iconStyle: string = undefined;
 	export let indicatorValue: any = undefined;
 	export let label: string;
 </script>
@@ -12,7 +13,12 @@
 				{indicatorValue}
 			</span>
 		{/if}
-		<img src={icon} alt={label} class="w-5 h-5" />
+		{#if icon}
+			<img src={icon} alt={label} class="w-5 h-5" />
+		{/if}
+		{#if iconStyle}
+			<span class={iconStyle} />
+		{/if}
 	</div>
 	<div class="text-xs font-display font-semibold">
 		{label}

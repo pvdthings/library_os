@@ -10,7 +10,10 @@ const mapBorrower = (record) => {
             email: record.get('Email'),
             phone: record.get('Phone')
         },
-        issues: mapIssues(record)
+        issues: mapIssues(record),
+        keyholder: !!record.get('Keyholder'),
+        joinDate: record.get('Joined'),
+        volunteerHours: Number(record.get('Volunteer Hours'))
     }
 }
 
@@ -27,22 +30,7 @@ const mapIssues = (record) => {
 }
 
 const fetchBorrowers = async () => {
-    const records = await borrowers.select({
-        view: 'api',
-        fields: [
-            'Name',
-            'Email',
-            'Phone',
-            'Active', 
-            'Suspended', 
-            'Overdue Loans', 
-            'Dues Paid',
-            'Signed Liability Waiver',
-            'transactions_past_year'
-        ],
-        pageSize: 100
-    }).all();
-
+    const records = await borrowers.select().all();
     return records.map(mapBorrower);
 }
 
@@ -50,6 +38,14 @@ const fetchBorrower = async ({ id }) => {
     const record = await borrowers.find(id);
     return mapBorrower(record);
 }
+
+const findMember = async ({ email }) => {
+    const matches = await borrowers.select({
+        filterByFormula: `{Email} = '${email}'`
+    }).all();
+
+    return matches.length ? mapBorrower(matches[0]) : undefined;
+};
 
 const updateBorrower = async (id, { email, phone }) => {
     let updatedFields = {};
@@ -63,5 +59,6 @@ const updateBorrower = async (id, { email, phone }) => {
 module.exports = {
     fetchBorrowers,
     fetchBorrower,
+    findMember,
     updateBorrower
 };

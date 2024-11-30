@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/core/api/models/borrower_model.dart';
+import 'package:librarian_app/core/api/models/member_model.dart';
 import 'package:librarian_app/core/api/models/item_model.dart';
 import 'package:librarian_app/core/api/models/thing_summary_model.dart';
 
@@ -7,7 +7,7 @@ import 'checkout_details.dart';
 
 Step buildConfirmStep({
   required bool isActive,
-  required BorrowerModel? borrower,
+  required MemberModel? borrower,
   required List<ItemModel> items,
   required DateTime dueDate,
   required void Function(DateTime) onDueDateUpdated,

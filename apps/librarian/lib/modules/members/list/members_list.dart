@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:librarian_app/utils/media_query.dart';
 
-import '../../../core/api/models/borrower_model.dart';
+import '../../../core/api/models/member_model.dart';
 
 class MembersList extends StatefulWidget {
-  final List<BorrowerModel> borrowers;
-  final BorrowerModel? selected;
-  final void Function(BorrowerModel borrower)? onTap;
+  final List<MemberModel> borrowers;
+  final MemberModel? selected;
+  final void Function(MemberModel borrower)? onTap;
 
   const MembersList({
     super.key,
