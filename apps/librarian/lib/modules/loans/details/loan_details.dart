@@ -56,7 +56,8 @@ class LoanDetails extends StatelessWidget {
             useListTile: true,
             label: 'Phone',
             placeholderText: '-',
-            value: borrower!.phone,
+            value:
+                borrower!.phone != null ? formatPhone(borrower!.phone!) : null,
           ),
           Detail(
             useListTile: true,
