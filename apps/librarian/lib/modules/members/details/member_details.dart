@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/issue_model.dart';
 import 'package:librarian_app/modules/members/details/contact_card.dart';
+import 'package:librarian_app/modules/members/details/stats_card.dart';
 import 'package:librarian_app/modules/members/providers/borrower_details_provider.dart';
 import 'package:librarian_app/modules/members/details/issues_card.dart';
 import 'package:librarian_app/modules/members/details/payments_card.dart';
@@ -25,17 +26,23 @@ class MemberDetails extends ConsumerWidget {
           email: model.email,
           phone: model.phone,
           issues: model.issues,
+          memberSince: model.memberSince,
+          keyholder: model.keyholder,
+          volunteerHours: model.volunteerHours,
         );
       },
       loading: () {
-        return const Skeleton(
+        return Skeleton(
           enabled: true,
           child: _Details(
             id: '',
             name: '',
             email: '',
             phone: '',
-            issues: [],
+            issues: const [],
+            keyholder: false,
+            memberSince: DateTime.now(),
+            volunteerHours: 0,
           ),
         );
       },
@@ -53,6 +60,9 @@ class _Details extends StatelessWidget {
     required this.email,
     required this.phone,
     required this.issues,
+    required this.keyholder,
+    required this.memberSince,
+    required this.volunteerHours,
   });
 
   final String id;
@@ -60,6 +70,9 @@ class _Details extends StatelessWidget {
   final String? email;
   final String? phone;
   final List<Issue> issues;
+  final bool keyholder;
+  final DateTime? memberSince;
+  final int volunteerHours;
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +84,18 @@ class _Details extends StatelessWidget {
           email: email,
           phone: phone,
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 16.0),
+        StatsCard(
+          keyholder: keyholder,
+          memberSince: memberSince,
+          volunteerHours: volunteerHours,
+        ),
+        const SizedBox(height: 16.0),
         IssuesCard(
           borrowerId: id,
           issues: issues,
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 16.0),
         const PaymentsCard(),
       ],
     );

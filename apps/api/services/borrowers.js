@@ -11,7 +11,9 @@ const mapBorrower = (record) => {
             phone: record.get('Phone')
         },
         issues: mapIssues(record),
-        keyholder: !!record.get('Keyholder')
+        keyholder: !!record.get('Keyholder'),
+        joinDate: record.get('Joined'),
+        volunteerHours: Number(record.get('Volunteer Hours'))
     }
 }
 
@@ -28,22 +30,7 @@ const mapIssues = (record) => {
 }
 
 const fetchBorrowers = async () => {
-    const records = await borrowers.select({
-        view: 'api',
-        fields: [
-            'Name',
-            'Email',
-            'Phone',
-            'Active', 
-            'Suspended', 
-            'Overdue Loans', 
-            'Dues Paid',
-            'Signed Liability Waiver',
-            'transactions_past_year'
-        ],
-        pageSize: 100
-    }).all();
-
+    const records = await borrowers.select().all();
     return records.map(mapBorrower);
 }
 

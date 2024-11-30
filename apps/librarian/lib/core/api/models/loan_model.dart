@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/core/api/models/borrower_model.dart';
+import 'package:librarian_app/core/api/models/member_model.dart';
 import 'package:librarian_app/core/api/models/thing_summary_model.dart';
 
 class LoanModel {
   final String id;
   final int number;
   final ThingSummaryModel thing;
-  final BorrowerModel borrower;
+  final MemberModel borrower;
   final DateTime checkedOutDate;
   DateTime dueDate;
   DateTime? checkedInDate;
@@ -33,7 +33,7 @@ class LoanModel {
       id: json['id'] as String? ?? '?',
       number: json['number'] as int,
       thing: ThingSummaryModel.fromJson(json['thing'] as Map<String, dynamic>),
-      borrower: BorrowerModel(
+      borrower: MemberModel(
         id: json['borrower']?['id'] as String? ?? '?',
         name: json['borrower']?['name'] as String? ?? '???',
         email: null,

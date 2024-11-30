@@ -1,19 +1,19 @@
 import 'package:librarian_app/core/api/api.dart' as api;
 import 'package:librarian_app/core/api/models/payment_model.dart';
 
-import '../api/models/borrower_model.dart';
+import '../api/models/member_model.dart';
 
 class BorrowersRepository {
-  Future<List<BorrowerModel>> getBorrowers() async {
+  Future<List<MemberModel>> getBorrowers() async {
     final response = await api.fetchBorrowers();
     return (response.data as List)
-        .map((json) => BorrowerModel.fromJson(json))
+        .map((json) => MemberModel.fromJson(json))
         .toList();
   }
 
-  Future<BorrowerModel?> getBorrowerDetails(String id) async {
+  Future<MemberModel?> getBorrowerDetails(String id) async {
     final response = await api.fetchBorrower(id);
-    return BorrowerModel.fromJson(response.data as Map<String, dynamic>);
+    return MemberModel.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<bool> updateBorrower(String id, {String? email, String? phone}) async {
