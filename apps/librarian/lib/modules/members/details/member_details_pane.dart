@@ -6,7 +6,7 @@ import 'package:librarian_app/modules/members/providers/selected_borrower_provid
 import 'package:librarian_app/widgets/dialogs/save_dialog.dart';
 import 'package:librarian_app/widgets/panes/pane_header.dart';
 
-import '../../../core/api/models/borrower_model.dart';
+import '../../../core/api/models/member_model.dart';
 
 class MemberDetailsPane extends ConsumerWidget {
   final Future<MemberModel?> borrowerFuture;

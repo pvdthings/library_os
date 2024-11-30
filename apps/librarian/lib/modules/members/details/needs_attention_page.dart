@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/core/api/models/borrower_model.dart';
+import 'package:librarian_app/core/api/models/member_model.dart';
 
 import 'needs_attention_view.dart';
 

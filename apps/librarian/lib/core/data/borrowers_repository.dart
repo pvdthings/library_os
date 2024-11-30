@@ -1,7 +1,7 @@
 import 'package:librarian_app/core/api/api.dart' as api;
 import 'package:librarian_app/core/api/models/payment_model.dart';
 
-import '../api/models/borrower_model.dart';
+import '../api/models/member_model.dart';
 
 class BorrowersRepository {
   Future<List<MemberModel>> getBorrowers() async {
