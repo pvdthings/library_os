@@ -10,8 +10,8 @@ Step buildBorrowerStep({
   required BuildContext context,
   required WidgetRef ref,
   required bool isActive,
-  required BorrowerModel? borrower,
-  required void Function(BorrowerModel?) onBorrowerSelected,
+  required MemberModel? borrower,
+  required void Function(MemberModel?) onBorrowerSelected,
 }) {
   return Step(
     title: const Text('Select Borrower'),
@@ -56,7 +56,7 @@ class _SelectBorrowerTextField extends ConsumerStatefulWidget {
   });
 
   final String? text;
-  final void Function(BorrowerModel? borrower) onSelected;
+  final void Function(MemberModel? borrower) onSelected;
 
   @override
   ConsumerState<_SelectBorrowerTextField> createState() =>

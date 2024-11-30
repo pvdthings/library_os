@@ -22,7 +22,7 @@ class CheckoutStepper extends ConsumerStatefulWidget {
 
 class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
   int stepIndex = 0;
-  BorrowerModel? borrower;
+  MemberModel? borrower;
   DateTime dueDate = DateTime.now().add(const Duration(days: 7));
 
   bool didPromptForEyeProtection = false;

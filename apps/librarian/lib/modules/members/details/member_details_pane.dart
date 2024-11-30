@@ -9,7 +9,7 @@ import 'package:librarian_app/widgets/panes/pane_header.dart';
 import '../../../core/api/models/borrower_model.dart';
 
 class MemberDetailsPane extends ConsumerWidget {
-  final Future<BorrowerModel?> borrowerFuture;
+  final Future<MemberModel?> borrowerFuture;
 
   const MemberDetailsPane({
     super.key,

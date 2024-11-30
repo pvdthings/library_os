@@ -5,7 +5,7 @@ import 'package:librarian_app/core/data/borrowers_repository.dart';
 import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
 import 'package:librarian_app/providers/members.dart';
 
-final borrowerDetailsProvider = Provider<Future<BorrowerModel?>>((ref) async {
+final borrowerDetailsProvider = Provider<Future<MemberModel?>>((ref) async {
   ref.watch(membersProvider);
   final selectedBorrower = ref.watch(selectedBorrowerProvider);
   if (selectedBorrower == null) {
@@ -33,6 +33,9 @@ final memberDetailsProvider = FutureProvider((ref) async {
     email: details.email,
     phone: details.phone,
     issues: details.issues,
+    keyholder: details.keyholder,
+    memberSince: details.joinDate,
+    volunteerHours: details.volunteerHours,
   );
 });
 
@@ -41,6 +44,9 @@ class MemberDetailsViewModel {
     required this.id,
     required this.name,
     required this.issues,
+    required this.keyholder,
+    required this.volunteerHours,
+    this.memberSince,
     this.email,
     this.phone,
   });
@@ -50,4 +56,7 @@ class MemberDetailsViewModel {
   final String? email;
   final String? phone;
   final List<Issue> issues;
+  final bool keyholder;
+  final DateTime? memberSince;
+  final int volunteerHours;
 }

@@ -7,7 +7,7 @@ import 'checkout_details.dart';
 
 Step buildConfirmStep({
   required bool isActive,
-  required BorrowerModel? borrower,
+  required MemberModel? borrower,
   required List<ItemModel> items,
   required DateTime dueDate,
   required void Function(DateTime) onDueDateUpdated,

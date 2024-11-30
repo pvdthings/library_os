@@ -16,7 +16,7 @@ class LoanDetails extends StatelessWidget {
     this.notes,
   });
 
-  final BorrowerModel? borrower;
+  final MemberModel? borrower;
   final List<ThingSummaryModel> things;
   final String? notes;
   final DateTime checkedOutDate;

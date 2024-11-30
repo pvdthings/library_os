@@ -13,7 +13,7 @@ class CheckoutDetails extends StatelessWidget {
     required this.onDueDateUpdated,
   });
 
-  final BorrowerModel? borrower;
+  final MemberModel? borrower;
   final List<ThingSummaryModel> things;
   final DateTime dueDate;
   final void Function(DateTime newDate) onDueDateUpdated;

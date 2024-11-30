@@ -107,7 +107,7 @@ final dummyDetails = LoanDetailsModel(
     number: 0,
     images: [],
   ),
-  borrower: const BorrowerModel(
+  borrower: const MemberModel(
     id: '',
     name: 'Jane Smith',
     issues: [],

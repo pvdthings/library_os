@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:librarian_app/core/api/models/borrower_model.dart';
 
 class NeedsAttentionView extends StatelessWidget {
-  final BorrowerModel member;
+  final MemberModel member;
 
   const NeedsAttentionView({super.key, required this.member});
 

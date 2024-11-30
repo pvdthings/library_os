@@ -14,3 +14,10 @@ String formatDate(DateTime dateTime) {
 String formatDateForHumans(DateTime dateTime) {
   return _humanDateFormat.format(dateTime);
 }
+
+String formatHours(int seconds) {
+  Duration duration = Duration(seconds: seconds);
+  return [duration.inHours, duration.inMinutes]
+      .map((seg) => seg.remainder(60).toString().padLeft(2, '0'))
+      .join(':');
+}

@@ -6,7 +6,7 @@ import 'package:librarian_app/providers/members.dart';
 
 import 'edited_borrower_details_providers.dart';
 
-final borrowersProvider = Provider<Future<List<BorrowerModel>>>((ref) async {
+final borrowersProvider = Provider<Future<List<MemberModel>>>((ref) async {
   final searchFilter = ref.watch(borrowersFilterProvider);
   final borrowers = await ref.watch(membersProvider);
 
@@ -46,7 +46,7 @@ class MembersListViewModel {
     required this.onTap,
   });
 
-  final BorrowerModel? selected;
-  final List<BorrowerModel> members;
-  final void Function(BorrowerModel) onTap;
+  final MemberModel? selected;
+  final List<MemberModel> members;
+  final void Function(MemberModel) onTap;
 }

@@ -6,7 +6,7 @@ import 'needs_attention_view.dart';
 class NeedsAttentionPage extends StatelessWidget {
   const NeedsAttentionPage({super.key, required this.member});
 
-  final BorrowerModel member;
+  final MemberModel member;
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,7 @@ import 'members_list.dart';
 class MembersListView extends ConsumerWidget {
   const MembersListView({super.key, this.onTap});
 
-  final void Function(BorrowerModel)? onTap;
+  final void Function(MemberModel)? onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,7 +49,7 @@ class MembersListView extends ConsumerWidget {
   }
 }
 
-const dummyMember = BorrowerModel(
+const dummyMember = MemberModel(
   id: '',
   name: 'Member',
   issues: [],

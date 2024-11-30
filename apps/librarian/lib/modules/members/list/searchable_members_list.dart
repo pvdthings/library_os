@@ -7,7 +7,7 @@ import 'package:librarian_app/modules/members/list/members_list_view.dart';
 import '../../../widgets/fields/submit_text_field.dart';
 
 class SearchableMembersList extends ConsumerWidget {
-  final void Function(BorrowerModel borrower)? onTapBorrower;
+  final void Function(MemberModel borrower)? onTapBorrower;
 
   const SearchableMembersList({
     super.key,
