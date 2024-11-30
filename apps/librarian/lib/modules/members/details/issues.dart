@@ -6,7 +6,7 @@ import 'package:librarian_app/providers/members.dart';
 
 import '../payments/dues_dialog.dart';
 
-class MemberIssues extends ConsumerWidget {
+class MemberIssues extends StatelessWidget {
   final String borrowerId;
   final List<Issue> issues;
   final void Function(bool success) onRecordCashPayment;
@@ -19,7 +19,7 @@ class MemberIssues extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
       children: [
