@@ -30,6 +30,7 @@ class LoanDetailsPane extends ConsumerWidget {
           return _Details(
             loading: false,
             details: loan,
+            memberDetails: model.member!,
             onSave: (dueDate, notes) {
               model.onSave?.call(dueDate, notes);
             },
@@ -40,6 +41,7 @@ class LoanDetailsPane extends ConsumerWidget {
           return _Details(
             loading: true,
             details: dummyDetails,
+            memberDetails: dummyMemberDetails,
             onSave: (_, __) {},
             onCheckIn: () {},
           );
@@ -55,6 +57,7 @@ class LoanDetailsPane extends ConsumerWidget {
 class _Details extends StatelessWidget {
   const _Details({
     required this.details,
+    required this.memberDetails,
     required this.onSave,
     required this.onCheckIn,
     this.loading = false,
@@ -62,6 +65,7 @@ class _Details extends StatelessWidget {
 
   final bool loading;
   final LoanDetailsModel details;
+  final MemberModel memberDetails;
   final void Function(DateTime, String?)? onSave;
   final void Function()? onCheckIn;
 
@@ -76,20 +80,15 @@ class _Details extends StatelessWidget {
           onCheckIn: onCheckIn,
         ),
         Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Skeleton(
-                enabled: loading,
-                child: LoanDetails(
-                  borrower: details.borrower,
-                  things: [details.thing],
-                  notes: details.notes,
-                  checkedOutDate: details.checkedOutDate,
-                  dueDate: details.dueDate,
-                  isOverdue: details.isOverdue,
-                ),
-              ),
+          child: Skeleton(
+            enabled: loading,
+            child: LoanDetails(
+              borrower: memberDetails,
+              things: [details.thing],
+              notes: details.notes,
+              checkedOutDate: details.checkedOutDate,
+              dueDate: details.dueDate,
+              isOverdue: details.isOverdue,
             ),
           ),
         ),
@@ -107,12 +106,17 @@ final dummyDetails = LoanDetailsModel(
     number: 0,
     images: [],
   ),
-  borrower: const MemberModel(
-    id: '',
-    name: 'Jane Smith',
-    issues: [],
-  ),
+  borrower: dummyMemberDetails,
   checkedOutDate: DateTime.now(),
   dueDate: DateTime.now(),
+  notes: 'Loading notes...',
   remindersSent: 0,
+);
+
+final dummyMemberDetails = MemberModel(
+  id: '',
+  name: 'Jane Smith',
+  email: 'email@email.com',
+  joinDate: DateTime.now(),
+  issues: [],
 );

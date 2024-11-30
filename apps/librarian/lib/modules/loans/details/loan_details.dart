@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:librarian_app/core/api/models/borrower_model.dart';
+import 'package:librarian_app/utils/format.dart';
 import 'package:librarian_app/widgets/detail.dart';
 import 'package:librarian_app/core/api/models/thing_summary_model.dart';
 import 'package:librarian_app/utils/media_query.dart';
@@ -30,7 +31,10 @@ class LoanDetails extends StatelessWidget {
 
     final borrowerCard = Card(
       elevation: cardElevation,
+      margin: EdgeInsets.zero,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Detail(
             useListTile: true,
@@ -54,29 +58,41 @@ class LoanDetails extends StatelessWidget {
             placeholderText: '-',
             value: borrower!.phone,
           ),
+          Detail(
+            useListTile: true,
+            label: 'Member Since',
+            placeholderText: '-',
+            value: borrower!.joinDate != null
+                ? formatDateForHumans(borrower!.joinDate!)
+                : null,
+          ),
         ],
       ),
     );
 
     final thingsCard = Card(
       elevation: cardElevation,
+      margin: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Detail(
             useListTile: true,
             label: 'Thing',
             prefixIcon: Icon(Icons.build_rounded),
           ),
-          Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              color: Colors.black45,
-              shape: BoxShape.rectangle,
+          Expanded(
+            child: Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: Colors.black45,
+                shape: BoxShape.rectangle,
+              ),
+              height: 240,
+              child: _ThingImage(urls: things[0].images),
             ),
-            height: 240,
-            child: _ThingImage(urls: things[0].images),
           ),
         ],
       ),
@@ -84,7 +100,10 @@ class LoanDetails extends StatelessWidget {
 
     final datesCard = Card(
       elevation: cardElevation,
+      margin: EdgeInsets.zero,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Detail(
             useListTile: true,
@@ -122,7 +141,10 @@ class LoanDetails extends StatelessWidget {
 
     final notesCard = Card(
       elevation: cardElevation,
+      margin: EdgeInsets.zero,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Detail(
             useListTile: true,
@@ -138,31 +160,43 @@ class LoanDetails extends StatelessWidget {
       ),
     );
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Wrap(
-          children: [
-            FractionallySizedBox(
-              widthFactor: isMobileScreen ? 1 : 0.5,
-              child: thingsCard,
-            ),
-            FractionallySizedBox(
-              widthFactor: isMobileScreen ? 1 : 0.5,
-              child: datesCard,
-            ),
-            FractionallySizedBox(
-              widthFactor: isMobileScreen ? 1 : 0.5,
-              child: notesCard,
-            ),
-            FractionallySizedBox(
-              widthFactor: isMobileScreen ? 1 : 0.5,
-              child: borrowerCard,
-            ),
-          ],
-        ),
-      ],
+    final children = [thingsCard, datesCard, notesCard, borrowerCard];
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (isMobileScreen) {
+          return ListView.separated(
+            itemCount: children.length,
+            padding: const EdgeInsets.all(16.0),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Container(
+                constraints: BoxConstraints(
+                  maxHeight: constraints.maxHeight / 2,
+                  // minHeight: constraints.maxWidth,
+                ),
+                child: children[index],
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 16);
+            },
+          );
+        }
+
+        return GridView.count(
+          padding: const EdgeInsets.all(16.0),
+          childAspectRatio: Size(
+            constraints.maxWidth - 48,
+            constraints.maxHeight - 48,
+          ).aspectRatio,
+          crossAxisCount: isMobileScreen ? 1 : 2,
+          crossAxisSpacing: 16.0,
+          mainAxisSpacing: 16.0,
+          shrinkWrap: true,
+          children: children,
+        );
+      },
     );
   }
 }
