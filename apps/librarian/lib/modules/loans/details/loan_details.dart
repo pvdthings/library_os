@@ -173,7 +173,6 @@ class LoanDetails extends StatelessWidget {
               return Container(
                 constraints: BoxConstraints(
                   maxHeight: constraints.maxHeight / 2,
-                  // minHeight: constraints.maxWidth,
                 ),
                 child: children[index],
               );
