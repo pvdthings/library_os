@@ -15,7 +15,7 @@
 	$: catalogText = $t('Catalog');
 	$: bookmarksText = $t('Bookmarks');
 	$: learnText = $t('Learn');
-	$: volunteerText = $t('Volunteer');
+	// $: volunteerText = $t('Volunteer');
 </script>
 
 <BottomNavigation>
@@ -38,10 +38,10 @@
 		label={learnText}
 		on:click={() => goto('/info')}
 	/>
-	<BottomNavigationItem
+	<!-- <BottomNavigationItem
 		active={$page.url.pathname === '/volunteer'}
 		iconStyle={$page.url.pathname === '/volunteer' ? 'ph-fill ph-clock text-xl' : 'ph-bold ph-clock text-xl'}
 		label={volunteerText}
 		on:click={() => goto('/volunteer')}
-	/>
+	/> -->
 </BottomNavigation>
