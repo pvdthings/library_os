@@ -29,19 +29,20 @@ class LoanDetailsHeader extends ConsumerWidget {
 
     return PaneHeader(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: loading
-                ? []
-                : [
-                    ThingNumber(number: loan.thing.number),
-                    const SizedBox(width: 16),
-                    Text(
-                      loan.thing.name,
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                  ],
+          if (!loading) ...[
+            ThingNumber(number: loan.thing.number),
+            const SizedBox(width: 16),
+          ],
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(right: 16.0),
+              child: Text(
+                loading ? '' : loan.thing.name,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 24),
+              ),
+            ),
           ),
           Row(
             children: [
