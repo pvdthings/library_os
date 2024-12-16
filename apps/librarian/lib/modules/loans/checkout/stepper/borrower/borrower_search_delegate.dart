@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/api/models/borrower_model.dart';
+import '../../../../../core/api/models/member_model.dart';
 import '../../../../members/list/members_list.dart';
 
-class BorrowerSearchDelegate extends SearchDelegate<BorrowerModel?> {
+class BorrowerSearchDelegate extends SearchDelegate<MemberModel?> {
   BorrowerSearchDelegate(this.borrowers);
 
-  final List<BorrowerModel> borrowers;
+  final List<MemberModel> borrowers;
 
   @override
   List<Widget>? buildActions(BuildContext context) {

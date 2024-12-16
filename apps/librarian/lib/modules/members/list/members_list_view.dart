@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/borrower_model.dart';
+import 'package:librarian_app/core/api/models/member_model.dart';
 import 'package:librarian_app/modules/members/providers/borrowers_provider.dart';
 import 'package:librarian_app/widgets/skeleton.dart';
 
@@ -9,7 +9,7 @@ import 'members_list.dart';
 class MembersListView extends ConsumerWidget {
   const MembersListView({super.key, this.onTap});
 
-  final void Function(BorrowerModel)? onTap;
+  final void Function(MemberModel)? onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,7 +49,7 @@ class MembersListView extends ConsumerWidget {
   }
 }
 
-const dummyMember = BorrowerModel(
+const dummyMember = MemberModel(
   id: '',
   name: 'Member',
   issues: [],

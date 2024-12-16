@@ -70,19 +70,13 @@ class LoanDetailsPage extends ConsumerWidget {
               const SizedBox(width: 8),
             ],
           ),
-          body: SingleChildScrollView(
-            controller: ScrollController(),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: LoanDetails(
-                borrower: loan.borrower,
-                things: [loan.thing],
-                checkedOutDate: loan.checkedOutDate,
-                dueDate: loan.dueDate,
-                isOverdue: loan.isOverdue,
-                notes: loan.notes,
-              ),
-            ),
+          body: LoanDetails(
+            borrower: model.member,
+            things: [loan.thing],
+            checkedOutDate: loan.checkedOutDate,
+            dueDate: loan.dueDate,
+            isOverdue: loan.isOverdue,
+            notes: loan.notes,
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
