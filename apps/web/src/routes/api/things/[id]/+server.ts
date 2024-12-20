@@ -27,7 +27,7 @@ export const GET = async ({ params }) => {
     categories: [], // TODO
     eyeProtection: !!thing['eye_protection'],
     hidden: !!thing['hidden'],
-    image: thing.thing_images?.map(image => image.url),
+    image: thing.thing_images.length ? thing.thing_images[0].url : undefined,
     items: thing['items'].map(item => ({ ...item, status: 'available' })),
     name: thing['name'],
     spanishName: thing['spanish_name']
