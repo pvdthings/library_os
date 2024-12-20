@@ -11,6 +11,7 @@ export const GET = async ({ params }) => {
       name,
       spanish_name,
       items ( id, brand, hidden, number ),
+      categories ( name ),
       thing_images ( url )
     `)
     .eq('id', id);
@@ -24,7 +25,7 @@ export const GET = async ({ params }) => {
     availableDate: undefined,
     available: thing.items.length, // TODO
     stock: thing.items.length, // TODO
-    categories: [], // TODO
+    categories: thing.categories.map(cat => cat.name),
     eyeProtection: !!thing['eye_protection'],
     hidden: !!thing['hidden'],
     image: thing.thing_images.length ? thing.thing_images[0].url : undefined,

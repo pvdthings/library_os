@@ -22,10 +22,10 @@ export const GET = async ({ params }) => {
 
   return json({
     id: item.id,
-    available: true,
-    availableDate: undefined,
+    available: true, // TODO
+    availableDate: undefined, // TODO
     brand: item.brand,
-    condition: item.status,
+    status: item.status,
     eyeProtection: eye_protection,
     image: item.item_images.length ? item.item_images[0].url : undefined,
     number: item.number,
