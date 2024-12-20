@@ -1,6 +1,16 @@
 import type { AppData } from '$lib/models/AppData';
-import { fetchThings } from '$lib/server/api.js'
+import { supabase } from '$lib/supabaseClient.js';
 
-export const load = async ({ fetch }): Promise<AppData> => {
-  return fetchThings(fetch);
-}
+export const load = async (): Promise<AppData> => {
+  const { data: categories, error: categoriesError } = await supabase.from('categories').select('name');
+  const { data: things } = await supabase.from('things').select();
+
+  if (categoriesError) {
+    console.log('error', categoriesError);
+  }
+
+  return {
+    categories: ['All', ...(categories ?? []).map(c => c.name)],
+    things: things ?? []
+  };
+};
