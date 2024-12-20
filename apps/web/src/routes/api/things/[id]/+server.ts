@@ -10,7 +10,8 @@ export const GET = async ({ params }) => {
       hidden,
       name,
       spanish_name,
-      items ( id, brand, hidden, number )
+      items ( id, brand, hidden, number ),
+      thing_images ( url )
     `)
     .eq('id', id);
 
@@ -21,12 +22,12 @@ export const GET = async ({ params }) => {
   return json({
     id: thing['id'],
     availableDate: undefined,
-    available: thing.items.length,
-    stock: thing.items.length,
-    categories: [],
+    available: thing.items.length, // TODO
+    stock: thing.items.length, // TODO
+    categories: [], // TODO
     eyeProtection: !!thing['eye_protection'],
     hidden: !!thing['hidden'],
-    image: undefined,
+    image: thing.thing_images?.map(image => image.url),
     items: thing['items'].map(item => ({ ...item, status: 'available' })),
     name: thing['name'],
     spanishName: thing['spanish_name']
