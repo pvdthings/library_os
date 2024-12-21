@@ -5,32 +5,33 @@ export const GET = async ({ params }) => {
   const { id } = params;
   const { data: things } = await supabase.from('things')
     .select(`
-      id,
-      eye_protection,
-      hidden,
-      name,
-      spanish_name,
-      items ( id, brand, hidden, number ),
+      *,
+      list:items ( id, brand, hidden, number ),
       categories ( name ),
-      thing_images ( url )
+      images:thing_images ( url ),
+      items (
+        stock:count
+      ),
+      loans:loans_items (
+        unavailable:count
+      )
     `)
-    .eq('id', id);
+    .eq('id', id)
+    .eq('loans.returned', false);
 
   const thing = things?.[0];
 
-  console.log('thing', thing);
-
   return json({
-    id: thing['id'],
+    id: thing.id,
     availableDate: undefined,
-    available: thing.items.length, // TODO
-    stock: thing.items.length, // TODO
+    available: thing.items[0].stock - thing.loans[0].unavailable,
+    stock: thing.items[0].stock,
     categories: thing.categories.map(cat => cat.name),
-    eyeProtection: !!thing['eye_protection'],
-    hidden: !!thing['hidden'],
-    image: thing.thing_images.length ? thing.thing_images[0].url : undefined,
-    items: thing['items'].map(item => ({ ...item, status: 'available' })),
-    name: thing['name'],
-    spanishName: thing['spanish_name']
+    eyeProtection: !!thing.eye_protection,
+    hidden: !!thing.hidden,
+    image: thing.images.length ? thing.images[0].url : undefined,
+    items: thing.list.map(item => ({ ...item, status: 'available' })),
+    name: thing.name,
+    spanishName: thing.spanish_name
   });
 };
