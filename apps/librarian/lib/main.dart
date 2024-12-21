@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
-import 'package:librarian_app/constants.dart';
-import 'package:librarian_app/core/core.dart';
+import 'package:librarian_app/core/supabase.dart';
 import 'package:librarian_app/modules/splash/pages/splash_page.dart';
-import 'package:librarian_app/core/services/image_service.dart';
 import 'package:librarian_app/theme/indigo_theme.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await supabase.Supabase.initialize(
-    url: supabaseUrl,
-    anonKey: supabasePublicKey,
-  );
-
-  if (supabaseUrl.isNotEmpty) {
-    Library.logoUrl = ImageService().getPublicUrl('library', 'settings/logo');
-  }
+  await initializeSupabase();
 
   runApp(const riverpod.ProviderScope(
     child: LibrarianApp(),
@@ -30,7 +20,7 @@ class LibrarianApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Librarian',
+      title: 'Library OS',
       debugShowCheckedModeBanner: false,
       theme: indigoTheme,
       initialRoute: '/',

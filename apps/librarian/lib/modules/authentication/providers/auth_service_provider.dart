@@ -14,8 +14,10 @@ class AuthService {
   bool get hasValidSession => _supabase.auth.currentSession != null;
 
   Future<void> signIn({void Function()? onSuccess}) async {
-    await _supabase.auth.signInWithOAuth(Provider.discord,
-        redirectTo: appUrl.isNotEmpty ? appUrl : null);
+    await _supabase.auth.signInWithOAuth(
+      OAuthProvider.discord,
+      redirectTo: appUrl.isNotEmpty ? appUrl : null,
+    );
 
     if (onSuccess != null) {
       ref.listen(userProvider, (_, user) {

@@ -1,4 +1,4 @@
-library api;
+library;
 
 import 'package:dio/dio.dart';
 import 'package:librarian_app/constants.dart';

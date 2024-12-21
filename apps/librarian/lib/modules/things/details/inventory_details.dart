@@ -1,4 +1,3 @@
-import 'package:file_picker/_internal/file_picker_web.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,7 +50,7 @@ class InventoryDetails extends ConsumerWidget {
                           const UpdatedImageModel(type: null, bytes: null);
                     },
                     onReplace: () async {
-                      FilePickerResult? result = await FilePickerWeb.platform
+                      FilePickerResult? result = await FilePicker.platform
                           .pickFiles(type: FileType.image);
                       if (result != null) {
                         ref.read(imageUploadProvider.notifier).state =
