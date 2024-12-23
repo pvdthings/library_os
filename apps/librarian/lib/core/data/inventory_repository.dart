@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,8 +49,9 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   }
 
   Future<DetailedThingModel> getThingDetails({required String id}) async {
-    final thingId = int.parse(id);
-    final data = await supabase.from('things').select('''
+    final data = await supabase
+        .from('things')
+        .select('''
         *,
         associations:things_associations!things_associations_thing_id_fkey (
           id,
@@ -64,9 +63,11 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         loans:loans_items (
           unavailable:count
         )
-      ''').eq('id', thingId).eq('loans.returned', false).limit(1).single();
-
-    print(jsonEncode(data));
+      ''')
+        .eq('id', int.parse(id))
+        .eq('loans.returned', false)
+        .limit(1)
+        .single();
 
     return DetailedThingModel.fromQuery(data);
   }
