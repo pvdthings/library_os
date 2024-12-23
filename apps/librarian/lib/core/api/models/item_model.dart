@@ -64,4 +64,25 @@ class ItemModel {
           .toList(),
     );
   }
+
+  factory ItemModel.fromQuery(Map<String, dynamic> data) {
+    return ItemModel(
+      id: data['id'].toString(),
+      thingId: data['thing_id'].toString(),
+      number: data['number'] as int,
+      name: data['name'] as String? ?? 'Unknown Thing',
+      notes: data['notes'] as String?,
+      available: true,
+      hidden: false,
+      totalLoans: 0,
+      brand: data['brand'] as String?,
+      condition: data['status'] as String?,
+      location: data['location']?.toString(),
+      estimatedValue: 0,
+      eyeProtection: false,
+      linkedThingIds: [],
+      imageUrls: [],
+      manuals: [],
+    );
+  }
 }

@@ -25,4 +25,16 @@ class ThingModel {
       available: json['available'] as int,
     );
   }
+
+  factory ThingModel.fromQuery(Map<String, dynamic> data) {
+    final stock = data['items'][0]['stock'] as int;
+    return ThingModel(
+      id: data['id'].toString(),
+      name: data['name'] as String,
+      spanishName: data['spanish_name'] as String?,
+      hidden: data['hidden'] as bool,
+      stock: stock,
+      available: stock - data['loans'][0]['unavailable'] as int,
+    );
+  }
 }

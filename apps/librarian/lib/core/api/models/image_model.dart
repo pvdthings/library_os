@@ -22,4 +22,14 @@ class ImageModel {
       height: json['height'] as double,
     );
   }
+
+  factory ImageModel.fromQuery(Map<String, dynamic> data) {
+    return ImageModel(
+      id: data['url'] as String,
+      url: data['url'] as String,
+      type: '',
+      width: 0,
+      height: 0,
+    );
+  }
 }

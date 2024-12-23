@@ -26,7 +26,7 @@ class InventoryListView extends ConsumerWidget {
         }
 
         return Skeleton(
-          enabled: snapshot.connectionState == ConnectionState.waiting,
+          enabled: !snapshot.hasData,
           child: InventoryList(
             things: snapshot.data ?? [dummyThing, dummyThing, dummyThing],
             selected: selectedThing,

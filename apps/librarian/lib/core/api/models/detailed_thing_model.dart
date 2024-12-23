@@ -47,6 +47,31 @@ class DetailedThingModel {
       items: (json['items'] as List).map((e) => ItemModel.fromJson(e)).toList(),
     );
   }
+
+  factory DetailedThingModel.fromQuery(Map<String, dynamic> data) {
+    final items = data['items'] as List;
+    return DetailedThingModel(
+      id: data['id'].toString(),
+      name: data['name'] as String,
+      spanishName: data['spanish_name'] as String?,
+      hidden: data['hidden'] as bool,
+      eyeProtection: data['eye_protection'] as bool,
+      stock: items.length,
+      available: items.length - data['loans'][0]['unavailable'] as int,
+      categories: (data['categories'] as List)
+          .map((e) => e['name'].toString())
+          .toList(),
+      linkedThings: (data['associations'] as List)
+          .map((e) => LinkedThing(
+                id: e['id'].toString(),
+                name: e['things']['name'] as String,
+              ))
+          .toList(),
+      images:
+          (data['images'] as List).map((e) => ImageModel.fromQuery(e)).toList(),
+      items: items.map((e) => ItemModel.fromQuery(e)).toList(),
+    );
+  }
 }
 
 class LinkedThing {

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/api.dart' as api;
 import 'package:librarian_app/core/services/image_service.dart';
 import 'package:librarian_app/core/api/models/updated_image_model.dart';
+import 'package:librarian_app/core/supabase.dart';
 
 import '../api/models/detailed_thing_model.dart';
 import '../api/models/item_model.dart';
@@ -16,14 +19,22 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   Future<List<ThingModel>> build() async => await getThings();
 
   Future<List<String>> getCategories() async {
-    final response = await api.getCategories();
-    return (response.data as List).map((e) => e.toString()).sorted().toList();
+    final data = await supabase.from('categories').select('name');
+    return data.map((e) => e['name'].toString()).sorted().toList();
   }
 
   Future<List<ThingModel>> getThings({String? filter}) async {
-    final response = await api.fetchThings();
-    final objects = response.data as List;
-    final things = objects.map((e) => ThingModel.fromJson(e)).toList();
+    final data = await supabase.from('things').select('''
+        *,
+        items (
+          stock:count
+        ),
+        loans:loans_items (
+          unavailable:count
+        )
+      ''').eq('loans.returned', false);
+
+    final things = data.map((e) => ThingModel.fromQuery(e)).toList();
 
     if (filter == null) {
       return things;
@@ -40,8 +51,24 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   }
 
   Future<DetailedThingModel> getThingDetails({required String id}) async {
-    final response = await api.fetchThing(id: id);
-    return DetailedThingModel.fromJson(response.data as Map<String, dynamic>);
+    final thingId = int.parse(id);
+    final data = await supabase.from('things').select('''
+        *,
+        associations:things_associations!things_associations_thing_id_fkey (
+          id,
+          things!things_associations_associated_thing_id_fkey ( name )
+        ),
+        categories ( name ),
+        images:thing_images ( url ),
+        items (*),
+        loans:loans_items (
+          unavailable:count
+        )
+      ''').eq('id', thingId).eq('loans.returned', false).limit(1).single();
+
+    print(jsonEncode(data));
+
+    return DetailedThingModel.fromQuery(data);
   }
 
   Future<List<ItemModel>> getItems() async {
