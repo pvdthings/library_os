@@ -1,17 +1,5 @@
 part of 'api.dart';
 
-Future<Response> getCategories() async {
-  return await DioClient.instance.get('/things/categories');
-}
-
-Future<Response> fetchThings() async {
-  return await DioClient.instance.get('/things');
-}
-
-Future<Response> fetchThing({required String id}) async {
-  return await DioClient.instance.get('/things/$id');
-}
-
 Future<Response> createThing({
   required String name,
   String? spanishName,
