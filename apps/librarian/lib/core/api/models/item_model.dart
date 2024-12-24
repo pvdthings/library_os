@@ -9,7 +9,6 @@ class ItemModel {
     required this.available,
     required this.hidden,
     required this.eyeProtection,
-    required this.totalLoans,
     required this.imageUrls,
     required this.manuals,
     required this.linkedThingIds,
@@ -32,7 +31,6 @@ class ItemModel {
   final bool available;
   final bool hidden;
   final bool eyeProtection;
-  final int totalLoans;
   final List<String> linkedThingIds;
   final List<String> imageUrls;
   final List<ManualModel> manuals;
@@ -51,7 +49,6 @@ class ItemModel {
       notes: json['notes'] as String?,
       available: json['available'] as bool,
       hidden: json['hidden'] as bool,
-      totalLoans: json['totalLoans'] as int,
       brand: json['brand'] as String?,
       condition: json['condition'] as String?,
       location: json['location'] as String?,
@@ -66,23 +63,32 @@ class ItemModel {
   }
 
   factory ItemModel.fromQuery(Map<String, dynamic> data) {
+    final thing = data['thing'];
     return ItemModel(
       id: data['id'].toString(),
       thingId: data['thing_id'].toString(),
       number: data['number'] as int,
-      name: data['name'] as String? ?? 'Unknown Thing',
+      name: thing['name'] as String? ?? 'Unknown Thing',
       notes: data['notes'] as String?,
-      available: true,
-      hidden: false,
-      totalLoans: 0,
+      available: (data['active_loans'][0]['count'] as int) == 0,
+      hidden: data['hidden'] as bool,
       brand: data['brand'] as String?,
       condition: data['status'] as String?,
       location: data['location']?.toString(),
-      estimatedValue: 0,
-      eyeProtection: false,
+      estimatedValue: data['estimated_value'] as double?,
+      eyeProtection: thing['eye_protection'] as bool,
       linkedThingIds: [],
-      imageUrls: [],
-      manuals: [],
+      imageUrls: (data['images'] as List?)
+              ?.map((image) => image['url'] as String)
+              .toList() ??
+          [],
+      manuals: (data['attachments'] as List?)
+              ?.map((a) => ManualModel(
+                    filename: a['name'] as String? ?? 'Attachment',
+                    url: a['url'] as String,
+                  ))
+              .toList() ??
+          [],
     );
   }
 }

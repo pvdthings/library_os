@@ -57,7 +57,7 @@ class DetailedThingModel {
       hidden: data['hidden'] as bool,
       eyeProtection: data['eye_protection'] as bool,
       stock: items.length,
-      available: items.length - data['loans'][0]['unavailable'] as int,
+      available: items.length - data['unavailable_items'][0]['count'] as int,
       categories: (data['categories'] as List)
           .map((e) => e['name'].toString())
           .toList(),

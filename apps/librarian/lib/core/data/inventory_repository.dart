@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,15 +61,25 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         ),
         categories ( name ),
         images:thing_images ( url ),
-        items (*),
-        loans:loans_items (
-          unavailable:count
-        )
+        items (
+          *,
+          active_loans:loans_items (count),
+          loans:loans_items (count),
+          attachments:item_attachments (*),
+          images:item_images (*),
+          thing:things (*)
+        ),
+        unavailable_items:loans_items (count)
       ''')
         .eq('id', int.parse(id))
-        .eq('loans.returned', false)
+        .eq('unavailable_items.returned', false)
+        .eq('items.active_loans.returned', false)
         .limit(1)
         .single();
+
+    if (kDebugMode) {
+      print(jsonEncode(data));
+    }
 
     return DetailedThingModel.fromQuery(data);
   }
@@ -80,8 +92,26 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
 
   Future<ItemModel?> getItem({required int number}) async {
     try {
-      final response = await api.fetchInventoryItem(number: number);
-      return ItemModel.fromJson(response.data as Map<String, dynamic>);
+      final data = await supabase
+          .from('items')
+          .select('''
+            *,
+            active_loans:loans_items (count),
+            loans:loans_items (count),
+            attachments:item_attachments (*),
+            images:item_images (*),
+            thing:things (*)
+          ''')
+          .eq('number', number)
+          .eq('active_loans.returned', false)
+          .limit(1)
+          .single();
+
+      if (kDebugMode) {
+        print(jsonEncode(data));
+      }
+
+      return ItemModel.fromQuery(data);
     } catch (_) {
       return null;
     }
