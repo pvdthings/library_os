@@ -1,35 +1,30 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
-import 'package:librarian_app/constants.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
-import 'user_provider.dart';
+import 'package:librarian_app/core/supabase.dart';
 
 class AuthService {
   const AuthService(this.ref);
 
   final rp.Ref ref;
 
-  static SupabaseClient get _supabase => Supabase.instance.client;
+  bool get hasValidSession => supabase.auth.currentSession != null;
 
-  bool get hasValidSession => _supabase.auth.currentSession != null;
-
-  Future<void> signIn({void Function()? onSuccess}) async {
-    await _supabase.auth.signInWithOAuth(
-      OAuthProvider.discord,
-      redirectTo: appUrl.isNotEmpty ? appUrl : null,
+  Future<void> signIn({
+    required String email,
+    required String password,
+    void Function()? onSuccess,
+  }) async {
+    await supabase.auth.signInWithPassword(
+      email: email,
+      password: password,
     );
 
-    if (onSuccess != null) {
-      ref.listen(userProvider, (_, user) {
-        if (user != null) {
-          onSuccess();
-        }
-      });
+    if (supabase.auth.currentUser != null) {
+      onSuccess?.call();
     }
   }
 
   Future<void> signOut() async {
-    await _supabase.auth.signOut();
+    await supabase.auth.signOut();
   }
 }
 
