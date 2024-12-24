@@ -13,11 +13,11 @@ class ImageService {
     final pathName = path ?? createPath(type);
 
     await Supabase.instance.client.storage
-        .from(bucket ?? 'librarian_images')
+        .from(bucket ?? 'uploads')
         .uploadBinary(pathName, bytes);
 
     final String url = Supabase.instance.client.storage
-        .from(bucket ?? 'librarian_images')
+        .from(bucket ?? 'uploads')
         .getPublicUrl(pathName);
 
     return ImageUploadResult(url: url);
