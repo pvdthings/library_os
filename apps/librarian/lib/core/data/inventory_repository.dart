@@ -85,9 +85,16 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   }
 
   Future<List<ItemModel>> getItems() async {
-    final response = await api.fetchInventoryItems();
-    final objects = response.data as List;
-    return objects.map((e) => ItemModel.fromJson(e)).toList();
+    final data = await supabase.from('items').select('''
+            *,
+            active_loans:loans_items (count),
+            loans:loans_items (count),
+            attachments:item_attachments (*),
+            images:item_images (*),
+            thing:things (*)
+          ''').eq('active_loans.returned', false);
+
+    return data.map((e) => ItemModel.fromQuery(e)).toList();
   }
 
   Future<ItemModel?> getItem({required int number}) async {
