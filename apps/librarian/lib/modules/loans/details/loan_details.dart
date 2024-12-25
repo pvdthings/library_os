@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:librarian_app/core/api/models/member_model.dart';
 import 'package:librarian_app/utils/format.dart';
 import 'package:librarian_app/widgets/detail.dart';
-import 'package:librarian_app/core/api/models/thing_summary_model.dart';
+import 'package:librarian_app/core/api/models/item_summary_model.dart';
 import 'package:librarian_app/utils/media_query.dart';
 import 'package:librarian_app/widgets/no_image.dart';
 
@@ -18,7 +18,7 @@ class LoanDetails extends StatelessWidget {
   });
 
   final MemberModel? borrower;
-  final List<ThingSummaryModel> things;
+  final List<ItemSummaryModel> things;
   final String? notes;
   final DateTime checkedOutDate;
   final DateTime dueDate;

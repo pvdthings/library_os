@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:librarian_app/core/api/models/member_model.dart';
 import 'package:librarian_app/widgets/detail.dart';
-import 'package:librarian_app/core/api/models/thing_summary_model.dart';
+import 'package:librarian_app/core/api/models/item_summary_model.dart';
 
 class CheckoutDetails extends StatelessWidget {
   const CheckoutDetails({
@@ -14,7 +14,7 @@ class CheckoutDetails extends StatelessWidget {
   });
 
   final MemberModel? borrower;
-  final List<ThingSummaryModel> things;
+  final List<ItemSummaryModel> things;
   final DateTime dueDate;
   final void Function(DateTime newDate) onDueDateUpdated;
 

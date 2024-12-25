@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:librarian_app/core/api/models/member_model.dart';
 import 'package:librarian_app/core/api/models/item_model.dart';
-import 'package:librarian_app/core/api/models/thing_summary_model.dart';
+import 'package:librarian_app/core/api/models/item_summary_model.dart';
 
 import 'checkout_details.dart';
 
@@ -19,7 +19,7 @@ Step buildConfirmStep({
       child: CheckoutDetails(
         borrower: borrower,
         things: items
-            .map((t) => ThingSummaryModel(
+            .map((t) => ItemSummaryModel(
                   id: t.id,
                   name: t.name,
                   number: t.number,

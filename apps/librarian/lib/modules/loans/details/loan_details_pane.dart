@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/member_model.dart';
 import 'package:librarian_app/core/api/models/loan_details_model.dart';
-import 'package:librarian_app/core/api/models/thing_summary_model.dart';
+import 'package:librarian_app/core/api/models/item_summary_model.dart';
 import 'package:librarian_app/modules/loans/providers/loan_details_provider.dart';
 import 'package:librarian_app/modules/loans/details/loan_details_header.dart';
 import 'package:librarian_app/widgets/skeleton.dart';
@@ -100,7 +100,7 @@ class _Details extends StatelessWidget {
 final dummyDetails = LoanDetailsModel(
   id: '',
   number: 1000,
-  thing: const ThingSummaryModel(
+  thing: const ItemSummaryModel(
     id: '',
     name: 'Something',
     number: 0,

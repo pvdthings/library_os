@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/member_model.dart';
 import 'package:librarian_app/core/api/models/loan_model.dart';
-import 'package:librarian_app/core/api/models/thing_summary_model.dart';
+import 'package:librarian_app/core/api/models/item_summary_model.dart';
 import 'package:librarian_app/modules/loans/providers/loans_provider.dart';
 import 'package:librarian_app/modules/loans/providers/selected_loan_provider.dart';
 import 'package:librarian_app/widgets/skeleton.dart';
@@ -57,7 +57,7 @@ class LoansListView extends ConsumerWidget {
 final dummyLoan = LoanModel(
   id: '',
   number: 0,
-  thing: const ThingSummaryModel(
+  thing: const ItemSummaryModel(
     id: '',
     name: 'Thing',
     number: 0,
