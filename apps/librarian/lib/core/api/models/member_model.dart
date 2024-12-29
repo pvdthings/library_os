@@ -37,4 +37,17 @@ class MemberModel {
       volunteerHours: json['volunteerHours'] as int,
     );
   }
+
+  factory MemberModel.fromQuery(Map<String, dynamic> data) {
+    return MemberModel(
+      id: data['id'].toString(),
+      name: data['name'] as String,
+      email: data['email'] as String?,
+      phone: data['phone'] as String?,
+      issues: [], // TODO
+      joinDate: DateTime.tryParse(data['join_date']),
+      keyholder: data['keyholder'] as bool,
+      volunteerHours: 0, // TODO
+    );
+  }
 }

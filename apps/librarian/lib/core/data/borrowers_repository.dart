@@ -1,5 +1,6 @@
 import 'package:librarian_app/core/api/api.dart' as api;
 import 'package:librarian_app/core/api/models/payment_model.dart';
+import 'package:librarian_app/core/supabase.dart';
 
 import '../api/models/member_model.dart';
 
@@ -12,8 +13,13 @@ class BorrowersRepository {
   }
 
   Future<MemberModel?> getBorrowerDetails(String id) async {
-    final response = await api.fetchBorrower(id);
-    return MemberModel.fromJson(response.data as Map<String, dynamic>);
+    final data = await supabase
+        .from('members')
+        .select()
+        .eq('id', int.parse(id))
+        .limit(1)
+        .single();
+    return MemberModel.fromQuery(data);
   }
 
   Future<bool> updateBorrower(String id, {String? email, String? phone}) async {

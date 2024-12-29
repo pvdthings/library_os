@@ -14,9 +14,29 @@ class LoansRepository {
     required String thingId,
   }) async {
     try {
-      final response = await API.fetchLoan(id: id, thingId: thingId);
-      return LoanDetailsModel.fromJson(response.data as Map<String, dynamic>);
+      final data = await supabase.from('loans_items').select('''
+        id,
+        item:items (
+          *,
+          thing:things (id, name),
+          images:item_images (*)
+        ),
+        loan:loans (
+          *,
+          member:members (*)
+        )
+      ''').eq('id', int.parse(id)).limit(1).single();
+
+      if (kDebugMode) {
+        print(jsonEncode(data));
+      }
+
+      return LoanDetailsModel.fromQuery(data);
     } catch (error) {
+      if (kDebugMode) {
+        print(error.toString());
+      }
+
       return null;
     }
   }
