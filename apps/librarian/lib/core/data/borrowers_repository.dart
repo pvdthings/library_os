@@ -6,10 +6,8 @@ import '../api/models/member_model.dart';
 
 class BorrowersRepository {
   Future<List<MemberModel>> getBorrowers() async {
-    final response = await api.fetchBorrowers();
-    return (response.data as List)
-        .map((json) => MemberModel.fromJson(json))
-        .toList();
+    final data = await supabase.from('members').select();
+    return data.map((json) => MemberModel.fromQuery(json)).toList();
   }
 
   Future<MemberModel?> getBorrowerDetails(String id) async {
@@ -31,11 +29,9 @@ class BorrowersRepository {
     }
   }
 
+  // TODO: Will need to create a wrapper around Airtable or Givebutter
   Future<List<PaymentModel>> getPayments(String borrowerId) async {
-    final response = await api.fetchPayments(borrowerId: borrowerId);
-    return (response.data as List)
-        .map((e) => PaymentModel.fromJson(e))
-        .toList();
+    return [];
   }
 
   Future<bool> recordPayment({
