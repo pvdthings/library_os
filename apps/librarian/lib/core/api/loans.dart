@@ -1,16 +1,5 @@
 part of 'api.dart';
 
-Future<Response> fetchLoans() async {
-  return await DioClient.instance.get('/loans');
-}
-
-Future<Response> fetchLoan({
-  required String id,
-  required String thingId,
-}) async {
-  return await DioClient.instance.get('/loans/$id/$thingId');
-}
-
 Future<Response> createLoan(NewLoan data) async {
   return await DioClient.instance.put('/loans', data: {
     'borrowerId': data.borrowerId,

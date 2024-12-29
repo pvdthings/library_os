@@ -1,13 +1,5 @@
 part of 'api.dart';
 
-Future<Response> fetchBorrower(String id) async {
-  return await DioClient.instance.get('/borrowers/$id');
-}
-
-Future<Response> fetchBorrowers() async {
-  return await DioClient.instance.get('/borrowers');
-}
-
 Future<Response> updateBorrower(
   String id, {
   String? email,
