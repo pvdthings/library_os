@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
-import 'package:librarian_app/core/api/api.dart' as API;
 import 'package:librarian_app/core/api/models/item_model.dart';
 import 'package:librarian_app/core/supabase.dart';
 
@@ -125,18 +124,13 @@ class LoansRepository {
   }
 
   Future<void> updateLoan({
-    required String loanId,
-    required String thingId,
+    required int parentLoanId,
     required DateTime dueBackDate,
     String? notes,
   }) async {
-    final dateFormat = DateFormat('yyyy-MM-dd');
-
-    await API.updateLoan(API.UpdatedLoan(
-      loanId: loanId,
-      thingId: thingId,
-      dueBackDate: dateFormat.format(dueBackDate),
-      notes: notes,
-    ));
+    await supabase.from('loans').update({
+      'due_date': dateFormat.format(dueBackDate),
+      'notes': notes,
+    }).eq('id', parentLoanId);
   }
 }

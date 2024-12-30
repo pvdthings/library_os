@@ -99,6 +99,7 @@ class _Details extends StatelessWidget {
 
 final dummyDetails = LoanDetailsModel(
   id: '',
+  parentLoanId: 0,
   number: 1000,
   thing: const ItemSummaryModel(
     id: '',

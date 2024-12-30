@@ -27,8 +27,7 @@ final loanDetailsProvider = FutureProvider((ref) async {
     onSave: (dueDate, notes) {
       LoansRepository()
           .updateLoan(
-              loanId: details.id,
-              thingId: details.thing.id,
+              parentLoanId: details.parentLoanId,
               dueBackDate: dueDate,
               notes: notes)
           .then((_) => ref.invalidate(loansProvider));

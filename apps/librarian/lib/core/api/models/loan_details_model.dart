@@ -5,6 +5,7 @@ import 'item_summary_model.dart';
 
 class LoanDetailsModel {
   final String id;
+  final int parentLoanId;
   final int number;
   final ItemSummaryModel thing;
   final MemberModel borrower;
@@ -23,6 +24,7 @@ class LoanDetailsModel {
 
   LoanDetailsModel({
     required this.id,
+    required this.parentLoanId,
     required this.number,
     required this.thing,
     required this.borrower,
@@ -36,6 +38,7 @@ class LoanDetailsModel {
   factory LoanDetailsModel.fromJson(Map<String, dynamic> json) {
     return LoanDetailsModel(
       id: json['id'] as String? ?? '?',
+      parentLoanId: 0,
       number: json['number'] as int,
       thing: ItemSummaryModel.fromJson(json['thing'] as Map<String, dynamic>),
       borrower: MemberModel(
@@ -67,6 +70,7 @@ class LoanDetailsModel {
 
     return LoanDetailsModel(
       id: data['id'].toString(),
+      parentLoanId: loan['id'] as int,
       number: item['number'] as int,
       thing: ItemSummaryModel(
         id: item['id'].toString(),
