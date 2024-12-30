@@ -28,30 +28,6 @@ class LoanModel {
     this.checkedInDate,
   });
 
-  factory LoanModel.fromJson(Map<String, dynamic> json) {
-    return LoanModel(
-      id: json['id'] as String? ?? '?',
-      number: json['number'] as int,
-      thing: ItemSummaryModel.fromJson(json['thing'] as Map<String, dynamic>),
-      borrower: MemberModel(
-        id: json['borrower']?['id'] as String? ?? '?',
-        name: json['borrower']?['name'] as String? ?? '???',
-        email: null,
-        phone: null,
-        issues: [],
-      ),
-      checkedOutDate: json['checkedOutDate'] != null
-          ? DateTime.parse(json['checkedOutDate'] as String)
-          : DateTime.now(),
-      checkedInDate: json['checkedInDate'] != null
-          ? DateTime.parse(json['checkedInDate'] as String)
-          : null,
-      dueDate: json['dueBackDate'] != null
-          ? DateTime.parse(json['dueBackDate'])
-          : DateTime.now(),
-    );
-  }
-
   factory LoanModel.fromQuery(Map<String, dynamic> data) {
     final item = data['item'];
     final loan = data['loan'];

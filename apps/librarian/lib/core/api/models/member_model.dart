@@ -23,21 +23,6 @@ class MemberModel {
     this.volunteerHours = 0,
   });
 
-  factory MemberModel.fromJson(Map<String, dynamic> json) {
-    return MemberModel(
-      id: json['id'] as String? ?? '???',
-      name: json['name'] as String? ?? '???',
-      email: json['contact']?['email'] as String?,
-      phone: json['contact']?['phone'] as String?,
-      issues: (json['issues'] as List? ?? [])
-          .map((code) => Issue.fromCode(code))
-          .toList(),
-      joinDate: DateTime.tryParse(json['joinDate'] ?? ''),
-      keyholder: json['keyholder'] as bool,
-      volunteerHours: json['volunteerHours'] as int,
-    );
-  }
-
   factory MemberModel.fromQuery(Map<String, dynamic> data) {
     return MemberModel(
       id: data['id'].toString(),

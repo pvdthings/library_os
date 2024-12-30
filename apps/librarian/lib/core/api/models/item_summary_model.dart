@@ -13,18 +13,6 @@ class ItemSummaryModel {
     this.lastLoanId,
   });
 
-  factory ItemSummaryModel.fromJson(Map<String, dynamic> json) {
-    return ItemSummaryModel(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      number: json['number'] as int,
-      images: json['images'] != null
-          ? List<String>.from(json['images'] as List)
-          : [],
-      lastLoanId: json['lastLoanId'] as String?,
-    );
-  }
-
   factory ItemSummaryModel.fromQuery(Map<String, dynamic> data) {
     return ItemSummaryModel(
       id: data['id'].toString(),

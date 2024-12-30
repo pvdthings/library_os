@@ -40,28 +40,6 @@ class ItemModel {
     return location == 'Providence Public Library';
   }
 
-  factory ItemModel.fromJson(Map<String, dynamic> json) {
-    return ItemModel(
-      id: json['id'] as String,
-      thingId: json['thingId'] as String,
-      number: json['number'] as int,
-      name: json['name'] as String? ?? 'Unknown Thing',
-      notes: json['notes'] as String?,
-      available: json['available'] as bool,
-      hidden: json['hidden'] as bool,
-      brand: json['brand'] as String?,
-      condition: json['condition'] as String?,
-      location: json['location'] as String?,
-      estimatedValue: json['estimatedValue'] as double?,
-      eyeProtection: json['eyeProtection'] as bool,
-      linkedThingIds: (json['linkedThingIds'] as List).cast<String>(),
-      imageUrls: (json['images'] as List).cast<String>(),
-      manuals: (json['manuals'] as List)
-          .map((m) => ManualModel.fromJson(m))
-          .toList(),
-    );
-  }
-
   factory ItemModel.fromQuery(Map<String, dynamic> data) {
     final thing = data['thing'];
     return ItemModel(
