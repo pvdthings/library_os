@@ -34,9 +34,7 @@ final loanDetailsProvider = FutureProvider((ref) async {
           .then((_) => ref.invalidate(loansProvider));
     },
     onCheckIn: () {
-      LoansRepository()
-          .closeLoan(loanId: details.id, thingId: details.thing.id)
-          .then((_) {
+      LoansRepository().closeLoan(details.id).then((_) {
         ref.invalidate(loansProvider);
         ref.invalidate(selectedLoanProvider);
       });

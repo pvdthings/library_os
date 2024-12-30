@@ -53,10 +53,9 @@ class _CheckoutStepperState extends ConsumerState<CheckoutStepper> {
   }
 
   void _finish() async {
-    final success = await ref.read(loansControllerProvider).openLoan(
-        borrowerId: borrower!.id,
-        thingIds: items.map((e) => e.id).toList(),
-        dueDate: dueDate);
+    final success = await ref
+        .read(loansControllerProvider)
+        .openLoan(borrowerId: borrower!.id, items: items, dueDate: dueDate);
 
     Future.delayed(Duration.zero, () {
       widget.onFinish?.call();

@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/api/models/item_model.dart';
 import 'package:librarian_app/core/data/loans_repository.dart';
 import 'package:librarian_app/providers/loans.dart';
 
@@ -12,11 +13,11 @@ class LoansController {
 
   Future<bool> openLoan({
     required String borrowerId,
-    required List<String> thingIds,
+    required List<ItemModel> items,
     required DateTime dueDate,
   }) async {
-    final loanId = await LoansRepository().openLoan(
-        borrowerId: borrowerId, thingIds: thingIds, dueBackDate: dueDate);
+    final loanId = await LoansRepository()
+        .openLoan(borrowerId: borrowerId, items: items, dueBackDate: dueDate);
 
     final loan = (await ref.refresh(loansProvider))
         .firstWhereOrNull((l) => l.id == loanId);

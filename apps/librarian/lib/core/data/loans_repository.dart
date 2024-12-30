@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:librarian_app/core/api/api.dart' as API;
+import 'package:librarian_app/core/api/models/item_model.dart';
 import 'package:librarian_app/core/supabase.dart';
 
 import '../api/models/loan_details_model.dart';
 import '../api/models/loan_model.dart';
 
 class LoansRepository {
+  final dateFormat = DateFormat('yyyy-MM-dd');
+
   Future<LoanDetailsModel?> getLoan({
     required String id,
     required String thingId,
@@ -64,35 +67,61 @@ class LoansRepository {
 
   Future<String?> openLoan({
     required String borrowerId,
-    required List<String> thingIds,
+    required List<ItemModel> items,
     required DateTime dueBackDate,
   }) async {
-    final dateFormat = DateFormat('yyyy-MM-dd');
     try {
-      final response = await API.createLoan(API.NewLoan(
-        borrowerId: borrowerId,
-        thingIds: thingIds,
-        checkedOutDate: dateFormat.format(DateTime.now()),
-        dueBackDate: dateFormat.format(dueBackDate),
-      ));
+      final data = await supabase
+          .from('loans')
+          .insert({
+            'member_id': int.parse(borrowerId),
+            'due_date': dateFormat.format(dueBackDate),
+          })
+          .select()
+          .single();
 
-      return (response.data as Map<String, dynamic>)['id'] as String;
+      final loanId = data['id'] as int;
+
+      final futures = items.map((item) => supabase
+          .from('loans_items')
+          .insert({
+            'loan_id': loanId,
+            'item_id': int.parse(item.id),
+            'thing_id': int.parse(item.thingId),
+          })
+          .select()
+          .single());
+
+      await Future.wait(
+        futures,
+        eagerError: true,
+        cleanUp: (value) async {
+          final id = value['id'];
+          if (id == null) {
+            return;
+          }
+
+          if (kDebugMode) {
+            print('Cleaning up... ID: $id');
+          }
+
+          await supabase.from('loans_items').delete().eq('id', id);
+        },
+      );
+
+      return data['id'].toString();
     } catch (error) {
+      if (kDebugMode) {
+        print(error.toString());
+      }
       return null;
     }
   }
 
-  Future<void> closeLoan({
-    required String loanId,
-    required String thingId,
-  }) async {
-    final dateFormat = DateFormat('yyyy-MM-dd');
-
-    await API.updateLoan(API.UpdatedLoan(
-      loanId: loanId,
-      thingId: thingId,
-      checkedInDate: dateFormat.format(DateTime.now()),
-    ));
+  Future<void> closeLoan(String loanId) async {
+    await supabase
+        .from('loans_items')
+        .update({'returned': true}).eq('id', int.parse(loanId));
   }
 
   Future<void> updateLoan({
