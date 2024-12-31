@@ -61,21 +61,7 @@ class InventoryDetails extends ConsumerWidget {
                       }
                     },
                   ),
-                  ThingDetailsCard(
-                    details: details ??
-                        DetailedThingModel(
-                          id: '',
-                          name: 'Something',
-                          categories: ['Category', 'Category'],
-                          linkedThings: [],
-                          images: [],
-                          items: [],
-                          hidden: false,
-                          eyeProtection: false,
-                          stock: 1,
-                          available: 1,
-                        ),
-                  ),
+                  ThingDetailsCard(details: details ?? dummyDetails),
                 ],
               ),
               const SizedBox(height: 32),
@@ -118,3 +104,19 @@ class InventoryDetails extends ConsumerWidget {
     );
   }
 }
+
+final dummyDetails = DetailedThingModel(
+  id: '',
+  name: 'Something',
+  categories: [
+    ThingCategory(id: 0, name: 'Category'),
+    ThingCategory(id: 1, name: 'Category'),
+  ],
+  linkedThings: [],
+  images: [],
+  items: [],
+  hidden: false,
+  eyeProtection: false,
+  stock: 1,
+  available: 1,
+);

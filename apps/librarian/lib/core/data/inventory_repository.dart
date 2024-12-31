@@ -18,9 +18,13 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   @override
   Future<List<ThingModel>> build() async => await getThings();
 
-  Future<List<String>> getCategories() async {
-    final data = await supabase.from('categories').select('name');
-    return data.map((e) => e['name'].toString()).sorted().toList();
+  Future<List<ThingCategory>> getCategories() async {
+    final data = await supabase.from('categories').select();
+    return data
+        .map(
+            (e) => ThingCategory(id: e['id'] as int, name: e['name'] as String))
+        .sorted((a, b) => a.name.compareTo(b.name))
+        .toList();
   }
 
   Future<List<ThingModel>> getThings({String? filter}) async {
@@ -59,7 +63,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
           id,
           things!things_associations_associated_thing_id_fkey ( name )
         ),
-        categories ( name ),
+        categories ( * ),
         images:thing_images ( url ),
         items (
           *,
@@ -124,50 +128,77 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     }
   }
 
-  Future<ThingModel> createThing({
+  Future<void> createThing({
     required String name,
     String? spanishName,
   }) async {
-    final response = await api.createThing(
-      name: name,
-      spanishName: spanishName,
-    );
+    await supabase.from('things').insert({
+      'name': name,
+      'spanish_name': spanishName,
+    });
 
     ref.invalidateSelf();
-
-    return ThingModel.fromJson(response.data as Map<String, dynamic>);
   }
 
+  // TODO: This is a dreadful mess which can be fixed by introducing auto-save
   Future<void> updateThing({
     required String thingId,
     String? name,
     String? spanishName,
     bool? hidden,
     bool? eyeProtection,
-    List<String>? categories,
+    List<ThingCategory>? categories,
     List<LinkedThing>? linkedThings,
     UpdatedImageModel? image,
   }) async {
-    if (image != null && image.bytes == null) {
-      await deleteThingImage(thingId: thingId);
+    final id = int.parse(thingId);
+
+    final values = {};
+
+    if (name != null) {
+      values['name'] = name;
     }
 
-    await api.updateThing(
-      thingId,
-      name: name,
-      spanishName: spanishName,
-      categories: categories,
-      linkedThings: linkedThings?.map((t) => t.id).toList(),
-      hidden: hidden,
-      eyeProtection: eyeProtection,
-      image: await _convert(image),
-    );
+    if (spanishName != null) {
+      values['spanish_name'] = spanishName;
+    }
+
+    if (eyeProtection != null) {
+      values['eye_protection'] = eyeProtection;
+    }
+
+    if (hidden != null) {
+      values['hidden'] = hidden;
+    }
+
+    await supabase.from('things').update(values).eq('id', id);
+
+    if (categories != null) {
+      await supabase.from('thing_categories').delete().eq('thing_id', id);
+
+      await supabase.from('thing_categories').insert(categories
+          .map((c) => {'thing_id': id, 'category_id': c.id})
+          .toList());
+    }
+
+    if (image != null && image.bytes == null) {
+      await supabase.from('thing_images').delete().eq('thing_id', id);
+    } else {
+      final uploadedImage = await uploadImage(image);
+      if (uploadedImage != null) {
+        await supabase.from('thing_images').delete().eq('thing_id', id);
+
+        await supabase
+            .from('thing_images')
+            .insert({'thing_id': id, 'url': uploadedImage.url});
+      }
+    }
 
     ref.invalidateSelf();
   }
 
-  Future<api.ImageDTO?> _convert(UpdatedImageModel? updatedImage) async {
-    if (updatedImage == null || updatedImage.bytes == null || kDebugMode) {
+  Future<api.ImageDTO?> uploadImage(UpdatedImageModel? updatedImage) async {
+    if (updatedImage == null || updatedImage.bytes == null) {
       return null;
     }
 

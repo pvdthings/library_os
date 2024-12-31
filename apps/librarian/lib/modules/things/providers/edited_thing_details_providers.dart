@@ -14,7 +14,7 @@ final hiddenProvider = StateProvider<bool?>((ref) => null);
 
 final eyeProtectionProvider = StateProvider<bool?>((ref) => null);
 
-final categoriesProvider = StateProvider<List<String>?>((ref) => null);
+final categoriesProvider = StateProvider<List<ThingCategory>?>((ref) => null);
 
 final linkedThingsProvider = StateProvider<List<LinkedThing>?>((ref) => null);
 
@@ -35,7 +35,7 @@ final unsavedChangesProvider = Provider<bool>((ref) {
 class ThingDetailsEditor {
   ThingDetailsEditor(this.ref);
 
-  final ProviderRef ref;
+  final Ref ref;
 
   Future<void> save() async {
     await ref.read(thingsRepositoryProvider.notifier).updateThing(

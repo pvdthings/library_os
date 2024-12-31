@@ -24,7 +24,7 @@ class DetailedThingModel {
   final bool eyeProtection;
   final int stock;
   final int available;
-  final List<String> categories;
+  final List<ThingCategory> categories;
   final List<LinkedThing> linkedThings;
   final List<ImageModel> images;
   final List<ItemModel> items;
@@ -40,7 +40,10 @@ class DetailedThingModel {
       stock: items.length,
       available: items.length - data['unavailable_items'][0]['count'] as int,
       categories: (data['categories'] as List)
-          .map((e) => e['name'].toString())
+          .map((e) => ThingCategory(
+                id: e['id'] as int,
+                name: e['name'] as String,
+              ))
           .toList(),
       linkedThings: (data['associations'] as List)
           .map((e) => LinkedThing(
@@ -53,6 +56,13 @@ class DetailedThingModel {
       items: items.map((e) => ItemModel.fromQuery(e)).toList(),
     );
   }
+}
+
+class ThingCategory {
+  const ThingCategory({required this.id, required this.name});
+
+  final int id;
+  final String name;
 }
 
 class LinkedThing {

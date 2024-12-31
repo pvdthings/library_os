@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/api/models/detailed_thing_model.dart';
 import 'package:librarian_app/widgets/details_card/card_body.dart';
 import 'package:librarian_app/widgets/details_card/card_header.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
@@ -17,7 +18,7 @@ class CategoriesCard extends ConsumerWidget {
     return FutureBuilder(
       future: ref.watch(thingDetailsProvider),
       builder: (context, snapshot) {
-        final List<String> categories =
+        final List<ThingCategory> categories =
             snapshot.connectionState == ConnectionState.waiting
                 ? []
                 : ref.watch(categoriesProvider) ?? snapshot.data!.categories;
@@ -27,7 +28,7 @@ class CategoriesCard extends ConsumerWidget {
             title: 'Categories',
             trailing: TextButton.icon(
               onPressed: () async {
-                final category = await showDialog<String?>(
+                final category = await showDialog<ThingCategory?>(
                   context: context,
                   builder: (context) => _CategoriesDialog(
                     existingCategories: categories.toSet(),
@@ -54,10 +55,12 @@ class CategoriesCard extends ConsumerWidget {
                       return Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: Chip(
-                          label: Text(c),
+                          label: Text(c.name),
                           onDeleted: () {
                             ref.read(categoriesProvider.notifier).state =
-                                categories.where((cat) => cat != c).toList();
+                                categories
+                                    .where((cat) => cat.id != c.id)
+                                    .toList();
                           },
                         ),
                       );
@@ -77,7 +80,7 @@ class CategoriesCard extends ConsumerWidget {
 class _CategoriesDialog extends ConsumerWidget {
   const _CategoriesDialog({required this.existingCategories});
 
-  final Set<String> existingCategories;
+  final Set<ThingCategory> existingCategories;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -120,7 +123,7 @@ class _CategoriesDialog extends ConsumerWidget {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  final List<String> categories = snapshot.data!
+                  final List<ThingCategory> categories = snapshot.data!
                       .where((c) => !existingCategories.contains(c))
                       .toList();
 
@@ -128,7 +131,7 @@ class _CategoriesDialog extends ConsumerWidget {
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(categories[index]),
+                        title: Text(categories[index].name),
                         onTap: () =>
                             Navigator.of(context).pop(categories[index]),
                       );
