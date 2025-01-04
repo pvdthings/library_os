@@ -13,7 +13,7 @@ import '../api/models/item_model.dart';
 import '../api/models/thing_model.dart';
 
 class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
-  final imageService = _ImageServiceWrapper();
+  final imageService = ImageService();
 
   @override
   Future<List<ThingModel>> build() async => await getThings();
@@ -216,7 +216,10 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   }
 
   Future<void> deleteThingImage({required String thingId}) async {
-    await api.deleteThingImage(thingId);
+    await supabase
+        .from('thing_images')
+        .delete()
+        .eq('thing_id', int.parse(thingId));
     ref.invalidateSelf();
   }
 
@@ -231,23 +234,45 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     required UpdatedImageModel? image,
     List<UpdatedImageModel>? manuals,
   }) async {
-    final imageUrl = await imageService.uploadImage(image);
+    final values = List.generate(quantity, (_) {
+      return {
+        'thing_id': int.parse(thingId),
+        'brand': brand,
+        'estimated_value': estimatedValue,
+        'hidden': hidden,
+        'notes': notes,
+        'status': condition,
+      };
+    });
 
-    final manualDTOs = manuals == null || kDebugMode
-        ? null
-        : await Future.wait(manuals.map((m) => imageService.uploadImageDTO(m)));
+    await supabase.from('items').insert(values);
 
-    await api.createInventoryItems(
-      thingId,
-      quantity: quantity,
-      brand: brand,
-      condition: condition,
-      notes: notes,
-      estimatedValue: estimatedValue,
-      hidden: hidden,
-      image: image == null ? null : api.ImageDTO(url: imageUrl),
-      manuals: manualDTOs,
-    );
+    if (image != null) {
+      // add image
+    }
+
+    if (manuals != null) {
+      // add attachments
+    }
+
+    // OLD
+    // final imageUrl = await imageService.uploadImage(image);
+
+    // final manualDTOs = manuals == null || kDebugMode
+    //     ? null
+    //     : await Future.wait(manuals.map((m) => imageService.uploadImageDTO(m)));
+
+    // await api.createInventoryItems(
+    //   thingId,
+    //   quantity: quantity,
+    //   brand: brand,
+    //   condition: condition,
+    //   notes: notes,
+    //   estimatedValue: estimatedValue,
+    //   hidden: hidden,
+    //   image: image == null ? null : api.ImageDTO(url: imageUrl),
+    //   manuals: manualDTOs,
+    // );
     ref.invalidateSelf();
   }
 
@@ -261,22 +286,22 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     UpdatedImageModel? image,
     List<UpdatedImageModel>? manuals,
   }) async {
-    final imageUrl = await imageService.uploadImage(image);
+    // final imageUrl = await imageService.uploadImage(image);
 
-    final manualDTOs = manuals == null || kDebugMode
-        ? null
-        : await Future.wait(manuals.map((m) => imageService.uploadImageDTO(m)));
+    // final manualDTOs = manuals == null || kDebugMode
+    //     ? null
+    //     : await Future.wait(manuals.map((m) => imageService.uploadImageDTO(m)));
 
-    await api.updateInventoryItem(
-      id,
-      brand: brand,
-      condition: condition,
-      notes: notes,
-      estimatedValue: estimatedValue,
-      hidden: hidden,
-      image: image == null ? null : api.ImageDTO(url: imageUrl),
-      manuals: manualDTOs,
-    );
+    // await api.updateInventoryItem(
+    //   id,
+    //   brand: brand,
+    //   condition: condition,
+    //   notes: notes,
+    //   estimatedValue: estimatedValue,
+    //   hidden: hidden,
+    //   image: image == null ? null : api.ImageDTO(url: imageUrl),
+    //   manuals: manualDTOs,
+    // );
 
     ref.invalidateSelf();
   }
@@ -289,36 +314,5 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   Future<void> deleteItem(String id) async {
     await api.deleteInventoryItem(id);
     ref.invalidateSelf();
-  }
-}
-
-class _ImageServiceWrapper {
-  static final _service = ImageService();
-
-  Future<String?> uploadImage(UpdatedImageModel? image) async {
-    if (image?.bytes == null || kDebugMode) {
-      return null;
-    }
-
-    final result = await _service.uploadImage(
-      bytes: image!.bytes!,
-      type: image.type!,
-    );
-
-    return result.url;
-  }
-
-  Future<api.ImageDTO> uploadImageDTO(UpdatedImageModel image) async {
-    if (image.existingUrl != null) {
-      return api.ImageDTO(url: image.existingUrl, name: image.name);
-    }
-
-    final result = await _service.uploadImage(
-      bytes: image.bytes!,
-      type: image.type!,
-      path: image.name,
-    );
-
-    return api.ImageDTO(url: result.url, name: image.name);
   }
 }
