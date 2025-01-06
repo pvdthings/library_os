@@ -245,10 +245,16 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
       };
     });
 
-    await supabase.from('items').insert(values);
+    final ids = await supabase.from('items').insert(values).select();
 
-    if (image != null) {
-      // add image
+    final imageUrl = await uploadImage(image);
+    if (imageUrl != null) {
+      await supabase.from('item_images').insert(ids.map((v) {
+            return {
+              'item_id': v['id'] as int,
+              'url': imageUrl.url,
+            };
+          }).toList());
     }
 
     if (manuals != null) {
