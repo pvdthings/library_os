@@ -319,7 +319,9 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   }
 
   Future<void> convertItem(String id, String thingId) async {
-    await api.convertInventoryItem(id, thingId);
+    await supabase
+        .from('items')
+        .update({'thing_id': int.parse(thingId)}).eq('id', int.parse(id));
     ref.invalidateSelf();
   }
 
