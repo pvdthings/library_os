@@ -324,7 +324,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   }
 
   Future<void> deleteItem(String id) async {
-    await api.deleteInventoryItem(id);
+    await supabase.from('items').delete().eq('id', int.parse(id));
     ref.invalidateSelf();
   }
 }
