@@ -210,6 +210,21 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     return api.ImageDTO(url: result.url);
   }
 
+  Future<List<api.ImageDTO>?> uploadImages(
+      List<UpdatedImageModel>? images) async {
+    if (images == null) {
+      return null;
+    }
+
+    final service = ImageService();
+
+    final uploads = images.map(
+        (image) => service.uploadImage(bytes: image.bytes!, type: image.type!));
+    final results = await Future.wait(uploads);
+
+    return results.map((r) => api.ImageDTO(url: r.url)).toList();
+  }
+
   Future<void> deleteThing(String id) async {
     await supabase.from('things').delete().eq('id', int.parse(id));
     ref.invalidateSelf();
@@ -257,28 +272,19 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
           }).toList());
     }
 
-    if (manuals != null) {
-      // add attachments
+    final manualUrls = await uploadImages(manuals);
+    if (manualUrls != null) {
+      for (final url in manualUrls) {
+        await supabase.from('item_attachments').insert(ids.map((v) {
+              return {
+                'item_id': v['id'] as int,
+                'name': 'Manual',
+                'url': url.url,
+              };
+            }).toList());
+      }
     }
 
-    // OLD
-    // final imageUrl = await imageService.uploadImage(image);
-
-    // final manualDTOs = manuals == null || kDebugMode
-    //     ? null
-    //     : await Future.wait(manuals.map((m) => imageService.uploadImageDTO(m)));
-
-    // await api.createInventoryItems(
-    //   thingId,
-    //   quantity: quantity,
-    //   brand: brand,
-    //   condition: condition,
-    //   notes: notes,
-    //   estimatedValue: estimatedValue,
-    //   hidden: hidden,
-    //   image: image == null ? null : api.ImageDTO(url: imageUrl),
-    //   manuals: manualDTOs,
-    // );
     ref.invalidateSelf();
   }
 
