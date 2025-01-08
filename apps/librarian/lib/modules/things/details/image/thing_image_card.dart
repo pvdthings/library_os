@@ -106,13 +106,18 @@ class ThingImageCard extends StatelessWidget {
                   onPressed: onReplace,
                   child: const Text('Choose'),
                 ),
-                TextButton(
-                  onPressed: imageUrl != null ? onRemove : null,
-                  child: Text(
-                    'Remove',
-                    style: TextStyle(color: Colors.red.shade300),
-                  ),
-                ),
+                imageUrl == null
+                    ? TextButton(
+                        onPressed: null,
+                        child: Text('Remove'),
+                      )
+                    : TextButton(
+                        onPressed: onRemove,
+                        child: Text(
+                          'Remove',
+                          style: TextStyle(color: Colors.red.shade300),
+                        ),
+                      ),
               ],
             ),
           ],
