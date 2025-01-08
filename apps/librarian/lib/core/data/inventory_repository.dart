@@ -298,22 +298,54 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     UpdatedImageModel? image,
     List<UpdatedImageModel>? manuals,
   }) async {
-    // final imageUrl = await imageService.uploadImage(image);
+    final values = {};
 
-    // final manualDTOs = manuals == null || kDebugMode
-    //     ? null
-    //     : await Future.wait(manuals.map((m) => imageService.uploadImageDTO(m)));
+    if (brand != null) {
+      values['brand'] = brand;
+    }
 
-    // await api.updateInventoryItem(
-    //   id,
-    //   brand: brand,
-    //   condition: condition,
-    //   notes: notes,
-    //   estimatedValue: estimatedValue,
-    //   hidden: hidden,
-    //   image: image == null ? null : api.ImageDTO(url: imageUrl),
-    //   manuals: manualDTOs,
-    // );
+    if (notes != null) {
+      values['notes'] = notes;
+    }
+
+    if (condition != null) {
+      values['status'] = condition;
+    }
+
+    if (estimatedValue != null) {
+      values['estimated_value'] = estimatedValue;
+    }
+
+    if (hidden != null) {
+      values['hidden'] = hidden;
+    }
+
+    final itemId = int.parse(id);
+    await supabase.from('items').update(values).eq('id', itemId);
+
+    if (image != null) {
+      await supabase.from('item_images').delete().eq('item_id', itemId);
+    }
+
+    final imageUrl = await uploadImage(image);
+    if (imageUrl != null) {
+      await supabase.from('item_images').insert({
+        'item_id': itemId,
+        'url': imageUrl.url,
+      });
+    }
+
+    // TODO: unable to remove existing manuals
+    final manualUrls = await uploadImages(manuals);
+    if (manualUrls != null) {
+      for (final url in manualUrls) {
+        await supabase.from('item_attachments').insert({
+          'item_id': itemId,
+          'name': 'Manual',
+          'url': url.url,
+        });
+      }
+    }
 
     ref.invalidateSelf();
   }
