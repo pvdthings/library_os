@@ -26,6 +26,7 @@ class MemberIssues extends StatelessWidget {
         _IssueTile(
           duesNotPaidIssue,
           isOk: !issues.contains(duesNotPaidIssue),
+          alwaysShowTrailing: true,
           trailing: _PayDuesButton(
             memberId: borrowerId,
             onRecordCashPayment: onRecordCashPayment,
@@ -52,11 +53,13 @@ class _IssueTile extends StatelessWidget {
   const _IssueTile(
     this.issue, {
     this.isOk = false,
+    this.alwaysShowTrailing = false,
     this.trailing,
   });
 
   final Issue issue;
   final bool isOk;
+  final bool alwaysShowTrailing;
   final Widget? trailing;
 
   @override
@@ -70,6 +73,7 @@ class _IssueTile extends StatelessWidget {
         title: Text(issue.okTitle),
         subtitle:
             issue.okExplanation != null ? Text(issue.okExplanation!) : null,
+        trailing: alwaysShowTrailing ? trailing : null,
       );
     }
 

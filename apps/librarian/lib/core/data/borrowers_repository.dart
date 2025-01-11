@@ -1,4 +1,3 @@
-import 'package:librarian_app/core/api/api.dart' as api;
 import 'package:librarian_app/core/api/models/payment_model.dart';
 import 'package:librarian_app/core/supabase.dart';
 
@@ -48,13 +47,14 @@ class BorrowersRepository {
     required double cash,
   }) async {
     try {
-      await api.recordCashPayment(
-        cash: cash,
-        borrowerId: borrowerId,
-      );
+      await supabase.from('members_payments').insert({
+        'member_id': int.parse(borrowerId),
+        'cash': cash,
+      });
     } catch (error) {
       return false;
     }
+
     return true;
   }
 }
