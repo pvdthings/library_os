@@ -20,13 +20,18 @@ class BorrowersRepository {
     return MemberModel.fromQuery(data);
   }
 
-  Future<bool> updateBorrower(String id, {String? email, String? phone}) async {
-    try {
-      await api.updateBorrower(id, email: email, phone: phone);
-      return true;
-    } catch (error) {
-      return false;
+  Future<void> updateBorrower(String id, {String? email, String? phone}) async {
+    final values = {};
+
+    if (email != null) {
+      values['email'] = email;
     }
+
+    if (phone != null) {
+      values['phone'] = phone;
+    }
+
+    await supabase.from('members').update(values).eq('id', int.parse(id));
   }
 
   // TODO: Will need to create a wrapper around Airtable or Givebutter

@@ -5,6 +5,7 @@ import 'package:librarian_app/modules/members/providers/selected_borrower_provid
 import 'package:librarian_app/providers/loans.dart';
 import 'package:librarian_app/providers/members.dart';
 
+// TODO: Refactor this to use MVVM.
 final phoneProvider = StateProvider<String?>((ref) => null);
 
 final emailProvider = StateProvider<String?>((ref) => null);
@@ -16,7 +17,7 @@ final unsavedChangesProvider = Provider<bool>((ref) {
 class BorrowerDetailsEditor {
   BorrowerDetailsEditor(this.ref);
 
-  final ProviderRef ref;
+  final Ref ref;
 
   Future<void> save() async {
     await BorrowersRepository().updateBorrower(
