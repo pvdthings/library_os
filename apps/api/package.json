@@ -1,6 +1,6 @@
 {
   "name": "pvdthings-api",
-  "version": "1.22.1",
+  "version": "1.22.2",
   "description": "",
   "main": "server.js",
   "scripts": {
