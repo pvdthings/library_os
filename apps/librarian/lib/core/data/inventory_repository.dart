@@ -173,6 +173,14 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
 
     await supabase.from('things').update(values).eq('id', id);
 
+    if (linkedThings != null) {
+      await supabase.from('things_associations').delete().eq('thing_id', id);
+
+      await supabase.from('things_associations').insert(linkedThings
+          .map((t) => {'thing_id': id, 'associated_thing_id': int.parse(t.id)})
+          .toList());
+    }
+
     if (categories != null) {
       await supabase.from('thing_categories').delete().eq('thing_id', id);
 
