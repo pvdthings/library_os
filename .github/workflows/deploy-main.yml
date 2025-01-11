@@ -8,7 +8,7 @@ on:
 jobs:
   deploy-api:
     name: Deploy API
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: akhileshns/heroku-deploy@v3.13.15

@@ -13,6 +13,8 @@ const lending = require('./apps/librarian');
 const cors = require('cors');
 const apiKeyMiddleware = require('./middleware/apiKey');
 
+const allowedOrigins = process.env.ACCESS_CONTROL_ALLOW_ORIGIN.split(',');
+
 const corsOptions = Object.freeze({
     allowedHeaders: [
         'Origin',
@@ -24,7 +26,13 @@ const corsOptions = Object.freeze({
         'supabase-refresh-token'
     ],
     credentials: true,
-    origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN
+    origin: (origin, callback) => {
+        if (allowedOrigins.includes(origin) || (!origin && isDevelopment())) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
 });
 
 app.use(cors(corsOptions));
