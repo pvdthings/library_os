@@ -9,11 +9,11 @@ class PaymentModel {
   final double? cash;
   final DateTime date;
 
-  factory PaymentModel.fromJson(Map<String, dynamic> json) {
+  factory PaymentModel.fromQuery(Map<String, dynamic> data) {
     return PaymentModel(
-      id: json['id'] as String,
-      cash: json['cash'] as double?,
-      date: DateTime.parse(json['date'] as String),
+      id: data['id'].toString(),
+      cash: data['cash'] as double,
+      date: DateTime.parse(data['created_at'] as String),
     );
   }
 }

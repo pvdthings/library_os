@@ -34,9 +34,13 @@ class BorrowersRepository {
     await supabase.from('members').update(values).eq('id', int.parse(id));
   }
 
-  // TODO: Will need to create a wrapper around Airtable or Givebutter
+  // TODO: Will need to create a wrapper around Givebutter or Stripe to handle online payments.
   Future<List<PaymentModel>> getPayments(String borrowerId) async {
-    return [];
+    final data = await supabase
+        .from('members_payments')
+        .select()
+        .eq('member_id', borrowerId);
+    return data.map((json) => PaymentModel.fromQuery(json)).toList();
   }
 
   Future<bool> recordPayment({
