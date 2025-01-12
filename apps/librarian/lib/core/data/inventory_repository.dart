@@ -36,7 +36,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         loans:loans_items (
           unavailable:count
         )
-      ''').eq('loans.returned', false);
+      ''').eq('loans.returned', false).order('name', ascending: true);
 
     final things = data.map((e) => ThingModel.fromQuery(e)).toList();
 
