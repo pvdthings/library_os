@@ -20,3 +20,19 @@ flutter run -d chrome
 ```
 
 For a better debugging experience, use the Flutter dev tools in Visual Studio Code.
+
+## The Supabase Migration Checklist
+
+- Repositories
+  - Loans
+  - Members
+  - Inventory
+  - Payments
+- Actions
+  - Extend Active Loans
+- DB Automations / Email Notifications
+  - New Loan Created
+  - Due Date Updated
+  - Due Back Reminder
+  - Overdue Notice
+  - Membership Renewal
