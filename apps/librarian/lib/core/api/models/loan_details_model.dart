@@ -7,13 +7,12 @@ class LoanDetailsModel {
   final String id;
   final int parentLoanId;
   final int number;
-  final ItemSummaryModel thing;
+  final ItemSummaryModel item;
   final MemberModel borrower;
   final DateTime checkedOutDate;
   final String? notes;
   final int remindersSent;
   DateTime dueDate;
-  DateTime? checkedInDate;
 
   bool get isOverdue {
     final now = DateTime.now();
@@ -26,12 +25,11 @@ class LoanDetailsModel {
     required this.id,
     required this.parentLoanId,
     required this.number,
-    required this.thing,
+    required this.item,
     required this.borrower,
     required this.checkedOutDate,
     required this.dueDate,
     required this.remindersSent,
-    this.checkedInDate,
     this.notes,
   });
 
@@ -45,7 +43,7 @@ class LoanDetailsModel {
       id: data['id'].toString(),
       parentLoanId: loan['id'] as int,
       number: item['number'] as int,
-      thing: ItemSummaryModel(
+      item: ItemSummaryModel(
         id: item['id'].toString(),
         name: thing['name'] as String,
         number: item['number'] as int,
@@ -60,11 +58,10 @@ class LoanDetailsModel {
         email: member['email'] as String?,
         phone: member['phone'] as String?,
         joinDate: DateTime.parse(member['join_date']),
-        issues: [], // TODO ?
+        issues: [],
       ),
       notes: loan['notes'] as String?,
       checkedOutDate: DateTime.parse(loan['checkout_date']),
-      checkedInDate: null,
       dueDate: DateTime.parse(loan['due_date']),
       remindersSent: loan['reminders_sent'] as int,
     );

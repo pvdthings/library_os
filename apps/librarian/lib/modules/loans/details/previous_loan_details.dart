@@ -23,7 +23,7 @@ class PreviousLoanDetails extends ConsumerWidget {
           final previousLoan = snapshot.data!;
           return LoanDetails(
             borrower: previousLoan.borrower,
-            things: [previousLoan.thing],
+            things: [previousLoan.item],
             checkedOutDate: previousLoan.checkedOutDate,
             dueDate: previousLoan.dueDate,
           );

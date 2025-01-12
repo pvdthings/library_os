@@ -21,7 +21,7 @@ class LoanDetailsPage extends ConsumerWidget {
         final loan = model.loan!;
         return Scaffold(
           appBar: AppBar(
-            title: Text('#${loan.thing.number}'),
+            title: Text('#${loan.item.number}'),
             centerTitle: true,
             actions: [
               IconButton(
@@ -72,7 +72,7 @@ class LoanDetailsPage extends ConsumerWidget {
           ),
           body: LoanDetails(
             borrower: model.member,
-            things: [loan.thing],
+            things: [loan.item],
             checkedOutDate: loan.checkedOutDate,
             dueDate: loan.dueDate,
             isOverdue: loan.isOverdue,
@@ -84,7 +84,7 @@ class LoanDetailsPage extends ConsumerWidget {
                 context: context,
                 builder: (context) {
                   return CheckinDialog(
-                    thingNumber: loan.thing.number,
+                    thingNumber: loan.item.number,
                     onCheckin: () async {
                       model.onCheckIn?.call();
                     },

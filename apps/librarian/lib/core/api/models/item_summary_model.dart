@@ -18,8 +18,8 @@ class ItemSummaryModel {
       id: data['id'].toString(),
       name: data['name'] as String,
       number: data['number'] as int,
-      images: [], // TODO
-      lastLoanId: data['id'].toString(), // TODO
+      images: [],
+      lastLoanId: null, // TODO
     );
   }
 }

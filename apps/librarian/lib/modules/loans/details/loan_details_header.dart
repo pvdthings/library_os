@@ -31,14 +31,14 @@ class LoanDetailsHeader extends ConsumerWidget {
       child: Row(
         children: [
           if (!loading) ...[
-            ThingNumber(number: loan.thing.number),
+            ThingNumber(number: loan.item.number),
             const SizedBox(width: 16),
           ],
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(right: 16.0),
               child: Text(
-                loading ? '' : loan.thing.name,
+                loading ? '' : loan.item.name,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(fontSize: 24),
               ),
@@ -72,12 +72,12 @@ class LoanDetailsHeader extends ConsumerWidget {
                 ),
               ),
               IconButton(
-                onPressed: !loading && loan.thing.lastLoanId != null
+                onPressed: !loading && loan.item.lastLoanId != null
                     ? () {
                         controller.viewPreviousLoan(
-                          id: loan.thing.lastLoanId!,
-                          itemId: loan.thing.id,
-                          itemNumber: loan.thing.number,
+                          id: loan.item.lastLoanId!,
+                          itemId: loan.item.id,
+                          itemNumber: loan.item.number,
                         );
                       }
                     : null,
@@ -114,7 +114,7 @@ class LoanDetailsHeader extends ConsumerWidget {
                           context: context,
                           builder: (context) {
                             return CheckinDialog(
-                              thingNumber: loan.thing.number,
+                              thingNumber: loan.item.number,
                               onCheckin: () async {
                                 await Future(onCheckIn!);
                               },

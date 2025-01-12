@@ -84,7 +84,7 @@ class _Details extends StatelessWidget {
             enabled: loading,
             child: LoanDetails(
               borrower: memberDetails,
-              things: [details.thing],
+              things: [details.item],
               notes: details.notes,
               checkedOutDate: details.checkedOutDate,
               dueDate: details.dueDate,
@@ -101,7 +101,7 @@ final dummyDetails = LoanDetailsModel(
   id: '',
   parentLoanId: 0,
   number: 1000,
-  thing: const ItemSummaryModel(
+  item: const ItemSummaryModel(
     id: '',
     name: 'Something',
     number: 0,
