@@ -13,7 +13,7 @@ class LoansRepository {
 
   Future<LoanDetailsModel?> getLoan({
     required String id,
-    required String thingId,
+    required String itemId,
   }) async {
     try {
       final data = await supabase.from('loans_items').select('''

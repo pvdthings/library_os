@@ -17,7 +17,7 @@ class PreviousLoanDetails extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return FutureBuilder(
-      future: LoansRepository().getLoan(id: loanId, thingId: itemId),
+      future: LoansRepository().getLoan(id: loanId, itemId: itemId),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final previousLoan = snapshot.data!;

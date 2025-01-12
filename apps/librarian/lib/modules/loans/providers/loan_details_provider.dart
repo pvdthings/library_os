@@ -16,7 +16,7 @@ final loanDetailsProvider = FutureProvider((ref) async {
   final [details, memberDetails] = await Future.wait([
     LoansRepository().getLoan(
       id: selectedLoan.id,
-      thingId: selectedLoan.thing.id,
+      itemId: selectedLoan.thing.id,
     ),
     BorrowersRepository().getBorrowerDetails(selectedLoan.borrower.id),
   ]);
