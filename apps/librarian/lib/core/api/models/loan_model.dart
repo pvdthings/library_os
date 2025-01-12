@@ -25,7 +25,6 @@ class LoanModel {
     required this.borrower,
     required this.checkedOutDate,
     required this.dueDate,
-    this.checkedInDate,
   });
 
   factory LoanModel.fromQuery(Map<String, dynamic> data) {
@@ -54,7 +53,6 @@ class LoanModel {
         issues: [], // TODO ?
       ),
       checkedOutDate: DateTime.parse(loan['checkout_date']),
-      checkedInDate: null, // TODO: not needed
       dueDate: DateTime.parse(loan['due_date']),
     );
   }
