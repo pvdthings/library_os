@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/api.dart' as api;
+import 'package:librarian_app/core/api/models/loan_details_model.dart';
 import 'package:librarian_app/modules/loans/details/thing_number.dart';
 import 'package:librarian_app/providers/loans.dart';
 import 'package:librarian_app/widgets/dialogs/general_dialog.dart';
 
-import 'previous_loan_details.dart';
+import 'loan_details.dart';
 
 class LoanDetailsController {
   const LoanDetailsController({
@@ -16,26 +17,18 @@ class LoanDetailsController {
   final BuildContext context;
   final WidgetRef ref;
 
-  void viewPreviousLoan({
-    required String id,
-    required String itemId,
-    required int itemNumber,
-  }) {
+  void viewPreviousLoan(LoanDetailsModel loan) {
     showDialog(
       context: context,
       builder: (context) {
         return GeneralDialog(
-          titlePrefix: ThingNumber(number: itemNumber),
+          titlePrefix: ThingNumber(number: loan.item.number),
           title: 'Previous Loan',
-          content: SingleChildScrollView(
-            controller: ScrollController(),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: PreviousLoanDetails(
-                loanId: id,
-                itemId: itemId,
-              ),
-            ),
+          content: LoanDetails(
+            borrower: loan.borrower,
+            things: [loan.item],
+            checkedOutDate: loan.checkedOutDate,
+            dueDate: loan.dueDate,
           ),
         );
       },

@@ -43,7 +43,6 @@ class LoanModel {
         images: (item['images'] as List)
             .map((image) => image['url'] as String)
             .toList(),
-        lastLoanId: null, // TODO
       ),
       borrower: MemberModel(
         id: member['id'].toString(),

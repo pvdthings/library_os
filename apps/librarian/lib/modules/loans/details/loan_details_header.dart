@@ -49,8 +49,7 @@ class LoanDetailsHeader extends ConsumerWidget {
               IconButton(
                 onPressed: loading
                     ? null
-                    : () {
-                        showDialog(
+                    : () => showDialog(
                           context: context,
                           builder: (context) {
                             return EditLoanDialog(
@@ -59,8 +58,7 @@ class LoanDetailsHeader extends ConsumerWidget {
                               onSavePressed: onSave,
                             );
                           },
-                        );
-                      },
+                        ),
                 icon: const Icon(Icons.edit),
                 tooltip: 'Edit',
               ),
@@ -68,18 +66,12 @@ class LoanDetailsHeader extends ConsumerWidget {
                 height: 24,
                 width: 24,
                 child: VerticalDivider(
-                  color: Colors.white.withOpacity(0.3),
+                  color: Colors.white.withValues(alpha: 0.3),
                 ),
               ),
               IconButton(
-                onPressed: !loading && loan.item.lastLoanId != null
-                    ? () {
-                        controller.viewPreviousLoan(
-                          id: loan.item.lastLoanId!,
-                          itemId: loan.item.id,
-                          itemNumber: loan.item.number,
-                        );
-                      }
+                onPressed: !loading && loan.previousLoan != null
+                    ? () => controller.viewPreviousLoan(loan.previousLoan!)
                     : null,
                 tooltip: 'Previous Loan',
                 icon: const Icon(Icons.history),
@@ -87,8 +79,7 @@ class LoanDetailsHeader extends ConsumerWidget {
               const SizedBox(width: 4),
               IconButton(
                 onPressed: !loading && loan.borrower.email != null
-                    ? () {
-                        showDialog(
+                    ? () => showDialog(
                           context: context,
                           builder: (context) {
                             return SendEmailDialog(
@@ -100,8 +91,7 @@ class LoanDetailsHeader extends ConsumerWidget {
                               },
                             );
                           },
-                        );
-                      }
+                        )
                     : null,
                 tooltip: 'Send Email',
                 icon: const Icon(Icons.email),
@@ -109,8 +99,7 @@ class LoanDetailsHeader extends ConsumerWidget {
               const SizedBox(width: 4),
               IconButton(
                 onPressed: !loading && onCheckIn != null
-                    ? () {
-                        showDialog(
+                    ? () => showDialog(
                           context: context,
                           builder: (context) {
                             return CheckinDialog(
@@ -120,8 +109,7 @@ class LoanDetailsHeader extends ConsumerWidget {
                               },
                             );
                           },
-                        );
-                      }
+                        )
                     : null,
                 tooltip: 'Check in',
                 icon: const Icon(Icons.library_add_check),

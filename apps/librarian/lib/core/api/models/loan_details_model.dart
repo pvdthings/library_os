@@ -13,6 +13,7 @@ class LoanDetailsModel {
   final String? notes;
   final int remindersSent;
   DateTime dueDate;
+  LoanDetailsModel? previousLoan;
 
   bool get isOverdue {
     final now = DateTime.now();
@@ -31,9 +32,13 @@ class LoanDetailsModel {
     required this.dueDate,
     required this.remindersSent,
     this.notes,
+    this.previousLoan,
   });
 
-  factory LoanDetailsModel.fromQuery(Map<String, dynamic> data) {
+  factory LoanDetailsModel.fromQuery(
+    Map<String, dynamic> data, {
+    LoanDetailsModel? previousLoan,
+  }) {
     final item = data['item'];
     final loan = data['loan'];
     final member = loan['member'];
@@ -43,6 +48,7 @@ class LoanDetailsModel {
       id: data['id'].toString(),
       parentLoanId: loan['id'] as int,
       number: item['number'] as int,
+      previousLoan: previousLoan,
       item: ItemSummaryModel(
         id: item['id'].toString(),
         name: thing['name'] as String,
@@ -50,7 +56,6 @@ class LoanDetailsModel {
         images: (item['images'] as List)
             .map((image) => image['url'] as String)
             .toList(),
-        lastLoanId: null, // TODO
       ),
       borrower: MemberModel(
         id: member['id'].toString(),

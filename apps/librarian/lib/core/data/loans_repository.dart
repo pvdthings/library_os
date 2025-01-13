@@ -33,7 +33,9 @@ class LoansRepository {
         print(jsonEncode(data));
       }
 
-      return LoanDetailsModel.fromQuery(data);
+      final previousLoan = await getPreviousLoan(itemId: int.parse(itemId));
+
+      return LoanDetailsModel.fromQuery(data, previousLoan: previousLoan);
     } catch (error) {
       if (kDebugMode) {
         print(error.toString());
@@ -41,6 +43,32 @@ class LoansRepository {
 
       return null;
     }
+  }
+
+  Future<LoanDetailsModel?> getPreviousLoan({required int itemId}) async {
+    final data = await supabase.from('loans_items').select('''
+        id,
+        item_id,
+        item:items (
+          *,
+          thing:things (id, name),
+          images:item_images (*)
+        ),
+        loan:loans (
+          *,
+          member:members (*)
+        )
+      ''').eq('item_id', itemId).order('loan_id', ascending: false).limit(2);
+
+    if (kDebugMode) {
+      print(jsonEncode(data));
+    }
+
+    if (data.length < 2) {
+      return null;
+    }
+
+    return LoanDetailsModel.fromQuery(data[1]);
   }
 
   Future<List<LoanModel>> getLoans() async {
