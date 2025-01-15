@@ -7,7 +7,7 @@ const buildDocOptions = require('./docs/scripts/buildOptions');
 const swaggerUi = require('swagger-ui-express');
 const app = express();
 const bodyParser = require('body-parser');
-const auth = require('./auth');
+// const auth = require('./auth');
 const things = require('./apps/catalog/routes/things');
 const lending = require('./apps/librarian');
 const cors = require('cors');
@@ -45,7 +45,7 @@ app.get('/', (_, res) => {
 app.use('/web', things);
 app.use('/things', things);
 app.use('/lending', lending);
-app.use('/auth', auth);
+// app.use('/auth', auth);
 
 const PORT = process.env.PORT || 8088;
 
