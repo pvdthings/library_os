@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const things = require('./apps/catalog/routes/things');
 const lending = require('./apps/librarian');
 const cors = require('cors');
+const helmet = require('helmet');
 const apiKeyMiddleware = require('./middleware/apiKey');
 
 const allowedOrigins = process.env.ACCESS_CONTROL_ALLOW_ORIGIN.split(',');
@@ -36,12 +37,10 @@ const corsOptions = Object.freeze({
 });
 
 app.use(cors(corsOptions));
+app.use(helmet());
 app.use(apiKeyMiddleware);
 app.use(bodyParser.json());
 
-app.get('/', (_, res) => {
-    res.send('You have reached the Things API');
-});
 app.use('/web', things);
 app.use('/things', things);
 app.use('/lending', lending);
@@ -59,6 +58,8 @@ if (isDevelopment()) {
         swaggerUi.setup(specs, { explorer: true })
     );
 }
+
+app.disable('x-powered-by');
 
 app.listen(PORT, () => {
     console.log(`PVD Things API listening on PORT ${PORT}...`);
