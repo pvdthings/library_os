@@ -46,6 +46,10 @@ app.use('/things', things);
 app.use('/lending', lending);
 // app.use('/auth', auth);
 
+app.use((req, res, next) => {
+    res.status(404).send();
+});
+
 const PORT = process.env.PORT || 8088;
 
 if (isDevelopment()) {
