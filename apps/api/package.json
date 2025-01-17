@@ -1,6 +1,6 @@
 {
   "name": "pvdthings-api",
-  "version": "1.22.2",
+  "version": "1.23.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -24,9 +24,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
-    "helmet": "^8.0.0",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "helmet": "^8.0.0"
   },
   "devDependencies": {
     "jest": "^29.3.1"
