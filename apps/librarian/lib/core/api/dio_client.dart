@@ -13,8 +13,8 @@ class DioClient {
       contentType: 'application/json',
       headers: {
         'x-api-key': apiKey,
-        'supabase-access-token': _accessToken,
-        'supabase-refresh-token': _refreshToken,
+        'x-access-token': _accessToken,
+        'x-refresh-token': _refreshToken,
       },
     );
   }

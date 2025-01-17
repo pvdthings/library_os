@@ -19,8 +19,8 @@ const corsOptions = Object.freeze({
         'X-Requested-With',
         'Content-Type',
         'Accept',
-        'supabase-access-token',
-        'supabase-refresh-token'
+        'x-access-token',
+        'x-refresh-token'
     ],
     credentials: true,
     origin: (origin, callback) => {

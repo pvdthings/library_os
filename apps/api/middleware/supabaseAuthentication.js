@@ -3,7 +3,7 @@ const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_PUB_ANON_KEY);
 
 const authenticateToken = async (req, res, next) => {
-    const accessToken = req.headers['supabase-access-token'];
+    const accessToken = req.headers['x-access-token'];
 
     const { data: { user }, error } = await supabase.auth.getUser(accessToken);
 
