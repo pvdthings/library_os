@@ -39,7 +39,6 @@ app.use(apiKeyMiddleware);
 app.use(bodyParser.json());
 
 app.use('/web', things);
-app.use('/things', things);
 app.use('/lending', lending);
 
 app.use((req, res, next) => {
