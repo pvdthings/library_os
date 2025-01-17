@@ -2,10 +2,10 @@ part of 'api.dart';
 
 class DioClient {
   static String get _accessToken =>
-      Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+      supabase.auth.currentSession?.accessToken ?? '';
 
   static String get _refreshToken =>
-      Supabase.instance.client.auth.currentSession?.refreshToken ?? '';
+      supabase.auth.currentSession?.refreshToken ?? '';
 
   static BaseOptions get _options {
     return BaseOptions(

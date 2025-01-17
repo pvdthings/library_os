@@ -1,7 +1,6 @@
-library core;
+library;
 
 import 'package:flutter/foundation.dart';
-import 'package:file_picker/_internal/file_picker_web.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

@@ -1,10 +1,24 @@
-const String supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-const String supabasePublicKey = String.fromEnvironment('SUPABASE_PUBLIC_KEY');
+Future<void> loadEnvironmentVariables() async {
+  await dotenv.load(isOptional: true);
+}
 
-const String apiHost = String.fromEnvironment('API_HOST',
-    defaultValue: 'http://localhost:8088/lending');
+const supabaseUrlKey = 'SUPABASE_URL';
+const supabasePublicKeyKey = 'SUPABASE_PUBLIC_KEY';
+const apiHostKey = 'API_HOST';
+const apiKeyKey = 'API_KEY';
+const appUrlKey = 'APP_URL';
 
-const String apiKey = String.fromEnvironment('API_KEY');
+const String _supabaseUrl = String.fromEnvironment(supabaseUrlKey);
+const String _supabasePublicKey = String.fromEnvironment(supabasePublicKeyKey);
+const String _apiHost = String.fromEnvironment(apiHostKey);
+const String _apiKey = String.fromEnvironment(apiKeyKey);
+const String _appUrl = String.fromEnvironment(appUrlKey);
 
-const String appUrl = String.fromEnvironment('APP_URL');
+String get supabaseUrl => dotenv.get(supabaseUrlKey, fallback: _supabaseUrl);
+String get supabasePublicKey =>
+    dotenv.get(supabasePublicKeyKey, fallback: _supabasePublicKey);
+String get apiHost => dotenv.get(apiHostKey, fallback: _apiHost);
+String get apiKey => dotenv.get(apiKeyKey, fallback: _apiKey);
+String get appUrl => dotenv.get(appUrlKey, fallback: _appUrl);

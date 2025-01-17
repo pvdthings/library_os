@@ -1,7 +1,7 @@
 part of 'core.dart';
 
 Future<FileData?> pickDocumentFile() async {
-  FilePickerResult? result = await FilePickerWeb.platform.pickFiles(
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
     type: FileType.custom,
     allowedExtensions: ['pdf'],
   );
@@ -16,7 +16,7 @@ Future<FileData?> pickDocumentFile() async {
 
 Future<FileData?> pickImageFile() async {
   FilePickerResult? result =
-      await FilePickerWeb.platform.pickFiles(type: FileType.image);
+      await FilePicker.platform.pickFiles(type: FileType.image);
   return result == null
       ? null
       : FileData(
