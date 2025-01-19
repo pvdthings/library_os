@@ -1,4 +1,4 @@
-import { HOST, KEY } from "$lib/server/env";
+import { API_HOST, API_KEY } from "$env/static/private";
 import { fail } from "@sveltejs/kit";
 
 export const load = async ({ cookies, fetch }): Promise<any> => {
@@ -6,9 +6,9 @@ export const load = async ({ cookies, fetch }): Promise<any> => {
   const firstName = cookies.get('firstName');
   const keyholder = cookies.get('keyholder');
 
-  const response = await fetch(`${HOST}/web/volunteer/shifts`, {
+  const response = await fetch(`${API_HOST}/web/volunteer/shifts`, {
     headers: {
-      'x-api-key': KEY,
+      'x-api-key': API_KEY,
       'x-email': email
     }
   });
@@ -30,11 +30,11 @@ export const actions = {
       return fail(400, { invalid: true });
     }
 
-    const response = await fetch(`${HOST}/web/volunteer/auth`, {
+    const response = await fetch(`${API_HOST}/web/volunteer/auth`, {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
-				'x-api-key': KEY
+				'x-api-key': API_KEY
 			},
 			body: JSON.stringify({ email })
 		});
@@ -63,11 +63,11 @@ export const actions = {
     const data = await request.formData();
     const shifts = data.getAll('shifts').map((s) => JSON.parse(s.toString()));
 
-    const response = await fetch(`${HOST}/web/volunteer/shifts/enroll`, {
+    const response = await fetch(`${API_HOST}/web/volunteer/shifts/enroll`, {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
-				'x-api-key': KEY,
+				'x-api-key': API_KEY,
         'x-email': email
 			},
 			body: JSON.stringify({ shifts })

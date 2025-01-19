@@ -1,10 +1,10 @@
+import { API_HOST, API_KEY } from "$env/static/private";
 import type { AppData } from "$lib/models/AppData";
-import { HOST, KEY } from "./env";
 
 export const fetchThings = async (fetch): Promise<AppData> => {
-  const result = await fetch(`${HOST}/things`, {
+  const result = await fetch(`${API_HOST}/web/things`, {
     headers: {
-      'x-api-key': KEY
+      'x-api-key': API_KEY
     }
   });
 
