@@ -6,7 +6,7 @@ const { getItemDetails } = require('../services/itemDetails');
 // const { enroll, getShifts } = require('../services/shifts');
 // const { findMember } = require('../../../services/borrowers');
 
-router.get('/', async (req, res) => {
+router.get('/catalog', async (req, res) => {
     try {
         res.send(await getCatalogData());
     } catch (error) {
