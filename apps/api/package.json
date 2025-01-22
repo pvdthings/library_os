@@ -3,20 +3,11 @@
   "version": "1.23.0",
   "description": "",
   "main": "server.js",
+  "private": true,
   "scripts": {
     "test": "jest",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pvdthings/api.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/pvdthings/api/issues"
-  },
-  "homepage": "https://github.com/pvdthings/api#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
     "airtable": "^0.12.2",
