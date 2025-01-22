@@ -11,7 +11,7 @@ AIRTABLE_KEY=[value]
 AIRTABLE_BASE_ID=[value]
 
 SUPABASE_URL=[value]
-SUPABASE_PUB_ANON_KEY=[value]
+SUPABASE_PUBLIC_KEY=[value]
 
 // Determines which users can access admin features
 ADMIN_WHITELIST="alice@email.com"
