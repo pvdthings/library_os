@@ -40,7 +40,6 @@ dependencies:
   url_launcher: ^6.2.5
   skeletonizer: ^1.4.2
   phone_numbers_parser: ^9.0.2
-  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -70,8 +69,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - web/assets/
-    - .env
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
