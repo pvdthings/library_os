@@ -6,29 +6,48 @@ Librarian is the first app in **Library OS**. It is intended to be used by volun
 
 ## Running the app
 
-### Set environment variables
+### Environment variables
 
 ```
 API_HOST (http://localhost:8088/lending)
 API_KEY
-APP_URL
+
 SUPABASE_URL
 SUPABASE_PUBLIC_KEY
 ```
 
-Supabase variables are required for production environments, but not for local development.
+Environment variables are passed in when running the app.
+
+```
+flutter run -d chrome --dart-define VAR=value
+```
+
+To simplify configuration during development, it's recommeneded to use Visual Studio Code and create a `launch.json` file at the root of the `library_os` folder.
+
+Your configuration will look something like this:
+
+```json
+{
+  "name": "librarian",
+  "cwd": "apps/librarian",
+  "request": "launch",
+  "type": "dart",
+  "args": [
+    "--dart-define", "API_KEY=value",
+    "--dart-define", "API_HOST=http://localhost:8088/lending",
+    "--dart-define", "SUPABASE_URL=value",
+    "--dart-define", "SUPABASE_PUBLIC_KEY=value"
+  ]
+}
+```
 
 ### Launch in Chrome
 
-```
-flutter run -d chrome
-```
-
-For a better debugging experience, use the Flutter dev tools in Visual Studio Code.
+Use Visual Studio's `Run and Debug` feature to launch the app in Chrome.
 
 ## Project Structure
 
-The repository is organized "feature-first," so things become more specific as you go down the folder hierarchy.
+The repository is (mostly) organized "feature-first," so things become more specific as you go down the folder hierarchy.
 
 - `core` folders contain **Business Logic**.
 - `data` folders contain **Repostories**.
