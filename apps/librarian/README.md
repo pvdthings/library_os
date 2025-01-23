@@ -45,13 +45,6 @@ Your configuration will look something like this:
 
 Use Visual Studio's `Run and Debug` feature to launch the app in Chrome.
 
-## Project Structure
+## Project structure
 
 The repository is (mostly) organized "feature-first," so things become more specific as you go down the folder hierarchy.
-
-- `core` folders contain **Business Logic**.
-- `data` folders contain **Repostories**.
-- `models` contains **Models** or **ViewModels**.
-- `providers` folders contain **Providers**, which maintain shared app state and notify widgets of changes.
-- `widgets` folders contain **UI Widgets** (and controllers) that compose larger widgets or pages.
-- `pages` folders contain UI widgets that represent pages. These are generally wrapped in a `Scaffold` widget.
