@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
 import 'package:librarian_app/core/supabase.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
   const AuthService(this.ref);
@@ -8,18 +9,37 @@ class AuthService {
 
   bool get hasValidSession => supabase.auth.currentSession != null;
 
-  Future<void> signIn({
+  Future<void> requestCode({
     required String email,
-    required String password,
     void Function()? onSuccess,
+    void Function(String error)? onError,
   }) async {
-    await supabase.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
-
-    if (supabase.auth.currentUser != null) {
+    try {
+      await supabase.auth.signInWithOtp(
+        email: email,
+        shouldCreateUser: false,
+      );
       onSuccess?.call();
+    } catch (error) {
+      onError?.call(error.toString());
+    }
+  }
+
+  Future<void> verifyCode({
+    required String email,
+    required String code,
+    void Function()? onSuccess,
+    void Function(String error)? onError,
+  }) async {
+    try {
+      await supabase.auth.verifyOTP(
+        email: email,
+        token: code,
+        type: OtpType.email,
+      );
+      onSuccess?.call();
+    } catch (error) {
+      onError?.call(error.toString());
     }
   }
 
