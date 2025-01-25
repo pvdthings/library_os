@@ -39,7 +39,10 @@ app.use(apiKeyMiddleware);
 app.use(bodyParser.json());
 
 app.use('/web', things);
-app.use('/lending', lending);
+
+if (!process.env.DISABLE_LENDING) {
+    app.use('/lending', lending);
+}
 
 app.use((req, res, next) => {
     res.status(404).send();
