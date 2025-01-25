@@ -1,4 +1,4 @@
-import type { Thing, ThingID } from "$lib/models/Thing";
+import type { Thing, ThingID } from "$lib/api/models/Thing";
 import { defaultFilterCategory, filter } from "$lib/utils/filters";
 import { derived, get, writable } from "svelte/store";
 

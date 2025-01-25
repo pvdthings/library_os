@@ -27,15 +27,9 @@ class LoanDetailsController {
         return GeneralDialog(
           titlePrefix: ThingNumber(number: itemNumber),
           title: 'Previous Loan',
-          content: SingleChildScrollView(
-            controller: ScrollController(),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: PreviousLoanDetails(
-                loanId: id,
-                itemId: itemId,
-              ),
-            ),
+          content: PreviousLoanDetails(
+            loanId: id,
+            itemId: itemId,
           ),
         );
       },
