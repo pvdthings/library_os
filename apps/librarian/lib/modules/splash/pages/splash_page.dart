@@ -23,7 +23,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
 
       if (!service.hasValidSession) {
         Navigator.of(context).pushAndRemoveUntil(
-          createFadePageRoute(child: const SignInPage()),
+          createFadePageRoute(child: SignInPage()),
           (route) => false,
         );
       } else {

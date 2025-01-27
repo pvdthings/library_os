@@ -1,4 +1,4 @@
-import type { ThingDetailsModel } from "$lib/models/ThingDetails";
+import type { ThingDetailsModel } from "$lib/api/models/ThingDetails";
 import { derived, get, readable, writable, type Readable } from "svelte/store";
 import type { Async } from "./types";
 
