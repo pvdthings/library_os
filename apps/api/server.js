@@ -10,6 +10,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const apiKeyMiddleware = require('./middleware/apiKey');
 const notFound = require('./middleware/notFound');
+const rateLimit = require('./middleware/rateLimit');
 
 const allowedOrigins = process.env.ACCESS_CONTROL_ALLOW_ORIGIN.split(',');
 
@@ -33,6 +34,7 @@ const corsOptions = Object.freeze({
     }
 });
 
+app.use(rateLimit);
 app.use(cors(corsOptions));
 app.use(helmet());
 app.use(apiKeyMiddleware);
