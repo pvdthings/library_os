@@ -9,6 +9,7 @@ const lending = require('./apps/librarian');
 const cors = require('cors');
 const helmet = require('helmet');
 const apiKeyMiddleware = require('./middleware/apiKey');
+const notFound = require('./middleware/notFound');
 
 const allowedOrigins = process.env.ACCESS_CONTROL_ALLOW_ORIGIN.split(',');
 
@@ -44,9 +45,7 @@ if (!process.env.DISABLE_LENDING) {
     app.use('/lending', lending);
 }
 
-app.use((req, res, next) => {
-    res.status(404).send();
-});
+app.use(notFound);
 
 app.disable('x-powered-by');
 
