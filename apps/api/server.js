@@ -20,8 +20,7 @@ const corsOptions = Object.freeze({
         'X-Requested-With',
         'Content-Type',
         'Accept',
-        'x-access-token',
-        'x-refresh-token'
+        'x-access-token'
     ],
     credentials: true,
     origin: (origin, callback) => {
