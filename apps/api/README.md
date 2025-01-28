@@ -3,9 +3,12 @@
 ## Environment variables
 You'll need to set these environment variables in a `.env` file at the root of the project folder:
 ```js
-NODE_ENV=development // or 'production'
+NODE_ENV=[value] // 'development' or 'production' (default)
 
 API_KEY=[value]
+
+RATE_LIMIT_WINDOW_MINUTES=[value] // 15 (default)
+RATE_LIMIT_FAILED_ATTEMPTS=[value] // 5 (default)
 
 AIRTABLE_KEY=[value]
 AIRTABLE_BASE_ID=[value]
