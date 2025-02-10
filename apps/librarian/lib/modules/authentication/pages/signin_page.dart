@@ -149,3 +149,10 @@ class _LogoImage extends StatelessWidget {
     );
   }
 }
+
+final signOutPageTransition = createFadePageRoute(
+  child: SignInPage(
+    message: 'You have been signed out.',
+  ),
+  duration: const Duration(milliseconds: 500),
+);

@@ -6,7 +6,6 @@ import 'package:librarian_app/theme/indigo_theme.dart';
 
 import 'modules/authentication/pages/signin_page.dart';
 import 'modules/authentication/providers/auth_service_provider.dart';
-import 'widgets/fade_page_route.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,12 +24,7 @@ class LibrarianApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthService.instance.handleSignOut(() {
-      navigatorKey.currentState?.pushReplacement(createFadePageRoute(
-        child: SignInPage(
-          message: 'You have been signed out.',
-        ),
-        duration: Duration(milliseconds: 500),
-      ));
+      navigatorKey.currentState?.pushReplacement(signOutPageTransition);
     });
 
     return MaterialApp(
