@@ -10,8 +10,11 @@ import 'package:librarian_app/dashboard/pages/dashboard_page.dart';
 import 'package:librarian_app/widgets/fade_page_route.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// TODO: Refactor using MVVM
 class SignInPage extends ConsumerWidget {
-  SignInPage({super.key});
+  SignInPage({super.key, this.message});
+
+  final String? message;
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -30,7 +33,7 @@ class SignInPage extends ConsumerWidget {
 
     Future<void> signIn() async {
       try {
-        await ref.read(authServiceProvider).signIn(
+        await AuthService.instance.signIn(
             email: _emailController.text,
             password: _passwordController.text,
             onSuccess: navigateToDashboard);
@@ -103,9 +106,10 @@ class SignInPage extends ConsumerWidget {
                       label: const Text('Sign in'),
                     ),
                   ),
-                  if (ref.watch(signinErrorProvider) != null) ...[
+                  if (ref.watch(signinErrorProvider) != null ||
+                      message != null) ...[
                     const SizedBox(height: 16.0),
-                    Text(ref.read(signinErrorProvider)!)
+                    Text(ref.read(signinErrorProvider) ?? message!),
                   ],
                 ],
               ),
@@ -145,3 +149,10 @@ class _LogoImage extends StatelessWidget {
     );
   }
 }
+
+final signOutPageTransition = createFadePageRoute(
+  child: SignInPage(
+    message: 'You have been signed out.',
+  ),
+  duration: const Duration(milliseconds: 500),
+);
