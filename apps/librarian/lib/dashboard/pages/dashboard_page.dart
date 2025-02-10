@@ -179,7 +179,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                 const UpdateButton(),
                 const SizedBox(width: 32),
                 const UserTray(),
-                const SizedBox(width: 32),
+                const SizedBox(width: 16),
               ],
               IconButton(
                 onPressed: () => AuthService.instance.signOut(),
