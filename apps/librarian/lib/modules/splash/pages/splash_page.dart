@@ -19,9 +19,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
     super.initState();
 
     Timer(const Duration(seconds: 2), () {
-      final service = ref.read(authServiceProvider);
-
-      if (!service.hasValidSession) {
+      if (!AuthService.instance.hasValidSession) {
         Navigator.of(context).pushAndRemoveUntil(
           createFadePageRoute(child: SignInPage()),
           (route) => false,
