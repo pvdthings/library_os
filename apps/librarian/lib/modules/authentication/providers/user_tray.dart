@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/core.dart';
 import 'package:librarian_app/modules/authentication/providers/user_provider.dart';
-import 'package:librarian_app/modules/authentication/widgets/user_avatar.dart';
 
 class UserTray extends ConsumerWidget {
   const UserTray({super.key});
@@ -14,8 +13,6 @@ class UserTray extends ConsumerWidget {
     return Row(
       children: [
         Text(user?.name ?? ''),
-        const SizedBox(width: 12),
-        const UserAvatar(),
       ],
     );
   }
