@@ -1,9 +1,0 @@
-paths:
-  /auth/check:
-    post:
-      summary: Checks whether a given email is whitelisted for logon
-      responses:
-        '200':
-          description: Whitelisted
-        '401':
-          description: Not whitelisted

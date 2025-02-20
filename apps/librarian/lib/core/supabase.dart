@@ -1,4 +1,3 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:librarian_app/constants.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -9,8 +8,8 @@ final supabase = Supabase.instance.client;
 
 Future<void> initializeSupabase() async {
   await Supabase.initialize(
-    url: dotenv.get('SUPABASE_URL'),
-    anonKey: dotenv.get('SUPABASE_KEY'),
+    url: supabaseUrl,
+    anonKey: supabasePublicKey,
   );
 
   if (supabaseUrl.isNotEmpty) {

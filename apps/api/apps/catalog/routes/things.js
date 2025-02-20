@@ -1,40 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const { enroll, getShifts } = require('../services/shifts');
-const { findMember } = require('../../../services/borrowers');
+const { getCatalogData } = require('../services/catalog');
+const { getThingDetails } = require('../services/thingDetails');
+const { getItemDetails } = require('../services/itemDetails');
 
-router.get('/volunteer/shifts', async (req, res) => {
-    const email = req.headers['x-email'];
+router.get('/catalog', async (req, res) => {
     try {
-        res.send(await getShifts({ email }));
+        res.send(await getCatalogData());
     } catch (error) {
         console.error(error);
         res.status(error.status || 500).send({ errors: [error] });
     }
 });
 
-router.post('/volunteer/auth', async (req, res) => {
-    const { email } = req.body;
+router.get('/things/:id', async (req, res) => {
+    const { id } = req.params;
     try {
-        const member = await findMember({ email });
-
-        if (member) {
-            res.send(member);
-        } else {
-            res.sendStatus(403);
-        }
+        res.send(await getThingDetails(id));
     } catch (error) {
         console.error(error);
         res.status(error.status || 500).send({ errors: [error] });
     }
 });
 
-router.post('/volunteer/shifts/enroll', async (req, res) => {
-    const email = req.headers['x-email'];
-    const { shifts } = req.body;
+router.get('/items/:id', async (req, res) => {
+    const { id } = req.params;
     try {
-        await enroll(email, shifts);
-        res.sendStatus(204);
+        res.send(await getItemDetails(id));
     } catch (error) {
         console.error(error);
         res.status(error.status || 500).send({ errors: [error] });

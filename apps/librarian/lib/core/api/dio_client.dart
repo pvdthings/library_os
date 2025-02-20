@@ -2,10 +2,7 @@ part of 'api.dart';
 
 class DioClient {
   static String get _accessToken =>
-      Supabase.instance.client.auth.currentSession?.accessToken ?? '';
-
-  static String get _refreshToken =>
-      Supabase.instance.client.auth.currentSession?.refreshToken ?? '';
+      supabase.auth.currentSession?.accessToken ?? '';
 
   static BaseOptions get _options {
     return BaseOptions(
@@ -13,8 +10,7 @@ class DioClient {
       contentType: 'application/json',
       headers: {
         'x-api-key': apiKey,
-        'supabase-access-token': _accessToken,
-        'supabase-refresh-token': _refreshToken,
+        'x-access-token': _accessToken,
       },
     );
   }

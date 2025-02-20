@@ -1,5 +1,5 @@
 import { browser } from "$app/environment";
-import type { ThingID } from "$lib/models/Thing";
+import type { ThingID } from "$lib/api/models/Thing";
 import { derived, writable } from "svelte/store";
 
 const defaultValue = [];

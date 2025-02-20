@@ -6,7 +6,7 @@ import 'package:librarian_app/modules/loans/details/thing_number.dart';
 import 'package:librarian_app/providers/loans.dart';
 import 'package:librarian_app/widgets/dialogs/general_dialog.dart';
 
-import 'loan_details.dart';
+import 'previous_loan_details.dart';
 
 class LoanDetailsController {
   const LoanDetailsController({
@@ -24,11 +24,9 @@ class LoanDetailsController {
         return GeneralDialog(
           titlePrefix: ThingNumber(number: loan.item.number),
           title: 'Previous Loan',
-          content: LoanDetails(
-            borrower: loan.borrower,
-            things: [loan.item],
-            checkedOutDate: loan.checkedOutDate,
-            dueDate: loan.dueDate,
+          content: PreviousLoanDetails(
+            loanId: loan.id,
+            itemId: loan.item.id,
           ),
         );
       },

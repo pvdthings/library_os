@@ -10,8 +10,11 @@ import 'package:librarian_app/dashboard/pages/dashboard_page.dart';
 import 'package:librarian_app/widgets/fade_page_route.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// TODO: Refactor using MVVM
 class SignInPage extends ConsumerWidget {
-  SignInPage({super.key});
+  SignInPage({super.key, this.message});
+
+  final String? message;
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -30,7 +33,7 @@ class SignInPage extends ConsumerWidget {
 
     Future<void> signIn() async {
       try {
-        await ref.read(authServiceProvider).signIn(
+        await AuthService.instance.signIn(
             email: _emailController.text,
             password: _passwordController.text,
             onSuccess: navigateToDashboard);
@@ -46,73 +49,73 @@ class SignInPage extends ConsumerWidget {
     final cardHeight = min<double>(240, screenSize.height);
     final cardWidth = min<double>(cardHeight, screenSize.width);
 
-    final card = Card(
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        width: cardWidth,
-        child: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _LogoImage(),
-              const SizedBox(height: 8.0),
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Email is required';
-                  }
-
-                  return null;
-                },
-              ),
-              const SizedBox(height: 8.0),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                ),
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Password is required';
-                  }
-
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16.0),
-              ListenableBuilder(
-                listenable: Listenable.merge([
-                  _emailController,
-                  _passwordController,
-                ]),
-                builder: (context, _) => FilledButton.icon(
-                  onPressed: _canSubmit ? signIn : null,
-                  label: Text('Sign in'),
-                ),
-              ),
-              if (ref.watch(signinErrorProvider) != null) ...[
-                const SizedBox(height: 16.0),
-                Text(ref.read(signinErrorProvider)!)
-              ],
-            ],
-          ),
-        ),
-      ),
-    );
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Center(child: card),
+        child: Center(
+            child: Card(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            width: cardWidth,
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _LogoImage(),
+                  const SizedBox(height: 8.0),
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Email is required';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 8.0),
+                  TextFormField(
+                    controller: _passwordController,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                    ),
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password is required';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16.0),
+                  ListenableBuilder(
+                    listenable: Listenable.merge([
+                      _emailController,
+                      _passwordController,
+                    ]),
+                    builder: (context, _) => FilledButton.icon(
+                      onPressed: _canSubmit ? signIn : null,
+                      label: const Text('Sign in'),
+                    ),
+                  ),
+                  if (ref.watch(signinErrorProvider) != null ||
+                      message != null) ...[
+                    const SizedBox(height: 16.0),
+                    Text(ref.read(signinErrorProvider) ?? message!),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        )),
       ),
     );
   }
@@ -146,3 +149,10 @@ class _LogoImage extends StatelessWidget {
     );
   }
 }
+
+final signOutPageTransition = createFadePageRoute(
+  child: SignInPage(
+    message: 'You have been signed out.',
+  ),
+  duration: const Duration(milliseconds: 500),
+);

@@ -1,10 +1,10 @@
-const String supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+const supabaseUrlKey = 'SUPABASE_URL';
+const supabasePublicKeyKey = 'SUPABASE_PUBLIC_KEY';
+const apiHostKey = 'API_HOST';
+const apiKeyKey = 'API_KEY';
+const appUrlKey = 'APP_URL';
 
-const String supabasePublicKey = String.fromEnvironment('SUPABASE_KEY');
-
-const String apiHost = String.fromEnvironment('API_HOST',
-    defaultValue: 'http://localhost:8088/lending');
-
-const String apiKey = String.fromEnvironment('API_KEY');
-
-const String appUrl = String.fromEnvironment('APP_URL');
+const apiHost = String.fromEnvironment(apiHostKey);
+const apiKey = String.fromEnvironment(apiKeyKey);
+const supabaseUrl = String.fromEnvironment(supabaseUrlKey);
+const supabasePublicKey = String.fromEnvironment(supabasePublicKeyKey);

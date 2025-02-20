@@ -1,4 +1,4 @@
-import type { AppData } from '$lib/models/AppData';
+import type { AppData } from '$lib/api/models/AppData';
 import { supabase } from '$lib/supabaseClient.js';
 
 export const load = async (): Promise<AppData> => {

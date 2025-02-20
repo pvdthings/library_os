@@ -3,18 +3,18 @@
 ## Environment variables
 You'll need to set these environment variables in a `.env` file at the root of the project folder:
 ```js
-NODE_ENV=development // or 'production'
+NODE_ENV=[value] // 'development' or 'production' (default)
 
 API_KEY=[value]
+
+RATE_LIMIT_WINDOW_MINUTES=[value] // 15 (default)
+RATE_LIMIT_FAILED_ATTEMPTS=[value] // 5 (default)
 
 AIRTABLE_KEY=[value]
 AIRTABLE_BASE_ID=[value]
 
 SUPABASE_URL=[value]
-SUPABASE_PUB_ANON_KEY=[value]
-
-// Determines which Discord accounts are allowed to authenticate with the API
-DISCORD_WHITELIST="alice@email.com bob@email.com"
+SUPABASE_PUBLIC_KEY=[value]
 
 // Determines which users can access admin features
 ADMIN_WHITELIST="alice@email.com"
@@ -34,9 +34,3 @@ npm run install // on first run
 npm run start
 ```
 The server will start on port `8088`.
-
-When running locally, no authentication is needed for the `lending` API. In production environments, these endpoints require tokens provided by Supabase Authentication (via Discord).
-
-### Documentation
-
-**Swagger Docs** are hosted at [http://localhost:8088/docs]().
