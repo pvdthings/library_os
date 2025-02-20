@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:librarian_app/utils/format.dart';
 
-import '../providers/actions_service_provider.dart';
-
 class ActionWizardController extends ChangeNotifier {
-  ActionWizardController(this.context, {required this.service});
+  ActionWizardController(this.context);
 
   final BuildContext context;
-  final ActionsService service;
 
   DateTime? _dueDate;
 
@@ -39,7 +36,8 @@ class ActionWizardController extends ChangeNotifier {
 
   Future<void> _runAction() {
     isLoading = true;
-    return service.extendAllDueDates(dueDate!).then((success) {
+    // TODO
+    return Future.value(true).then((success) {
       Navigator.of(context).pop(success);
 
       if (success) {

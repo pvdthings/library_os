@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/actions/providers/actions_service_provider.dart';
 import 'package:librarian_app/modules/actions/widgets/action_controller.dart';
 import 'package:librarian_app/modules/actions/widgets/extend_active_loans/extend_active_loans.dart';
 import 'package:librarian_app/utils/media_query.dart';
@@ -29,10 +28,7 @@ class Actions extends ConsumerWidget {
               FractionallySizedBox(
                 widthFactor: isMobileScreen ? 1 : 0.33,
                 child: _Action(
-                  controller: ActionController(
-                    context,
-                    service: ref.read(actionsServiceProvider),
-                  ),
+                  controller: ActionController(context),
                   title: ExtendActiveLoans.title,
                   description: ExtendActiveLoans.description,
                 ),

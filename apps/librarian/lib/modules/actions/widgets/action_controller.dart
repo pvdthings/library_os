@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/modules/actions/providers/actions_service_provider.dart';
 import 'package:librarian_app/modules/actions/widgets/action_wizard.dart';
 import 'package:librarian_app/modules/actions/widgets/action_wizard_controller.dart';
 import 'package:librarian_app/modules/actions/widgets/action_wizard_dialog.dart';
 import 'package:librarian_app/utils/media_query.dart';
 
 class ActionController {
-  const ActionController(this.context, {required this.service});
+  const ActionController(this.context);
 
   final BuildContext context;
-  final ActionsService service;
 
   Future<bool> isAuthorized() {
-    return service.isAuthorizedToExtendAllDueDates();
+    // TODO: Use Supabase roles to determine authorization
+    return Future.value(false);
   }
 
   void showWizard() {
     final isMobileScreen = isMobile(context);
-    final controller = ActionWizardController(context, service: service);
+    final controller = ActionWizardController(context);
 
     if (isMobileScreen) {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
