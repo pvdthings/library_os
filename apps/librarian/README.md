@@ -9,9 +9,6 @@ Librarian is the first app in **Library OS**. It is intended to be used by volun
 ### Environment variables
 
 ```
-API_HOST (http://localhost:8088/lending)
-API_KEY
-
 SUPABASE_URL
 SUPABASE_KEY
 ```
@@ -33,8 +30,6 @@ Your configuration will look something like this:
   "request": "launch",
   "type": "dart",
   "args": [
-    "--dart-define", "API_KEY=value",
-    "--dart-define", "API_HOST=http://localhost:8088/lending",
     "--dart-define", "SUPABASE_URL=value",
     "--dart-define", "SUPABASE_PUBLIC_KEY=value"
   ]
