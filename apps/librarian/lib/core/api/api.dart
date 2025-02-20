@@ -6,4 +6,3 @@ import 'package:librarian_app/core/supabase.dart';
 
 part 'dio_client.dart';
 part 'dto.dart';
-part 'payments.dart';
