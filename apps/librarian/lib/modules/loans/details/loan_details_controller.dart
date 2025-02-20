@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/api.dart' as api;
 import 'package:librarian_app/core/api/models/loan_details_model.dart';
 import 'package:librarian_app/modules/loans/details/thing_number.dart';
 import 'package:librarian_app/providers/loans.dart';
@@ -34,7 +33,8 @@ class LoanDetailsController {
   }
 
   Future<void> sendReminderEmail({required int loanNumber}) async {
-    api.sendReminderEmail(loanNumber: loanNumber).then((value) {
+    // TODO: Implement email sending
+    Future.value(true).then((value) {
       ref.invalidate(loansProvider);
 
       ScaffoldMessenger.of(context)
