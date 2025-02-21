@@ -13,6 +13,7 @@ Future<void> initializeSupabase() async {
   );
 
   if (supabaseUrl.isNotEmpty) {
-    Library.logoUrl = ImageService().getPublicUrl('library', 'settings/logo');
+    Library.logoUrl =
+        ImageService.instance.getPublicUrl('library', 'settings/logo');
   }
 }

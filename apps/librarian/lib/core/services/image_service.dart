@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:librarian_app/core/supabase.dart';
 import 'package:uuid/uuid.dart';
 
 class ImageService {
+  static ImageService get instance => _instance;
+
   Future<ImageUploadResult> uploadImage({
     required Uint8List bytes,
     required String type,
@@ -12,13 +14,12 @@ class ImageService {
   }) async {
     final pathName = path ?? createPath(type);
 
-    await Supabase.instance.client.storage
+    await supabase.storage
         .from(bucket ?? 'uploads')
         .uploadBinary(pathName, bytes);
 
-    final String url = Supabase.instance.client.storage
-        .from(bucket ?? 'uploads')
-        .getPublicUrl(pathName);
+    final String url =
+        supabase.storage.from(bucket ?? 'uploads').getPublicUrl(pathName);
 
     return ImageUploadResult(url: url);
   }
@@ -29,9 +30,11 @@ class ImageService {
   }
 
   String getPublicUrl(String bucket, String path) {
-    return Supabase.instance.client.storage.from(bucket).getPublicUrl(path);
+    return supabase.storage.from(bucket).getPublicUrl(path);
   }
 }
+
+final _instance = ImageService();
 
 class ImageUploadResult {
   final String url;

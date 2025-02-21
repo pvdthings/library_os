@@ -13,8 +13,6 @@ import '../api/models/item_model.dart';
 import '../api/models/thing_model.dart';
 
 class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
-  final imageService = ImageService();
-
   @override
   Future<List<ThingModel>> build() async => await getThings();
 
@@ -210,7 +208,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
       return null;
     }
 
-    final result = await ImageService().uploadImage(
+    final result = await ImageService.instance.uploadImage(
       bytes: updatedImage.bytes!,
       type: updatedImage.type!,
     );
@@ -224,10 +222,8 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
       return null;
     }
 
-    final service = ImageService();
-
-    final uploads = images.map(
-        (image) => service.uploadImage(bytes: image.bytes!, type: image.type!));
+    final uploads = images.map((image) => ImageService.instance
+        .uploadImage(bytes: image.bytes!, type: image.type!));
     final results = await Future.wait(uploads);
 
     return results.map((r) => api.ImageDTO(url: r.url)).toList();
