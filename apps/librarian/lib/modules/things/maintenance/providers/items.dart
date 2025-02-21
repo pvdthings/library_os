@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/item_model.dart';
+import 'package:librarian_app/core/models/item_model.dart';
 import 'package:librarian_app/modules/things/providers/items.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 

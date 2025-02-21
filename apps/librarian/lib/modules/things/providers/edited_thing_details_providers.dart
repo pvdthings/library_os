@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/detailed_thing_model.dart';
-import 'package:librarian_app/core/api/models/image_model.dart';
-import 'package:librarian_app/core/api/models/updated_image_model.dart';
+import 'package:librarian_app/core/models/detailed_thing_model.dart';
+import 'package:librarian_app/core/models/image_model.dart';
+import 'package:librarian_app/core/models/updated_image_model.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_provider.dart';
 import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';

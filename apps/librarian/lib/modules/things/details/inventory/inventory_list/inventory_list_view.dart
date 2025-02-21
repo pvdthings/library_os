@@ -5,7 +5,7 @@ import 'package:librarian_app/modules/things/providers/selected_thing_provider.d
 import 'package:librarian_app/modules/things/providers/things_provider.dart';
 import 'package:librarian_app/widgets/skeleton.dart';
 
-import '../../../../../core/api/models/thing_model.dart';
+import '../../../../../core/models/thing_model.dart';
 import 'inventory_list.dart';
 
 class InventoryListView extends ConsumerWidget {

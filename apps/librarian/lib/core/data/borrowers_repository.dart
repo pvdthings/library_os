@@ -1,7 +1,7 @@
-import 'package:librarian_app/core/api/models/payment_model.dart';
+import 'package:librarian_app/core/models/payment_model.dart';
 import 'package:librarian_app/core/supabase.dart';
 
-import '../api/models/member_model.dart';
+import '../models/member_model.dart';
 
 class BorrowersRepository {
   Future<List<MemberModel>> getBorrowers() async {

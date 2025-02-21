@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/core/api/models/member_model.dart';
-import 'package:librarian_app/core/api/models/item_summary_model.dart';
+import 'package:librarian_app/core/models/member_model.dart';
+import 'package:librarian_app/core/models/item_summary_model.dart';
 
 class LoanModel {
   final String id;

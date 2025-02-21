@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
-import 'package:librarian_app/core/api/models/item_model.dart';
+import 'package:librarian_app/core/models/item_model.dart';
 import 'package:librarian_app/core/supabase.dart';
 
-import '../api/models/loan_details_model.dart';
-import '../api/models/loan_model.dart';
+import '../models/loan_details_model.dart';
+import '../models/loan_model.dart';
 
 class LoansRepository {
   final dateFormat = DateFormat('yyyy-MM-dd');

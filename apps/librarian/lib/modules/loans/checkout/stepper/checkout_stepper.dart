@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/member_model.dart';
+import 'package:librarian_app/core/models/member_model.dart';
 import 'package:librarian_app/modules/loans/details/loan_details_page.dart';
 import 'package:librarian_app/modules/loans/providers/loans_controller_provider.dart';
 import 'package:librarian_app/utils/media_query.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
-import 'package:librarian_app/core/api/models/item_model.dart';
+import 'package:librarian_app/core/models/item_model.dart';
 
 import 'borrower/borrower_step.dart';
 import 'confirm/confirm_step.dart';

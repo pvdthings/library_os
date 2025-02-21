@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/core/api/models/item_model.dart';
+import 'package:librarian_app/core/models/item_model.dart';
 import 'package:librarian_app/widgets/icons.dart';
 
 Widget getIcon(ItemModel item) {

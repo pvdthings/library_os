@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/thing_model.dart';
+import 'package:librarian_app/core/models/thing_model.dart';
 import 'package:librarian_app/modules/things/providers/create_thing_service.dart';
 import 'package:librarian_app/modules/things/providers/find_things.dart';
 import 'package:librarian_app/utils/future_signal.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/detailed_thing_model.dart';
+import 'package:librarian_app/core/models/detailed_thing_model.dart';
 import 'package:librarian_app/widgets/details_card/card_body.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
 import 'package:librarian_app/widgets/fields/checkbox_field.dart';

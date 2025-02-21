@@ -5,7 +5,7 @@ import 'package:librarian_app/widgets/details_card/card_body.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
 import 'package:librarian_app/widgets/hint_text.dart';
 
-import '../../../../core/api/models/item_model.dart';
+import '../../../../core/models/item_model.dart';
 import '../../../../widgets/details_card/card_header.dart';
 import 'icons.dart';
 

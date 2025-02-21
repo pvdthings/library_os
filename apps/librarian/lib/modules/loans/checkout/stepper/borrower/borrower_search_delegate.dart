@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/api/models/member_model.dart';
+import '../../../../../core/models/member_model.dart';
 import '../../../../members/list/members_list.dart';
 
 class BorrowerSearchDelegate extends SearchDelegate<MemberModel?> {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/item_model.dart';
-import 'package:librarian_app/core/api/models/thing_model.dart';
+import 'package:librarian_app/core/models/item_model.dart';
+import 'package:librarian_app/core/models/thing_model.dart';
 import 'package:librarian_app/modules/things/providers/find_things.dart';
 import 'package:librarian_app/modules/things/providers/item_details_orchestrator.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';

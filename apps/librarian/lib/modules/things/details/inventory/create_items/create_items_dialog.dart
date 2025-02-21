@@ -5,7 +5,7 @@ import 'package:librarian_app/modules/things/details/inventory/create_items/crea
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items_controller.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
 
-import '../../../../../core/api/models/thing_model.dart';
+import '../../../../../core/models/thing_model.dart';
 
 class CreateItemsDialog extends ConsumerStatefulWidget {
   const CreateItemsDialog({super.key, required this.thing});

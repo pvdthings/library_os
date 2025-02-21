@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_app/core/api/models/member_model.dart';
+import 'package:librarian_app/core/models/member_model.dart';
 
 class NeedsAttentionView extends StatelessWidget {
   final MemberModel member;

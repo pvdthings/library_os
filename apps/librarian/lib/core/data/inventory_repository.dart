@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/api.dart' as api;
 import 'package:librarian_app/core/services/image_service.dart';
-import 'package:librarian_app/core/api/models/updated_image_model.dart';
 import 'package:librarian_app/core/supabase.dart';
 
-import '../api/models/detailed_thing_model.dart';
-import '../api/models/item_model.dart';
-import '../api/models/thing_model.dart';
+import '../models/detailed_thing_model.dart';
+import '../models/image_upload_model.dart';
+import '../models/item_model.dart';
+import '../models/thing_model.dart';
+import '../models/updated_image_model.dart';
 
 class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
   @override
@@ -203,7 +203,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     ref.invalidateSelf();
   }
 
-  Future<api.ImageDTO?> uploadImage(UpdatedImageModel? updatedImage) async {
+  Future<ImageUploadModel?> uploadImage(UpdatedImageModel? updatedImage) async {
     if (updatedImage == null || updatedImage.bytes == null) {
       return null;
     }
@@ -213,10 +213,10 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
       type: updatedImage.type!,
     );
 
-    return api.ImageDTO(url: result.url);
+    return ImageUploadModel(url: result.url);
   }
 
-  Future<List<api.ImageDTO>?> uploadImages(
+  Future<List<ImageUploadModel>?> uploadImages(
       List<UpdatedImageModel>? images) async {
     if (images == null) {
       return null;
@@ -226,7 +226,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         .uploadImage(bytes: image.bytes!, type: image.type!));
     final results = await Future.wait(uploads);
 
-    return results.map((r) => api.ImageDTO(url: r.url)).toList();
+    return results.map((r) => ImageUploadModel(url: r.url)).toList();
   }
 
   Future<void> deleteThing(String id) async {

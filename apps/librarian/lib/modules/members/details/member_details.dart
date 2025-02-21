@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/issue_model.dart';
+import 'package:librarian_app/core/models/issue_model.dart';
 import 'package:librarian_app/modules/members/details/contact_card.dart';
 import 'package:librarian_app/modules/members/details/stats_card.dart';
 import 'package:librarian_app/modules/members/providers/borrower_details_provider.dart';

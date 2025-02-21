@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/loan_model.dart';
+import 'package:librarian_app/core/models/loan_model.dart';
 import 'package:librarian_app/modules/loans/providers/loans_filter_provider.dart';
 import 'package:librarian_app/providers/loans.dart';
 

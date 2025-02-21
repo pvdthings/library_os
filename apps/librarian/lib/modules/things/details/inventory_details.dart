@@ -1,10 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/detailed_thing_model.dart';
+import 'package:librarian_app/core/models/detailed_thing_model.dart';
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items_dialog.dart';
 import 'package:librarian_app/modules/things/details/thing_details/thing_details_card.dart';
-import 'package:librarian_app/core/api/models/updated_image_model.dart';
+import 'package:librarian_app/core/models/updated_image_model.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
 import 'package:librarian_app/modules/things/providers/item_details_orchestrator.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';

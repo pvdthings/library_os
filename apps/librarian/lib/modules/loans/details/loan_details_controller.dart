@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/api/models/loan_details_model.dart';
+import 'package:librarian_app/core/models/loan_details_model.dart';
 import 'package:librarian_app/modules/loans/details/thing_number.dart';
 import 'package:librarian_app/providers/loans.dart';
 import 'package:librarian_app/widgets/dialogs/general_dialog.dart';
