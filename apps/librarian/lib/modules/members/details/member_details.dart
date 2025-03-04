@@ -83,24 +83,22 @@ class _Details extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 16,
       children: [
         ContactCard(
           name: name,
           email: email,
           phone: phone,
         ),
-        const SizedBox(height: 16.0),
         StatsCard(
           keyholder: keyholder,
           memberSince: memberSince,
           volunteerHours: volunteerHours,
         ),
-        const SizedBox(height: 16.0),
         IssuesCard(
           borrowerId: id,
           issues: issues,
         ),
-        const SizedBox(height: 16.0),
         PaymentsCard(payments: payments),
       ],
     );
