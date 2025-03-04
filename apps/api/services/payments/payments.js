@@ -16,12 +16,10 @@ const fetchPayments = async (borrowerId) => {
 };
 
 const recordCashPayment = async ({
-    borrowerId,
-    cash
+    borrowerId
 }) => {
     const payment = await payments.create({
-        "member": [borrowerId],
-        cash
+        "member": [borrowerId]
     });
 
     return payment.id;

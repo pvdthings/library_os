@@ -16,9 +16,8 @@ router.get('/:borrowerId', async (req, res) => {
 
 router.put('/:borrowerId', async (req, res) => {
     const { borrowerId } = req.params;
-    const { cash } = req.body;
     try {
-        const paymentId = await recordCashPayment({ borrowerId, cash });
+        const paymentId = await recordCashPayment({ borrowerId });
         res.status(201).send({ id: paymentId });
     } catch (error) {
         console.error(error);
