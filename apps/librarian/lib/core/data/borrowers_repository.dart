@@ -34,11 +34,9 @@ class BorrowersRepository {
 
   Future<bool> recordPayment({
     required String borrowerId,
-    required double cash,
   }) async {
     try {
       await api.recordCashPayment(
-        cash: cash,
         borrowerId: borrowerId,
       );
     } catch (error) {
