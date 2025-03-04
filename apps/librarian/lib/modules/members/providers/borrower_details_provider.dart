@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/member_model.dart';
 import 'package:librarian_app/core/api/models/issue_model.dart';
+import 'package:librarian_app/core/api/models/payment_model.dart';
 import 'package:librarian_app/core/data/borrowers_repository.dart';
 import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
 import 'package:librarian_app/providers/members.dart';
@@ -21,11 +22,14 @@ final memberDetailsProvider = FutureProvider((ref) async {
     return null;
   }
 
-  final details =
-      await BorrowersRepository().getBorrowerDetails(selectedMemberId);
+  final repository = BorrowersRepository();
+
+  final details = await repository.getBorrowerDetails(selectedMemberId);
   if (details == null) {
     return null;
   }
+
+  final payments = await repository.getPayments(selectedMemberId);
 
   return MemberDetailsViewModel(
     id: selectedMemberId,
@@ -36,6 +40,7 @@ final memberDetailsProvider = FutureProvider((ref) async {
     keyholder: details.keyholder,
     memberSince: details.joinDate,
     volunteerHours: details.volunteerHours,
+    payments: payments,
   );
 });
 
@@ -45,6 +50,7 @@ class MemberDetailsViewModel {
     required this.name,
     required this.issues,
     required this.keyholder,
+    required this.payments,
     required this.volunteerHours,
     this.memberSince,
     this.email,
@@ -59,4 +65,5 @@ class MemberDetailsViewModel {
   final bool keyholder;
   final DateTime? memberSince;
   final int volunteerHours;
+  final List<PaymentModel> payments;
 }

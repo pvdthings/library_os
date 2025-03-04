@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/api/models/issue_model.dart';
+import 'package:librarian_app/core/api/models/payment_model.dart';
 import 'package:librarian_app/modules/members/details/contact_card.dart';
 import 'package:librarian_app/modules/members/details/stats_card.dart';
 import 'package:librarian_app/modules/members/providers/borrower_details_provider.dart';
@@ -29,6 +30,7 @@ class MemberDetails extends ConsumerWidget {
           memberSince: model.memberSince,
           keyholder: model.keyholder,
           volunteerHours: model.volunteerHours,
+          payments: model.payments,
         );
       },
       loading: () {
@@ -43,6 +45,7 @@ class MemberDetails extends ConsumerWidget {
             keyholder: false,
             memberSince: DateTime.now(),
             volunteerHours: 0,
+            payments: const [],
           ),
         );
       },
@@ -62,6 +65,7 @@ class _Details extends StatelessWidget {
     required this.issues,
     required this.keyholder,
     required this.memberSince,
+    required this.payments,
     required this.volunteerHours,
   });
 
@@ -72,6 +76,7 @@ class _Details extends StatelessWidget {
   final List<Issue> issues;
   final bool keyholder;
   final DateTime? memberSince;
+  final List<PaymentModel> payments;
   final int volunteerHours;
 
   @override
@@ -96,7 +101,7 @@ class _Details extends StatelessWidget {
           issues: issues,
         ),
         const SizedBox(height: 16.0),
-        const PaymentsCard(),
+        PaymentsCard(payments: payments),
       ],
     );
   }
