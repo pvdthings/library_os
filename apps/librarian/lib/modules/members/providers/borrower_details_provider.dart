@@ -6,6 +6,7 @@ import 'package:librarian_app/core/data/borrowers_repository.dart';
 import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
 import 'package:librarian_app/providers/members.dart';
 
+// TODO: Remove this provider
 final borrowerDetailsProvider = Provider<Future<MemberModel?>>((ref) async {
   ref.watch(membersProvider);
   final selectedBorrower = ref.watch(selectedBorrowerProvider);
