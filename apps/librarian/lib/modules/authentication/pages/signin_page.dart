@@ -1,50 +1,38 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/core.dart';
 import 'package:librarian_app/modules/authentication/providers/signin_error_provider.dart';
 import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
 import 'package:librarian_app/dashboard/pages/dashboard_page.dart';
 import 'package:librarian_app/widgets/fade_page_route.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../widgets/logo_image.dart';
+
 // TODO: Refactor using MVVM
-class SignInPage extends ConsumerWidget {
-  SignInPage({super.key, this.message});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key, this.message});
 
   final String? message;
 
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
 
-  bool get _canSubmit =>
-      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+class _SignInPageState extends State<SignInPage> {
+  bool didAccessCodeSend = false;
+  String? email;
+
+  void navigateToDashboard() {
+    Navigator.of(context).pushAndRemoveUntil(
+      createFadePageRoute(child: const DashboardPage()),
+      (route) => false,
+    );
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    void navigateToDashboard() {
-      Navigator.of(context).pushAndRemoveUntil(
-        createFadePageRoute(child: const DashboardPage()),
-        (route) => false,
-      );
-    }
-
-    Future<void> signIn() async {
-      try {
-        await AuthService.instance.signIn(
-            email: _emailController.text,
-            password: _passwordController.text,
-            onSuccess: navigateToDashboard);
-      } on AuthException catch (error) {
-        ref.read(signinErrorProvider.notifier).state = error.message;
-      } catch (error) {
-        ref.read(signinErrorProvider.notifier).state =
-            "An unexpected error occurred.";
-      }
-    }
-
+  Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final cardHeight = min<double>(240, screenSize.height);
     final cardWidth = min<double>(cardHeight, screenSize.width);
@@ -53,99 +41,162 @@ class SignInPage extends ConsumerWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Center(
-            child: Card(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            width: cardWidth,
-            child: Form(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _LogoImage(),
-                  const SizedBox(height: 8.0),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
+          child: Card(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              width: cardWidth,
+              child: didAccessCodeSend
+                  ? AccessCodeForm(
+                      email: email!,
+                      message: widget.message,
+                      onSuccess: navigateToDashboard,
+                    )
+                  : UsernameForm(
+                      message: widget.message,
+                      onSuccess: (email) => setState(() {
+                        didAccessCodeSend = true;
+                        this.email = email;
+                      }),
                     ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email is required';
-                      }
-
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8.0),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password is required';
-                      }
-
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16.0),
-                  ListenableBuilder(
-                    listenable: Listenable.merge([
-                      _emailController,
-                      _passwordController,
-                    ]),
-                    builder: (context, _) => FilledButton.icon(
-                      onPressed: _canSubmit ? signIn : null,
-                      label: const Text('Sign in'),
-                    ),
-                  ),
-                  if (ref.watch(signinErrorProvider) != null ||
-                      message != null) ...[
-                    const SizedBox(height: 16.0),
-                    Text(ref.read(signinErrorProvider) ?? message!),
-                  ],
-                ],
-              ),
             ),
           ),
-        )),
+        ),
       ),
     );
   }
 }
 
-class _LogoImage extends StatelessWidget {
+class UsernameForm extends ConsumerWidget {
+  UsernameForm({super.key, this.message, this.onSuccess});
+
+  final _emailController = TextEditingController();
+
+  final String? message;
+  final void Function(String email)? onSuccess;
+
   @override
-  Widget build(BuildContext context) {
-    if (Library.logoUrl != null) {
-      return Image.network(
-        Library.logoUrl!,
-        loadingBuilder: (context, child, progress) {
-          return Center(child: child);
-        },
-        isAntiAlias: true,
-        height: 120,
-      );
+  Widget build(BuildContext context, WidgetRef ref) {
+    Future<void> signIn() async {
+      try {
+        await AuthService.instance.signIn(email: _emailController.text);
+        onSuccess?.call(_emailController.text);
+      } on AuthException catch (error) {
+        ref.read(signinErrorProvider.notifier).state = error.message;
+      } catch (error) {
+        ref.read(signinErrorProvider.notifier).state =
+            "An unexpected error occurred.";
+      }
     }
 
-    if (kDebugMode) {
-      return Image.asset(
-        'pvd_things.png',
-        isAntiAlias: true,
-        height: 120,
-      );
+    return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          LogoImage(),
+          const SizedBox(height: 8.0),
+          TextFormField(
+            controller: _emailController,
+            decoration: const InputDecoration(
+              labelText: 'Email',
+            ),
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Email is required';
+              }
+
+              return null;
+            },
+          ),
+          const SizedBox(height: 16.0),
+          ListenableBuilder(
+            listenable: _emailController,
+            builder: (context, _) => FilledButton.icon(
+              onPressed: _emailController.text.isNotEmpty ? signIn : null,
+              label: const Text('Sign in'),
+            ),
+          ),
+          if (ref.watch(signinErrorProvider) != null || message != null) ...[
+            const SizedBox(height: 16.0),
+            Text(ref.read(signinErrorProvider) ?? message!),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class AccessCodeForm extends ConsumerWidget {
+  AccessCodeForm({
+    super.key,
+    required this.email,
+    this.message,
+    this.onSuccess,
+  });
+
+  final _codeController = TextEditingController();
+
+  final String email;
+  final String? message;
+  final void Function()? onSuccess;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    Future<void> signIn() async {
+      try {
+        await AuthService.instance.submitAccessCode(
+          accessCode: _codeController.text,
+          email: email,
+          onSuccess: onSuccess,
+        );
+      } on AuthException catch (error) {
+        ref.read(signinErrorProvider.notifier).state = error.message;
+      } catch (error) {
+        ref.read(signinErrorProvider.notifier).state =
+            "An unexpected error occurred.";
+      }
     }
 
-    return const Icon(
-      Icons.local_library_outlined,
-      size: 120,
+    return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          LogoImage(),
+          const SizedBox(height: 8.0),
+          Text('Enter the access code that was sent to your email.'),
+          const SizedBox(height: 8.0),
+          TextFormField(
+            controller: _codeController,
+            decoration: const InputDecoration(
+              labelText: 'Access Code',
+            ),
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Access Code is required';
+              }
+
+              return null;
+            },
+          ),
+          const SizedBox(height: 16.0),
+          ListenableBuilder(
+            listenable: _codeController,
+            builder: (context, _) => FilledButton.icon(
+              onPressed: _codeController.text.isNotEmpty ? signIn : null,
+              label: const Text('Verify'),
+            ),
+          ),
+          if (ref.watch(signinErrorProvider) != null || message != null) ...[
+            const SizedBox(height: 16.0),
+            Text(ref.read(signinErrorProvider) ?? message!),
+          ],
+        ],
+      ),
     );
   }
 }

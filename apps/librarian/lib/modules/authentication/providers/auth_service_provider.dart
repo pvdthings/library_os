@@ -4,18 +4,33 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class AuthService {
   const AuthService();
 
-  static get instance => _instance;
+  static AuthService get instance => _instance;
 
   bool get hasValidSession => supabase.auth.currentSession != null;
 
   Future<void> signIn({
     required String email,
-    required String password,
     void Function()? onSuccess,
   }) async {
-    await supabase.auth.signInWithPassword(
+    await supabase.auth.signInWithOtp(
       email: email,
-      password: password,
+      shouldCreateUser: false,
+    );
+
+    if (supabase.auth.currentUser != null) {
+      onSuccess?.call();
+    }
+  }
+
+  Future<void> submitAccessCode({
+    required String accessCode,
+    required String email,
+    void Function()? onSuccess,
+  }) async {
+    await supabase.auth.verifyOTP(
+      type: OtpType.email,
+      email: email,
+      token: accessCode,
     );
 
     if (supabase.auth.currentUser != null) {
