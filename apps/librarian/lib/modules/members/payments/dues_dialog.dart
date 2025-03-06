@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/modules/members/providers/selected_borrower_provider.dart';
 import 'record_payment_dialog.dart';
 
-class DuesNotPaidDialog extends StatefulWidget {
+class DuesNotPaidDialog extends ConsumerStatefulWidget {
   final String instructions;
   final String? imageUrl;
-  final Future<void> Function(double cash) onConfirmPayment;
+  final Future<void> Function() onConfirmPayment;
 
   const DuesNotPaidDialog({
     super.key,
@@ -14,17 +16,18 @@ class DuesNotPaidDialog extends StatefulWidget {
   });
 
   @override
-  State<DuesNotPaidDialog> createState() => _DuesNotPaidDialogState();
+  ConsumerState<DuesNotPaidDialog> createState() => _DuesNotPaidDialogState();
 }
 
-class _DuesNotPaidDialogState extends State<DuesNotPaidDialog> {
+class _DuesNotPaidDialogState extends ConsumerState<DuesNotPaidDialog> {
   bool _recordPayment = false;
 
   @override
   Widget build(BuildContext context) {
     if (_recordPayment) {
       return RecordPaymentDialog(
-        onConfirmPayment: widget.onConfirmPayment,
+        name: ref.read(selectedBorrowerProvider)!.name,
+        onConfirm: widget.onConfirmPayment,
       );
     }
 

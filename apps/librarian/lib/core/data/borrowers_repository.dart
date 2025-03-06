@@ -44,12 +44,10 @@ class BorrowersRepository {
 
   Future<bool> recordPayment({
     required String borrowerId,
-    required double cash,
   }) async {
     try {
       await supabase.from('members_payments').insert({
         'member_id': int.parse(borrowerId),
-        'cash': cash,
       });
     } catch (error) {
       return false;
