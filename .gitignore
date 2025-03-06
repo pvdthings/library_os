@@ -3,6 +3,7 @@ fly.toml
 fly.*.toml
 
 # Miscellaneous
+.env
 *.class
 *.log
 *.pyc
@@ -48,3 +49,6 @@ app.*.map.json
 
 # Launch
 .vscode
+
+# JavaScript
+node_modules/
