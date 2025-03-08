@@ -10,7 +10,6 @@ const fetchPayments = async (borrowerId) => {
 
     return records.map(r => ({
         id: r.id,
-        cash: r.get('cash'),
         date: r.get('date')
     }));
 };
