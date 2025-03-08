@@ -8,30 +8,41 @@ class AuthService {
 
   bool get hasValidSession => supabase.auth.currentSession != null;
 
-  Future<void> signIn({
+  Future<void> requestAccessCode({
     required String email,
     void Function()? onSuccess,
+    void Function(String)? onError,
   }) async {
-    await supabase.auth.signInWithOtp(
-      email: email,
-      shouldCreateUser: false,
-    );
-
-    if (supabase.auth.currentUser != null) {
+    try {
+      await supabase.auth.signInWithOtp(
+        email: email,
+        shouldCreateUser: false,
+      );
       onSuccess?.call();
+    } on AuthException catch (error) {
+      onError?.call(error.message);
+    } catch (error) {
+      onError?.call("An unexpected error occurred.");
     }
   }
 
-  Future<void> submitAccessCode({
+  Future<void> verifyAccessCode({
     required String accessCode,
     required String email,
     void Function()? onSuccess,
+    void Function(String)? onError,
   }) async {
-    await supabase.auth.verifyOTP(
-      type: OtpType.email,
-      email: email,
-      token: accessCode,
-    );
+    try {
+      await supabase.auth.verifyOTP(
+        type: OtpType.email,
+        email: email,
+        token: accessCode,
+      );
+    } on AuthException catch (error) {
+      onError?.call(error.message);
+    } catch (error) {
+      onError?.call("An unexpected error occurred.");
+    }
 
     if (supabase.auth.currentUser != null) {
       onSuccess?.call();
