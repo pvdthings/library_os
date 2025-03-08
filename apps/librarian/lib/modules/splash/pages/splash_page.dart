@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/modules/authentication/pages/signin_page.dart';
-import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
+import 'package:librarian_app/core/services/auth_service.dart';
 import 'package:librarian_app/dashboard/pages/dashboard_page.dart';
 import 'package:librarian_app/widgets/fade_page_route.dart';
 
