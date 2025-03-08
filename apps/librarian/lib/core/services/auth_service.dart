@@ -20,7 +20,10 @@ class AuthService {
       );
       onSuccess?.call();
     } on AuthException catch (error) {
-      onError?.call(error.message);
+      String errorMessage = error.code == 'otp_disabled'
+          ? "$email is not enrolled."
+          : error.message;
+      onError?.call(errorMessage);
     } catch (error) {
       onError?.call("An unexpected error occurred.");
     }
