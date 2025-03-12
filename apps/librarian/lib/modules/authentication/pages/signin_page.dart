@@ -1,50 +1,41 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/core/core.dart';
-import 'package:librarian_app/modules/authentication/providers/signin_error_provider.dart';
-import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
 import 'package:librarian_app/dashboard/pages/dashboard_page.dart';
 import 'package:librarian_app/widgets/fade_page_route.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-// TODO: Refactor using MVVM
-class SignInPage extends ConsumerWidget {
-  SignInPage({super.key, this.message});
+import '../widgets/access_code_form.dart';
+import '../widgets/username_form.dart';
+
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key, this.message});
 
   final String? message;
 
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
 
-  bool get _canSubmit =>
-      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+class _SignInPageState extends State<SignInPage> {
+  bool didAccessCodeSend = false;
+  String? email;
+
+  void onEmailSubmitted(String email) {
+    setState(() {
+      didAccessCodeSend = true;
+      this.email = email;
+    });
+  }
+
+  void onCodeAccepted() {
+    Navigator.of(context).pushAndRemoveUntil(
+      createFadePageRoute(child: const DashboardPage()),
+      (route) => false,
+    );
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    void navigateToDashboard() {
-      Navigator.of(context).pushAndRemoveUntil(
-        createFadePageRoute(child: const DashboardPage()),
-        (route) => false,
-      );
-    }
-
-    Future<void> signIn() async {
-      try {
-        await AuthService.instance.signIn(
-            email: _emailController.text,
-            password: _passwordController.text,
-            onSuccess: navigateToDashboard);
-      } on AuthException catch (error) {
-        ref.read(signinErrorProvider.notifier).state = error.message;
-      } catch (error) {
-        ref.read(signinErrorProvider.notifier).state =
-            "An unexpected error occurred.";
-      }
-    }
-
+  Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final cardHeight = min<double>(240, screenSize.height);
     final cardWidth = min<double>(cardHeight, screenSize.width);
@@ -53,99 +44,24 @@ class SignInPage extends ConsumerWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Center(
-            child: Card(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            width: cardWidth,
-            child: Form(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _LogoImage(),
-                  const SizedBox(height: 8.0),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
+          child: Card(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              width: cardWidth,
+              child: didAccessCodeSend
+                  ? AccessCodeForm(
+                      email: email!,
+                      message: widget.message,
+                      onSuccess: onCodeAccepted,
+                    )
+                  : UsernameForm(
+                      message: widget.message,
+                      onSuccess: onEmailSubmitted,
                     ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email is required';
-                      }
-
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8.0),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password is required';
-                      }
-
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16.0),
-                  ListenableBuilder(
-                    listenable: Listenable.merge([
-                      _emailController,
-                      _passwordController,
-                    ]),
-                    builder: (context, _) => FilledButton.icon(
-                      onPressed: _canSubmit ? signIn : null,
-                      label: const Text('Sign in'),
-                    ),
-                  ),
-                  if (ref.watch(signinErrorProvider) != null ||
-                      message != null) ...[
-                    const SizedBox(height: 16.0),
-                    Text(ref.read(signinErrorProvider) ?? message!),
-                  ],
-                ],
-              ),
             ),
           ),
-        )),
+        ),
       ),
-    );
-  }
-}
-
-class _LogoImage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    if (Library.logoUrl != null) {
-      return Image.network(
-        Library.logoUrl!,
-        loadingBuilder: (context, child, progress) {
-          return Center(child: child);
-        },
-        isAntiAlias: true,
-        height: 120,
-      );
-    }
-
-    if (kDebugMode) {
-      return Image.asset(
-        'pvd_things.png',
-        isAntiAlias: true,
-        height: 120,
-      );
-    }
-
-    return const Icon(
-      Icons.local_library_outlined,
-      size: 120,
     );
   }
 }
