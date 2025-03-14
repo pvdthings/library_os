@@ -5,7 +5,7 @@ import 'package:librarian_app/modules/splash/pages/splash_page.dart';
 import 'package:librarian_app/theme/indigo_theme.dart';
 
 import 'modules/authentication/pages/signin_page.dart';
-import 'modules/authentication/providers/auth_service_provider.dart';
+import 'core/services/auth_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

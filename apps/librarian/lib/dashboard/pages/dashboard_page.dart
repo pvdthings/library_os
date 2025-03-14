@@ -5,7 +5,7 @@ import 'package:librarian_app/dashboard/providers/create_loan_controller.dart';
 import 'package:librarian_app/dashboard/providers/invalidate_module.dart';
 import 'package:librarian_app/dashboard/providers/workspace.dart';
 import 'package:librarian_app/dashboard/widgets/end_drawer.dart';
-import 'package:librarian_app/modules/authentication/providers/auth_service_provider.dart';
+import 'package:librarian_app/core/services/auth_service.dart';
 import 'package:librarian_app/modules/authentication/providers/user_tray.dart';
 import 'package:librarian_app/modules/members/details/needs_attention_page.dart';
 import 'package:librarian_app/dashboard/layouts/members_desktop_layout.dart';
