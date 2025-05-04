@@ -14,7 +14,7 @@ const config = {
 				'default-src': ["'self'"],
 				'script-src': ["'self'"], // Add 'nonce-{nonce}' or 'sha256-{hash}' if needed
 				'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'], // Allow inline styles if necessary
-				'img-src': ["'self'", 'data:'],
+				'img-src': ["'self'", 'data:', 'https://v5.airtableusercontent.com'],
 				'connect-src': ["'self'"],
 				'font-src': ["'self'", 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
 			}
