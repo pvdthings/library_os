@@ -7,7 +7,18 @@ const config = {
 		postcss: true
 	}),
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		csp: {
+			mode: 'hash',
+			directives: {
+				'default-src': ["'self'"],
+				'script-src': ["'self'"],
+				'style-src': ["'self'", 'https://fonts.googleapis.com'],
+				'img-src': ["'self'", 'data:', 'https://v5.airtableusercontent.com'],
+				'connect-src': ["'self'", 'https://*.pvdthings.coop'],
+				'font-src': ["'self'", 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+			}
+		}
 	}
 };
 
