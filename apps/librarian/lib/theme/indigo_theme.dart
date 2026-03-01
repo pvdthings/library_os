@@ -12,7 +12,7 @@ ThemeData _createIndigoTheme() {
     cardTheme: baseTheme.cardTheme.copyWith(
       color: baseTheme.colorScheme.surfaceContainerLow,
     ),
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: baseTheme.colorScheme.surfaceContainerHigh,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
