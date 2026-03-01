@@ -20,7 +20,7 @@ class BorrowerDetailsEditor {
   final Ref ref;
 
   Future<void> save() async {
-    await BorrowersRepository().updateBorrower(
+    await borrowersRepository.updateBorrower(
         ref.read(selectedBorrowerProvider)!.id,
         email: ref.read(emailProvider),
         phone: ref.read(phoneProvider));

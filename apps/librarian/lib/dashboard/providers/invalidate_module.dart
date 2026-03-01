@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/providers/loans.dart';
 import 'package:librarian_app/providers/members.dart';
+import 'package:librarian_app/providers/things.dart';
 
 void invalidateModule(WidgetRef ref, int index) {
   switch (index) {
@@ -12,7 +12,7 @@ void invalidateModule(WidgetRef ref, int index) {
       ref.invalidate(membersProvider);
     case thingsIndex:
     case repairIndex:
-      ref.invalidate(thingsRepositoryProvider);
+      ref.invalidate(rootThingsProvider);
       return;
     case actionsIndex:
       return;

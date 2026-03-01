@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/models/thing_model.dart';
+import 'package:librarian_app/providers/things.dart';
 import 'package:librarian_app/widgets/dialogs/general_dialog.dart';
-
-import '../../providers/things_repository_provider.dart';
 
 class ChooseThingsDialog extends ConsumerStatefulWidget {
   const ChooseThingsDialog({super.key, required this.existing});
@@ -27,7 +26,7 @@ class _ChooseThingsDialogState extends ConsumerState<ChooseThingsDialog> {
   @override
   void initState() {
     super.initState();
-    thingsFuture = ref.read(thingsRepositoryProvider);
+    thingsFuture = ref.read(rootThingsProvider);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/data/inventory_repository.dart';
 import 'package:librarian_app/core/models/item_model.dart';
 import 'package:librarian_app/dashboard/providers/end_drawer_provider.dart';
 import 'package:librarian_app/utils/media_query.dart';
@@ -7,7 +8,6 @@ import 'package:librarian_app/utils/media_query.dart';
 import '../details/inventory/item_details/drawer.dart';
 import '../details/inventory/item_details/item_details_controller.dart';
 import '../details/inventory/item_details_page.dart';
-import 'things_repository_provider.dart';
 
 class ItemDetailsOrchestrator {
   ItemDetailsOrchestrator(this.ref);
@@ -31,7 +31,7 @@ class ItemDetailsOrchestrator {
 
     final detailsController = ItemDetailsController(
       item: item,
-      repository: ref.read(thingsRepositoryProvider.notifier),
+      repository: inventoryRepository,
       onSave: () {
         // setState(() => _isLoading = true);
       },

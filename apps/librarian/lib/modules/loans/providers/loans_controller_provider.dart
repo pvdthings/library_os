@@ -16,8 +16,11 @@ class LoansController {
     required List<ItemModel> items,
     required DateTime dueDate,
   }) async {
-    final loanId = await LoansRepository()
-        .openLoan(borrowerId: borrowerId, items: items, dueBackDate: dueDate);
+    final loanId = await loansRepository.openLoan(
+      borrowerId: borrowerId,
+      items: items,
+      dueBackDate: dueDate,
+    );
 
     final loan = (await ref.refresh(loansProvider))
         .firstWhereOrNull((l) => l.id == loanId);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/data/inventory_repository.dart';
 import 'package:librarian_app/core/models/detailed_thing_model.dart';
 import 'package:librarian_app/widgets/details_card/card_body.dart';
 import 'package:librarian_app/widgets/details_card/card_header.dart';
 import 'package:librarian_app/widgets/details_card/details_card.dart';
 import 'package:librarian_app/modules/things/providers/edited_thing_details_providers.dart';
-import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/widgets/hint_text.dart';
 
 import '../../providers/thing_details_provider.dart';
@@ -116,8 +116,7 @@ class _CategoriesDialog extends ConsumerWidget {
             const Divider(),
             Expanded(
               child: FutureBuilder(
-                future:
-                    ref.read(thingsRepositoryProvider.notifier).getCategories(),
+                future: inventoryRepository.getCategories(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());

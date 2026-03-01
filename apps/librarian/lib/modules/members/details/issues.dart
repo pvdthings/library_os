@@ -112,8 +112,8 @@ class _PayDuesButton extends ConsumerWidget {
               imageUrl: issue.graphicUrl,
               onConfirmPayment: () async {
                 // TODO: React to success/failure
-                final result = await BorrowersRepository()
-                    .recordPayment(borrowerId: memberId);
+                final result = await borrowersRepository.recordPayment(
+                    borrowerId: memberId);
 
                 ref.invalidate(membersProvider);
                 ref.invalidate(memberDetailsProvider);

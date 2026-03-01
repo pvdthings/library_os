@@ -14,7 +14,7 @@ final borrowerDetailsProvider = Provider<Future<MemberModel?>>((ref) async {
     return null;
   }
 
-  return await BorrowersRepository().getBorrowerDetails(selectedBorrower.id);
+  return await borrowersRepository.getBorrowerDetails(selectedBorrower.id);
 });
 
 final memberDetailsProvider = FutureProvider((ref) async {
@@ -23,7 +23,7 @@ final memberDetailsProvider = FutureProvider((ref) async {
     return null;
   }
 
-  final repository = BorrowersRepository();
+  final repository = borrowersRepository;
 
   final details = await repository.getBorrowerDetails(selectedMemberId);
   if (details == null) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
+import 'package:librarian_app/core/data/inventory_repository.dart';
 import 'package:librarian_app/widgets/icons.dart';
 
 class SuggestedThingsDialog extends ConsumerWidget {
@@ -25,9 +25,7 @@ class SuggestedThingsDialog extends ConsumerWidget {
         constraints: const BoxConstraints(maxHeight: 500),
         width: 500,
         child: FutureBuilder(
-            future: ref
-                .read(thingsRepositoryProvider.notifier)
-                .getCachedThingsById(thingIds),
+            future: inventoryRepository.getCachedThingsById(thingIds),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());

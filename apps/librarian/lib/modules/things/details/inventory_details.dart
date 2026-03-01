@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/data/inventory_repository.dart';
 import 'package:librarian_app/core/models/detailed_thing_model.dart';
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items_dialog.dart';
 import 'package:librarian_app/modules/things/details/thing_details/thing_details_card.dart';
@@ -9,10 +10,10 @@ import 'package:librarian_app/modules/things/providers/edited_thing_details_prov
 import 'package:librarian_app/modules/things/providers/item_details_orchestrator.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_provider.dart';
-import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/modules/things/details/categories/categories_card.dart';
 import 'package:librarian_app/modules/things/details/inventory/items_card.dart';
 import 'package:librarian_app/modules/things/details/image/thing_image_card.dart';
+import 'package:librarian_app/providers/things.dart';
 import 'package:librarian_app/widgets/skeleton.dart';
 
 import 'linked_things/card.dart';
@@ -92,9 +93,10 @@ class InventoryDetails extends ConsumerWidget {
                 onToggleHidden: details?.hidden == true
                     ? null
                     : (id, value) async {
-                        await ref
-                            .read(thingsRepositoryProvider.notifier)
-                            .updateItem(id, hidden: value);
+                        await inventoryRepository
+                            .updateItem(id, hidden: value)
+                            .then(
+                                (value) => ref.invalidate(rootThingsProvider));
                       },
               ),
             ],

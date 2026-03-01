@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'things_repository_provider.dart';
+import 'package:librarian_app/core/data/inventory_repository.dart';
+import 'package:librarian_app/providers/things.dart';
 
 final allItems = Provider((ref) async {
-  ref.watch(thingsRepositoryProvider);
-  return await ref.read(thingsRepositoryProvider.notifier).getItems();
+  ref.watch(rootThingsProvider);
+  return await inventoryRepository.getItems();
 });

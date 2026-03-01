@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/data/inventory_repository.dart';
 import 'package:librarian_app/core/models/detailed_thing_model.dart';
 import 'package:librarian_app/core/models/image_model.dart';
 import 'package:librarian_app/core/models/updated_image_model.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/providers/thing_details_provider.dart';
-import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
+import 'package:librarian_app/providers/things.dart';
 
 final nameProvider = StateProvider<String?>((ref) => null);
 
@@ -38,15 +39,17 @@ class ThingDetailsEditor {
   final Ref ref;
 
   Future<void> save() async {
-    await ref.read(thingsRepositoryProvider.notifier).updateThing(
-        thingId: ref.read(selectedThingProvider)!.id,
-        name: ref.read(nameProvider),
-        spanishName: ref.read(spanishNameProvider),
-        hidden: ref.read(hiddenProvider),
-        eyeProtection: ref.read(eyeProtectionProvider),
-        categories: ref.read(categoriesProvider),
-        linkedThings: ref.read(linkedThingsProvider),
-        image: ref.read(imageUploadProvider));
+    await inventoryRepository
+        .updateThing(
+            thingId: ref.read(selectedThingProvider)!.id,
+            name: ref.read(nameProvider),
+            spanishName: ref.read(spanishNameProvider),
+            hidden: ref.read(hiddenProvider),
+            eyeProtection: ref.read(eyeProtectionProvider),
+            categories: ref.read(categoriesProvider),
+            linkedThings: ref.read(linkedThingsProvider),
+            image: ref.read(imageUploadProvider))
+        .then((value) => ref.invalidate(rootThingsProvider));
     discardChanges();
   }
 

@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:librarian_app/core/models/item_model.dart';
 import 'package:librarian_app/modules/things/providers/items.dart';
-import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
+import 'package:librarian_app/providers/things.dart';
 
 final items = Provider((ref) async {
   final items = await ref.watch(allItems);
-  final things = (await ref.watch(thingsRepositoryProvider));
+  final things = (await ref.watch(rootThingsProvider));
   final hiddenMap = {for (final e in things) e.id: e.hidden};
 
   return RepairItemsViewModel(

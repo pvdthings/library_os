@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/data/inventory_repository.dart';
 import 'package:librarian_app/core/models/item_model.dart';
-import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/widgets/item_card.dart';
 
 import 'connected_thing_search_field.dart';
@@ -48,7 +48,7 @@ Step buildItemsStep({
                 );
               }
             },
-            repository: ref.read(thingsRepositoryProvider.notifier),
+            repository: inventoryRepository,
           ),
         ),
         const SizedBox(height: 16.0),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/data/inventory_repository.dart';
 import 'package:librarian_app/modules/things/providers/selected_thing_provider.dart';
 import 'package:librarian_app/modules/things/details/inventory/delete_inventory_item_dialog.dart';
+import 'package:librarian_app/providers/things.dart';
 import 'package:librarian_app/utils/media_query.dart';
 
 import '../delete/delete_thing_dialog.dart';
-import 'things_repository_provider.dart';
 
 class ThingDetailsController {
   const ThingDetailsController({required this.ref});
@@ -21,9 +22,9 @@ class ThingDetailsController {
       thingName: thingName,
     )) {
       ref.invalidate(selectedThingProvider);
-      ref
-          .read(thingsRepositoryProvider.notifier)
+      inventoryRepository
           .deleteThing(selectedThing.id)
+          .then((value) => ref.invalidate(rootThingsProvider))
           .whenComplete(() {
         if (isMobile(context)) {
           Navigator.of(context).pop();
@@ -46,9 +47,9 @@ class ThingDetailsController {
       itemNumber: itemNumber,
       thingName: thingName,
     )) {
-      ref
-          .read(thingsRepositoryProvider.notifier)
+      inventoryRepository
           .deleteItem(id)
+          .then((value) => ref.invalidate(rootThingsProvider))
           .whenComplete(() {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('#$itemNumber ($thingName) deleted'),

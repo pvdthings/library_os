@@ -14,18 +14,18 @@ final loanDetailsProvider = FutureProvider((ref) async {
   }
 
   final [details, memberDetails] = await Future.wait([
-    LoansRepository().getLoan(
+    loansRepository.getLoan(
       id: selectedLoan.id,
       itemId: selectedLoan.thing.id,
     ),
-    BorrowersRepository().getBorrowerDetails(selectedLoan.borrower.id),
+    borrowersRepository.getBorrowerDetails(selectedLoan.borrower.id),
   ]);
 
   return LoanDetailsViewModel(
     loan: details as LoanDetailsModel,
     member: memberDetails as MemberModel,
     onSave: (dueDate, notes) {
-      LoansRepository()
+      loansRepository
           .updateLoan(
               parentLoanId: details.parentLoanId,
               dueBackDate: dueDate,
@@ -33,7 +33,7 @@ final loanDetailsProvider = FutureProvider((ref) async {
           .then((_) => ref.invalidate(loansProvider));
     },
     onCheckIn: () {
-      LoansRepository().closeLoan(details.id).then((_) {
+      loansRepository.closeLoan(details.id).then((_) {
         ref.invalidate(loansProvider);
         ref.invalidate(selectedLoanProvider);
       });

@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/data/inventory_repository.dart';
 import 'package:librarian_app/core/models/thing_model.dart';
-import 'package:librarian_app/modules/things/providers/things_repository_provider.dart';
 import 'package:librarian_app/modules/things/convert/icon.dart';
+import 'package:librarian_app/providers/things.dart';
 
 class ConvertDialog extends ConsumerStatefulWidget {
   const ConvertDialog({super.key, required this.itemId});
@@ -31,7 +32,7 @@ class _ConvertDialogState extends ConsumerState<ConvertDialog> {
             const Text('Choose a thing to convert to, then click Convert.'),
             const SizedBox(height: 16),
             FutureBuilder(
-              future: ref.read(thingsRepositoryProvider),
+              future: ref.read(rootThingsProvider),
               builder: (context, snapshot) {
                 final List<ThingModel> thingOptions =
                     snapshot.connectionState != ConnectionState.done
@@ -72,9 +73,9 @@ class _ConvertDialogState extends ConsumerState<ConvertDialog> {
               onPressed: selectedThingId.value == null
                   ? null
                   : () {
-                      ref
-                          .read(thingsRepositoryProvider.notifier)
+                      inventoryRepository
                           .convertItem(widget.itemId, selectedThingId.value!)
+                          .then((value) => ref.invalidate(rootThingsProvider))
                           .then((_) => Navigator.of(context).pop(true));
                     },
               child: const Text('Convert'),

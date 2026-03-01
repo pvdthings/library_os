@@ -2,20 +2,79 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:librarian_app/core/config/mode.dart';
+import 'package:librarian_app/core/models/detailed_thing_model.dart';
+import 'package:librarian_app/core/models/image_upload_model.dart';
+import 'package:librarian_app/core/models/item_model.dart';
+import 'package:librarian_app/core/models/thing_model.dart';
+import 'package:librarian_app/core/models/updated_image_model.dart';
 import 'package:librarian_app/core/services/image_service.dart';
 import 'package:librarian_app/core/supabase.dart';
 
-import '../models/detailed_thing_model.dart';
-import '../models/image_upload_model.dart';
-import '../models/item_model.dart';
-import '../models/thing_model.dart';
-import '../models/updated_image_model.dart';
+final inventoryRepository =
+    appMode.isDemo ? FakeInventoryRepository() : SupabaseInventoryRepository();
 
-class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
+abstract class InventoryRepository {
+  Future<List<ThingCategory>> getCategories();
+
+  Future<List<ThingModel>> getThings({String? filter});
+
+  Future<List<ThingModel>> getCachedThingsById(Iterable<String> ids);
+
+  Future<DetailedThingModel> getThingDetails({required String id});
+
+  Future<List<ItemModel>> getItems();
+
+  Future<ItemModel?> getItem({required int number});
+
+  Future<void> createThing({
+    required String name,
+    String? spanishName,
+  });
+
+  Future<void> updateThing({
+    required String thingId,
+    String? name,
+    String? spanishName,
+    bool? hidden,
+    bool? eyeProtection,
+    List<ThingCategory>? categories,
+    List<LinkedThing>? linkedThings,
+    UpdatedImageModel? image,
+  });
+
+  Future<void> deleteThing(String id);
+
+  Future<void> createItems({
+    required String thingId,
+    required int quantity,
+    required String? brand,
+    required String? condition,
+    required String? notes,
+    required double? estimatedValue,
+    required bool? hidden,
+    required UpdatedImageModel? image,
+    List<UpdatedImageModel>? manuals,
+  });
+
+  Future<void> updateItem(
+    String id, {
+    String? brand,
+    String? notes,
+    String? condition,
+    double? estimatedValue,
+    bool? hidden,
+    UpdatedImageModel? image,
+    List<UpdatedImageModel>? manuals,
+  });
+
+  Future<void> convertItem(String id, String thingId);
+
+  Future<void> deleteItem(String id);
+}
+
+class SupabaseInventoryRepository implements InventoryRepository {
   @override
-  Future<List<ThingModel>> build() async => await getThings();
-
   Future<List<ThingCategory>> getCategories() async {
     final data = await supabase.from('categories').select();
     return data
@@ -25,6 +84,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         .toList();
   }
 
+  @override
   Future<List<ThingModel>> getThings({String? filter}) async {
     final data = await supabase.from('things').select('''
         *,
@@ -47,11 +107,13 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         .toList();
   }
 
+  @override
   Future<List<ThingModel>> getCachedThingsById(Iterable<String> ids) async {
-    final all = await state;
+    final all = await getThings();
     return all.where((t) => ids.contains(t.id)).toList();
   }
 
+  @override
   Future<DetailedThingModel> getThingDetails({required String id}) async {
     final data = await supabase
         .from('things')
@@ -86,6 +148,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     return DetailedThingModel.fromQuery(data);
   }
 
+  @override
   Future<List<ItemModel>> getItems() async {
     final data = await supabase.from('items').select('''
             *,
@@ -99,6 +162,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     return data.map((e) => ItemModel.fromQuery(e)).toList();
   }
 
+  @override
   Future<ItemModel?> getItem({required int number}) async {
     try {
       final data = await supabase
@@ -126,6 +190,7 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     }
   }
 
+  @override
   Future<void> createThing({
     required String name,
     String? spanishName,
@@ -134,11 +199,10 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
       'name': name,
       'spanish_name': spanishName,
     });
-
-    ref.invalidateSelf();
   }
 
   // TODO: This is a dreadful mess which can be fixed by introducing auto-save
+  @override
   Future<void> updateThing({
     required String thingId,
     String? name,
@@ -199,8 +263,6 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
             .insert({'thing_id': id, 'url': uploadedImage.url});
       }
     }
-
-    ref.invalidateSelf();
   }
 
   Future<ImageUploadModel?> uploadImage(UpdatedImageModel? updatedImage) async {
@@ -229,19 +291,19 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
     return results.map((r) => ImageUploadModel(url: r.url)).toList();
   }
 
+  @override
   Future<void> deleteThing(String id) async {
     await supabase.from('things').delete().eq('id', int.parse(id));
-    ref.invalidateSelf();
   }
 
-  Future<void> deleteThingImage({required String thingId}) async {
-    await supabase
-        .from('thing_images')
-        .delete()
-        .eq('thing_id', int.parse(thingId));
-    ref.invalidateSelf();
-  }
+  // Future<void> deleteThingImage({required String thingId}) async {
+  //   await supabase
+  //       .from('thing_images')
+  //       .delete()
+  //       .eq('thing_id', int.parse(thingId));
+  // }
 
+  @override
   Future<void> createItems({
     required String thingId,
     required int quantity,
@@ -288,10 +350,9 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
             }).toList());
       }
     }
-
-    ref.invalidateSelf();
   }
 
+  @override
   Future<void> updateItem(
     String id, {
     String? brand,
@@ -350,19 +411,137 @@ class InventoryRepository extends Notifier<Future<List<ThingModel>>> {
         });
       }
     }
-
-    ref.invalidateSelf();
   }
 
+  @override
   Future<void> convertItem(String id, String thingId) async {
     await supabase
         .from('items')
         .update({'thing_id': int.parse(thingId)}).eq('id', int.parse(id));
-    ref.invalidateSelf();
   }
 
+  @override
   Future<void> deleteItem(String id) async {
     await supabase.from('items').delete().eq('id', int.parse(id));
-    ref.invalidateSelf();
+  }
+}
+
+class FakeInventoryRepository implements InventoryRepository {
+  @override
+  Future<List<ThingCategory>> getCategories() async {
+    return [
+      ThingCategory(id: 1, name: 'Audio'),
+      ThingCategory(id: 2, name: 'Visual'),
+      ThingCategory(id: 3, name: 'Computer'),
+    ];
+  }
+
+  @override
+  Future<List<ThingModel>> getThings({String? filter}) async {
+    return [
+      ThingModel(
+        id: '1',
+        name: 'The Great Gatsby',
+        spanishName: 'El Gran Gatsby',
+        hidden: false,
+        stock: 5,
+        available: 4,
+      ),
+    ];
+  }
+
+  @override
+  Future<List<ThingModel>> getCachedThingsById(Iterable<String> ids) async {
+    return getThings()
+        .then((things) => things.where((t) => ids.contains(t.id)).toList());
+  }
+
+  @override
+  Future<DetailedThingModel> getThingDetails({required String id}) async {
+    final things = await getThings();
+    final thing = things.firstWhere((t) => t.id == id);
+
+    return DetailedThingModel(
+      id: thing.id,
+      name: thing.name,
+      spanishName: thing.spanishName,
+      hidden: thing.hidden,
+      eyeProtection: false,
+      categories: [ThingCategory(id: 1, name: 'Books')],
+      linkedThings: [],
+      images: [],
+      stock: thing.stock,
+      available: thing.available,
+      items: [],
+    );
+  }
+
+  @override
+  Future<List<ItemModel>> getItems() async {
+    return [];
+  }
+
+  @override
+  Future<ItemModel?> getItem({required int number}) async {
+    return null;
+  }
+
+  @override
+  Future<void> createThing({
+    required String name,
+    String? spanishName,
+  }) async {}
+
+  @override
+  Future<void> updateThing({
+    required String thingId,
+    String? name,
+    String? spanishName,
+    bool? hidden,
+    bool? eyeProtection,
+    List<ThingCategory>? categories,
+    List<LinkedThing>? linkedThings,
+    UpdatedImageModel? image,
+  }) async {}
+
+  @override
+  Future<void> deleteThing(String id) {
+    return Future.delayed(const Duration(seconds: 1));
+  }
+
+  @override
+  Future<void> convertItem(String id, String thingId) {
+    return Future.delayed(const Duration(seconds: 1));
+  }
+
+  @override
+  Future<void> createItems(
+      {required String thingId,
+      required int quantity,
+      required String? brand,
+      required String? condition,
+      required String? notes,
+      required double? estimatedValue,
+      required bool? hidden,
+      required UpdatedImageModel? image,
+      List<UpdatedImageModel>? manuals}) {
+    return Future.delayed(const Duration(seconds: 1));
+  }
+
+  @override
+  Future<void> deleteItem(String id) {
+    return Future.delayed(const Duration(seconds: 1));
+  }
+
+  @override
+  Future<void> updateItem(String id,
+      {String? brand,
+      String? notes,
+      String? condition,
+      double? estimatedValue,
+      bool? hidden,
+      UpdatedImageModel? image,
+      List<UpdatedImageModel>? manuals}) {
+    return Future.delayed(const Duration(seconds: 1));
   }
 }
