@@ -1,4 +1,4 @@
-import 'package:librarian_app/constants.dart';
+import 'package:librarian_app/core/config/constants.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core.dart';
