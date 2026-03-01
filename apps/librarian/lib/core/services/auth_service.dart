@@ -1,3 +1,4 @@
+import 'package:librarian_app/core/config/mode.dart';
 import 'package:librarian_app/core/supabase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -13,6 +14,11 @@ class AuthService {
     void Function()? onSuccess,
     void Function(String)? onError,
   }) async {
+    if (appMode.isDemo) {
+      onSuccess?.call();
+      return;
+    }
+
     try {
       await supabase.auth.signInWithOtp(
         email: email,
@@ -35,6 +41,11 @@ class AuthService {
     void Function()? onSuccess,
     void Function(String)? onError,
   }) async {
+    if (appMode.isDemo) {
+      onSuccess?.call();
+      return;
+    }
+
     try {
       await supabase.auth.verifyOTP(
         type: OtpType.email,
