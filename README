@@ -1,3 +1,15 @@
 # Library OS
 
 The open source web operating system for lending libraries.
+
+## Getting Started
+
+### Launch the Database
+
+```zsh
+cd supabase
+npx supabase start
+
+# to stop
+npx supabase stop
+```
