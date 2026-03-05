@@ -4,6 +4,7 @@ import 'package:librarian_app/core/data/inventory_repository.dart';
 import 'package:librarian_app/core/models/thing_model.dart';
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items.dart';
 import 'package:librarian_app/modules/things/details/inventory/create_items/create_items_controller.dart';
+import 'package:librarian_app/providers/things.dart';
 import 'package:librarian_app/widgets/filled_progress_button.dart';
 
 class CreateItemsDialog extends ConsumerStatefulWidget {
@@ -32,6 +33,7 @@ class _CreateItemsDialogState extends ConsumerState<CreateItemsDialog> {
         setState(() => _isLoading = true);
       },
       onSaveComplete: () {
+        ref.invalidate(rootThingsProvider);
         Navigator.of(context).pop();
       },
     );
