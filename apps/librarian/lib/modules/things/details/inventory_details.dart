@@ -35,11 +35,9 @@ class InventoryDetails extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Wrap(
-                spacing: 16,
-                runSpacing: 32,
-                children: [
-                  ThingImageCard(
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final thingImageCard = ThingImageCard(
                     width: 240,
                     height: 240,
                     imageUrl: ref.watch(imageUploadProvider) != null
@@ -61,9 +59,31 @@ class InventoryDetails extends ConsumerWidget {
                         );
                       }
                     },
-                  ),
-                  ThingDetailsCard(details: details ?? dummyDetails),
-                ],
+                  );
+
+                  final thingDetailsCard =
+                      ThingDetailsCard(details: details ?? dummyDetails);
+
+                  if (constraints.maxWidth < 600) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        thingImageCard,
+                        const SizedBox(height: 16),
+                        thingDetailsCard,
+                      ],
+                    );
+                  } else {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        thingImageCard,
+                        const SizedBox(width: 16),
+                        Expanded(child: thingDetailsCard),
+                      ],
+                    );
+                  }
+                },
               ),
               const SizedBox(height: 32),
               const Wrap(
