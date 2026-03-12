@@ -62,6 +62,11 @@ class _AccessCodeFormState extends State<AccessCodeForm> {
                 return 'Access Code is required';
               }
 
+              final codeRegex = RegExp(r'^\d{6}\$');
+              if (!codeRegex.hasMatch(value)) {
+                return 'Enter a valid 6-digit code';
+              }
+
               return null;
             },
           ),
