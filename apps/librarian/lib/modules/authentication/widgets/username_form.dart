@@ -51,6 +51,11 @@ class _UsernameFormState extends State<UsernameForm> {
                 return 'Email is required';
               }
 
+              final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+');
+              if (!emailRegex.hasMatch(value)) {
+                return 'Enter a valid email address';
+              }
+
               return null;
             },
           ),
